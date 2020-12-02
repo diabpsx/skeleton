@@ -1,0 +1,145 @@
+// WARNING: This file's extension ('.MIP') indicates that it may not have been a C or C++ file.
+// It should contain Ghidra's best effort at decompiling the machine language to C, 
+// but TDR does not currently attempt to handle assembly language or other non-C/C++ code differently, 
+// so any decompiled code below may not reflect the original project source code for this file.
+// If the source file is from a library, you should replace it with the original library version of the file.
+// Otherwise, manual reconstruction of the code may be required, 
+// Especially if the original source code was assembly language which used hardware features inaccessible to C.
+#include "THISDUST.H"
+#include "CRUNCH.H"
+
+
+// decompiled code
+// original method signature: 
+// void crunch() /* crunch method signature is not contained in the debug symbol data. This is likely either a library function or the game was compiled without debug symbols. Please refer to the TDR documentation for additional guidance. */
+ // line 34, offset 0x800105d4
+int crunch(int iParm1,undefined4 *puParm2,int iParm3,undefined4 uParm4)
+
+{
+	undefined4 uVar1;
+	undefined4 *puVar2;
+	int in_t8;
+	int iVar3;
+	
+	iParm3 = iParm1 + iParm3;
+	uVar1 = 0;
+	iVar3 = 0;
+	puVar2 = puParm2;
+	DAT_80010ab8 = iParm1;
+	DAT_80010abc = iParm3;
+	DAT_80010ac0 = uParm4;
+	do {
+		FUN_800106d4();
+		if ((in_t8 != 0) && (iVar3 = iVar3 + 1, iVar3 == 0x108)) {
+			FUN_8001097c();
+		}
+	} while (iParm1 < iParm3);
+	FUN_8001097c();
+	FUN_80010a7c();
+	*puVar2 = uVar1;
+	puVar2[1] = DAT_80010abc - DAT_80010ab8;
+	return (int)puVar2 + (8 - (int)puParm2);
+}
+
+
+
+// decompiled code
+// original method signature: 
+// void decrunch() /* decrunch method signature is not contained in the debug symbol data. This is likely either a library function or the game was compiled without debug symbols. Please refer to the TDR documentation for additional guidance. */
+ // line 485, offset 0x80010b00
+undefined4 decrunch(int iParm1,int iParm2,int iParm3)
+
+{
+	uint uVar1;
+	undefined4 uVar2;
+	uint uVar3;
+	int iVar4;
+	int iVar5;
+	undefined *puVar6;
+	undefined *puVar7;
+	uint uVar8;
+	int iVar9;
+	undefined8 uVar10;
+	
+	iParm2 = iParm2 + iParm3;
+	puVar7 = (undefined *)(*(int *)(iParm2 + -4) + iParm1);
+	uVar8 = *(uint *)(iParm2 + -0xc);
+	uVar3 = *(uint *)(iParm2 + -8) ^ uVar8;
+	do {
+		iVar4 = uVar8 << 0x1f;
+		uVar8 = uVar8 >> 1;
+		if (iVar4 < 0) {
+			if (uVar8 == 0) {
+LAB_80010b74:
+				FUN_80010d14();
+				if (-1 < iVar4) goto LAB_80010b84;
+			}
+			iVar4 = FUN_80010d48();
+			if (1 < iVar4) {
+				if (iVar4 == 3) {
+					iVar4 = 8;
+					goto LAB_80010bcc;
+				}
+				FUN_80010d48();
+			}
+LAB_80010cb4:
+			uVar10 = FUN_80010d48();
+			puVar6 = puVar7 + (int)((ulonglong)uVar10 >> 0x20);
+			iVar4 = (int)uVar10 + 1;
+			do {
+				puVar6 = puVar6 + -1;
+				puVar7 = puVar7 + -1;
+				*puVar7 = *puVar6;
+				iVar4 = iVar4 + -1;
+			} while (iVar4 != 0);
+		}
+		else {
+			if (uVar8 == 0) goto LAB_80010b74;
+LAB_80010b84:
+			iVar4 = uVar8 << 0x1f;
+			uVar8 = uVar8 >> 1;
+			if (iVar4 < 0) {
+				if (uVar8 != 0) goto LAB_80010cb4;
+LAB_80010bb4:
+				FUN_80010d14();
+				if (iVar4 < 0) goto LAB_80010cb4;
+			}
+			else {
+				if (uVar8 == 0) goto LAB_80010bb4;
+			}
+			iVar4 = 0;
+LAB_80010bcc:
+			uVar1 = FUN_80010d48();
+			iVar4 = uVar1 + iVar4 + 1;
+			do {
+				iVar9 = 8;
+				do {
+					iVar5 = uVar8 << 0x1f;
+					uVar8 = uVar8 >> 1;
+					uVar10 = CONCAT44(uVar1,iVar4);
+					if (uVar8 == 0) {
+						uVar10 = FUN_80010d14();
+					}
+					iVar4 = (int)uVar10;
+					uVar1 = (int)((ulonglong)uVar10 >> 0x20) << 1 | (uint)(iVar5 < 0);
+					iVar9 = iVar9 + -1;
+				} while (iVar9 != 0);
+				puVar7 = puVar7 + -1;
+				*puVar7 = (char)uVar1;
+				iVar4 = iVar4 + -1;
+			} while (iVar4 != 0);
+		}
+		if ((int)puVar7 <= iParm1) {
+			uVar2 = 0;
+			if (uVar3 != 0) {
+				uVar2 = 0xffffffff;
+			}
+			return uVar2;
+		}
+	} while( true );
+}
+
+
+
+
+

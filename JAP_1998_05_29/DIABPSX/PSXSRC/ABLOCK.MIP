@@ -1,0 +1,89 @@
+// WARNING: This file's extension ('.MIP') indicates that it may not have been a C or C++ file.
+// It should contain Ghidra's best effort at decompiling the machine language to C, 
+// but TDR does not currently attempt to handle assembly language or other non-C/C++ code differently, 
+// so any decompiled code below may not reflect the original project source code for this file.
+// If the source file is from a library, you should replace it with the original library version of the file.
+// Otherwise, manual reconstruction of the code may be required, 
+// Especially if the original source code was assembly language which used hardware features inaccessible to C.
+#include "THISDUST.H"
+#include "ABLOCK.H"
+
+
+// decompiled code
+// original method signature: 
+// void ABL_SetBlockRGBXY() /* ABL_SetBlockRGBXY method signature is not contained in the debug symbol data. This is likely either a library function or the game was compiled without debug symbols. Please refer to the TDR documentation for additional guidance. */
+ // line 115, offset 0x80010dec
+void ABL_SetBlockRGBXY(undefined4 uParm1,undefined4 uParm2,undefined4 uParm3,undefined4 uParm4)
+
+{
+	setCopReg(2,0x6000,uParm1);
+	setCopReg(2,0x8000,uParm2);
+	setCopReg(2,0x6800,uParm3);
+	setCopReg(2,0x7000,uParm4);
+	return;
+}
+
+
+
+// decompiled code
+// original method signature: 
+// void ABL_PrintPart() /* ABL_PrintPart method signature is not contained in the debug symbol data. This is likely either a library function or the game was compiled without debug symbols. Please refer to the TDR documentation for additional guidance. */
+ // line 143, offset 0x80010e00
+void ABL_PrintPart(int iParm1,undefined4 *puParm2,int iParm3)
+
+{
+	byte bVar1;
+	undefined2 uVar2;
+	short sVar3;
+	short sVar4;
+	undefined uVar5;
+	undefined4 uVar6;
+	int iVar7;
+	short sVar8;
+	
+	uVar6 = getCopReg(2,0x8000);
+	iVar7 = getCopReg(2,0x7000);
+	sVar3 = (short)uVar6 + *(short *)(iParm1 + 4);
+	uVar6 = getCopReg(2,0x6800);
+	sVar4 = (short)uVar6 - *(short *)(iParm1 + 6);
+	uVar5 = 0x3c;
+	if ((iVar7 != 0) && ((*(byte *)((int)puParm2 + 0xf) & 2) == 0)) {
+		uVar5 = 0x3e;
+	}
+	*(undefined *)(iParm3 + 7) = uVar5;
+	*(undefined4 *)(iParm3 + 0xc) = *puParm2;
+	*(undefined4 *)(iParm3 + 0x18) = puParm2[1];
+	uVar2 = *(undefined2 *)((int)puParm2 + 10);
+	*(undefined2 *)(iParm3 + 0x24) = *(undefined2 *)(puParm2 + 2);
+	*(undefined2 *)(iParm3 + 0x30) = uVar2;
+	bVar1 = *(byte *)(puParm2 + 3);
+	sVar8 = sVar4 + (ushort)*(byte *)((int)puParm2 + 0xd);
+	*(short *)(iParm3 + 8) = sVar3;
+	*(short *)(iParm3 + 10) = sVar4;
+	*(short *)(iParm3 + 0x14) = sVar3 + (ushort)bVar1;
+	*(short *)(iParm3 + 0x16) = sVar4;
+	*(short *)(iParm3 + 0x20) = sVar3;
+	*(short *)(iParm3 + 0x22) = sVar8;
+	*(short *)(iParm3 + 0x2c) = sVar3 + (ushort)bVar1;
+	*(short *)(iParm3 + 0x2e) = sVar8;
+	*(undefined *)(iParm3 + 3) = 0xc;
+	return;
+}
+
+
+
+// decompiled code
+// original method signature: 
+// void PCopen() /* PCopen method signature is not contained in the debug symbol data. This is likely either a library function or the game was compiled without debug symbols. Please refer to the TDR documentation for additional guidance. */
+ // line 360, offset 0x80010eac
+void PCopen(void)
+
+{
+	trap(0x103);
+	return;
+}
+
+
+
+
+
