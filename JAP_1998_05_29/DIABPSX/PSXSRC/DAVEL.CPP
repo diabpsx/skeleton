@@ -268,7 +268,7 @@ void mteleportfx__Fv(void)
 		if (*(int *)((int)&SpellFXDat[0].teleflag + iVar2) != 0) {
 			GetPlrPos__11SPELLFX_DATP12PlayerStruct
 								((SPELLFX_DAT *)((int)&SpellFXDat[0].apocactive + iVar2),
-								 (PlayerStruct *)((int)&plr._pmode + (int)puVar4));
+								 (PlayerStruct *)((int)&plr[0]._pmode + (int)puVar4));
 			this = GetPlayer__7CPlayeri(PNum);
 			OtPos = GetLastOtPos__C7CPlayer(this);
 			if (anyfuckingmenus == (void *)0x0) {
@@ -306,12 +306,12 @@ void mteleportfx__Fv(void)
 			SpinR = (uchar)SpinB;
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
 								(*(int *)((int)&SpellFXDat[0].scrnx + iVar2),
-								 *(int *)((int)&SpellFXDat[0].spiny1 + iVar2),SpinR,SpinR,SpinB,0x20,0x40,0,
-								 (void *)0x0,OtPos + 2,&DAT_00000001,(void *)0x0,8);
+								 *(int *)((int)&SpellFXDat[0].spiny1 + iVar2),SpinR,SpinR,SpinB,0x20,0x40,0,0,
+								 OtPos + 2,1,0,8);
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
 								(*(int *)((int)&SpellFXDat[0].scrnx + iVar2),
-								 *(int *)((int)&SpellFXDat[0].spiny2 + iVar2),SpinR,SpinR,SpinB,0x20,0x40,0,
-								 (void *)0x0,OtPos + 2,&DAT_00000001,(void *)0x0,8);
+								 *(int *)((int)&SpellFXDat[0].spiny2 + iVar2),SpinR,SpinR,SpinB,0x20,0x40,0,0,
+								 OtPos + 2,1,0,8);
 		}
 		piVar3 = piVar3 + 0x12;
 		iVar2 = iVar2 + 0x48;
@@ -947,8 +947,6 @@ void MonstPartJump__Fi(int m)
 	/* end block 2 */
 	// End Line: 1438
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void doparticlechain__Fiiiiiiiiiiii
 							 (int sx,int sy,int dx,int dy,int count,int scale,int scaledec,int semitrans,
 							 int randomize,int colour,int OtPos,int source)
@@ -1101,8 +1099,6 @@ void doparticlechain__Fiiiiiiiiiiii
 	/* end block 2 */
 	// End Line: 1707
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ParticleMissile__FP13MissileStructiiii
 							 (MissileStruct *Ms,int ScrX,int ScrY,int colour,int OtPos)
 
@@ -1168,8 +1164,6 @@ void ParticleMissile__FP13MissileStructiiii
 		// Start line: 1752
 	/* end block 2 */
 	// End Line: 1753
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void Teleportfx__Fiiiiiiii
 							 (int scrnx,int scrny,int width,int height,int scale,int colmask,int numpart,int OtPos
@@ -1301,8 +1295,6 @@ void Teleportfx__Fiiiiiiii
 	/* end block 2 */
 	// End Line: 1911
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ResurrectFX__Fiiii(int x,int height,int scale,int OtPos)
 
 {
@@ -1345,8 +1337,6 @@ void ResurrectFX__Fiiii(int x,int height,int scale,int OtPos)
 	/* end block 2 */
 	// End Line: 1953
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ParticleExp__FP13MissileStructiiii(MissileStruct *Ms,int ScrX,int ScrY,int colour,int OtPos)
 
 {
@@ -1385,8 +1375,6 @@ void ParticleExp__FP13MissileStructiiii(MissileStruct *Ms,int ScrX,int ScrY,int 
 		// Start line: 1996
 	/* end block 2 */
 	// End Line: 1997
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void GetPlrPos__11SPELLFX_DATP12PlayerStruct(SPELLFX_DAT *this,PlayerStruct *ptrplr)
 
@@ -1483,7 +1471,7 @@ void healFX__Fv(void)
 		if (*(int *)((int)&SpellFXDat[0].healactive + iVar1) != 0) {
 			GetPlrPos__11SPELLFX_DATP12PlayerStruct
 								((SPELLFX_DAT *)((int)&SpellFXDat[0].apocactive + iVar1),
-								 (PlayerStruct *)((int)&plr._pmode + (int)puVar2));
+								 (PlayerStruct *)((int)&plr[0]._pmode + (int)puVar2));
 			this = GetPlayer__7CPlayeri(PNum);
 			OtPos = GetLastOtPos__C7CPlayer(this);
 			Teleportfx__Fiiiiiiii
@@ -1523,8 +1511,6 @@ void healFX__Fv(void)
 	/* end block 2 */
 	// End Line: 2134
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void HealStart__Fi(int plr)
 
 {
@@ -1550,8 +1536,6 @@ void HealStart__Fi(int plr)
 		// Start line: 2145
 	/* end block 2 */
 	// End Line: 2146
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void HealotherStart__Fi(int plr)
 
@@ -1579,15 +1563,13 @@ void HealotherStart__Fi(int plr)
 	/* end block 2 */
 	// End Line: 2159
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TeleStart__Fi(int plr)
 
 {
 	int iVar1;
 	int iVar2;
 	
-	GetPlrPos__11SPELLFX_DATP12PlayerStruct(SpellFXDat + plr,&plr + plr);
+	GetPlrPos__11SPELLFX_DATP12PlayerStruct(SpellFXDat + plr,plr + plr);
 	SpellFXDat[plr].teleflag = 1;
 	iVar1 = SpellFXDat[plr].scrny;
 	iVar2 = SpellFXDat[plr].scrny;
@@ -1615,8 +1597,6 @@ void TeleStart__Fi(int plr)
 	/* end block 2 */
 	// End Line: 2186
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TeleStop__Fi(int plr)
 
 {
@@ -1643,8 +1623,6 @@ void TeleStop__Fi(int plr)
 	/* end block 2 */
 	// End Line: 2198
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PhaseStart__Fi(int plr)
 
 {
@@ -1670,8 +1648,6 @@ void PhaseStart__Fi(int plr)
 		// Start line: 2211
 	/* end block 2 */
 	// End Line: 2212
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void PhaseEnd__Fi(int plr)
 
@@ -1705,8 +1681,6 @@ void PhaseEnd__Fi(int plr)
 	/* end block 2 */
 	// End Line: 2227
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ApocInit__11SPELLFX_DATP12PlayerStruct(SPELLFX_DAT *this,PlayerStruct *ptrplr)
 
 {
@@ -1725,7 +1699,7 @@ void ApocInit__11SPELLFX_DATP12PlayerStruct(SPELLFX_DAT *this,PlayerStruct *ptrp
 	cVar2 = ptrplr->_pyoff;
 	sVar3 = ptrplr->_px;
 	sVar4 = ptrplr->_py;
-	this_01 = GetPlayer__7CPlayeri((uint)(ptrplr != &plr));
+	this_01 = GetPlayer__7CPlayeri((uint)(ptrplr != plr));
 	iVar6 = GetLastOtPos__C7CPlayer(this_01);
 	this->px = (int)ptrplr->_px;
 	sVar5 = ptrplr->_py;
@@ -1739,8 +1713,7 @@ void ApocInit__11SPELLFX_DATP12PlayerStruct(SPELLFX_DAT *this,PlayerStruct *ptrp
 	this->scrnx = (int)local_28.x;
 	this->scrny = (int)local_28.y + -0x20;
 	DrawSpinner__FiiUcUcUciiibiT8T8Uc
-						(this->scrnx + -2,(int)local_28.y + -0x1e,-1,-1,0xff,0x20,0x40,0,(void *)0x0,iVar6 + 2,
-						 &DAT_00000001,(void *)0x0,8);
+						(this->scrnx + -2,(int)local_28.y + -0x1e,-1,-1,0xff,0x20,0x40,0,0,iVar6 + 2,1,0,8);
 	SetLightFX__FiisssUcUcUc(this->px,this->py,0xa00,0xa00,0xa00,0x40,0x40,0x40);
 	return;
 }
@@ -1763,12 +1736,10 @@ void ApocInit__11SPELLFX_DATP12PlayerStruct(SPELLFX_DAT *this,PlayerStruct *ptrp
 	/* end block 2 */
 	// End Line: 2335
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ApocaStart__Fi(int plr)
 
 {
-	ApocInit__11SPELLFX_DATP12PlayerStruct(SpellFXDat + plr,&plr + plr);
+	ApocInit__11SPELLFX_DATP12PlayerStruct(SpellFXDat + plr,plr + plr);
 	return;
 }
 
@@ -1789,8 +1760,6 @@ void ApocaStart__Fi(int plr)
 		// Start line: 2350
 	/* end block 2 */
 	// End Line: 2351
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DaveLTask__FP4TASK(TASK *T)
 

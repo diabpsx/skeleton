@@ -111,15 +111,15 @@ void SetupLocalCoords__Fv(void)
 	}
 	iVar3 = plrxoff[myplr];
 	iVar4 = plryoff[myplr];
-	(&plr)[myplr].plrlevel = (uint)currlevel;
-	(&plr)[iVar1]._pLvlChanging = '\x01';
+	plr[myplr].plrlevel = (uint)currlevel;
+	plr[iVar1]._pLvlChanging = '\x01';
 	iVar2 = myplr;
-	(&plr)[iVar1]._px = (short)iVar3 + 0x4b;
-	(&plr)[iVar1]._py = (short)iVar4 + 0x44;
-	(&plr)[iVar2].pLvlLoad = '\0';
+	plr[iVar1]._px = (short)iVar3 + 0x4b;
+	plr[iVar1]._py = (short)iVar4 + 0x44;
+	plr[iVar2].pLvlLoad = '\0';
 	iVar1 = myplr;
-	(&plr)[myplr]._pmode = PM_NEWLVL;
-	(&plr)[iVar1].destAction = -1;
+	plr[myplr]._pmode = PM_NEWLVL;
+	plr[iVar1].destAction = -1;
 	return;
 }
 
@@ -243,7 +243,7 @@ uchar NetInit__FUcPUc(uchar bSinglePlayer,uchar *pfExitProgram)
 	if (bSinglePlayer == '\0') {
 		myplr = 0;
 		SetupLocalPlayer__Fv();
-		game_2_ui_player__FPC12PlayerStructP11_uiheroinfoUc(&plr,&_Stack48,gbValidSaveFile);
+		game_2_ui_player__FPC12PlayerStructP11_uiheroinfoUc(plr,&_Stack48,gbValidSaveFile);
 	}
 	SetRndSeed__Fl(0);
 	gbGameDestroyed = '\0';
@@ -269,7 +269,7 @@ uchar NetInit__FUcPUc(uchar bSinglePlayer,uchar *pfExitProgram)
 	}
 	myplr = 0;
 	SetupLocalPlayer__Fv();
-	(&plr)[myplr].plractive = '\x01';
+	plr[myplr].plractive = '\x01';
 	SetupLocalCoords__Fv();
 	if (FePlayerNo != 0) {
 		myplr = 1;

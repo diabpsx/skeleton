@@ -62,7 +62,7 @@ void PrintCDWaitTask__FP4TASK(TASK *T)
 			X = iVar1 + 0x120;
 			puVar2 = (undefined *)IsGameLoading__Fv();
 			if ((((puVar2 != &DAT_00000001) && (FeFlag == '\0')) && (qtextflag == '\0')) &&
-				 (PlayerStruct_800dbf20.plractive != '\0')) {
+				 (plr[1].plractive != '\0')) {
 				X = iVar1 + 0xa0;
 			}
 			pPVar3 = PrintFt4__7TextDatiiiiii(this,0,X,0xd0,(uint)(CDAngle >> 1) & 1,0x1fe,0);

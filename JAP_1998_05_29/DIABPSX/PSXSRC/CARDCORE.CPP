@@ -18,8 +18,6 @@
 	/* end block 2 */
 	// End Line: 325
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void init_mem_card__FPFii_vUc(TDRFuncPtr_init_mem_card__FPFii_vUc0handler handler,uchar read_dir)
 
 {
@@ -714,7 +712,7 @@ LAB_800a59a0:
 		R = (uint)WHITER;
 		G = (uint)WHITEG;
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,0,DY,Str,JustCentre,&local_40,R,G,G);
-		Str = GetStr__Fi(0x50e);
+		Str = GetStr__Fi(STR_PLEASE_WAIT_1294);
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 							(&MediumFont,0,DY + iVar1 * 0xd,Str,JustCentre,&local_40,R,G,G);
 		SetOTpos__6Dialogi(&DStack80,local_38);
@@ -993,7 +991,7 @@ void ShowLoadingBox__Fi(int Text)
 	DY = DY / 0xe0;
 	iVar2 = DY + 1;
 	if (bVar1) {
-		Str = GetStr__Fi(0x28a);
+		Str = GetStr__Fi(STR_PLEASE_DO_NOT_REMOVE_MEMORY_CARD_650);
 		DY = GetStrWidth__5CFontPc(&MediumFont,Str);
 		DY = iVar2 + DY / 0xe0;
 	}
@@ -1003,7 +1001,7 @@ void ShowLoadingBox__Fi(int Text)
 	G = (uint)WHITEG;
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,0,DY,Str,JustCentre,&local_40,R,G,G);
 	if (bVar1) {
-		Str = GetStr__Fi(0x28a);
+		Str = GetStr__Fi(STR_PLEASE_DO_NOT_REMOVE_MEMORY_CARD_650);
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 							(&MediumFont,0,DY + iVar2 * 0xd,Str,JustCentre,&local_40,R,G,G);
 	}
@@ -1059,33 +1057,33 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 	undefined4 *puVar18;
 	int iVar19;
 	
-	if (((uint)InvPos < 4) && ((&plr)[pnum].InvBody[0]._itype != -1)) {
-		(&plr)[pnum].InvBody[0]._itype = -1;
+	if (((uint)InvPos < 4) && (plr[pnum].InvBody[0]._itype != -1)) {
+		plr[pnum].InvBody[0]._itype = -1;
 	}
-	if ((InvPos == 4) && ((&plr)[pnum].InvBody[1]._itype != -1)) {
-		(&plr)[pnum].InvBody[1]._itype = -1;
+	if ((InvPos == 4) && (plr[pnum].InvBody[1]._itype != -1)) {
+		plr[pnum].InvBody[1]._itype = -1;
 	}
-	if ((InvPos == 5) && ((&plr)[pnum].InvBody[2]._itype != -1)) {
-		(&plr)[pnum].InvBody[2]._itype = -1;
+	if ((InvPos == 5) && (plr[pnum].InvBody[2]._itype != -1)) {
+		plr[pnum].InvBody[2]._itype = -1;
 	}
-	if ((InvPos == 6) && ((&plr)[pnum].InvBody[3]._itype != -1)) {
-		(&plr)[pnum].InvBody[3]._itype = -1;
+	if ((InvPos == 6) && (plr[pnum].InvBody[3]._itype != -1)) {
+		plr[pnum].InvBody[3]._itype = -1;
 	}
-	if ((InvPos - 7U < 6) && ((&plr)[pnum].InvBody[4]._itype != -1)) {
-		(&plr)[pnum].InvBody[4]._itype = -1;
+	if ((InvPos - 7U < 6) && (plr[pnum].InvBody[4]._itype != -1)) {
+		plr[pnum].InvBody[4]._itype = -1;
 	}
-	if ((InvPos - 0xdU < 6) && ((&plr)[pnum].InvBody[5]._itype != -1)) {
-		(&plr)[pnum].InvBody[5]._itype = -1;
+	if ((InvPos - 0xdU < 6) && (plr[pnum].InvBody[5]._itype != -1)) {
+		plr[pnum].InvBody[5]._itype = -1;
 	}
-	if ((InvPos - 0x13U < 6) && ((&plr)[pnum].InvBody[6]._itype != -1)) {
-		(&plr)[pnum].InvBody[6]._itype = -1;
+	if ((InvPos - 0x13U < 6) && (plr[pnum].InvBody[6]._itype != -1)) {
+		plr[pnum].InvBody[6]._itype = -1;
 	}
 	if ((InvPos - 0x19U < 0x28) &&
 		 (iVar3 = (int)*(char *)(pnum * 0x19e8 + -0x7ff24540 + (InvPos - 0x19U)), iVar3 != 0)) {
 		if (iVar3 < 1) {
 			iVar3 = -iVar3;
 		}
-		pcVar4 = (&plr)[pnum].InvGrid;
+		pcVar4 = plr[pnum].InvGrid;
 		do {
 			if (((int)*pcVar4 == iVar3) || ((int)*pcVar4 == -iVar3)) {
 				*pcVar4 = '\0';
@@ -1095,7 +1093,7 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 		iVar19 = iVar3 + -1;
 		piVar11 = (int *)(iVar19 * 0x6c + pnum * 0x19e8 + -0x7ff25624);
 		piVar13 = piVar11;
-		pIVar2 = &(&plr)[pnum].HoldItem;
+		pIVar2 = &plr[pnum].HoldItem;
 		do {
 			pIVar17 = pIVar2;
 			piVar12 = piVar13;
@@ -1114,8 +1112,8 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 		((ItemStruct *)&pIVar17->_iSeed)->_iVAdd1 = *piVar13;
 		pIVar17->_ivalue = iVar5;
 		pIVar17->_iIvalue = iVar7;
-		(&plr)[pnum]._pNumInv = (&plr)[pnum]._pNumInv + -1;
-		iVar5 = (&plr)[pnum]._pNumInv;
+		plr[pnum]._pNumInv = plr[pnum]._pNumInv + -1;
+		iVar5 = plr[pnum]._pNumInv;
 		if ((0 < iVar5) && (iVar5 != iVar19)) {
 			iVar7 = pnum * 0x19e8 + -0x7ff25624;
 			puVar14 = (undefined4 *)(iVar5 * 0x6c + iVar7);
@@ -1139,12 +1137,12 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 			puVar18[4] = *puVar16;
 			puVar18[5] = uVar6;
 			puVar18[6] = uVar8;
-			pcVar4 = (&plr)[pnum].InvGrid;
+			pcVar4 = plr[pnum].InvGrid;
 			do {
-				if ((int)*pcVar4 == (&plr)[pnum]._pNumInv + 1) {
+				if ((int)*pcVar4 == plr[pnum]._pNumInv + 1) {
 					*pcVar4 = (char)iVar3;
 				}
-				if ((int)*pcVar4 == ~(&plr)[pnum]._pNumInv) {
+				if ((int)*pcVar4 == ~plr[pnum]._pNumInv) {
 					*pcVar4 = -(char)iVar3;
 				}
 				pcVar4 = pcVar4 + 1;
@@ -1153,10 +1151,10 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 	}
 	iVar3 = InvPos + -0x41;
 	if (0x40 < InvPos) {
-		if ((&plr)[pnum].SpdList[iVar3]._itype != -1) {
+		if (plr[pnum].SpdList[iVar3]._itype != -1) {
 			piVar11 = (int *)(iVar3 * 0x6c + pnum * 0x19e8 + -0x7ff24518);
 			piVar13 = piVar11;
-			pIVar2 = &(&plr)[pnum].HoldItem;
+			pIVar2 = &plr[pnum].HoldItem;
 			do {
 				pIVar17 = pIVar2;
 				piVar12 = piVar13;
@@ -1175,7 +1173,7 @@ void KillItemDead__Fiii(int pnum,int InvPos,int Idx)
 			((ItemStruct *)&pIVar17->_iSeed)->_iVAdd1 = *piVar13;
 			pIVar17->_ivalue = iVar19;
 			pIVar17->_iIvalue = iVar5;
-			(&plr)[pnum].SpdList[iVar3]._itype = -1;
+			plr[pnum].SpdList[iVar3]._itype = -1;
 			drawsbarflag = '\x01';
 		}
 	}

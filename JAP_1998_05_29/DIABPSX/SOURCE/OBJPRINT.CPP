@@ -55,8 +55,6 @@
 	/* end block 2 */
 	// End Line: 555
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 DefaultObjPrint__FP12ObjectStructiiP7TextDatiii
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos,int XOffSet,int YOffSet)
@@ -140,8 +138,6 @@ DefaultObjPrint__FP12ObjectStructiiP7TextDatiii
 	/* end block 2 */
 	// End Line: 655
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 LightObjPrint__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -151,9 +147,7 @@ LightObjPrint__FP12ObjectStructiiP7TextDati
 	
 	pPVar1 = DefaultObjPrint__FP12ObjectStructiiP7TextDatiii(OStr,ScrX,ScrY,ObjDat,OtPos,0,0);
 	if ((pPVar1 != (POLY_FT4 *)0x0) && (OStr->_olid != -1)) {
-		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(ScrX + 1,ScrY + -0x1a,'\0','\0',0,0x10,0x40,0,(void *)0x0,OtPos,&DAT_00000001,
-							 (void *)0x0,8);
+		DrawSpinner__FiiUcUcUciiibiT8T8Uc(ScrX + 1,ScrY + -0x1a,'\0','\0',0,0x10,0x40,0,0,OtPos,1,0,8);
 	}
 	return pPVar1;
 }
@@ -180,8 +174,6 @@ LightObjPrint__FP12ObjectStructiiP7TextDati
 		// Start line: 700
 	/* end block 2 */
 	// End Line: 701
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_SARC__FP12ObjectStructiiP7TextDati
@@ -313,8 +305,6 @@ void ResetFlames__Fv(void)
 	/* end block 2 */
 	// End Line: 856
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PrintOBJ_FIRE__Fiii(int ScrX,int ScrY,int OtPos)
 
 {
@@ -405,8 +395,6 @@ void PrintOBJ_FIRE__Fiii(int ScrX,int ScrY,int OtPos)
 		// Start line: 1072
 	/* end block 2 */
 	// End Line: 1073
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 DoorObjPrint__FP12ObjectStructiiP7TextDati
@@ -515,8 +503,6 @@ LAB_8007e18c:
 	/* end block 2 */
 	// End Line: 1330
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DrawLightSpark__Fiii(int xo,int yo,int ot)
 
 {
@@ -534,8 +520,7 @@ void DrawLightSpark__Fiii(int xo,int yo,int ot)
 		local_3c = 0x30;
 		local_34 = 0;
 	}
-	DrawSpinner__FiiUcUcUciiibiT8T8Uc
-						(xo,yo,-1,-0x80,0,local_3c,0x28,local_34,(void *)0x0,ot,(void *)0x0,(void *)0x0,8);
+	DrawSpinner__FiiUcUcUciiibiT8T8Uc(xo,yo,-1,-0x80,0,local_3c,0x28,local_34,0,ot,0,0,8);
 	return;
 }
 
@@ -556,8 +541,6 @@ void DrawLightSpark__Fiii(int xo,int yo,int ot)
 		// Start line: 1367
 	/* end block 2 */
 	// End Line: 1368
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_L1LIGHT__FP12ObjectStructiiP7TextDati
@@ -588,8 +571,6 @@ PrintOBJ_L1LIGHT__FP12ObjectStructiiP7TextDati
 		// Start line: 1427
 	/* end block 2 */
 	// End Line: 1428
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void PrintTorchStick__Fiiii(int x,int y,int f,int OtPos)
 
@@ -623,8 +604,6 @@ void PrintTorchStick__Fiiii(int x,int y,int f,int OtPos)
 	/* end block 2 */
 	// End Line: 1458
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_TORCHL__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -656,8 +635,6 @@ PrintOBJ_TORCHL__FP12ObjectStructiiP7TextDati
 		// Start line: 1505
 	/* end block 2 */
 	// End Line: 1506
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_TORCHR__FP12ObjectStructiiP7TextDati
@@ -691,8 +668,6 @@ PrintOBJ_TORCHR__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 1554
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_TORCHL2__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -725,8 +700,6 @@ PrintOBJ_TORCHL2__FP12ObjectStructiiP7TextDati
 		// Start line: 1614
 	/* end block 2 */
 	// End Line: 1615
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_TORCHR2__FP12ObjectStructiiP7TextDati
@@ -796,8 +769,6 @@ PrintOBJ_TORCHR2__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 1678
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_BARRELEX__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -854,8 +825,6 @@ PrintOBJ_BARRELEX__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 1762
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_SHRINEL__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -867,8 +836,7 @@ PrintOBJ_SHRINEL__FP12ObjectStructiiP7TextDati
 	iVar2 = (int)OStr->_oAnimFrame + -1;
 	if (OStr->_oAnimFlag != '\0') {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(ScrX + -0xc,ScrY + -0x1c,'\0','P',0xf0,iVar2 * 8,0x40,iVar2 * 4,(void *)0x0,OtPos,
-							 &DAT_00000001,(void *)0x0,8);
+							(ScrX + -0xc,ScrY + -0x1c,'\0','P',0xf0,iVar2 * 8,0x40,iVar2 * 4,0,OtPos,1,0,8);
 	}
 	pPVar1 = DefaultObjPrint__FP12ObjectStructiiP7TextDatiii(OStr,ScrX,ScrY,ObjDat,OtPos,0,0);
 	return pPVar1;
@@ -894,8 +862,6 @@ PrintOBJ_SHRINEL__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 1800
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_SHRINER__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -907,8 +873,7 @@ PrintOBJ_SHRINER__FP12ObjectStructiiP7TextDati
 	iVar2 = (int)OStr->_oAnimFrame + -1;
 	if (OStr->_oAnimFlag != '\0') {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(ScrX + 8,ScrY + -0x1d,'\0','P',0xf0,iVar2 * 8,0x40,iVar2 * 4,(void *)0x0,OtPos,
-							 &DAT_00000001,(void *)0x0,8);
+							(ScrX + 8,ScrY + -0x1d,'\0','P',0xf0,iVar2 * 8,0x40,iVar2 * 4,0,OtPos,1,0,8);
 	}
 	pPVar1 = DefaultObjPrint__FP12ObjectStructiiP7TextDatiii(OStr,ScrX,ScrY,ObjDat,OtPos,0,0);
 	return pPVar1;
@@ -931,8 +896,6 @@ PrintOBJ_SHRINER__FP12ObjectStructiiP7TextDati
 		// Start line: 1839
 	/* end block 2 */
 	// End Line: 1840
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_BOOKCANDLE__FP12ObjectStructiiP7TextDati
@@ -985,8 +948,6 @@ PrintOBJ_BOOKCANDLE__FP12ObjectStructiiP7TextDati
 		// Start line: 1863
 	/* end block 2 */
 	// End Line: 1864
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_MCIRCLE1__FP12ObjectStructiiP7TextDati
@@ -1069,8 +1030,6 @@ PrintOBJ_MCIRCLE1__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 1948
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_STORYBOOK__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -1123,8 +1082,6 @@ PrintOBJ_STORYBOOK__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 2043
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_STORYCANDLE__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -1154,8 +1111,6 @@ PrintOBJ_STORYCANDLE__FP12ObjectStructiiP7TextDati
 	/* end block 2 */
 	// End Line: 2067
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 POLY_FT4 *
 PrintOBJ_CANDLE1__FP12ObjectStructiiP7TextDati
 					(ObjectStruct *OStr,int ScrX,int ScrY,TextDat *ObjDat,int OtPos)
@@ -1184,8 +1139,6 @@ PrintOBJ_CANDLE1__FP12ObjectStructiiP7TextDati
 		// Start line: 2088
 	/* end block 2 */
 	// End Line: 2089
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_CANDLE2__FP12ObjectStructiiP7TextDati
@@ -1217,8 +1170,6 @@ PrintOBJ_CANDLE2__FP12ObjectStructiiP7TextDati
 		// Start line: 2114
 	/* end block 2 */
 	// End Line: 2115
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_STAND__FP12ObjectStructiiP7TextDati
@@ -1254,8 +1205,6 @@ PrintOBJ_STAND__FP12ObjectStructiiP7TextDati
 		// Start line: 2144
 	/* end block 2 */
 	// End Line: 2145
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 *
 PrintOBJ_SKFIRE__FP12ObjectStructiiP7TextDati

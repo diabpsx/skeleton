@@ -149,7 +149,7 @@ void InitTownerInfo__FilUciiici(int i,long w,uchar sel,int t,int x,int y,int ao,
 	towner[i]._ttype = t;
 	towner[i]._ty = y;
 	towner[i]._tx = x;
-	(&dung_map)[x * 0x70 + y].dMonster = (short)i + 1;
+	dung_map[x * 0x70 + y].dMonster = (short)i + 1;
 	towner[i]._tAnimOrder = (char)ao;
 	towner[i]._tTenPer = tp;
 	lVar1 = GetRndSeed__Fv();
@@ -204,7 +204,7 @@ void InitQstSnds__Fi(int i)
 	iVar1 = 0;
 	i = i * 0xc4;
 	do {
-		(&towner[0].qsts[0]._qsttype)[i] = (&quests._qtype)[iVar1];
+		(&towner[0].qsts[0]._qsttype)[i] = (&quests[0]._qtype)[iVar1];
 		(&towner[0].qsts[0]._qstmsg)[i] = (uchar)*piVar2;
 		if (*piVar2 == -1) {
 			(&towner[0].qsts[0]._qstmsgact)[i] = '\0';
@@ -825,14 +825,14 @@ void InitCows__Fv(void)
 		towner[iVar1]._tName = 0xd2;
 		tnum = y + (&cowoffy)[iVar3];
 		iVar3 = x + (&cowoffx)[iVar3];
-		if ((&dung_map)[x * 0x70 + tnum].dMonster == 0) {
-			(&dung_map)[x * 0x70 + tnum].dMonster = ~(ushort)iVar1;
+		if (dung_map[x * 0x70 + tnum].dMonster == 0) {
+			dung_map[x * 0x70 + tnum].dMonster = ~(ushort)iVar1;
 		}
-		if ((&dung_map)[iVar3 * 0x70 + y].dMonster == 0) {
-			(&dung_map)[iVar3 * 0x70 + y].dMonster = ~(ushort)numtowners;
+		if (dung_map[iVar3 * 0x70 + y].dMonster == 0) {
+			dung_map[iVar3 * 0x70 + y].dMonster = ~(ushort)numtowners;
 		}
-		if ((&dung_map)[iVar3 * 0x70 + tnum].dMonster == 0) {
-			(&dung_map)[iVar3 * 0x70 + tnum].dMonster = ~(ushort)numtowners;
+		if (dung_map[iVar3 * 0x70 + tnum].dMonster == 0) {
+			dung_map[iVar3 * 0x70 + tnum].dMonster = ~(ushort)numtowners;
 		}
 		iVar4 = iVar4 + 1;
 		numtowners = numtowners + 1;
@@ -867,8 +867,7 @@ void InitTowners__Fv(void)
 	boyloadflag = '\0';
 	InitSmith__Fv();
 	InitHealer__Fv();
-	if ((QuestStruct_ARRAY_800dda90[2]._qactive != '\0') &&
-		 (QuestStruct_ARRAY_800dda90[2]._qactive != '\x03')) {
+	if ((quests[6]._qactive != '\0') && (quests[6]._qactive != '\x03')) {
 		InitTownDead__Fv();
 	}
 	InitBarOwner__Fv();
@@ -1021,8 +1020,8 @@ void TownCtrlMsg__Fi(int i)
 	
 	if (towner[i]._tbtcnt != 0) {
 		iVar1 = towner[i]._tVar1;
-		iVar2 = abs(towner[i]._tx - (int)(&plr)[iVar1]._px);
-		iVar1 = abs(towner[i]._ty - (int)(&plr)[iVar1]._py);
+		iVar2 = abs(towner[i]._tx - (int)plr[iVar1]._px);
+		iVar1 = abs(towner[i]._ty - (int)plr[iVar1]._py);
 		if ((1 < iVar2) || (1 < iVar1)) {
 			towner[i]._tbtcnt = 0;
 		}
@@ -1059,7 +1058,7 @@ void TownBlackSmith__Fv(void)
 	
 	i = GetActiveTowner__Fi(0);
 	TownCtrlMsg__Fi(i);
-	if ((qtextflag == '\0') && (quests._qactive == '\x03')) {
+	if ((qtextflag == '\0') && (quests[0]._qactive == '\x03')) {
 		IsDplayer__Fii(towner[i]._tx,towner[i]._ty + 1);
 	}
 	return;
@@ -1094,8 +1093,7 @@ void TownBarOwner__Fv(void)
 	
 	i = GetActiveTowner__Fi(3);
 	TownCtrlMsg__Fi(i);
-	if (((qtextflag == '\0') && (QuestStruct_ARRAY_800dda90[3]._qactive == '\x03')) &&
-		 (bannerflag != '\0')) {
+	if (((qtextflag == '\0') && (quests[7]._qactive == '\x03')) && (bannerflag != '\0')) {
 		IsDplayer__Fii(towner[i]._tx,towner[i]._ty + 1);
 	}
 	return;
@@ -1131,18 +1129,17 @@ void TownDead__Fv(void)
 	i = GetActiveTowner__Fi(2);
 	TownCtrlMsg__Fi(i);
 	if (qtextflag == '\0') {
-		if ((QuestStruct_ARRAY_800dda90[2]._qactive == '\x02') &&
-			 (QuestStruct_ARRAY_800dda90[2]._qlog == '\0')) {
+		if ((quests[6]._qactive == '\x02') && (quests[6]._qlog == '\0')) {
 			return;
 		}
-		if (QuestStruct_ARRAY_800dda90[2]._qactive == '\x01') {
+		if (quests[6]._qactive == '\x01') {
 			return;
 		}
 		towner[i]._tAnimDelay = 1000;
 		towner[i]._tAnimFrame = 1;
 		towner[i]._tName = 0x3da;
 	}
-	if (QuestStruct_ARRAY_800dda90[2]._qactive != '\x01') {
+	if (quests[6]._qactive != '\x01') {
 		towner[i]._tAnimCnt = 0;
 	}
 	return;
@@ -1518,14 +1515,14 @@ ItemStruct * PlrHasItem__FiiRi(int pnum,int item,int *i)
 	int iVar1;
 	
 	*i = 0;
-	if (0 < (&plr)[pnum]._pNumInv) {
+	if (0 < plr[pnum]._pNumInv) {
 		do {
 			iVar1 = *i;
-			if ((int)(&plr)[pnum].InvList[iVar1].IDidx == item) {
+			if ((int)plr[pnum].InvList[iVar1].IDidx == item) {
 				return (ItemStruct *)(pnum * 0x19e8 + -0x7ff25624 + iVar1 * 0x6c);
 			}
 			*i = iVar1 + 1;
-		} while (iVar1 + 1 < (&plr)[pnum]._pNumInv);
+		} while (iVar1 + 1 < plr[pnum]._pNumInv);
 	}
 	return (ItemStruct *)0x0;
 }
@@ -1570,7 +1567,7 @@ void CowSFX__Fi(int pnum)
 		}
 		else {
 			sgdwCowClicks = 0;
-			PTR_8011b818 = *(int **)((int)(&plr)[pnum]._pClass * 4 + sgnCowMsg * 0xc + -0x7feeed34);
+			PTR_8011b818 = *(int **)((int)plr[pnum]._pClass * 4 + sgnCowMsg * 0xc + -0x7feeed34);
 			sgnCowMsg = sgnCowMsg + 1;
 			iVar1 = pnum * 2;
 			if (2 < sgnCowMsg) {
@@ -1578,7 +1575,7 @@ void CowSFX__Fi(int pnum)
 			}
 		}
 		iVar1 = iVar1 * 0x100 + pnum * 0x13d;
-		PlaySfxLoc__Fiii((int)PTR_8011b818,(int)(&plr._px)[iVar1 * 4],(int)(&plr._py)[iVar1 * 4]);
+		PlaySfxLoc__Fiii((int)PTR_8011b818,(int)(&plr[0]._px)[iVar1 * 4],(int)(&plr[0]._py)[iVar1 * 4]);
 	}
 	return;
 }
@@ -1687,16 +1684,15 @@ void TalkToTowner__Fii(int p,int t)
 	uchar q;
 	int m;
 	int iVar1;
-	uint uVar2;
-	ItemStruct *pIVar3;
+	ItemStruct *pIVar2;
 	_135fake psfx;
 	int local_20 [2];
 	
 	ENG_random__Fl(3);
 	ENG_random__Fl(4);
 	ENG_random__Fl(5);
-	m = abs((int)(&plr)[p]._px - towner[t]._tx);
-	iVar1 = abs((int)(&plr)[p]._py - towner[t]._ty);
+	m = abs((int)plr[p]._px - towner[t]._tx);
+	iVar1 = abs((int)plr[p]._py - towner[t]._ty);
 	if (2 < m) {
 		return;
 	}
@@ -1710,25 +1706,25 @@ void TalkToTowner__Fii(int p,int t)
 		return;
 	}
 	towner[t]._tMsgSaid = '\0';
-	if ((0xb < (&_pcurs)[myplr]) && (uVar2 = FUN_80160c9c(), (uVar2 & 0xff) == 0)) {
+	if ((0xb < (&_pcurs)[myplr]) && (q = DropItemBeforeTrig__Fv(), q == '\0')) {
 		return;
 	}
 	m = GetActiveTowner__Fi(3);
 	if (t == m) {
-		if (((&plr)[p]._pLvlVisited[1] == '\0') && (towner[t]._tMsgSaid == '\0')) {
+		if ((plr[p]._pLvlVisited[1] == '\0') && (towner[t]._tMsgSaid == '\0')) {
 			towner[t]._tbtcnt = 0x96;
 			towner[t]._tVar1 = p;
 			InitQTextMsg__Fi(0x102);
 			towner[t]._tMsgSaid = '\x01';
 		}
-		if ((((&plr)[p]._pLvlVisited[2] != '\0') || ((&plr)[p]._pLvlVisited[4] != '\0')) &&
-			 (QuestStruct_800ddb30._qactive != '\0')) {
-			if ((QuestStruct_800ddb30._qvar2 == '\0') && (towner[t]._tMsgSaid == '\0')) {
-				QuestStruct_800ddb30._qvar2 = '\x01';
-				QuestStruct_800ddb30._qlog = '\x01';
-				if (QuestStruct_800ddb30._qactive == '\x01') {
-					QuestStruct_800ddb30._qactive = '\x02';
-					QuestStruct_800ddb30._qvar1 = '\x01';
+		if (((plr[p]._pLvlVisited[2] != '\0') || (plr[p]._pLvlVisited[4] != '\0')) &&
+			 (quests[12]._qactive != '\0')) {
+			if ((quests[12]._qvar2 == '\0') && (towner[t]._tMsgSaid == '\0')) {
+				quests[12]._qvar2 = '\x01';
+				quests[12]._qlog = '\x01';
+				if (quests[12]._qactive == '\x01') {
+					quests[12]._qactive = '\x02';
+					quests[12]._qvar1 = '\x01';
 				}
 				towner[t]._tbtcnt = 0x96;
 				towner[t]._tVar1 = p;
@@ -1736,10 +1732,10 @@ void TalkToTowner__Fii(int p,int t)
 				towner[t]._tMsgSaid = '\x01';
 				NetSendCmdQuest__FUcUc('\x01','\f');
 			}
-			if (((QuestStruct_800ddb30._qactive == '\x03') && (QuestStruct_800ddb30._qvar2 == '\x01')) &&
+			if (((quests[12]._qactive == '\x03') && (quests[12]._qvar2 == '\x01')) &&
 				 (towner[t]._tMsgSaid == '\0')) {
-				QuestStruct_800ddb30._qvar2 = '\x02';
-				QuestStruct_800ddb30._qvar1 = '\x02';
+				quests[12]._qvar2 = '\x02';
+				quests[12]._qvar1 = '\x02';
 				towner[t]._tbtcnt = 0x96;
 				towner[t]._tVar1 = p;
 				InitQTextMsg__Fi(3);
@@ -1747,28 +1743,28 @@ void TalkToTowner__Fii(int p,int t)
 				NetSendCmdQuest__FUcUc('\x01','\f');
 			}
 		}
-		if ((gbMaxPlayers == '\x01') && ((&plr)[p]._pLvlVisited[3] != '\0')) {
-			if (QuestStruct_ARRAY_800dda90[3]._qactive != '\0') {
-				if ((((uint)QuestStruct_ARRAY_800dda90[3]._qactive - 1 < 2) &&
-						(QuestStruct_ARRAY_800dda90[3]._qvar2 == '\0')) && (towner[t]._tMsgSaid == '\0')) {
-					QuestStruct_ARRAY_800dda90[3]._qvar2 = '\x01';
-					if ((uint)QuestStruct_ARRAY_800dda90[3]._qactive == (uint)gbMaxPlayers) {
-						QuestStruct_ARRAY_800dda90[3]._qvar1 = '\x01';
-						QuestStruct_ARRAY_800dda90[3]._qactive = '\x02';
+		if ((gbMaxPlayers == '\x01') && (plr[p]._pLvlVisited[3] != '\0')) {
+			if (quests[7]._qactive != '\0') {
+				if ((((uint)quests[7]._qactive - 1 < 2) && (quests[7]._qvar2 == '\0')) &&
+					 (towner[t]._tMsgSaid == '\0')) {
+					quests[7]._qvar2 = '\x01';
+					if ((uint)quests[7]._qactive == (uint)gbMaxPlayers) {
+						quests[7]._qvar1 = '\x01';
+						quests[7]._qactive = '\x02';
 					}
-					QuestStruct_ARRAY_800dda90[3]._qlog = '\x01';
+					quests[7]._qlog = '\x01';
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
 					InitQTextMsg__Fi(0xc);
 					towner[t]._tMsgSaid = '\x01';
 					NetSendCmdQuest__FUcUc('\x01','\a');
 				}
-				if (((QuestStruct_ARRAY_800dda90[3]._qvar2 == '\x01') &&
-						(pIVar3 = PlrHasItem__FiiRi(p,0xc,local_20), pIVar3 != (ItemStruct *)0x0)) &&
+				if (((quests[7]._qvar2 == '\x01') &&
+						(pIVar2 = PlrHasItem__FiiRi(p,0xc,local_20), pIVar2 != (ItemStruct *)0x0)) &&
 					 (towner[t]._tMsgSaid == '\0')) {
-					QuestStruct_ARRAY_800dda90[3]._qactive = '\x03';
-					QuestStruct_ARRAY_800dda90[3]._qvar1 = '\x03';
-					FUN_8015d6fc(p,local_20[0]);
+					quests[7]._qactive = '\x03';
+					quests[7]._qvar1 = '\x03';
+					RemoveInvItem__Fii(p,local_20[0]);
 					CreateItem__Fiii(5,towner[t]._tx,towner[t]._ty + 1);
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
@@ -1790,29 +1786,27 @@ void TalkToTowner__Fii(int p,int t)
 	}
 	m = GetActiveTowner__Fi(2);
 	if (t == m) {
-		if ((QuestStruct_ARRAY_800dda90[2]._qactive != '\x02') ||
-			 (QuestStruct_ARRAY_800dda90[2]._qvar1 != '\x01')) {
-			if ((QuestStruct_ARRAY_800dda90[2]._qactive == '\x03') &&
-				 (QuestStruct_ARRAY_800dda90[2]._qvar1 == '\x01')) {
-				QuestStruct_ARRAY_800dda90[2]._qvar1 = '\x01';
+		if ((quests[6]._qactive != '\x02') || (quests[6]._qvar1 != '\x01')) {
+			if ((quests[6]._qactive == '\x03') && (quests[6]._qvar1 == '\x01')) {
+				quests[6]._qvar1 = '\x01';
 				towner[t]._tbtcnt = 0x96;
 				towner[t]._tVar1 = p;
 				towner[t]._tMsgSaid = '\x01';
 				NetSendCmdQuest__FUcUc('\x01','\x06');
 				return;
 			}
-			if (QuestStruct_ARRAY_800dda90[2]._qactive != '\x01') {
-				if (QuestStruct_ARRAY_800dda90[2]._qactive != '\x02') {
+			if (quests[6]._qactive != '\x01') {
+				if (quests[6]._qactive != '\x02') {
 					return;
 				}
-				if (QuestStruct_ARRAY_800dda90[2]._qvar1 != '\0') {
+				if (quests[6]._qvar1 != '\0') {
 					return;
 				}
 			}
-			QuestStruct_ARRAY_800dda90[2]._qactive = '\x02';
-			QuestStruct_ARRAY_800dda90[2]._qmsg = '?';
-			QuestStruct_ARRAY_800dda90[2]._qlog = '\x01';
-			QuestStruct_ARRAY_800dda90[2]._qvar1 = '\x01';
+			quests[6]._qactive = '\x02';
+			quests[6]._qmsg = '?';
+			quests[6]._qlog = '\x01';
+			quests[6]._qvar1 = '\x01';
 			towner[t]._tbtcnt = 0x32;
 			towner[t]._tVar1 = p;
 			towner[t]._tVar2 = 3;
@@ -1823,16 +1817,16 @@ void TalkToTowner__Fii(int p,int t)
 		}
 		towner[t]._tbtcnt = 0x96;
 		towner[t]._tVar1 = p;
-		QuestStruct_ARRAY_800dda90[2]._qvar1 = '\x01';
-		if (((&plr)[p]._pClass == '\0') && (q = effect_is_playing__Fi(0x2d3), q == '\0')) {
+		quests[6]._qvar1 = '\x01';
+		if ((plr[p]._pClass == '\0') && (q = effect_is_playing__Fi(0x2d3), q == '\0')) {
 			psfx = PS_WARR8;
 		}
 		else {
-			if (((&plr)[p]._pClass == '\x01') && (q = effect_is_playing__Fi(0x26b), q == '\0')) {
+			if ((plr[p]._pClass == '\x01') && (q = effect_is_playing__Fi(0x26b), q == '\0')) {
 				psfx = PS_ROGUE8;
 			}
 			else {
-				if (((&plr)[p]._pClass != '\x02') || (q = effect_is_playing__Fi(0x203), q != '\0'))
+				if ((plr[p]._pClass != '\x02') || (q = effect_is_playing__Fi(0x203), q != '\0'))
 				goto LAB_8003c060;
 				psfx = PS_MAGE8;
 			}
@@ -1846,13 +1840,13 @@ LAB_8003c060:
 	m = GetActiveTowner__Fi(0);
 	if (t == m) {
 		if (gbMaxPlayers == '\x01') {
-			if (((&plr)[p]._pLvlVisited[4] != '\0') && (quests._qactive != '\0')) {
-				if (quests._qvar2 == '\0') {
-					quests._qvar2 = '\x01';
-					quests._qlog = '\x01';
-					if (quests._qactive == '\x01') {
-						quests._qactive = '\x02';
-						quests._qvar1 = '\x01';
+			if ((plr[p]._pLvlVisited[4] != '\0') && (quests[0]._qactive != '\0')) {
+				if (quests[0]._qvar2 == '\0') {
+					quests[0]._qvar2 = '\x01';
+					quests[0]._qlog = '\x01';
+					if (quests[0]._qactive == '\x01') {
+						quests[0]._qactive = '\x02';
+						quests[0]._qvar1 = '\x01';
 					}
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
@@ -1860,13 +1854,13 @@ LAB_8003c060:
 					towner[t]._tMsgSaid = '\x01';
 					NetSendCmdQuest__FUcUc('\x01','\0');
 				}
-				if (((quests._qvar2 == '\x01') &&
-						(pIVar3 = PlrHasItem__FiiRi(p,9,local_20), pIVar3 != (ItemStruct *)0x0)) &&
+				if (((quests[0]._qvar2 == '\x01') &&
+						(pIVar2 = PlrHasItem__FiiRi(p,9,local_20), pIVar2 != (ItemStruct *)0x0)) &&
 					 (towner[t]._tMsgSaid == '\0')) {
-					quests._qactive = '\x03';
-					quests._qvar2 = '\x02';
-					quests._qvar1 = '\x02';
-					FUN_8015d6fc(p,local_20[0]);
+					quests[0]._qactive = '\x03';
+					quests[0]._qvar2 = '\x02';
+					quests[0]._qvar1 = '\x02';
+					RemoveInvItem__Fii(p,local_20[0]);
 					CreateItem__Fiii(2,towner[t]._tx,towner[t]._ty + 1);
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
@@ -1875,16 +1869,16 @@ LAB_8003c060:
 					NetSendCmdQuest__FUcUc('\x01','\0');
 				}
 			}
-			if (((&plr)[p]._pLvlVisited[9] != '\0') && (QuestStruct_ARRAY_800dda90[6]._qactive != '\0')) {
-				if ((((uint)QuestStruct_ARRAY_800dda90[6]._qactive - 1 < 2) &&
-						((QuestStruct_ARRAY_800dda90[6]._qvar2 == '\0' && (towner[t]._tMsgSaid == '\0')))) &&
-					 ((quests._qvar2 == '\x02' || ((quests._qactive == '\x02' && (quests._qvar2 == '\x01')))))
-					 ) {
-					QuestStruct_ARRAY_800dda90[6]._qvar2 = '\x01';
-					QuestStruct_ARRAY_800dda90[6]._qlog = '\x01';
-					if (QuestStruct_ARRAY_800dda90[6]._qactive == '\x01') {
-						QuestStruct_ARRAY_800dda90[6]._qactive = '\x02';
-						QuestStruct_ARRAY_800dda90[6]._qvar1 = '\x01';
+			if ((plr[p]._pLvlVisited[9] != '\0') && (quests[10]._qactive != '\0')) {
+				if ((((uint)quests[10]._qactive - 1 < 2) &&
+						((quests[10]._qvar2 == '\0' && (towner[t]._tMsgSaid == '\0')))) &&
+					 ((quests[0]._qvar2 == '\x02' ||
+						((quests[0]._qactive == '\x02' && (quests[0]._qvar2 == '\x01')))))) {
+					quests[10]._qvar2 = '\x01';
+					quests[10]._qlog = '\x01';
+					if (quests[10]._qactive == '\x01') {
+						quests[10]._qactive = '\x02';
+						quests[10]._qvar1 = '\x01';
 					}
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
@@ -1892,13 +1886,13 @@ LAB_8003c060:
 					towner[t]._tMsgSaid = '\x01';
 					NetSendCmdQuest__FUcUc('\x01','\0');
 				}
-				if (((QuestStruct_ARRAY_800dda90[6]._qvar2 == '\x01') &&
-						(pIVar3 = PlrHasItem__FiiRi(p,0x10,local_20), pIVar3 != (ItemStruct *)0x0)) &&
+				if (((quests[10]._qvar2 == '\x01') &&
+						(pIVar2 = PlrHasItem__FiiRi(p,0x10,local_20), pIVar2 != (ItemStruct *)0x0)) &&
 					 (towner[t]._tMsgSaid == '\0')) {
-					QuestStruct_ARRAY_800dda90[6]._qactive = '\x03';
-					QuestStruct_ARRAY_800dda90[6]._qvar2 = '\x02';
-					QuestStruct_ARRAY_800dda90[6]._qvar1 = '\x02';
-					FUN_8015d6fc(p,local_20[0]);
+					quests[10]._qactive = '\x03';
+					quests[10]._qvar2 = '\x02';
+					quests[10]._qvar1 = '\x02';
+					RemoveInvItem__Fii(p,local_20[0]);
 					CreateItem__Fiii(8,towner[t]._tx,towner[t]._ty + 1);
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
@@ -1920,56 +1914,56 @@ LAB_8003c060:
 	}
 	m = GetActiveTowner__Fi(6);
 	if (t == m) {
-		if ((QuestStruct_ARRAY_800dda54[0]._qactive == '\x01') &&
-			 (pIVar3 = PlrHasItem__FiiRi(p,0x13,local_20), pIVar3 != (ItemStruct *)0x0)) {
-			FUN_8015d6fc(p,local_20[0]);
-			QuestStruct_ARRAY_800dda54[0]._qactive = '\x02';
-			QuestStruct_ARRAY_800dda54[0]._qvar1 = '\x02';
-			QuestStruct_ARRAY_800dda54[0]._qlog = '\x01';
+		if ((quests[1]._qactive == '\x01') &&
+			 (pIVar2 = PlrHasItem__FiiRi(p,0x13,local_20), pIVar2 != (ItemStruct *)0x0)) {
+			RemoveInvItem__Fii(p,local_20[0]);
+			quests[1]._qactive = '\x02';
+			quests[1]._qvar1 = '\x02';
+			quests[1]._qlog = '\x01';
 			towner[t]._tbtcnt = 0x96;
 			towner[t]._tVar1 = p;
 			InitQTextMsg__Fi(0x80);
 			towner[t]._tMsgSaid = '\x01';
 		}
 		else {
-			if (QuestStruct_ARRAY_800dda54[0]._qactive != '\x02') goto LAB_8003c898;
-			if ((uint)QuestStruct_ARRAY_800dda54[0]._qvar1 - 2 < 3) {
-				pIVar3 = PlrHasItem__FiiRi(p,0x11,local_20);
-				if (pIVar3 == (ItemStruct *)0x0) {
-					if (QuestStruct_ARRAY_800dda54[0]._qmsg == -0x7f) goto LAB_8003c898;
+			if (quests[1]._qactive != '\x02') goto LAB_8003c898;
+			if ((uint)quests[1]._qvar1 - 2 < 3) {
+				pIVar2 = PlrHasItem__FiiRi(p,0x11,local_20);
+				if (pIVar2 == (ItemStruct *)0x0) {
+					if (quests[1]._qmsg == -0x7f) goto LAB_8003c898;
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
-					QuestStruct_ARRAY_800dda54[0]._qmsg = -0x7f;
+					quests[1]._qmsg = -0x7f;
 					m = 0x81;
 				}
 				else {
-					FUN_8015d6fc(p,local_20[0]);
-					QuestStruct_ARRAY_800dda54[0]._qvar1 = '\x05';
+					RemoveInvItem__Fii(p,local_20[0]);
+					quests[1]._qvar1 = '\x05';
 					DAT_800cfc04 = 0x7b;
 					DAT_800cfd44 = 0xffffffff;
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
-					QuestStruct_ARRAY_800dda54[0]._qmsg = -0x7e;
+					quests[1]._qmsg = -0x7e;
 					m = 0x82;
 				}
 			}
 			else {
-				pIVar3 = PlrHasItem__FiiRi(p,0x14,local_20);
-				if (pIVar3 != (ItemStruct *)0x0) {
+				pIVar2 = PlrHasItem__FiiRi(p,0x14,local_20);
+				if (pIVar2 != (ItemStruct *)0x0) {
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
 					InitQTextMsg__Fi(0x84);
-					QuestStruct_ARRAY_800dda54[0]._qactive = '\x03';
+					quests[1]._qactive = '\x03';
 					towner[t]._tMsgSaid = '\x01';
-					(&AllItemsUseable)[(int)pIVar3->IDidx] = '\x01';
+					(&AllItemsUseable)[(int)pIVar2->IDidx] = '\x01';
 					goto LAB_8003c890;
 				}
-				pIVar3 = PlrHasItem__FiiRi(p,0x12,local_20);
-				if ((pIVar3 == (ItemStruct *)0x0) ||
-					 (m = 0x83, QuestStruct_ARRAY_800dda54[0]._qvar2 == -0x7d)) goto LAB_8003c898;
+				pIVar2 = PlrHasItem__FiiRi(p,0x12,local_20);
+				if ((pIVar2 == (ItemStruct *)0x0) || (m = 0x83, quests[1]._qvar2 == -0x7d))
+				goto LAB_8003c898;
 				towner[t]._tbtcnt = 0x96;
 				towner[t]._tVar1 = p;
-				QuestStruct_ARRAY_800dda54[0]._qvar2 = -0x7d;
+				quests[1]._qvar2 = -0x7d;
 			}
 			InitQTextMsg__Fi(m);
 			towner[t]._tMsgSaid = '\x01';
@@ -2014,24 +2008,23 @@ LAB_8003c898:
 	m = GetActiveTowner__Fi(1);
 	if (t == m) {
 		if (gbMaxPlayers == '\x01') {
-			if ((QuestStruct_ARRAY_800dda54[0]._qactive == '\x02') &&
-				 (QuestStruct_ARRAY_800dda54[0]._qmsg == -0x7e)) {
-				pIVar3 = PlrHasItem__FiiRi(p,0x12,local_20);
-				if (pIVar3 == (ItemStruct *)0x0) goto LAB_8003cb9c;
-				FUN_8015d6fc(p,local_20[0]);
+			if ((quests[1]._qactive == '\x02') && (quests[1]._qmsg == -0x7e)) {
+				pIVar2 = PlrHasItem__FiiRi(p,0x12,local_20);
+				if (pIVar2 == (ItemStruct *)0x0) goto LAB_8003cb9c;
+				RemoveInvItem__Fii(p,local_20[0]);
 				SpawnQuestItem__Fiiiii(0x14,towner[t]._tx,towner[t]._ty + 1,0,0);
 				InitQTextMsg__Fi(0x7c);
-				QuestStruct_ARRAY_800dda54[0]._qvar1 = '\a';
+				quests[1]._qvar1 = '\a';
 				DAT_800cfc04 = 0xffffffff;
 				q = '\x01';
 			}
 			else {
-				if (((&plr)[p]._pLvlVisited[1] == '\0') || (towner[t]._tMsgSaid != '\0')) goto LAB_8003cb9c;
-				if (QuestStruct_800ddb44._qactive == '\x01') {
-					QuestStruct_800ddb44._qactive = '\x02';
-					QuestStruct_800ddb44._qmsg = '\'';
-					QuestStruct_800ddb44._qlog = '\x01';
-					QuestStruct_800ddb44._qvar1 = '\x01';
+				if ((plr[p]._pLvlVisited[1] == '\0') || (towner[t]._tMsgSaid != '\0')) goto LAB_8003cb9c;
+				if (quests[13]._qactive == '\x01') {
+					quests[13]._qactive = '\x02';
+					quests[13]._qmsg = '\'';
+					quests[13]._qlog = '\x01';
+					quests[13]._qvar1 = '\x01';
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
 					InitQTextMsg__Fi(0x27);
@@ -2039,9 +2032,8 @@ LAB_8003c898:
 					q = '\r';
 				}
 				else {
-					if ((QuestStruct_800ddb44._qactive != '\x03') || (QuestStruct_800ddb44._qvar1 == '\x02'))
-					goto LAB_8003cb9c;
-					QuestStruct_800ddb44._qvar1 = '\x02';
+					if ((quests[13]._qactive != '\x03') || (quests[13]._qvar1 == '\x02')) goto LAB_8003cb9c;
+					quests[13]._qvar1 = '\x02';
 					towner[t]._tbtcnt = 0x96;
 					towner[t]._tVar1 = p;
 					InitQTextMsg__Fi(0x29);
@@ -2087,51 +2079,50 @@ LAB_8003cb9c:
 		return;
 	}
 	if (gbMaxPlayers == '\x01') {
-		if ((QuestStruct_800ddb6c._qactive == '\x01') &&
-			 (pIVar3 = PlrHasItem__FiiRi(p,0x21,local_20), pIVar3 != (ItemStruct *)0x0)) {
-			FUN_8015d6fc(p,local_20[0]);
-			QuestStruct_800ddb6c._qvar1 = '\x02';
+		if ((quests[15]._qactive == '\x01') &&
+			 (pIVar2 = PlrHasItem__FiiRi(p,0x21,local_20), pIVar2 != (ItemStruct *)0x0)) {
+			RemoveInvItem__Fii(p,local_20[0]);
+			quests[15]._qvar1 = '\x02';
 			towner[t]._tbtcnt = 0x96;
 			towner[t]._tVar1 = p;
 			InitQTextMsg__Fi(0x17);
 			towner[t]._tMsgSaid = '\x01';
-			QuestStruct_800ddb6c._qactive = '\x02';
-			QuestStruct_800ddb6c._qlog = '\x01';
+			quests[15]._qactive = '\x02';
+			quests[15]._qlog = '\x01';
 LAB_8003cd60:
 			NetSendCmdQuest__FUcUc('\x01','\x0f');
 		}
 		else {
-			if ((QuestStruct_800ddb6c._qactive == '\x03') && (QuestStruct_800ddb6c._qvar1 == '\a')) {
-				QuestStruct_800ddb6c._qvar1 = '\b';
+			if ((quests[15]._qactive == '\x03') && (quests[15]._qvar1 == '\a')) {
+				quests[15]._qvar1 = '\b';
 				towner[t]._tbtcnt = 0x96;
 				towner[t]._tVar1 = p;
 				InitQTextMsg__Fi(0x19);
 				towner[t]._tMsgSaid = '\x01';
-				QuestStruct_ARRAY_800dda90[1]._qlog = '\x01';
+				quests[5]._qlog = '\x01';
 				goto LAB_8003cd60;
 			}
 		}
 		if (gbMaxPlayers == '\x01') goto LAB_8003ce90;
 	}
-	if ((QuestStruct_800ddb6c._qactive == '\x02') && (QuestStruct_800ddb6c._qlog == '\0')) {
+	if ((quests[15]._qactive == '\x02') && (quests[15]._qlog == '\0')) {
 		towner[t]._tbtcnt = 0x96;
 		towner[t]._tVar1 = p;
 		InitQTextMsg__Fi(0x17);
 		towner[t]._tMsgSaid = '\x01';
-		QuestStruct_800ddb6c._qlog = '\x01';
+		quests[15]._qlog = '\x01';
 		q = '\x0f';
 	}
 	else {
-		if ((QuestStruct_800ddb6c._qactive != '\x03') || (QuestStruct_800ddb6c._qvar1 != '\a'))
-		goto LAB_8003ce90;
-		QuestStruct_800ddb6c._qvar1 = '\b';
+		if ((quests[15]._qactive != '\x03') || (quests[15]._qvar1 != '\a')) goto LAB_8003ce90;
+		quests[15]._qvar1 = '\b';
 		towner[t]._tbtcnt = 0x96;
 		towner[t]._tVar1 = p;
 		InitQTextMsg__Fi(0x19);
 		towner[t]._tMsgSaid = '\x01';
 		NetSendCmdQuest__FUcUc('\x01','\x0f');
 		q = '\x05';
-		QuestStruct_ARRAY_800dda90[1]._qlog = '\x01';
+		quests[5]._qlog = '\x01';
 	}
 	NetSendCmdQuest__FUcUc('\x01',q);
 LAB_8003ce90:

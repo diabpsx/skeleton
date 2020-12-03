@@ -73,7 +73,7 @@ void TonysGameTask__FP4TASK(TASK *T)
 {
 	do {
 		if (moo_moo == 1) {
-			SetLightFX__FiisssUcUcUc((int)plr._px,(int)plr._py,0xa00,0xa00,0xa00,0x40,0x40,0x40);
+			SetLightFX__FiisssUcUcUc((int)plr[0]._px,(int)plr[0]._py,0xa00,0xa00,0xa00,0x40,0x40,0x40);
 			moo_moo = 0;
 		}
 		TSK_Sleep(1);
@@ -123,9 +123,9 @@ void SetAmbientLight__Fv(void)
 	restore_b = restore_r;
 	do {
 		iVar7 = 0;
-		puVar4 = &dung_map_r;
-		puVar5 = &dung_map_g;
-		puVar6 = &dung_map_b;
+		puVar4 = dung_map_r;
+		puVar5 = dung_map_g;
+		puVar6 = dung_map_b;
 		do {
 			puVar2 = puVar6 + iVar3;
 			puVar6 = puVar6 + 0x38;
@@ -165,10 +165,10 @@ void SetAmbientLight__Fv(void)
 void SetDemoPlayer__Fv(void)
 
 {
-	plr._pHitPoints = (long)&DAT_00009600;
-	plr._pMaxHP = (long)&DAT_00009600;
-	plr._pMana = (long)&DAT_00004b00;
-	plr._pMaxMana = (long)&DAT_00004b00;
+	plr[0]._pHitPoints = (long)&DAT_00009600;
+	plr[0]._pMaxHP = (long)&DAT_00009600;
+	plr[0]._pMana = (long)&DAT_00004b00;
+	plr[0]._pMaxMana = (long)&DAT_00004b00;
 	return;
 }
 
@@ -248,7 +248,7 @@ void print_demo_task__FP4TASK(TASK *T)
 			SetWalkStyle__Fii(0,old_val);
 			RestoreDemoKeys__FPi(buff);
 			SetSpeed__F9GM_SPEEDS(speedstore);
-			plr._pInvincible = '\0';
+			plr[0]._pInvincible = '\0';
 			return;
 		}
 		if (demo_load != 0) {
@@ -268,10 +268,10 @@ void print_demo_task__FP4TASK(TASK *T)
 				demo_flash = uVar3;
 				if (bVar2 != 0) {
 					demo_flash = uVar3;
-					Str = GetStr__Fi(0xf8);
+					Str = GetStr__Fi(STR_DEMO_248);
 					Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 										(&MediumFont,0xa0,0x28,Str,JustCentre,(RECT *)0x0,R,G,G);
-					Str = GetStr__Fi(0x32e);
+					Str = GetStr__Fi(STR_PRESS_START_TO_CONTINUE_814);
 					X = 0xa0;
 					Y = 0x36;
 LAB_8009b628:
@@ -281,7 +281,7 @@ LAB_8009b628:
 			else {
 				pvVar4 = IsGameLoading__Fv();
 				if (pvVar4 != (void *)0x0) {
-					Str = GetStr__Fi(0xf8);
+					Str = GetStr__Fi(STR_DEMO_248);
 					X = 0x88;
 					Y = 0x28;
 					goto LAB_8009b628;
@@ -289,7 +289,7 @@ LAB_8009b628:
 			}
 		}
 		X = 0x3f;
-		Str = plr._pSplLvl + 0x3f;
+		Str = plr[0]._pSplLvl + 0x3f;
 		do {
 			*Str = 'd';
 			X = X + -1;
@@ -298,20 +298,20 @@ LAB_8009b628:
 		uVar5 = (uint)demo_which;
 		uVar5 = uVar5 - (((uint)((ulonglong)uVar5 * 0xcccccccd >> 0x20) & 0xfffffffc) + uVar5 / 5) &
 						0xff;
-		plr._pRSpell = ZEXT14(demo_level_spell1[uVar5]);
-		plr._pRSplType = '\x01';
-		plr._pTSpell = '\x04';
-		plr._pTSplType = '\0';
+		plr[0]._pRSpell = ZEXT14(demo_level_spell1[uVar5]);
+		plr[0]._pRSplType = '\x01';
+		plr[0]._pTSpell = '\x04';
+		plr[0]._pTSplType = '\0';
 		SetQSpell__Fiii(0,(uint)demo_level_spell2[uVar5],1);
-		plr._pMemSpells._0_4_ = 0xffffffff;
-		plr._pMemSpells._4_4_ = 0xffffffff;
-		plr._pStrength = 100;
-		plr._pBaseStr = 100;
-		plr._pBaseDex = 100;
-		plr._pgfxnum = plr._pgfxnum | demo_level_clothe[uVar5];
-		plr._pLevel = '\x05';
-		plr._pDexterity = ZEXT12(demo_level_dex[uVar5]);
-		plr._pDamageMod = ZEXT14(demo_level_dam[uVar5]);
+		plr[0]._pMemSpells._0_4_ = 0xffffffff;
+		plr[0]._pMemSpells._4_4_ = 0xffffffff;
+		plr[0]._pStrength = 100;
+		plr[0]._pBaseStr = 100;
+		plr[0]._pBaseDex = 100;
+		plr[0]._pgfxnum = plr[0]._pgfxnum | demo_level_clothe[uVar5];
+		plr[0]._pLevel = '\x05';
+		plr[0]._pDexterity = ZEXT12(demo_level_dex[uVar5]);
+		plr[0]._pDamageMod = ZEXT14(demo_level_dam[uVar5]);
 		allspellsflag = &DAT_00000001;
 		TSK_Sleep(1);
 	} while( true );

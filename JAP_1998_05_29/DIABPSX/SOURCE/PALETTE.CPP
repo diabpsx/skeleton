@@ -18,8 +18,6 @@
 	/* end block 2 */
 	// End Line: 179
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void LoadPalette__FPCc(char *pszFileName)
 
 {
@@ -43,8 +41,6 @@ void LoadPalette__FPCc(char *pszFileName)
 		// Start line: 223
 	/* end block 2 */
 	// End Line: 224
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void LoadRndLvlPal__Fi(int l)
 
@@ -97,8 +93,6 @@ void ResetPal__Fv(void)
 		// Start line: 277
 	/* end block 2 */
 	// End Line: 278
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetFadeLevel__Fi(int fadeval)
 
@@ -160,8 +154,6 @@ void * GetFadeState__Fv(void)
 		// Start line: 400
 	/* end block 2 */
 	// End Line: 401
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetPolyXY__FP8POLY_GT4PUc(POLY_GT4 *gt4,uchar *coords)
 
@@ -362,8 +354,6 @@ void BlackPalette__Fv(void)
 	/* end block 2 */
 	// End Line: 719
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PaletteFadeInTask__FP4TASK(TASK *T)
 
 {
@@ -408,8 +398,6 @@ void PaletteFadeInTask__FP4TASK(TASK *T)
 	/* end block 2 */
 	// End Line: 790
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * PaletteFadeIn__Fi(int fr)
 
 {
@@ -451,8 +439,6 @@ void * PaletteFadeIn__Fi(int fr)
 		// Start line: 821
 	/* end block 2 */
 	// End Line: 822
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void PaletteFadeOutTask__FP4TASK(TASK *T)
 
@@ -499,8 +485,6 @@ void PaletteFadeOutTask__FP4TASK(TASK *T)
 		// Start line: 906
 	/* end block 2 */
 	// End Line: 907
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void * PaletteFadeOut__Fi(int fr)
 

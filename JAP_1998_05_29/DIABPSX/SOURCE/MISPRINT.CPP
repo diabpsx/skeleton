@@ -535,8 +535,7 @@ void FuncGUARDIAN__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int 
 LAB_8007c4f4:
 	if ((cVar1 == '\x02') && (Ms->_mimfnum == '\0')) {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(ScrX + -2,ScrY + 2,-0x10,-0x10,0xf0,0x18,0xc0,0x10,&DAT_00000001,OtPos,&DAT_00000001,
-							 (void *)0x0,8);
+							(ScrX + -2,ScrY + 2,-0x10,-0x10,0xf0,0x18,0xc0,0x10,1,OtPos,1,0,8);
 	}
 	TempPrintMissile__FiiiiiiiiccUcUcUcc
 						(ScrX,ScrY,OtPos,3,(int)Ms->_miAnimFrame,0,(int)Ms->_mimfnum,0,0,0,0x80,0x80,0x80,0);
@@ -1108,8 +1107,7 @@ LAB_8007cdf8:
 	pPVar2->b0 = -0x60;
 	pPVar2->code = pPVar2->code & 0xfe | 2;
 	DrawSpinner__FiiUcUcUciiibiT8T8Uc
-						(ScrX,ScrY + -0xc,SpinR,SpinG,SpinB,0x18,0x48,(int)Ms->_miAnimFrame * 3,(void *)0x0,
-						 OtPos,(void *)0x0,(void *)0x0,8);
+						(ScrX,ScrY + -0xc,SpinR,SpinG,SpinB,0x18,0x48,(int)Ms->_miAnimFrame * 3,0,OtPos,0,0,8);
 	return;
 }
 
@@ -1181,7 +1179,7 @@ LAB_8007cf84:
 						(ScrX + (int)sVar2,ScrY + (int)sVar3 + -0xc,SpinR,SpinG,SpinB,
 						 (int)Ms->_miAnimFrame * 4 + 0x18,
 						 0x61 - ((uint)((int)Ms->_miAnimFrame * (0x8000 / (int)Ms->_miAnimLen)) >> 8),
-						 (int)Ms->_miAnimFrame * 3,(void *)0x0,OtPos + -1,&DAT_00000001,(void *)0x0,8);
+						 (int)Ms->_miAnimFrame * 3,0,OtPos + -1,1,0,8);
 	return;
 }
 
@@ -1202,8 +1200,6 @@ LAB_8007cf84:
 		// Start line: 1327
 	/* end block 2 */
 	// End Line: 1328
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncCBOLT__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
@@ -1231,8 +1227,6 @@ void FuncCBOLT__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtP
 		// Start line: 1343
 	/* end block 2 */
 	// End Line: 1344
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncBOOM__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
@@ -1280,8 +1274,6 @@ void FuncBOOM__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPo
 	/* end block 2 */
 	// End Line: 1358
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void FuncELEMENT__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
 {
@@ -1326,8 +1318,6 @@ void FuncELEMENT__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int O
 	/* end block 2 */
 	// End Line: 1393
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void FuncMISEXP__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
 {
@@ -1354,8 +1344,6 @@ void FuncMISEXP__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int Ot
 		// Start line: 1407
 	/* end block 2 */
 	// End Line: 1408
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncRHINO__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
@@ -1402,8 +1390,6 @@ void FuncRHINO__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtP
 	/* end block 2 */
 	// End Line: 1415
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void FuncFLASH__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
 {
@@ -1415,8 +1401,8 @@ void FuncFLASH__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtP
 		PNum = (int)Ms->_misource;
 		this = GetPlayer__7CPlayeri(PNum);
 		iVar1 = GetLastScrX__C7CPlayer(this);
-		ScrX = iVar1 + *(int *)((int)(&plr)[PNum]._pdir * 4 +
-													 (int)(&plr)[PNum]._pClass * 0x20 + -0x7fee730c) + -6;
+		ScrX = iVar1 + *(int *)((int)plr[PNum]._pdir * 4 + (int)plr[PNum]._pClass * 0x20 + -0x7fee730c)
+					 + -6;
 		ScrY = GetLastScrY__C7CPlayer(this);
 		ScrY = ScrY + 2;
 	}
@@ -1427,7 +1413,7 @@ void FuncFLASH__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtP
 	if (0 < iVar1) {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
 							(ScrX,ScrY + -0x24,-0x60,-0x60,0xff,iVar1 + 0x18,(int)Ms->_miAnimFrame * -4 + 0x80,
-							 (int)Ms->_miAnimFrame * 3,(void *)0x0,OtPos + 1,&DAT_00000001,&DAT_00000001,8);
+							 (int)Ms->_miAnimFrame * 3,0,OtPos + 1,1,1,8);
 	}
 	return;
 }
@@ -1449,8 +1435,6 @@ void FuncFLASH__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtP
 		// Start line: 1459
 	/* end block 2 */
 	// End Line: 1460
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncMANASHIELD__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
@@ -1478,8 +1462,6 @@ void FuncMANASHIELD__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,in
 	/* end block 2 */
 	// End Line: 1473
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void FuncFLASH2__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
 {
@@ -1503,8 +1485,6 @@ void FuncFLASH2__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int Ot
 		// Start line: 1479
 	/* end block 2 */
 	// End Line: 1480
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncRESURRECTBEAM__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 
@@ -1530,8 +1510,6 @@ void FuncRESURRECTBEAM__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY
 		// Start line: 1489
 	/* end block 2 */
 	// End Line: 1490
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void FuncWEAPEXP__FP13MissileStructiii(MissileStruct *Ms,int ScrX,int ScrY,int OtPos)
 

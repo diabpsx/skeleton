@@ -63,8 +63,6 @@ void ML_Init__Fv(void)
 	/* end block 2 */
 	// End Line: 171
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int ML_GetList__Fi(int Level)
 
 {
@@ -104,8 +102,6 @@ int ML_GetList__Fi(int Level)
 		// Start line: 218
 	/* end block 2 */
 	// End Line: 219
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int ML_SetRandomList__Fi(int Level)
 
@@ -148,8 +144,6 @@ int ML_SetRandomList__Fi(int Level)
 		// Start line: 278
 	/* end block 2 */
 	// End Line: 279
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int ML_SetList__Fii(int Level,int List)
 
@@ -254,8 +248,6 @@ int ML_SetList__Fii(int Level,int List)
 		// Start line: 343
 	/* end block 2 */
 	// End Line: 344
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int ML_GetPresetMonsters__FiPiUl(int currlevel,int *typelist,ulong QuestsNeededMask)
 

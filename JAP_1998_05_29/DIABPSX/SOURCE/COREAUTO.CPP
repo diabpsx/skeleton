@@ -23,8 +23,6 @@
 	/* end block 2 */
 	// End Line: 317
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ushort GetAutomapType__FiiUc(int x,int y,uchar view)
 
 {
@@ -68,8 +66,6 @@ ushort GetAutomapType__FiiUc(int x,int y,uchar view)
 		// Start line: 484
 	/* end block 2 */
 	// End Line: 485
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetAutomapView__Fii(int x,int y)
 

@@ -27,7 +27,7 @@ void PrintSelectBack__FUs(ushort Str)
 	int Y;
 	
 	if (Str == 0x49e) {
-		Str_00 = GetStr__Fi(0x49e);
+		Str_00 = GetStr__Fi(STR___BACK_____DEFAULT_1182);
 		Y = 0xde;
 	}
 	else {
@@ -129,11 +129,10 @@ void DrawDialogBox__FiiP4RECTiiii(int e,int f,RECT *DRect,int X,int Y,int W,int 
 	// End Line: 1797
 
 /* WARNING: Could not reconcile some variable overlaps */
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DrawSpinner__FiiUcUcUciiibiT8T8Uc
 							 (int x,int y,uchar SpinR,uchar SpinG,int SpinB,int spinradius,int spinbright,
-							 int angle,void *Sparkle,int OtPos,void *cross,void *iso,int SinStep)
+							 int angle,int Sparkle,int OtPos,int cross,int iso,int SinStep)
 
 {
 	short sVar1;
@@ -164,7 +163,7 @@ void DrawSpinner__FiiUcUcUciiibiT8T8Uc
 		OtPos = OtPos + 4;
 	}
 	this = GM_UseTexData__Fi(0);
-	if ((PauseMode == '\0') || (uVar10 = 0x10, Sparkle != (void *)0x0)) {
+	if ((PauseMode == '\0') || (uVar10 = 0x10, Sparkle != 0)) {
 		uVar5 = GU_GetRnd();
 		uVar10 = uVar5 & 0x1f;
 		uVar5 = VID_GetTick__Fv();
@@ -191,7 +190,7 @@ void DrawSpinner__FiiUcUcUciiibiT8T8Uc
 	if (0xff < local_60) {
 		local_60 = 0xff;
 	}
-	if (Sparkle != (void *)0x0) {
+	if (Sparkle != 0) {
 		pPVar6 = PrintFt4__7TextDatiiiiii(this,uVar8 + 0xd0,x,y,0,OtPos,0);
 		pPVar6->r0 = SpinR;
 		pPVar6->g0 = SpinG;
@@ -211,7 +210,7 @@ void DrawSpinner__FiiUcUcUciiibiT8T8Uc
 		pPVar7->v3 = pPVar7->v3 + -1;
 		pPVar7->u3 = pPVar7->u3 + -1;
 		local_88 = (short)y;
-		if (iso == (void *)0x0) {
+		if (iso == 0) {
 			sVar12 = (short)((uint)((int)Circle[angle & 0x3fU] * spinradius) >> 8);
 			sVar1 = Circle[angle + uVar10 & 0x3f];
 			sVar13 = (short)((uint)((int)Circle[angle + iVar9 & 0x3f] * spinradius) >> 8);
@@ -249,7 +248,7 @@ void DrawSpinner__FiiUcUcUciiibiT8T8Uc
 		pPVar7->b3 = '\0';
 		pPVar7->code = pPVar7->code & 0xfe | 2;
 		pPVar7->b1 = (uchar)local_60;
-		if (cross != (void *)0x0) {
+		if (cross != 0) {
 			pPVar7 = PrintGt4__7TextDatiiiiii(this,0xd8,x,y,0,OtPos + 1,0);
 			pPVar7->x0 = sVar2 + sVar12;
 			pPVar7->y0 = local_88 + sVar3;
@@ -430,16 +429,17 @@ void PrintMono__Fi(int ypos)
 
 {
 	char *Str;
-	int StrId;
+	int iVar1;
+	text_strs StrId;
 	
-	StrId = 0x29c;
+	StrId = STR___STEREO_668;
 	if (MONO != (void *)0x0) {
-		StrId = 0x29a;
+		StrId = STR___MONO_666;
 	}
 	Str = GetStr__Fi(StrId);
-	StrId = GetStrWidth__5CFontPc(&MediumFont,Str);
+	iVar1 = GetStrWidth__5CFontPc(&MediumFont,Str);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-						(&MediumFont,MonoX - (StrId >> 1),ypos,Str,JustLeft,&ORect,(uint)WHITER,(uint)WHITEG,
+						(&MediumFont,MonoX - (iVar1 >> 1),ypos,Str,JustLeft,&ORect,(uint)WHITER,(uint)WHITEG,
 						 (uint)WHITEB);
 	return;
 }
@@ -560,7 +560,7 @@ void DrawMenu__Fi(int MenuNo)
 	uint uVar14;
 	TXT_JUST *pTVar15;
 	int local_cc;
-	undefined *local_c8;
+	int local_c8;
 	POLY_G4 *local_b0 [2];
 	int local_a8;
 	OMENULIST *local_98;
@@ -812,29 +812,25 @@ code_r0x800a7c58:
 				}
 				if (local_a8 != 4) {
 					if (AlertTxt == 0) {
-						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											(x,Frm,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,local_78,&DAT_00000001,
-											 (void *)0x0,8);
+						DrawSpinner__FiiUcUcUciiibiT8T8Uc(x,Frm,-0x60,'@',0xf0,0x20,0x40,0,1,local_78,1,0,8);
 						SpinG = '@';
-						local_c8 = &DAT_00000001;
+						local_c8 = 1;
 						local_d8 = 0xf0;
 						local_d4 = 0x20;
 						local_cc = 0;
 					}
 					else {
 						if (FeFlag == '\0') goto LAB_800a7dd0;
-						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											(x,Frm,-0x60,-0x60,0x40,0x10,0x40,8,(void *)0x0,local_78,&DAT_00000001,
-											 (void *)0x0,8);
+						DrawSpinner__FiiUcUcUciiibiT8T8Uc(x,Frm,-0x60,-0x60,0x40,0x10,0x40,8,0,local_78,1,0,8);
 						SpinG = -0x60;
 						local_d8 = 0x40;
 						local_cc = 8;
 						local_d4 = 0x10;
-						local_c8 = (undefined *)0x0;
+						local_c8 = 0;
 					}
 					DrawSpinner__FiiUcUcUciiibiT8T8Uc
-										(x + iVar10,Frm,-0x60,SpinG,local_d8,local_d4,0x40,local_cc,local_c8,local_78,
-										 &DAT_00000001,(void *)0x0,8);
+										(x + iVar10,Frm,-0x60,SpinG,local_d8,local_d4,0x40,local_cc,local_c8,local_78,1,
+										 0,8);
 				}
 				goto LAB_800a7dd0;
 			}
@@ -2569,12 +2565,13 @@ void FormatPad__Fv(void)
 	ushort uVar2;
 	char *Str;
 	CPad *P;
-	int StrId;
+	int iVar3;
+	text_strs StrId;
 	
 	ActivateMemcard__Fii((uint)(current_card == 0),(uint)(current_card == 1));
-	StrId = 0x289;
+	StrId = STR_MEMORY_CARD_SLOT_2_649;
 	if (current_card == 0) {
-		StrId = 0x288;
+		StrId = STR_MEMORY_CARD_SLOT_1_648;
 	}
 	Str = GetStr__Fi(StrId);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
@@ -2627,8 +2624,8 @@ void FormatPad__Fv(void)
 	formatflag = formatflag + 1;
 	if ((2 < formatflag) && (ShowLoadingBox__Fi((&card_side_format)[current_card]), 10 < formatflag))
 	{
-		StrId = FUN_80142ff4(current_card);
-		if (StrId == 0) {
+		iVar3 = FUN_80142ff4(current_card);
+		if (iVar3 == 0) {
 			AlertTxt = 0x507;
 			ActivateMemcard__Fii(1,1);
 			cardondelay = 5;
@@ -2678,13 +2675,13 @@ void SaveOverwritePad__Fv(void)
 	ushort uVar2;
 	CPad *P;
 	char *Str;
-	int StrId;
+	text_strs StrId;
 	
 	P = PAD_GetPad__FiUc(options_pad,'\0');
 	LAMBO_MovePad__FP4CPad(P);
-	StrId = 0x289;
+	StrId = STR_MEMORY_CARD_SLOT_2_649;
 	if (current_card == 0) {
-		StrId = 0x288;
+		StrId = STR_MEMORY_CARD_SLOT_1_648;
 	}
 	Str = GetStr__Fi(StrId);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc

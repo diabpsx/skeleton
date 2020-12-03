@@ -25,10 +25,10 @@ uchar IsDplayer__Fii(int x,int y)
 {
 	uchar uVar1;
 	
-	if (((plr.plractive == '\0') || ((int)plr._px != x)) || ((int)plr._py != y)) {
+	if (((plr[0].plractive == '\0') || ((int)plr[0]._px != x)) || ((int)plr[0]._py != y)) {
 		uVar1 = '\0';
-		if ((PlayerStruct_800dbf20.plractive != '\0') && ((int)PlayerStruct_800dbf20._px == x)) {
-			uVar1 = ((int)PlayerStruct_800dbf20._py == y) << 1;
+		if ((plr[1].plractive != '\0') && ((int)plr[1]._px == x)) {
+			uVar1 = ((int)plr[1]._py == y) << 1;
 		}
 	}
 	else {
@@ -60,7 +60,7 @@ uchar IsDplayer__Fii(int x,int y)
 void * ismyplr__FP12PlayerStruct(PlayerStruct *ptrplr)
 
 {
-	return (void *)(uint)(&plr + myplr == ptrplr);
+	return (void *)(uint)(plr + myplr == ptrplr);
 }
 
 
@@ -86,7 +86,7 @@ void * ismyplr__FP12PlayerStruct(PlayerStruct *ptrplr)
 int plrind__FP12PlayerStruct(PlayerStruct *ptrplr)
 
 {
-	return (uint)(ptrplr != &plr);
+	return (uint)(ptrplr != plr);
 }
 
 
@@ -715,7 +715,7 @@ void AddPlrExperience__FP12PlayerStructil(PlayerStruct *ptrplr,int lvl,long exp)
 	uint uVar7;
 	
 	iVar2 = myplr;
-	myplr = ZEXT14(ptrplr != &plr);
+	myplr = ZEXT14(ptrplr != plr);
 	if (0 < ptrplr->_pHitPoints) {
 		cVar3 = ptrplr->_pLevel;
 		uVar7 = (((lvl - (int)cVar3) * 0x10000) / 10 + 0x10000) * exp;
@@ -950,7 +950,7 @@ LAB_80060ad4:
 	else {
 		if ((FirstTime == '\0') || (currlevel != '\0')) {
 			x = plrind__FP12PlayerStruct(ptrplr);
-			if ((x != 1) || (plr.plractive == '\0')) goto LAB_80060ab4;
+			if ((x != 1) || (plr[0].plractive == '\0')) goto LAB_80060ab4;
 			pnum = plrind__FP12PlayerStruct(ptrplr);
 			x = ViewX + 1;
 			y = ViewY + 1;
@@ -1094,7 +1094,7 @@ void PlrClrTrans__Fii(int x,int y)
 				iVar1 = iVar2 * 0x380 + iVar3 * 8;
 				do {
 					iVar2 = iVar2 + 1;
-					(&TransList)[(int)(&dung_map.dTransVal)[iVar1]] = '\0';
+					(&TransList)[(int)(&dung_map[0].dTransVal)[iVar1]] = '\0';
 					iVar1 = iVar1 + 0x380;
 				} while (iVar2 <= x + 1);
 			}
@@ -1143,8 +1143,8 @@ void PlrDoTrans__Fii(int x,int y)
 				iVar2 = x_00 * 0x380 + y_00 * 8;
 				do {
 					puVar1 = (undefined *)GetSOLID__Fii(x_00,y_00);
-					if ((puVar1 != &DAT_00000001) && ((int)(&dung_map.dTransVal)[iVar2] != 0)) {
-						(&TransList)[(int)(&dung_map.dTransVal)[iVar2]] = '\x01';
+					if ((puVar1 != &DAT_00000001) && ((int)(&dung_map[0].dTransVal)[iVar2] != 0)) {
+						(&TransList)[(int)(&dung_map[0].dTransVal)[iVar2]] = '\x01';
 					}
 					x_00 = x_00 + 1;
 					iVar2 = iVar2 + 0x380;
@@ -1348,7 +1348,7 @@ void StartAttack__FP12PlayerStructi(PlayerStruct *ptrplr,int d)
 	bool bVar2;
 	void *pvVar3;
 	
-	cVar1 = (&dung_map)[(int)ptrplr->_pVar6 * 0x70 + (int)ptrplr->_pVar7].dObject;
+	cVar1 = dung_map[(int)ptrplr->_pVar6 * 0x70 + (int)ptrplr->_pVar7].dObject;
 	bVar2 = false;
 	if (((ptrplr->_pInvincible == '\0') || (ptrplr->_pHitPoints != 0)) ||
 		 (pvVar3 = ismyplr__FP12PlayerStruct(ptrplr), pvVar3 == (void *)0x0)) {
@@ -1610,10 +1610,10 @@ void RespawnDeadItem__FP10ItemStructii(ItemStruct *itm,int x,int y)
 	if (numitems < 0x7f) {
 		i = FindGetItem__FiUsi((int)itm->IDidx,itm->_iCreateInfo,itm->_iSeed);
 		if (-1 < i) {
-			FUN_8015eeb8(x,y,(int)itm->IDidx,(uint)itm->_iCreateInfo,itm->_iSeed);
+			SyncGetItem__FiiiUsi(x,y,(int)itm->IDidx,itm->_iCreateInfo,itm->_iSeed);
 		}
 		i = (int)itemavail;
-		(&dung_map)[x * 0x70 + y].dItem = itemavail + '\x01';
+		dung_map[x * 0x70 + y].dItem = itemavail + '\x01';
 		cVar2 = s__800d53d5[0x7d - numitems];
 		(&itemactive)[numitems] = itemavail;
 		itemavail = cVar2;
@@ -1911,7 +1911,7 @@ void TryDropPlayerItems__FP12PlayerStruct(PlayerStruct *ptrplr)
 			while (iVar3 != -1) {
 				uVar4 = (int)ptrplr->_pdir + iVar3 & 7;
 				PlrDeadItem__FP12PlayerStructP10ItemStructii
-									(ptrplr,itm,(int)(&offset_x)[uVar4],(int)(&offset_y)[uVar4]);
+									(ptrplr,itm,(int)offset_x[uVar4],(int)offset_y[uVar4]);
 				iVar3 = iVar3 + -1;
 				itm = itm + 1;
 			}
@@ -2171,7 +2171,7 @@ void StartPlrKill__FP12PlayerStructi(PlayerStruct *ptrplr,int earflag)
 				iVar2 = (int)*psVar4;
 				if (missile[iVar2]._mitype == '\r') {
 					uVar1 = missile[iVar2]._misource;
-					if (ptrplr != &plr) {
+					if (ptrplr != plr) {
 						uVar1 = uVar1 ^ 1;
 					}
 					if ((uVar1 == 0) && (missile[iVar2]._miDelFlag == '\0')) {
@@ -2261,56 +2261,56 @@ void RemovePlrMissiles__FP12PlayerStruct(PlayerStruct *ptrplr)
 {
 	ushort uVar1;
 	void *pvVar2;
-	int iVar3;
-	int iVar4;
+	int mi;
+	int i;
 	
 	if (((currlevel != '\0') && (pvVar2 = ismyplr__FP12PlayerStruct(ptrplr), pvVar2 != (void *)0x0))
 		 && ((monster[myplr]._mx != '\x01' || (monster[myplr]._my != '\0')))) {
-		FUN_8014c3d8(myplr,myplr);
+		M_StartKill__Fii(myplr,myplr);
 		AddDead__Fiici((int)monster[myplr]._mx,(int)monster[myplr]._my,(monster[myplr].MType)->mdeadval,
 									 (int)monster[myplr]._mdir);
-		iVar4 = myplr;
-		(&dung_map)[(int)monster[myplr]._mx * 0x70 + (int)monster[myplr]._my].dMonster = 0;
-		monster[iVar4]._mDelFlag = '\x01';
-		FUN_801548c0();
+		i = myplr;
+		dung_map[(int)monster[myplr]._mx * 0x70 + (int)monster[myplr]._my].dMonster = 0;
+		monster[i]._mDelFlag = '\x01';
+		DeleteMonsterList__Fv();
 	}
-	iVar4 = 0;
+	i = 0;
 	if (0 < nummissiles) {
-		iVar3 = 0;
+		mi = 0;
 		do {
-			iVar3 = (int)*(short *)((int)&missileactive + iVar3);
-			if (missile[iVar3]._mitype == '\x1e') {
-				uVar1 = missile[iVar3]._misource;
-				if (ptrplr != &plr) {
+			mi = (int)*(short *)((int)&missileactive + mi);
+			if (missile[mi]._mitype == '\x1e') {
+				uVar1 = missile[mi]._misource;
+				if (ptrplr != plr) {
 					uVar1 = uVar1 ^ 1;
 				}
 				if (uVar1 == 0) {
-					monster[(int)missile[iVar3]._miVar2]._mmode = (char)missile[iVar3]._miVar1;
+					monster[(int)missile[mi]._miVar2]._mmode = (char)missile[mi]._miVar1;
 				}
 			}
-			if (missile[iVar3]._mitype == '\r') {
-				uVar1 = missile[iVar3]._misource;
-				if (ptrplr != &plr) {
+			if (missile[mi]._mitype == '\r') {
+				uVar1 = missile[mi]._misource;
+				if (ptrplr != plr) {
 					uVar1 = uVar1 ^ 1;
 				}
 				if (uVar1 == 0) {
-					FUN_8014aac0(iVar3);
-					FUN_8013a8e8(iVar3,iVar4);
+					ClearMissileSpot__Fi(mi);
+					DeleteMissile__Fii(mi,i);
 				}
 			}
-			if (missile[iVar3]._mitype == '\"') {
-				uVar1 = missile[iVar3]._misource;
-				if (ptrplr != &plr) {
+			if (missile[mi]._mitype == '\"') {
+				uVar1 = missile[mi]._misource;
+				if (ptrplr != plr) {
 					uVar1 = uVar1 ^ 1;
 				}
 				if (uVar1 == 0) {
-					FUN_8014aac0(iVar3);
-					FUN_8013a8e8(iVar3,iVar4);
+					ClearMissileSpot__Fi(mi);
+					DeleteMissile__Fii(mi,i);
 				}
 			}
-			iVar4 = iVar4 + 1;
-			iVar3 = iVar4 * 2;
-		} while (iVar4 < nummissiles);
+			i = i + 1;
+			mi = i * 2;
+		} while (i < nummissiles);
 	}
 	return;
 }
@@ -2385,10 +2385,10 @@ void CheckPlrDead__Fi(int pnum)
 {
 	int iVar1;
 	
-	if ((&plr)[pnum]._pmode == PM_DEATH) {
-		iVar1 = (&plr)[pnum]._pAnimLen;
-		(&plr)[pnum].plractive = '\0';
-		(&plr)[pnum]._pAnimFrame = iVar1;
+	if (plr[pnum]._pmode == PM_DEATH) {
+		iVar1 = plr[pnum]._pAnimLen;
+		plr[pnum].plractive = '\0';
+		plr[pnum]._pAnimFrame = iVar1;
 	}
 	return;
 }
@@ -2427,17 +2427,16 @@ void StartNewLvl__FP12PlayerStructii(PlayerStruct *ptrplr,int fom,int lvl)
 		CheckPlrDead__Fi(1);
 		NewPause = PA_SetPauseOk__Fb((void *)0x0);
 		InitGamePadVars__Fv();
-		InitLevelChange__FP12PlayerStruct(&plr);
-		InitLevelChange__FP12PlayerStruct(&PlayerStruct_800dbf20);
+		InitLevelChange__FP12PlayerStruct(plr);
+		InitLevelChange__FP12PlayerStruct(plr + 1);
 		switch(fom) {
 		case 0x45:
 			setlvlnum = (uchar)lvl;
 			break;
 		case 0x48:
-			(&plr)[myplr].pTownWarps =
-					 (&plr)[myplr].pTownWarps | (byte)(1 << ((uint)leveltype - 2 & 0x1f));
-			(&plr)[myplr ^ 1U].pTownWarps =
-					 (&plr)[myplr ^ 1U].pTownWarps | (byte)(1 << ((uint)leveltype - 2 & 0x1f));
+			plr[myplr].pTownWarps = plr[myplr].pTownWarps | (byte)(1 << ((uint)leveltype - 2 & 0x1f));
+			plr[myplr ^ 1U].pTownWarps =
+					 plr[myplr ^ 1U].pTownWarps | (byte)(1 << ((uint)leveltype - 2 & 0x1f));
 		case 0x42:
 		case 0x43:
 		case 0x44:
@@ -2483,8 +2482,8 @@ void RestartTownLvl__FP12PlayerStruct(PlayerStruct *ptrplr)
 	ulong hWnd;
 	void *pvVar1;
 	
-	InitLevelChange__FP12PlayerStruct(&plr);
-	InitLevelChange__FP12PlayerStruct(&PlayerStruct_800dbf20);
+	InitLevelChange__FP12PlayerStruct(plr);
+	InitLevelChange__FP12PlayerStruct(plr + 1);
 	ptrplr->plrlevel = 0;
 	SetPlayerHitPoints__FP12PlayerStructi(ptrplr,0x40);
 	ptrplr->_pMana = 0;
@@ -2533,8 +2532,8 @@ void StartWarpLvl__FP12PlayerStructi(PlayerStruct *ptrplr,int pidx)
 		NewPause = PA_SetPauseOk__Fb((void *)0x0);
 		CheckPlrDead__Fi(0);
 		CheckPlrDead__Fi(1);
-		InitLevelChange__FP12PlayerStruct(&plr);
-		InitLevelChange__FP12PlayerStruct(&PlayerStruct_800dbf20);
+		InitLevelChange__FP12PlayerStruct(plr);
+		InitLevelChange__FP12PlayerStruct(plr + 1);
 		InitGamePadVars__Fv();
 		if (gbMaxPlayers != '\x01') {
 			if (ptrplr->plrlevel == 0) {
@@ -2613,7 +2612,7 @@ uchar ChkPlrOffsets__Fiiii(int wx1,int wy1,int wx2,int wy2)
 	int iVar2;
 	int iVar3;
 	
-	if ((plr._pmode == PM_DEATH) || (PlayerStruct_800dbf20._pmode == PM_DEATH)) {
+	if ((plr[0]._pmode == PM_DEATH) || (plr[1]._pmode == PM_DEATH)) {
 		uVar1 = '\x01';
 	}
 	else {
@@ -2688,10 +2687,9 @@ LAB_80062688:
 		y = 1;
 	}
 	else {
-		if (((plr.plractive == '\0') || (PlayerStruct_800dbf20.plractive == '\0')) ||
-			 (uVar1 = ChkPlrOffsets__Fiiii
-													(plr.WorldX,plr.WorldY,PlayerStruct_800dbf20.WorldX,
-													 PlayerStruct_800dbf20.WorldY), uVar1 != '\0')) {
+		if (((plr[0].plractive == '\0') || (plr[1].plractive == '\0')) ||
+			 (uVar1 = ChkPlrOffsets__Fiiii(plr[0].WorldX,plr[0].WorldY,plr[1].WorldX,plr[1].WorldY),
+			 uVar1 != '\0')) {
 			PM_ChangeOffset__FP12PlayerStruct(ptrplr);
 			ChangeLightXY__Fiii((int)ptrplr->_plid,(int)ptrplr->_px,(int)ptrplr->_py);
 			ChangeVisionXY__Fiii((int)ptrplr->_pvid,(int)ptrplr->_px,(int)ptrplr->_py);
@@ -2851,53 +2849,54 @@ uchar PlrHitMonst__FP12PlayerStructi(PlayerStruct *ptrplr,int m)
 
 {
 	char cVar1;
-	long lVar2;
-	uint uVar3;
+	uchar uVar2;
+	long lVar3;
 	void *pvVar4;
 	int iVar5;
-	int iVar6;
-	int dam;
+	uint uVar6;
 	int iVar7;
+	int dam;
+	int iVar8;
 	uchar local_28 [8];
 	
-	iVar7 = 0;
+	iVar8 = 0;
 	if ((monster[m]._mhitpoints >> 6 < 1) ||
 		 ((((monster[m].MType)->mtype == ' ' && (monster[m]._mgoal == '\x02')) ||
 			(monster[m]._mmode == '\x0e')))) {
 		return '\0';
 	}
-	lVar2 = ENG_random__Fl(100);
+	lVar3 = ENG_random__Fl(100);
 	if (monster[m]._mmode == '\x0f') {
-		lVar2 = 0;
+		lVar3 = 0;
 	}
-	iVar6 = ((int)ptrplr->_pLevel - (((int)monster[m].mArmorClass - ptrplr->_pIEnAc) + -0x32)) +
+	iVar7 = ((int)ptrplr->_pLevel - (((int)monster[m].mArmorClass - ptrplr->_pIEnAc) + -0x32)) +
 					((int)((uint)(ushort)ptrplr->_pDexterity << 0x10) >> 0x11);
 	if (ptrplr->_pClass == '\0') {
-		iVar6 = iVar6 + 0x14;
+		iVar7 = iVar7 + 0x14;
 	}
-	iVar6 = iVar6 + ptrplr->_pIBonusToHit;
-	dam = iVar6;
-	if (iVar6 < 5) {
+	iVar7 = iVar7 + ptrplr->_pIBonusToHit;
+	dam = iVar7;
+	if (iVar7 < 5) {
 		dam = 5;
 	}
-	if (0x5f < iVar6) {
+	if (0x5f < iVar7) {
 		dam = 0x5f;
 	}
-	uVar3 = FUN_8015698c(m,local_28);
-	if ((uVar3 & 0xff) != 0) {
+	uVar2 = CheckMonsterHit__FiRUc(m,local_28);
+	if (uVar2 != '\0') {
 		return local_28[0];
 	}
-	if (dam <= lVar2) {
+	if (dam <= lVar3) {
 		return '\0';
 	}
-	iVar6 = ptrplr->_pIMinDam;
-	lVar2 = ENG_random__Fl((ptrplr->_pIMaxDam - iVar6) + 1);
-	iVar6 = lVar2 + iVar6;
-	iVar6 = iVar6 + (iVar6 * ptrplr->_pIBonusDam) / 100 + ptrplr->_pIBonusDamMod + ptrplr->_pDamageMod
+	iVar7 = ptrplr->_pIMinDam;
+	lVar3 = ENG_random__Fl((ptrplr->_pIMaxDam - iVar7) + 1);
+	iVar7 = lVar3 + iVar7;
+	iVar7 = iVar7 + (iVar7 * ptrplr->_pIBonusDam) / 100 + ptrplr->_pIBonusDamMod + ptrplr->_pDamageMod
 	;
 	if ((ptrplr->_pClass == '\0') &&
-		 (cVar1 = ptrplr->_pLevel, lVar2 = ENG_random__Fl(100), lVar2 < (int)cVar1)) {
-		iVar6 = iVar6 * 2;
+		 (cVar1 = ptrplr->_pLevel, lVar3 = ENG_random__Fl(100), lVar3 < (int)cVar1)) {
+		iVar7 = iVar7 * 2;
 	}
 	dam = -1;
 	if ((ptrplr->InvBody[4]._itype == 1) || (ptrplr->InvBody[5]._itype == 1)) {
@@ -2909,84 +2908,84 @@ uchar PlrHitMonst__FP12PlayerStructi(PlayerStruct *ptrplr,int m)
 	cVar1 = (monster[m].MData)->mMonstClass;
 	if (cVar1 == '\0') {
 		if (dam == 1) {
-			iVar6 = iVar6 - (iVar6 >> 1);
+			iVar7 = iVar7 - (iVar7 >> 1);
 		}
 		iVar5 = 4;
 LAB_80062c98:
 		if (dam == iVar5) {
-			iVar6 = iVar6 + (iVar6 >> 1);
+			iVar7 = iVar7 + (iVar7 >> 1);
 		}
 	}
 	else {
 		if (cVar1 == '\x02') {
 			iVar5 = 1;
 			if (dam == 4) {
-				iVar6 = iVar6 - (iVar6 >> 1);
+				iVar7 = iVar7 - (iVar7 >> 1);
 				iVar5 = 1;
 			}
 			goto LAB_80062c98;
 		}
 	}
 	if (((ptrplr->_pIFlags & 0x40000000U) != 0) && ((monster[m].MData)->mMonstClass == '\x01')) {
-		iVar6 = iVar6 * 3;
+		iVar7 = iVar7 * 3;
 	}
-	dam = iVar6 * 0x40;
+	dam = iVar7 * 0x40;
 	pvVar4 = ismyplr__FP12PlayerStruct(ptrplr);
 	if (pvVar4 != (void *)0x0) {
-		monster[m]._mhitpoints = monster[m]._mhitpoints + iVar6 * -0x40;
+		monster[m]._mhitpoints = monster[m]._mhitpoints + iVar7 * -0x40;
 	}
 	if ((ptrplr->_pIFlags & 2U) != 0) {
-		iVar7 = ENG_random__Fl(dam >> 3);
-		iVar5 = ptrplr->_pHitPoints + iVar7;
+		iVar8 = ENG_random__Fl(dam >> 3);
+		iVar5 = ptrplr->_pHitPoints + iVar8;
 		ptrplr->_pHitPoints = iVar5;
 		if (ptrplr->_pMaxHP < iVar5) {
 			ptrplr->_pHitPoints = ptrplr->_pMaxHP;
 		}
-		iVar5 = ptrplr->_pHPBase + iVar7;
+		iVar5 = ptrplr->_pHPBase + iVar8;
 		ptrplr->_pHPBase = iVar5;
 		if (ptrplr->_pMaxHPBase < iVar5) {
 			ptrplr->_pHPBase = ptrplr->_pMaxHPBase;
 		}
 		drawhpflag = '\x01';
 	}
-	uVar3 = ptrplr->_pIFlags;
-	if ((uVar3 & 0x6000) != 0) {
-		if ((uVar3 & 0x8000000) != 0) goto LAB_80062e58;
-		if ((uVar3 & 0x2000) != 0) {
-			iVar7 = (iVar6 * 0xc0) / 100;
+	uVar6 = ptrplr->_pIFlags;
+	if ((uVar6 & 0x6000) != 0) {
+		if ((uVar6 & 0x8000000) != 0) goto LAB_80062e58;
+		if ((uVar6 & 0x2000) != 0) {
+			iVar8 = (iVar7 * 0xc0) / 100;
 		}
-		if ((uVar3 & 0x4000) != 0) {
-			iVar7 = dam / 0x14;
+		if ((uVar6 & 0x4000) != 0) {
+			iVar8 = dam / 0x14;
 		}
-		iVar5 = ptrplr->_pMana + iVar7;
+		iVar5 = ptrplr->_pMana + iVar8;
 		ptrplr->_pMana = iVar5;
 		if (ptrplr->_pMaxMana < iVar5) {
 			ptrplr->_pMana = ptrplr->_pMaxMana;
 		}
-		iVar5 = ptrplr->_pManaBase + iVar7;
+		iVar5 = ptrplr->_pManaBase + iVar8;
 		ptrplr->_pManaBase = iVar5;
 		if (ptrplr->_pMaxManaBase < iVar5) {
 			ptrplr->_pManaBase = ptrplr->_pMaxManaBase;
 		}
 		drawmanaflag = '\x01';
 	}
-	uVar3 = ptrplr->_pIFlags;
+	uVar6 = ptrplr->_pIFlags;
 LAB_80062e58:
-	if ((uVar3 & 0x18000) != 0) {
-		if ((uVar3 & 0x8000) != 0) {
-			iVar7 = (iVar6 * 0xc0) / 100;
+	if ((uVar6 & 0x18000) != 0) {
+		if ((uVar6 & 0x8000) != 0) {
+			iVar8 = (iVar7 * 0xc0) / 100;
 		}
-		if ((uVar3 & 0x10000) != 0) {
-			iVar7 = dam / 0x14;
+		if ((uVar6 & 0x10000) != 0) {
+			iVar8 = dam / 0x14;
 		}
-		iVar6 = ptrplr->_pHitPoints + iVar7;
-		ptrplr->_pHitPoints = iVar6;
-		if (ptrplr->_pMaxHP < iVar6) {
+		iVar7 = ptrplr->_pHitPoints + iVar8;
+		ptrplr->_pHitPoints = iVar7;
+		if (ptrplr->_pMaxHP < iVar7) {
 			ptrplr->_pHitPoints = ptrplr->_pMaxHP;
 		}
-		iVar7 = ptrplr->_pHPBase + iVar7;
-		ptrplr->_pHPBase = iVar7;
-		if (ptrplr->_pMaxHPBase < iVar7) {
+		iVar8 = ptrplr->_pHPBase + iVar8;
+		ptrplr->_pHPBase = iVar8;
+		if (ptrplr->_pMaxHPBase < iVar8) {
 			ptrplr->_pHPBase = ptrplr->_pMaxHPBase;
 		}
 		drawhpflag = '\x01';
@@ -3004,7 +3003,7 @@ LAB_80062e58:
 	else {
 		if (monster[m]._mmode != '\x0f') {
 			if ((ptrplr->_pIFlags & 0x800U) != 0) {
-				FUN_8014b0bc(m,(int)ptrplr->_pdir);
+				M_GetKnockback__Fii(m,(int)ptrplr->_pdir);
 			}
 			M_StartHit__FiP12PlayerStructi(m,ptrplr,dam);
 			return '\x01';
@@ -3062,15 +3061,15 @@ uchar PlrHitPlr__FP12PlayerStructc(PlayerStruct *ptrplr,char p)
 	
 	iVar6 = (int)p;
 	dir = plrind__FP12PlayerStruct(ptrplr);
-	if (((iVar6 == dir) || ((&plr)[iVar6]._pInvincible != '\0')) ||
-		 (((&plr)[iVar6]._pSpellFlags & 1U) != 0)) {
+	if (((iVar6 == dir) || (plr[iVar6]._pInvincible != '\0')) || ((plr[iVar6]._pSpellFlags & 1U) != 0)
+		 ) {
 		return '\0';
 	}
 	lVar2 = ENG_random__Fl(100);
-	iVar4 = (uint)(ushort)(&plr)[iVar6]._pDexterity << 0x10;
+	iVar4 = (uint)(ushort)plr[iVar6]._pDexterity << 0x10;
 	dir = iVar4 >> 0x10;
 	dir = ((int)ptrplr->_pLevel -
-				((&plr)[iVar6]._pIAC + (&plr)[iVar6]._pIBonusAC +
+				(plr[iVar6]._pIAC + plr[iVar6]._pIBonusAC +
 				 (((dir / 5 + (dir >> 0x1f)) - (iVar4 >> 0x1f)) * 0x10000 >> 0x10) + -0x32)) +
 				((int)((uint)(ushort)ptrplr->_pDexterity << 0x10) >> 0x11);
 	if (ptrplr->_pClass == '\0') {
@@ -3084,13 +3083,13 @@ uchar PlrHitPlr__FP12PlayerStructc(PlayerStruct *ptrplr,char p)
 	if (0x5f < dir) {
 		iVar4 = 0x5f;
 	}
-	if ((((&plr)[iVar6]._pmode == PM_STAND) || (lVar5 = 100, (&plr)[iVar6]._pmode == PM_ATTACK)) &&
-		 (lVar5 = 100, (&plr)[iVar6]._pBlockFlag != '\0')) {
+	if (((plr[iVar6]._pmode == PM_STAND) || (lVar5 = 100, plr[iVar6]._pmode == PM_ATTACK)) &&
+		 (lVar5 = 100, plr[iVar6]._pBlockFlag != '\0')) {
 		lVar5 = ENG_random__Fl(100);
 	}
 	pnum = (int)p;
-	iVar6 = (&plr)[pnum]._pBaseToBlk + (int)(&plr)[pnum]._pDexterity +
-					((int)ptrplr->_pLevel - (int)(&plr)[pnum]._pLevel) * -2;
+	iVar6 = plr[pnum]._pBaseToBlk + (int)plr[pnum]._pDexterity +
+					((int)ptrplr->_pLevel - (int)plr[pnum]._pLevel) * -2;
 	dir = iVar6;
 	if (iVar6 < 0) {
 		dir = 0;
@@ -3132,8 +3131,8 @@ uchar PlrHitPlr__FP12PlayerStructc(PlayerStruct *ptrplr,char p)
 		StartPlrHit__FiiUc((int)p,dwDam,'\0');
 		return '\x01';
 	}
-	dir = GetDirection__Fiiii((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)ptrplr->_px,
-														(int)ptrplr->_py);
+	dir = GetDirection__Fiiii((int)plr[pnum]._px,(int)plr[pnum]._py,(int)ptrplr->_px,(int)ptrplr->_py)
+	;
 	StartPlrBlock__Fii(pnum,dir);
 	return '\x01';
 }
@@ -3167,7 +3166,7 @@ uchar PlrHitObj__FP12PlayerStructii(PlayerStruct *ptrplr,int mx,int my)
 	uint uVar2;
 	uint val;
 	
-	uVar2 = SEXT14((&dung_map)[mx * 0x70 + my].dObject);
+	uVar2 = SEXT14(dung_map[mx * 0x70 + my].dObject);
 	val = uVar2 - 1;
 	if ((int)uVar2 < 1) {
 		val = ~uVar2;
@@ -3215,10 +3214,10 @@ int PM_DoAttack__FP12PlayerStruct(PlayerStruct *ptrplr)
 	int psfx;
 	uint uVar3;
 	uint m;
-	int y;
+	int sy;
 	
 	psfx = ptrplr->_pAnimFrame;
-	uVar1 = '\0';
+	uVar2 = '\0';
 	if (((ptrplr->_pIFlags & 0x20000U) != 0) && (psfx == 1)) {
 		ptrplr->_pAnimFrame = 2;
 	}
@@ -3241,45 +3240,45 @@ int PM_DoAttack__FP12PlayerStruct(PlayerStruct *ptrplr)
 		psfx = ptrplr->_pAnimFrame;
 	}
 	if (psfx == ptrplr->_pAFNum) {
-		y = (int)ptrplr->_pVar7;
+		sy = (int)ptrplr->_pVar7;
 		psfx = (int)ptrplr->_pVar6;
-		uVar3 = SEXT24((&dung_map)[psfx * 0x70 + y].dMonster);
+		uVar3 = SEXT24(dung_map[psfx * 0x70 + sy].dMonster);
 		if (uVar3 != 0) {
 			m = uVar3 - 1;
 			if ((int)uVar3 < 1) {
 				m = ~uVar3;
 			}
-			uVar3 = FUN_8015694c(m);
-			if ((uVar3 & 0xff) != 0) {
+			uVar1 = CanTalkToMonst__Fi(m);
+			if (uVar1 != '\0') {
 				ptrplr->_pVar1 = 0;
 				return 0;
 			}
 		}
 		if ((ptrplr->_pIFlags & 0x10U) != 0) {
-			FUN_80142a04(psfx,y,1,0,0,0x40,0,(uint)(ptrplr != &plr),0,0);
+			AddMissile__Fiiiiiiciii(psfx,sy,1,0,0,0x40,0,(uint)(ptrplr != plr),0,0);
 		}
 		if ((ptrplr->_pIFlags & 0x20U) != 0) {
-			FUN_80142a04(psfx,y,2,0,0,0x40,0,(uint)(ptrplr != &plr),0,0);
+			AddMissile__Fiiiiiiciii(psfx,sy,2,0,0,0x40,0,(uint)(ptrplr != plr),0,0);
 		}
-		uVar3 = SEXT24((&dung_map)[psfx * 0x70 + y].dMonster);
+		uVar3 = SEXT24(dung_map[psfx * 0x70 + sy].dMonster);
 		if (uVar3 == 0) {
-			uVar2 = IsDplayer__Fii(psfx,y);
-			if ((uVar2 == '\0') || (FriendlyMode != '\0')) {
-				if ('\0' < (&dung_map)[psfx * 0x70 + y].dObject) {
-					uVar1 = PlrHitObj__FP12PlayerStructii(ptrplr,psfx,y);
+			uVar1 = IsDplayer__Fii(psfx,sy);
+			if ((uVar1 == '\0') || (FriendlyMode != '\0')) {
+				if ('\0' < dung_map[psfx * 0x70 + sy].dObject) {
+					uVar2 = PlrHitObj__FP12PlayerStructii(ptrplr,psfx,sy);
 				}
 			}
 			else {
-				uVar1 = IsDplayer__Fii(psfx,y);
-				if (uVar1 == '\0') {
-					p = IsDplayer__Fii(psfx,y);
+				uVar2 = IsDplayer__Fii(psfx,sy);
+				if (uVar2 == '\0') {
+					p = IsDplayer__Fii(psfx,sy);
 					p = ~p;
 				}
 				else {
-					uVar1 = IsDplayer__Fii(psfx,y);
-					p = uVar1 - 1;
+					uVar2 = IsDplayer__Fii(psfx,sy);
+					p = uVar2 - 1;
 				}
-				uVar1 = PlrHitPlr__FP12PlayerStructc(ptrplr,p);
+				uVar2 = PlrHitPlr__FP12PlayerStructc(ptrplr,p);
 			}
 		}
 		else {
@@ -3287,9 +3286,9 @@ int PM_DoAttack__FP12PlayerStruct(PlayerStruct *ptrplr)
 			if ((int)uVar3 < 1) {
 				m = ~uVar3;
 			}
-			uVar1 = PlrHitMonst__FP12PlayerStructi(ptrplr,m);
+			uVar2 = PlrHitMonst__FP12PlayerStructi(ptrplr,m);
 		}
-		if ((uVar1 != '\0') && (uVar1 = WeaponDur__FP12PlayerStructi(ptrplr,0x1e), uVar1 != '\0'))
+		if ((uVar2 != '\0') && (uVar2 = WeaponDur__FP12PlayerStructi(ptrplr,0x1e), uVar2 != '\0'))
 		goto LAB_800637cc;
 	}
 	if (ptrplr->_pAnimFrame != ptrplr->_pAFrames) {
@@ -3327,15 +3326,16 @@ int PM_DoRangeAttack__FP12PlayerStruct(PlayerStruct *ptrplr)
 
 {
 	uchar uVar1;
-	uint uVar2;
+	uint mitype;
 	
 	if (ptrplr->_pAnimFrame == ptrplr->_pAFNum) {
-		uVar2 = -(uint)((ptrplr->_pIFlags & 8U) != 0) & 0x1b;
+		mitype = -(uint)((ptrplr->_pIFlags & 8U) != 0) & 0x1b;
 		if ((ptrplr->_pIFlags & 0x2000000U) != 0) {
-			uVar2 = 0x38;
+			mitype = 0x38;
 		}
-		FUN_80142a04((int)ptrplr->_px,(int)ptrplr->_py,(int)ptrplr->_pVar1,(int)ptrplr->_pVar2,
-								 (int)ptrplr->_pdir,uVar2,0,(uint)(ptrplr != &plr),4,0);
+		AddMissile__Fiiiiiiciii
+							((int)ptrplr->_px,(int)ptrplr->_py,(int)ptrplr->_pVar1,(int)ptrplr->_pVar2,
+							 (int)ptrplr->_pdir,mitype,0,(uint)(ptrplr != plr),4,0);
 		PlaySfxLoc__Fiii(4,(int)ptrplr->_px,(int)ptrplr->_py);
 		uVar1 = WeaponDur__FP12PlayerStructi(ptrplr,0x28);
 		if (uVar1 != '\0') goto LAB_800638d8;
@@ -3489,7 +3489,7 @@ void do_spell_anim__FiiiP12PlayerStruct(int aframe,int spell,int clss,PlayerStru
 	POLY_FT4 *local_30;
 	POLY_FT4 *local_2c;
 	
-	this = GetPlayer__7CPlayeri((uint)(ptrplr != &plr));
+	this = GetPlayer__7CPlayeri((uint)(ptrplr != plr));
 	iVar1 = GetLastOtPos__C7CPlayer(this);
 	X = GetLastScrX__C7CPlayer(this);
 	iVar2 = GetLastScrY__C7CPlayer(this);
@@ -3638,10 +3638,10 @@ int PM_DoSpell__FP12PlayerStruct(PlayerStruct *ptrplr)
 		else {
 			if (aframe == ptrplr->_pSFNum) {
 				if (ptrplr->_pSpell == '\x18') {
-					ApocaStart__Fi((uint)(ptrplr != &plr));
+					ApocaStart__Fi((uint)(ptrplr != plr));
 				}
 				CastSpell__Fiiiiiiii
-									((uint)(ptrplr != &plr),(int)ptrplr->_pSpell,(int)ptrplr->_px,(int)ptrplr->_py,
+									((uint)(ptrplr != plr),(int)ptrplr->_pSpell,(int)ptrplr->_px,(int)ptrplr->_py,
 									 (int)ptrplr->_pVar1,(int)ptrplr->_pVar2,0,(int)ptrplr->_pVar4);
 				if (ptrplr->_pSplFrom == '\0') {
 					cVar5 = ptrplr->_pRSplType;
@@ -3718,7 +3718,7 @@ int PM_DoSpell__FP12PlayerStruct(PlayerStruct *ptrplr)
 			}
 			if (bVar1) {
 				aframe = 6;
-				if (ptrplr != &plr) {
+				if (ptrplr != plr) {
 					aframe = 7;
 				}
 				PostGamePad__Fiiii(aframe,0,0,0);
@@ -3737,7 +3737,7 @@ int PM_DoSpell__FP12PlayerStruct(PlayerStruct *ptrplr)
 			}
 			if (bVar1) {
 				aframe = 6;
-				if (ptrplr != &plr) {
+				if (ptrplr != plr) {
 					aframe = 7;
 				}
 				PostGamePad__Fiiii(aframe,0,0,0);
@@ -4127,7 +4127,7 @@ LAB_800648e0:
 			else {
 				if ((((currlevel != '\x0f') || (setlevel == '\0')) && (monster[d].mtalkmsg != 0)) &&
 					 (monster[d].mtalkmsg != 0x24)) {
-					FUN_801565dc(d);
+					TalktoMonster__Fi(d);
 					options_pad = plrind__FP12PlayerStruct(ptrplr);
 				}
 			}
@@ -4151,11 +4151,10 @@ LAB_800648e0:
 		goto LAB_8006489c;
 	case 0x10:
 		cy = (int)ptrplr->destParam1;
-		d = GetDirection__Fiiii((int)ptrplr->_px,(int)ptrplr->_py,(int)(&plr)[cy]._px,
-														(int)(&plr)[cy]._py);
+		d = GetDirection__Fiiii((int)ptrplr->_px,(int)ptrplr->_py,(int)plr[cy]._px,(int)plr[cy]._py);
 		pnum = plrind__FP12PlayerStruct(ptrplr);
-		cx = (int)(&plr)[cy]._px;
-		cy = (int)(&plr)[cy]._py;
+		cx = (int)plr[cy]._px;
+		cy = (int)plr[cy]._py;
 LAB_8006489c:
 		StartSpell__Fiiii(pnum,d,cx,cy);
 		bVar1 = ptrplr->destParam2;
@@ -4163,7 +4162,7 @@ LAB_800648b0:
 		ptrplr->_pVar4 = (short)((int)((uint)bVar1 << 0x18) >> 0x18);
 		break;
 	case 0x11:
-		StartSpell__Fiiii((uint)(ptrplr != &plr),(int)ptrplr->destParam3,(int)ptrplr->destParam1,
+		StartSpell__Fiiii((uint)(ptrplr != plr),(int)ptrplr->destParam3,(int)ptrplr->destParam1,
 											(int)ptrplr->destParam2);
 		ptrplr->_pVar3 = (short)ptrplr->destParam3;
 		ptrplr->_pVar4 = (short)ptrplr->destParam4;
@@ -4200,7 +4199,7 @@ uchar PlrDeathModeOK__Fi(int p)
 	
 	bVar1 = true;
 	if (p == myplr) {
-		PVar2 = (&plr)[p]._pmode;
+		PVar2 = plr[p]._pmode;
 		if ((PVar2 == PM_DEATH) || (PVar2 == PM_QUIT)) {
 			bVar1 = true;
 		}
@@ -4252,45 +4251,45 @@ void ValidatePlayer__Fv(void)
 	
 	uVar8 = 0;
 	uVar9 = 0;
-	if ('2' < (&plr)[myplr]._pLevel) {
-		(&plr)[myplr]._pLevel = '2';
+	if ('2' < plr[myplr]._pLevel) {
+		plr[myplr]._pLevel = '2';
 	}
-	if ((&plr)[myplr]._pNextExper < (&plr)[myplr]._pExperience) {
-		(&plr)[myplr]._pExperience = (&plr)[myplr]._pNextExper;
+	if (plr[myplr]._pNextExper < plr[myplr]._pExperience) {
+		plr[myplr]._pExperience = plr[myplr]._pNextExper;
 	}
 	iVar7 = 0;
 	iVar3 = myplr * 0x19e8;
 	iVar4 = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar5 = 0;
 		do {
-			if (*(short *)((int)&(&plr)[myplr].InvList[0]._itype + iVar5) == 0xb) {
+			if (*(short *)((int)&plr[myplr].InvList[0]._itype + iVar5) == 0xb) {
 				if ((goldcheat == (void *)0x0) &&
-					 (5000 < *(int *)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar5))) {
-					*(undefined4 *)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar5) = 5000;
+					 (5000 < *(int *)((int)&plr[myplr].InvList[0]._ivalue + iVar5))) {
+					*(undefined4 *)((int)&plr[myplr].InvList[0]._ivalue + iVar5) = 5000;
 				}
-				iVar7 = iVar7 + *(int *)((int)&plr.InvList[0]._ivalue + iVar3);
+				iVar7 = iVar7 + *(int *)((int)&plr[0].InvList[0]._ivalue + iVar3);
 			}
 			iVar3 = iVar3 + 0x6c;
 			iVar4 = iVar4 + 1;
 			iVar5 = iVar5 + 0x6c;
-		} while (iVar4 < (&plr)[myplr]._pNumInv);
+		} while (iVar4 < plr[myplr]._pNumInv);
 	}
-	if (iVar7 != (&plr)[myplr]._pGold) {
-		(&plr)[myplr]._pGold = iVar7;
+	if (iVar7 != plr[myplr]._pGold) {
+		plr[myplr]._pGold = iVar7;
 	}
-	iVar3 = (int)(&plr)[myplr]._pClass;
-	if ((&MaxStats)[iVar3 * 4] < (int)(&plr)[myplr]._pBaseStr) {
-		(&plr)[myplr]._pBaseStr = (short)(&MaxStats)[iVar3 * 4];
+	iVar3 = (int)plr[myplr]._pClass;
+	if ((&MaxStats)[iVar3 * 4] < (int)plr[myplr]._pBaseStr) {
+		plr[myplr]._pBaseStr = (short)(&MaxStats)[iVar3 * 4];
 	}
-	if ((&INT_800da43c)[iVar3 * 4] < (int)(&plr)[myplr]._pBaseMag) {
-		(&plr)[myplr]._pBaseMag = (short)(&INT_800da43c)[iVar3 * 4];
+	if ((&INT_800da43c)[iVar3 * 4] < (int)plr[myplr]._pBaseMag) {
+		plr[myplr]._pBaseMag = (short)(&INT_800da43c)[iVar3 * 4];
 	}
-	if ((&INT_800da440)[iVar3 * 4] < (int)(&plr)[myplr]._pBaseDex) {
-		(&plr)[myplr]._pBaseDex = (short)(&INT_800da440)[iVar3 * 4];
+	if ((&INT_800da440)[iVar3 * 4] < (int)plr[myplr]._pBaseDex) {
+		plr[myplr]._pBaseDex = (short)(&INT_800da440)[iVar3 * 4];
 	}
-	if (*(int *)(&DAT_800da444 + iVar3 * 0x10) < (int)(&plr)[myplr]._pBaseVit) {
-		(&plr)[myplr]._pBaseVit = (short)*(int *)(&DAT_800da444 + iVar3 * 0x10);
+	if (*(int *)(&DAT_800da444 + iVar3 * 0x10) < (int)plr[myplr]._pBaseVit) {
+		plr[myplr]._pBaseVit = (short)*(int *)(&DAT_800da444 + iVar3 * 0x10);
 	}
 	iVar3 = 1;
 	if (allspellsflag == (void *)0x0) {
@@ -4320,9 +4319,9 @@ void ValidatePlayer__Fv(void)
 			iVar3 = iVar3 + 1;
 			iVar4 = iVar4 + 0x34;
 		} while (iVar3 < 0x25);
-		uVar1 = *(uint *)((int)&(&plr)[myplr]._pMemSpells + 4);
-		*(uint *)&(&plr)[myplr]._pMemSpells = *(uint *)&(&plr)[myplr]._pMemSpells & uVar8;
-		*(uint *)((int)&(&plr)[iVar7]._pMemSpells + 4) = uVar1 & uVar9;
+		uVar1 = *(uint *)((int)&plr[myplr]._pMemSpells + 4);
+		*(uint *)&plr[myplr]._pMemSpells = *(uint *)&plr[myplr]._pMemSpells & uVar8;
+		*(uint *)((int)&plr[iVar7]._pMemSpells + 4) = uVar1 & uVar9;
 	}
 	return;
 }
@@ -4430,39 +4429,39 @@ void ProcessPlayers__Fv(void)
 	p = 0;
 	puVar6 = (undefined *)0x0;
 	while (p < 2) {
-		ptrplr = (PlayerStruct *)((int)&plr._pmode + (int)puVar6);
+		ptrplr = (PlayerStruct *)((int)&plr[0]._pmode + (int)puVar6);
 		sel_data = p;
 		myplr = p;
-		if ((&plr.pLvlLoad)[(int)puVar6] != '\0') {
+		if ((&plr[0].pLvlLoad)[(int)puVar6] != '\0') {
 			sel_data = p;
 			myplr = p;
-			(&plr.pLvlLoad)[(int)puVar6] = (&plr.pLvlLoad)[(int)puVar6] + -1;
+			(&plr[0].pLvlLoad)[(int)puVar6] = (&plr[0].pLvlLoad)[(int)puVar6] + -1;
 		}
-		if (((&plr.plractive)[(int)puVar6] != '\0') &&
+		if (((&plr[0].plractive)[(int)puVar6] != '\0') &&
 			 (pvVar3 = IsGameLoading__Fv(), pvVar3 == (void *)0x0)) {
 			ValidatePlayer__Fv();
 			CheckCheatStats__FP12PlayerStruct(ptrplr);
 			uVar2 = PlrDeathModeOK__Fi(p);
-			if ((uVar2 == '\0') && (*(int *)((int)&plr._pHitPoints + (int)puVar6) >> 6 < 1)) {
+			if ((uVar2 == '\0') && (*(int *)((int)&plr[0]._pHitPoints + (int)puVar6) >> 6 < 1)) {
 				StartPlrKill__Fii(p,0);
 			}
-			if (((*(uint *)((int)&plr._pIFlags + (int)puVar6) & 0x40) != 0) && (currlevel != '\0')) {
-				*(int *)((int)&plr._pHitPoints + (int)puVar6) =
-						 *(int *)((int)&plr._pHitPoints + (int)puVar6) + -4;
-				*(int *)((int)&plr._pHPBase + (int)puVar6) = *(int *)((int)&plr._pHPBase + (int)puVar6) + -4
-				;
-				if (*(int *)((int)&plr._pHitPoints + (int)puVar6) >> 6 < 1) {
+			if (((*(uint *)((int)&plr[0]._pIFlags + (int)puVar6) & 0x40) != 0) && (currlevel != '\0')) {
+				*(int *)((int)&plr[0]._pHitPoints + (int)puVar6) =
+						 *(int *)((int)&plr[0]._pHitPoints + (int)puVar6) + -4;
+				*(int *)((int)&plr[0]._pHPBase + (int)puVar6) =
+						 *(int *)((int)&plr[0]._pHPBase + (int)puVar6) + -4;
+				if (*(int *)((int)&plr[0]._pHitPoints + (int)puVar6) >> 6 < 1) {
 					StartPlrKill__Fii(p,0);
 				}
 				drawhpflag = '\x01';
 			}
 			iVar5 = 0;
-			if (((*(uint *)((int)&plr._pIFlags + (int)puVar6) & 0x8000000) != 0) &&
-				 (iVar4 = *(int *)((int)&plr._pManaBase + (int)puVar6), 0 < iVar4)) {
-				iVar5 = *(int *)((int)&plr._pMana + (int)puVar6);
-				*(undefined4 *)((int)&plr._pMana + (int)puVar6) = 0;
+			if (((*(uint *)((int)&plr[0]._pIFlags + (int)puVar6) & 0x8000000) != 0) &&
+				 (iVar4 = *(int *)((int)&plr[0]._pManaBase + (int)puVar6), 0 < iVar4)) {
+				iVar5 = *(int *)((int)&plr[0]._pMana + (int)puVar6);
+				*(undefined4 *)((int)&plr[0]._pMana + (int)puVar6) = 0;
 				drawmanaflag = '\x01';
-				*(int *)((int)&plr._pManaBase + (int)puVar6) = iVar4 - iVar5;
+				*(int *)((int)&plr[0]._pManaBase + (int)puVar6) = iVar4 - iVar5;
 				iVar5 = 0;
 			}
 			do {
@@ -4496,14 +4495,14 @@ void ProcessPlayers__Fv(void)
 				}
 				CheckNewPath__FP12PlayerStruct(ptrplr);
 			} while (iVar5 != 0);
-			iVar5 = *(int *)((int)&plr._pAnimCnt + (int)puVar6) + 1;
-			*(int *)((int)&plr._pAnimCnt + (int)puVar6) = iVar5;
-			if (*(int *)((int)&plr._pAnimDelay + (int)puVar6) < iVar5) {
-				*(undefined4 *)((int)&plr._pAnimCnt + (int)puVar6) = 0;
-				iVar5 = *(int *)((int)&plr._pAnimFrame + (int)puVar6) + 1;
-				*(int *)((int)&plr._pAnimFrame + (int)puVar6) = iVar5;
-				if (*(int *)((int)&plr._pAnimLen + (int)puVar6) < iVar5) {
-					*(undefined4 *)((int)&plr._pAnimFrame + (int)puVar6) = 1;
+			iVar5 = *(int *)((int)&plr[0]._pAnimCnt + (int)puVar6) + 1;
+			*(int *)((int)&plr[0]._pAnimCnt + (int)puVar6) = iVar5;
+			if (*(int *)((int)&plr[0]._pAnimDelay + (int)puVar6) < iVar5) {
+				*(undefined4 *)((int)&plr[0]._pAnimCnt + (int)puVar6) = 0;
+				iVar5 = *(int *)((int)&plr[0]._pAnimFrame + (int)puVar6) + 1;
+				*(int *)((int)&plr[0]._pAnimFrame + (int)puVar6) = iVar5;
+				if (*(int *)((int)&plr[0]._pAnimLen + (int)puVar6) < iVar5) {
+					*(undefined4 *)((int)&plr[0]._pAnimFrame + (int)puVar6) = 1;
 				}
 			}
 		}
@@ -4592,14 +4591,14 @@ uchar PosOkPlayer__FP12PlayerStructii(PlayerStruct *ptrplr,int px,int py)
 				uVar6 = (uint)bVar3 - 1;
 			}
 			uVar4 = plrind__FP12PlayerStruct(ptrplr);
-			if ((uVar6 != uVar4) && ((&plr)[uVar6]._pHitPoints != 0)) {
+			if ((uVar6 != uVar4) && (plr[uVar6]._pHitPoints != 0)) {
 				return '\0';
 			}
 		}
-		iVar5 = (int)(&dung_map)[py + px * 0x70].dMonster;
+		iVar5 = (int)dung_map[py + px * 0x70].dMonster;
 		if ((iVar5 == 0) ||
 			 (((currlevel != '\0' && (0 < iVar5)) && (monster[iVar5 + -1]._mhitpoints >> 6 < 1)))) {
-			bVar3 = (&dung_map)[py + px * 0x70].dObject;
+			bVar3 = dung_map[py + px * 0x70].dObject;
 			if (bVar3 != 0) {
 				if ((char)bVar3 < '\x01') {
 					bVar3 = ~bVar3;
@@ -4707,7 +4706,7 @@ void CheckPlrSpell__Fv(void)
 {
 	char st;
 	int iVar1;
-	byte bVar2;
+	uchar uVar2;
 	SpellTarget *this;
 	void *pvVar3;
 	uint uVar4;
@@ -4718,15 +4717,15 @@ void CheckPlrSpell__Fv(void)
 	iVar1 = myplr;
 	pvVar3 = Active__11SpellTarget(this);
 	if (pvVar3 == (void *)0x0) {
-		cursmx = (int)(&plr)[iVar1]._px + (int)(&offset_x)[(int)(&plr)[iVar1]._pdir];
-		cursmy = (int)(&plr)[iVar1]._py + (int)(&offset_y)[(int)(&plr)[iVar1]._pdir];
+		cursmx = (int)plr[iVar1]._px + (int)offset_x[(int)plr[iVar1]._pdir];
+		cursmy = (int)plr[iVar1]._py + (int)offset_y[(int)plr[iVar1]._pdir];
 	}
 	else {
 		cursmx = ZEXT14(this->_stx);
 		cursmy = ZEXT14(this->_sty);
 	}
-	if ((&plr)[iVar1]._pRSpell == -1) {
-		st = (&plr)[iVar1]._pClass;
+	if (plr[iVar1]._pRSpell == -1) {
+		st = plr[iVar1]._pClass;
 		if (st == '\0') {
 			psfx = PS_WARR34;
 			goto LAB_80065a90;
@@ -4738,8 +4737,8 @@ void CheckPlrSpell__Fv(void)
 		psfx = PS_MAGE34;
 	}
 	else {
-		if ((leveltype == '\0') && ((&spelldata)[(&plr)[iVar1]._pRSpell].sTownSpell == '\0')) {
-			st = (&plr)[iVar1]._pClass;
+		if ((leveltype == '\0') && ((&spelldata)[plr[iVar1]._pRSpell].sTownSpell == '\0')) {
+			st = plr[iVar1]._pClass;
 			if (st == '\0') {
 				psfx = PS_WARR27;
 				goto LAB_80065a90;
@@ -4751,64 +4750,58 @@ void CheckPlrSpell__Fv(void)
 			psfx = PS_MAGE27;
 		}
 		else {
-			st = (&plr)[iVar1]._pRSplType;
+			st = plr[iVar1]._pRSplType;
 			if (st == '\x02') {
-				uVar4 = FUN_8015ffe0();
-LAB_8006583c:
-				uVar4 = uVar4 & 0xff;
+				uVar2 = UseScroll__Fv();
 			}
 			else {
 				if (st < '\x03') {
-					uVar4 = 0;
+					uVar2 = '\0';
 					if (-1 < st) {
-						bVar2 = CheckSpell__FiicUc(myplr,(&plr)[iVar1]._pRSpell,st,'\0');
-						uVar4 = (uint)bVar2;
-						goto LAB_8006583c;
+						uVar2 = CheckSpell__FiicUc(myplr,plr[iVar1]._pRSpell,st,'\0');
 					}
 				}
 				else {
-					uVar4 = 0;
+					uVar2 = '\0';
 					if (st == '\x03') {
-						uVar4 = FUN_801602ac();
-						goto LAB_8006583c;
+						uVar2 = UseStaff__Fv();
 					}
 				}
 			}
-			if (uVar4 != 0) {
-				if ((&plr)[iVar1]._pRSpell == 6) {
-					uVar4 = GetDirection__Fiiii((int)(&plr)[iVar1]._px,(int)(&plr)[iVar1]._py,cursmx,cursmy);
-					uVar5 = FUN_8013a43c(myplr,(&plr)[iVar1]._pRSpell);
+			if (uVar2 != '\0') {
+				if (plr[iVar1]._pRSpell == 6) {
+					uVar4 = GetDirection__Fiiii((int)plr[iVar1]._px,(int)plr[iVar1]._py,cursmx,cursmy);
+					uVar5 = GetSpellLevel__Fii(myplr,plr[iVar1]._pRSpell);
 					NetSendCmdLocParam3__FUcUcUcUcUsUsUs
-										('\x01','T',(uchar)cursmx,(uchar)cursmy,(uint)*(ushort *)&(&plr)[iVar1]._pRSpell
-										 ,uVar4 & 0xffff,uVar5 & 0xffff);
+										('\x01','T',(uchar)cursmx,(uchar)cursmy,(uint)*(ushort *)&plr[iVar1]._pRSpell,
+										 uVar4 & 0xffff,uVar5 & 0xffff);
 					return;
 				}
 				if (((&_pcursmonst)[sel_data] != -1) && (this->active == (void *)0x0)) {
-					uVar4 = FUN_8013a43c(myplr);
+					uVar4 = GetSpellLevel__Fii(myplr,plr[iVar1]._pRSpell);
 					NetSendCmdParam3__FUcUcUsUsUs
 										('\x01','\x16',*(ushort *)(&_pcursmonst + sel_data),
-										 *(ushort *)&(&plr)[iVar1]._pRSpell,uVar4 & 0xffff);
+										 *(ushort *)&plr[iVar1]._pRSpell,uVar4 & 0xffff);
 					return;
 				}
 				if ((&_pcursplr)[sel_data] != -1) {
-					uVar4 = FUN_8013a43c(myplr,(&plr)[iVar1]._pRSpell);
+					uVar4 = GetSpellLevel__Fii(myplr,plr[iVar1]._pRSpell);
 					NetSendCmdParam3__FUcUcUsUsUs
-										('\x01','\x17',(short)(&_pcursplr)[sel_data],*(ushort *)&(&plr)[iVar1]._pRSpell,
+										('\x01','\x17',(short)(&_pcursplr)[sel_data],*(ushort *)&plr[iVar1]._pRSpell,
 										 uVar4 & 0xffff);
 					return;
 				}
-				uVar4 = FUN_8013a43c(myplr,(&plr)[iVar1]._pRSpell);
+				uVar4 = GetSpellLevel__Fii(myplr,plr[iVar1]._pRSpell);
 				NetSendCmdLocParam2__FUcUcUcUcUsUs
-									('\x01','\x0e',(uchar)cursmx,(uchar)cursmy,
-									 (uint)*(ushort *)&(&plr)[iVar1]._pRSpell,uVar4 & 0xffff);
+									('\x01','\x0e',(uchar)cursmx,(uchar)cursmy,(uint)*(ushort *)&plr[iVar1]._pRSpell,
+									 uVar4 & 0xffff);
 				return;
 			}
-			if ((&plr)[iVar1]._pRSplType != '\x01') {
+			if (plr[iVar1]._pRSplType != '\x01') {
 				return;
 			}
-			if ((int)(&plr)[iVar1]._pSplLvl[(&plr)[iVar1]._pRSpell] + (int)(&plr)[iVar1]._pISplLvlAdd == 0
-				 ) {
-				st = (&plr)[iVar1]._pClass;
+			if ((int)plr[iVar1]._pSplLvl[plr[iVar1]._pRSpell] + (int)plr[iVar1]._pISplLvlAdd == 0) {
+				st = plr[iVar1]._pClass;
 				if (st == '\0') {
 					psfx = PS_WARR28;
 					goto LAB_80065a90;
@@ -4820,7 +4813,7 @@ LAB_8006583c:
 				psfx = PS_MAGE28;
 			}
 			else {
-				st = (&plr)[iVar1]._pClass;
+				st = plr[iVar1]._pClass;
 				if (st == '\0') {
 					psfx = PS_WARR35;
 					goto LAB_80065a90;
@@ -4952,7 +4945,7 @@ void CheckStats__Fi(int p)
 	int iVar2;
 	int iVar3;
 	
-	cVar1 = (&plr)[p]._pClass;
+	cVar1 = plr[p]._pClass;
 	iVar2 = 0;
 	if (cVar1 != '\0') {
 		if (cVar1 == '\x01') {
@@ -4967,47 +4960,47 @@ void CheckStats__Fi(int p)
 	iVar3 = 0;
 	do {
 		if (iVar3 == 1) {
-			if ((&INT_800da43c)[iVar2 * 4] < (int)(&plr)[p]._pBaseMag) {
-				(&plr)[p]._pBaseMag = (short)(&INT_800da43c)[iVar2 * 4];
+			if ((&INT_800da43c)[iVar2 * 4] < (int)plr[p]._pBaseMag) {
+				plr[p]._pBaseMag = (short)(&INT_800da43c)[iVar2 * 4];
 			}
 			else {
-				if ((int)(&plr)[p]._pBaseMag < 0) {
-					(&plr)[p]._pBaseMag = 0;
+				if ((int)plr[p]._pBaseMag < 0) {
+					plr[p]._pBaseMag = 0;
 				}
 			}
 		}
 		else {
 			if (iVar3 < 2) {
 				if (iVar3 == 0) {
-					if ((&MaxStats)[iVar2 * 4] < (int)(&plr)[p]._pBaseStr) {
-						(&plr)[p]._pBaseStr = (short)(&MaxStats)[iVar2 * 4];
+					if ((&MaxStats)[iVar2 * 4] < (int)plr[p]._pBaseStr) {
+						plr[p]._pBaseStr = (short)(&MaxStats)[iVar2 * 4];
 					}
 					else {
-						if ((int)(&plr)[p]._pBaseStr < 0) {
-							(&plr)[p]._pBaseStr = 0;
+						if ((int)plr[p]._pBaseStr < 0) {
+							plr[p]._pBaseStr = 0;
 						}
 					}
 				}
 			}
 			else {
 				if (iVar3 == 2) {
-					if ((&INT_800da440)[iVar2 * 4] < (int)(&plr)[p]._pBaseDex) {
-						(&plr)[p]._pBaseDex = (short)(&INT_800da440)[iVar2 * 4];
+					if ((&INT_800da440)[iVar2 * 4] < (int)plr[p]._pBaseDex) {
+						plr[p]._pBaseDex = (short)(&INT_800da440)[iVar2 * 4];
 					}
 					else {
-						if ((int)(&plr)[p]._pBaseDex < 0) {
-							(&plr)[p]._pBaseDex = 0;
+						if ((int)plr[p]._pBaseDex < 0) {
+							plr[p]._pBaseDex = 0;
 						}
 					}
 				}
 				else {
 					if (iVar3 == 3) {
-						if (*(int *)(&DAT_800da444 + iVar2 * 0x10) < (int)(&plr)[p]._pBaseVit) {
-							(&plr)[p]._pBaseVit = (short)*(int *)(&DAT_800da444 + iVar2 * 0x10);
+						if (*(int *)(&DAT_800da444 + iVar2 * 0x10) < (int)plr[p]._pBaseVit) {
+							plr[p]._pBaseVit = (short)*(int *)(&DAT_800da444 + iVar2 * 0x10);
 						}
 						else {
-							if ((int)(&plr)[p]._pBaseVit < 0) {
-								(&plr)[p]._pBaseVit = 0;
+							if ((int)plr[p]._pBaseVit < 0) {
+								plr[p]._pBaseVit = 0;
 							}
 						}
 					}
@@ -5016,11 +5009,11 @@ void CheckStats__Fi(int p)
 		}
 		iVar3 = iVar3 + 1;
 	} while (iVar3 < 4);
-	if ((&plr)[p]._pMaxMana < (&plr)[p]._pMana) {
-		(&plr)[p]._pMana = (&plr)[p]._pMaxMana;
+	if (plr[p]._pMaxMana < plr[p]._pMana) {
+		plr[p]._pMana = plr[p]._pMaxMana;
 	}
-	if ((&plr)[p]._pMaxManaBase < (&plr)[p]._pManaBase) {
-		(&plr)[p]._pManaBase = (&plr)[p]._pMaxManaBase;
+	if (plr[p]._pMaxManaBase < plr[p]._pManaBase) {
+		plr[p]._pManaBase = plr[p]._pMaxManaBase;
 	}
 	return;
 }
@@ -5056,19 +5049,19 @@ void ModifyPlrStr__Fii(int p,int l)
 	short sVar3;
 	
 	sVar3 = (short)l;
-	if ((&MaxStats)[(int)(&plr)[p]._pClass * 4] < (int)(&plr)[p]._pBaseStr + l) {
-		sVar3 = (short)(&MaxStats)[(int)(&plr)[p]._pClass * 4] - (&plr)[p]._pBaseStr;
+	if ((&MaxStats)[(int)plr[p]._pClass * 4] < (int)plr[p]._pBaseStr + l) {
+		sVar3 = (short)(&MaxStats)[(int)plr[p]._pClass * 4] - plr[p]._pBaseStr;
 	}
-	sVar2 = (&plr)[p]._pStrength;
-	(&plr)[p]._pBaseStr = (&plr)[p]._pBaseStr + sVar3;
-	cVar1 = (&plr)[p]._pClass;
-	(&plr)[p]._pStrength = sVar2 + sVar3;
+	sVar2 = plr[p]._pStrength;
+	plr[p]._pBaseStr = plr[p]._pBaseStr + sVar3;
+	cVar1 = plr[p]._pClass;
+	plr[p]._pStrength = sVar2 + sVar3;
 	if (cVar1 == '\x01') {
-		(&plr)[p]._pDamageMod =
-				 (((int)(&plr)[p]._pStrength + (int)(&plr)[p]._pDexterity) * (int)(&plr)[p]._pLevel) / 200;
+		plr[p]._pDamageMod =
+				 (((int)plr[p]._pStrength + (int)plr[p]._pDexterity) * (int)plr[p]._pLevel) / 200;
 	}
 	else {
-		(&plr)[p]._pDamageMod = ((int)(&plr)[p]._pStrength * (int)(&plr)[p]._pLevel) / 100;
+		plr[p]._pDamageMod = ((int)plr[p]._pStrength * (int)plr[p]._pLevel) / 100;
 	}
 	CalcPlrInv__FiUc(p,'\x01');
 	return;
@@ -5106,25 +5099,25 @@ void ModifyPlrMag__Fii(int p,int l)
 	int iVar4;
 	int iVar5;
 	
-	if ((&INT_800da43c)[(int)(&plr)[p]._pClass * 4] < (int)(&plr)[p]._pBaseMag + l) {
-		l = (&INT_800da43c)[(int)(&plr)[p]._pClass * 4] - (int)(&plr)[p]._pBaseMag;
+	if ((&INT_800da43c)[(int)plr[p]._pClass * 4] < (int)plr[p]._pBaseMag + l) {
+		l = (&INT_800da43c)[(int)plr[p]._pClass * 4] - (int)plr[p]._pBaseMag;
 	}
-	sVar2 = (&plr)[p]._pMagic;
-	(&plr)[p]._pBaseMag = (&plr)[p]._pBaseMag + (short)l;
-	cVar1 = (&plr)[p]._pClass;
-	(&plr)[p]._pMagic = sVar2 + (short)l;
+	sVar2 = plr[p]._pMagic;
+	plr[p]._pBaseMag = plr[p]._pBaseMag + (short)l;
+	cVar1 = plr[p]._pClass;
+	plr[p]._pMagic = sVar2 + (short)l;
 	iVar5 = l << 6;
 	if (cVar1 == '\x02') {
 		iVar5 = l << 7;
 	}
-	iVar4 = (&plr)[p]._pMaxMana;
-	(&plr)[p]._pMaxManaBase = (&plr)[p]._pMaxManaBase + iVar5;
-	uVar3 = (&plr)[p]._pIFlags;
-	(&plr)[p]._pMaxMana = iVar4 + iVar5;
+	iVar4 = plr[p]._pMaxMana;
+	plr[p]._pMaxManaBase = plr[p]._pMaxManaBase + iVar5;
+	uVar3 = plr[p]._pIFlags;
+	plr[p]._pMaxMana = iVar4 + iVar5;
 	if ((uVar3 & 0x8000000) == 0) {
-		iVar4 = (&plr)[p]._pMana;
-		(&plr)[p]._pManaBase = (&plr)[p]._pManaBase + iVar5;
-		(&plr)[p]._pMana = iVar4 + iVar5;
+		iVar4 = plr[p]._pMana;
+		plr[p]._pManaBase = plr[p]._pManaBase + iVar5;
+		plr[p]._pMana = iVar4 + iVar5;
 	}
 	CalcPlrInv__FiUc(p,'\x01');
 	return;
@@ -5160,16 +5153,16 @@ void ModifyPlrDex__Fii(int p,int l)
 	short sVar2;
 	
 	sVar2 = (short)l;
-	if ((&INT_800da440)[(int)(&plr)[p]._pClass * 4] < (int)(&plr)[p]._pBaseDex + l) {
-		sVar2 = (short)(&INT_800da440)[(int)(&plr)[p]._pClass * 4] - (&plr)[p]._pBaseDex;
+	if ((&INT_800da440)[(int)plr[p]._pClass * 4] < (int)plr[p]._pBaseDex + l) {
+		sVar2 = (short)(&INT_800da440)[(int)plr[p]._pClass * 4] - plr[p]._pBaseDex;
 	}
-	sVar1 = (&plr)[p]._pBaseDex;
-	(&plr)[p]._pDexterity = (&plr)[p]._pDexterity + sVar2;
-	(&plr)[p]._pBaseDex = sVar1 + sVar2;
+	sVar1 = plr[p]._pBaseDex;
+	plr[p]._pDexterity = plr[p]._pDexterity + sVar2;
+	plr[p]._pBaseDex = sVar1 + sVar2;
 	CalcPlrInv__FiUc(p,'\x01');
-	if ((&plr)[p]._pClass == '\x01') {
-		(&plr)[p]._pDamageMod =
-				 (((int)(&plr)[p]._pStrength + (int)(&plr)[p]._pDexterity) * (int)(&plr)[p]._pLevel) / 200;
+	if (plr[p]._pClass == '\x01') {
+		plr[p]._pDamageMod =
+				 (((int)plr[p]._pStrength + (int)plr[p]._pDexterity) * (int)plr[p]._pLevel) / 200;
 	}
 	return;
 }
@@ -5206,24 +5199,24 @@ void ModifyPlrVit__Fii(int p,int l)
 	int iVar4;
 	int iVar5;
 	
-	if (*(int *)(&DAT_800da444 + (int)(&plr)[p]._pClass * 0x10) < (int)(&plr)[p]._pBaseVit + l) {
-		l = *(int *)(&DAT_800da444 + (int)(&plr)[p]._pClass * 0x10) - (int)(&plr)[p]._pBaseVit;
+	if (*(int *)(&DAT_800da444 + (int)plr[p]._pClass * 0x10) < (int)plr[p]._pBaseVit + l) {
+		l = *(int *)(&DAT_800da444 + (int)plr[p]._pClass * 0x10) - (int)plr[p]._pBaseVit;
 	}
-	sVar2 = (&plr)[p]._pBaseVit;
-	cVar1 = (&plr)[p]._pClass;
+	sVar2 = plr[p]._pBaseVit;
+	cVar1 = plr[p]._pClass;
 	iVar5 = l << 6;
-	(&plr)[p]._pVitality = (&plr)[p]._pVitality + (short)l;
-	(&plr)[p]._pBaseVit = sVar2 + (short)l;
+	plr[p]._pVitality = plr[p]._pVitality + (short)l;
+	plr[p]._pBaseVit = sVar2 + (short)l;
 	if (cVar1 == '\0') {
 		iVar5 = l << 7;
 	}
-	iVar4 = (&plr)[p]._pMaxHPBase;
-	(&plr)[p]._pHPBase = (&plr)[p]._pHPBase + iVar5;
-	iVar3 = (&plr)[p]._pHitPoints;
-	(&plr)[p]._pMaxHPBase = iVar4 + iVar5;
-	iVar4 = (&plr)[p]._pMaxHP;
-	(&plr)[p]._pHitPoints = iVar3 + iVar5;
-	(&plr)[p]._pMaxHP = iVar4 + iVar5;
+	iVar4 = plr[p]._pMaxHPBase;
+	plr[p]._pHPBase = plr[p]._pHPBase + iVar5;
+	iVar3 = plr[p]._pHitPoints;
+	plr[p]._pMaxHPBase = iVar4 + iVar5;
+	iVar4 = plr[p]._pMaxHP;
+	plr[p]._pHitPoints = iVar3 + iVar5;
+	plr[p]._pMaxHP = iVar4 + iVar5;
 	CalcPlrInv__FiUc(p,'\x01');
 	return;
 }
@@ -5287,14 +5280,14 @@ void SetPlayerHitPoints__FP12PlayerStructi(PlayerStruct *ptrplr,int newhp)
 void SetPlrStr__Fii(int p,int v)
 
 {
-	(&plr)[p]._pBaseStr = (short)v;
+	plr[p]._pBaseStr = (short)v;
 	CalcPlrInv__FiUc(p,'\x01');
-	if ((&plr)[p]._pClass == '\x01') {
-		(&plr)[p]._pDamageMod =
-				 (((int)(&plr)[p]._pStrength + (int)(&plr)[p]._pDexterity) * (int)(&plr)[p]._pLevel) / 200;
+	if (plr[p]._pClass == '\x01') {
+		plr[p]._pDamageMod =
+				 (((int)plr[p]._pStrength + (int)plr[p]._pDexterity) * (int)plr[p]._pLevel) / 200;
 	}
 	else {
-		(&plr)[p]._pDamageMod = ((int)(&plr)[p]._pStrength * (int)(&plr)[p]._pLevel) / 100;
+		plr[p]._pDamageMod = ((int)plr[p]._pStrength * (int)plr[p]._pLevel) / 100;
 	}
 	return;
 }
@@ -5326,13 +5319,13 @@ void SetPlrMag__Fii(int p,int v)
 {
 	long lVar1;
 	
-	(&plr)[p]._pBaseMag = (short)v;
+	plr[p]._pBaseMag = (short)v;
 	lVar1 = v << 6;
-	if ((&plr)[p]._pClass == '\x02') {
+	if (plr[p]._pClass == '\x02') {
 		lVar1 = v << 7;
 	}
-	(&plr)[p]._pMaxManaBase = lVar1;
-	(&plr)[p]._pMaxMana = lVar1;
+	plr[p]._pMaxManaBase = lVar1;
+	plr[p]._pMaxMana = lVar1;
 	CalcPlrInv__FiUc(p,'\x01');
 	return;
 }
@@ -5362,14 +5355,14 @@ void SetPlrMag__Fii(int p,int v)
 void SetPlrDex__Fii(int p,int v)
 
 {
-	(&plr)[p]._pBaseDex = (short)v;
+	plr[p]._pBaseDex = (short)v;
 	CalcPlrInv__FiUc(p,'\x01');
-	if ((&plr)[p]._pClass == '\x01') {
-		(&plr)[p]._pDamageMod =
-				 (((int)(&plr)[p]._pStrength + (int)(&plr)[p]._pDexterity) * (int)(&plr)[p]._pLevel) / 200;
+	if (plr[p]._pClass == '\x01') {
+		plr[p]._pDamageMod =
+				 (((int)plr[p]._pStrength + (int)plr[p]._pDexterity) * (int)plr[p]._pLevel) / 200;
 	}
 	else {
-		(&plr)[p]._pDamageMod = ((int)(&plr)[p]._pStrength * (int)(&plr)[p]._pLevel) / 100;
+		plr[p]._pDamageMod = ((int)plr[p]._pStrength * (int)plr[p]._pLevel) / 100;
 	}
 	return;
 }
@@ -5402,14 +5395,14 @@ void SetPlrVit__Fii(int p,int v)
 	char cVar1;
 	long lVar2;
 	
-	cVar1 = (&plr)[p]._pClass;
-	(&plr)[p]._pBaseVit = (short)v;
+	cVar1 = plr[p]._pClass;
+	plr[p]._pBaseVit = (short)v;
 	lVar2 = v << 6;
 	if (cVar1 == '\0') {
 		lVar2 = v << 7;
 	}
-	(&plr)[p]._pHPBase = lVar2;
-	(&plr)[p]._pMaxHPBase = lVar2;
+	plr[p]._pHPBase = lVar2;
+	plr[p]._pMaxHPBase = lVar2;
 	CalcPlrInv__FiUc(p,'\x01');
 	return;
 }
@@ -5469,29 +5462,29 @@ void PlayDungMsgs__Fv(void)
 	int iVar1;
 	uint uVar2;
 	
-	if ((((currlevel != '\x01') || ((&plr)[myplr]._pLvlVisited[1] != '\0')) ||
-			((uint)gbMaxPlayers != (uint)currlevel)) || (((&plr)[myplr].pDungMsgs & 1) != 0)) {
-		if (((currlevel != '\x05') || ((&plr)[myplr]._pLvlVisited[5] != '\0')) ||
-			 ((gbMaxPlayers != '\x01' || (((&plr)[myplr].pDungMsgs & 2) != 0)))) {
-			if (((currlevel != '\t') || ((&plr)[myplr]._pLvlVisited[9] != '\0')) ||
-				 ((gbMaxPlayers != '\x01' || (((&plr)[myplr].pDungMsgs & 4) != 0)))) {
-				if ((((currlevel != '\r') || ((&plr)[myplr]._pLvlVisited[0xd] != '\0')) ||
-						(gbMaxPlayers != '\x01')) || (((&plr)[myplr].pDungMsgs & 8) != 0)) {
-					if (((currlevel == '\x10') && ((&plr)[myplr]._pLvlVisited[0x10] == '\0')) &&
-						 ((gbMaxPlayers == '\x01' && (((&plr)[myplr].pDungMsgs & 0x10) == 0)))) {
+	if ((((currlevel != '\x01') || (plr[myplr]._pLvlVisited[1] != '\0')) ||
+			((uint)gbMaxPlayers != (uint)currlevel)) || ((plr[myplr].pDungMsgs & 1) != 0)) {
+		if (((currlevel != '\x05') || (plr[myplr]._pLvlVisited[5] != '\0')) ||
+			 ((gbMaxPlayers != '\x01' || ((plr[myplr].pDungMsgs & 2) != 0)))) {
+			if (((currlevel != '\t') || (plr[myplr]._pLvlVisited[9] != '\0')) ||
+				 ((gbMaxPlayers != '\x01' || ((plr[myplr].pDungMsgs & 4) != 0)))) {
+				if ((((currlevel != '\r') || (plr[myplr]._pLvlVisited[0xd] != '\0')) ||
+						(gbMaxPlayers != '\x01')) || ((plr[myplr].pDungMsgs & 8) != 0)) {
+					if (((currlevel == '\x10') && (plr[myplr]._pLvlVisited[0x10] == '\0')) &&
+						 ((gbMaxPlayers == '\x01' && ((plr[myplr].pDungMsgs & 0x10) == 0)))) {
 						sfxdelay = 0x28;
-						uVar2 = SEXT14((&plr)[myplr]._pClass);
+						uVar2 = SEXT14(plr[myplr]._pClass);
 						if (((uVar2 == 0) || (uVar2 == (uint)gbMaxPlayers)) || (uVar2 == 2)) {
 							sfxdnum = 0x348;
 						}
-						(&plr)[myplr].pDungMsgs = (&plr)[myplr].pDungMsgs | 0x10;
+						plr[myplr].pDungMsgs = plr[myplr].pDungMsgs | 0x10;
 						return;
 					}
 					sfxdelay = 0;
 					return;
 				}
 				sfxdelay = 0x28;
-				uVar2 = SEXT14((&plr)[myplr]._pClass);
+				uVar2 = SEXT14(plr[myplr]._pClass);
 				iVar1 = 0x33a;
 				if (uVar2 != 0) {
 					if (uVar2 == (uint)gbMaxPlayers) {
@@ -5504,11 +5497,11 @@ void PlayDungMsgs__Fv(void)
 				}
 				sfxdnum = iVar1;
 LAB_800666c0:
-				(&plr)[myplr].pDungMsgs = (&plr)[myplr].pDungMsgs | 8;
+				plr[myplr].pDungMsgs = plr[myplr].pDungMsgs | 8;
 				return;
 			}
 			sfxdelay = 0x28;
-			uVar2 = SEXT14((&plr)[myplr]._pClass);
+			uVar2 = SEXT14(plr[myplr]._pClass);
 			iVar1 = 0x339;
 			if (uVar2 != 0) {
 				if (uVar2 == (uint)gbMaxPlayers) {
@@ -5521,11 +5514,11 @@ LAB_800666c0:
 			}
 			sfxdnum = iVar1;
 LAB_80066634:
-			(&plr)[myplr].pDungMsgs = (&plr)[myplr].pDungMsgs | 4;
+			plr[myplr].pDungMsgs = plr[myplr].pDungMsgs | 4;
 			return;
 		}
 		sfxdelay = 0x28;
-		uVar2 = SEXT14((&plr)[myplr]._pClass);
+		uVar2 = SEXT14(plr[myplr]._pClass);
 		iVar1 = 0x337;
 		if (uVar2 != 0) {
 			if (uVar2 == (uint)gbMaxPlayers) {
@@ -5538,11 +5531,11 @@ LAB_80066634:
 		}
 		sfxdnum = iVar1;
 LAB_80066598:
-		(&plr)[myplr].pDungMsgs = (&plr)[myplr].pDungMsgs | 2;
+		plr[myplr].pDungMsgs = plr[myplr].pDungMsgs | 2;
 		return;
 	}
 	sfxdelay = 0x28;
-	uVar2 = SEXT14((&plr)[myplr]._pClass);
+	uVar2 = SEXT14(plr[myplr]._pClass);
 	iVar1 = 0x338;
 	if (uVar2 != 0) {
 		if (uVar2 == (uint)gbMaxPlayers) {
@@ -5555,7 +5548,7 @@ LAB_80066598:
 	}
 	sfxdnum = iVar1;
 LAB_80066508:
-	(&plr)[myplr].pDungMsgs = (&plr)[myplr].pDungMsgs | 1;
+	plr[myplr].pDungMsgs = plr[myplr].pDungMsgs | 1;
 	return;
 }
 
@@ -5672,11 +5665,11 @@ void SetSpdbarGoldCurs__FP12PlayerStructi(PlayerStruct *ptrplr,int i)
 int GetSpellLevel__FP12PlayerStructi(PlayerStruct *ptrplr,int val)
 
 {
-	int iVar1;
+	int id;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	iVar1 = FUN_8013a43c(iVar1,val);
-	return iVar1;
+	id = plrind__FP12PlayerStruct(ptrplr);
+	id = GetSpellLevel__Fii(id,val);
+	return id;
 }
 
 
@@ -5762,10 +5755,10 @@ void CalcPlrInv__FP12PlayerStructUc(PlayerStruct *ptrplr,uchar bl)
 void RemoveSpdBarItem__FP12PlayerStructi(PlayerStruct *ptrplr,int val)
 
 {
-	int iVar1;
+	int pnum;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	FUN_8015d9ac(iVar1,val);
+	pnum = plrind__FP12PlayerStruct(ptrplr);
+	RemoveSpdBarItem__Fii(pnum,val);
 	return;
 }
 
@@ -5792,10 +5785,10 @@ void RemoveSpdBarItem__FP12PlayerStructi(PlayerStruct *ptrplr,int val)
 void M_StartKill__FiP12PlayerStruct(int m,PlayerStruct *ptrplr)
 
 {
-	int iVar1;
+	int pnum;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	FUN_8014c3d8(m,iVar1);
+	pnum = plrind__FP12PlayerStruct(ptrplr);
+	M_StartKill__Fii(m,pnum);
 	return;
 }
 
@@ -5912,11 +5905,12 @@ void HealotherStart__FP12PlayerStruct(PlayerStruct *ptrplr)
 int CalculateGold__FP12PlayerStruct(PlayerStruct *ptrplr)
 
 {
-	int iVar1;
+	int pnum;
+	long lVar1;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	iVar1 = FUN_80160b64(iVar1);
-	return iVar1;
+	pnum = plrind__FP12PlayerStruct(ptrplr);
+	lVar1 = CalculateGold__Fi(pnum);
+	return lVar1;
 }
 
 
@@ -5942,10 +5936,10 @@ int CalculateGold__FP12PlayerStruct(PlayerStruct *ptrplr)
 void M_StartHit__FiP12PlayerStructi(int m,PlayerStruct *ptrplr,int dam)
 
 {
-	int iVar1;
+	int pnum;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	FUN_8014b2d8(m,iVar1,dam);
+	pnum = plrind__FP12PlayerStruct(ptrplr);
+	M_StartHit__Fiii(m,pnum,dam);
 	return;
 }
 
@@ -6032,10 +6026,10 @@ void PhaseStart__FP12PlayerStruct(PlayerStruct *ptrplr)
 void RemoveInvItem__FP12PlayerStructi(PlayerStruct *ptrplr,int i)
 
 {
-	int iVar1;
+	int pnum;
 	
-	iVar1 = plrind__FP12PlayerStruct(ptrplr);
-	FUN_8015d6fc(iVar1,i);
+	pnum = plrind__FP12PlayerStruct(ptrplr);
+	RemoveInvItem__Fii(pnum,i);
 	return;
 }
 
@@ -6184,7 +6178,7 @@ uchar PosOkPlayer__Fiii(int pnum,int x,int y)
 {
 	uchar uVar1;
 	
-	uVar1 = PosOkPlayer__FP12PlayerStructii(&plr + pnum,x,y);
+	uVar1 = PosOkPlayer__FP12PlayerStructii(plr + pnum,x,y);
 	return uVar1;
 }
 
@@ -6213,7 +6207,7 @@ int CalcStatDiff__Fi(int pnum)
 {
 	int iVar1;
 	
-	iVar1 = CalcStatDiff__FP12PlayerStruct(&plr + pnum);
+	iVar1 = CalcStatDiff__FP12PlayerStruct(plr + pnum);
 	return iVar1;
 }
 
@@ -6240,7 +6234,7 @@ int CalcStatDiff__Fi(int pnum)
 void StartNewLvl__Fiii(int pnum,int fom,int lvl)
 
 {
-	StartNewLvl__FP12PlayerStructii(&plr + pnum,fom,lvl);
+	StartNewLvl__FP12PlayerStructii(plr + pnum,fom,lvl);
 	return;
 }
 
@@ -6267,7 +6261,7 @@ void StartNewLvl__Fiii(int pnum,int fom,int lvl)
 void CreatePlayer__Fic(int pnum,char c)
 
 {
-	CreatePlayer__FP12PlayerStructc(&plr + pnum,c);
+	CreatePlayer__FP12PlayerStructc(plr + pnum,c);
 	return;
 }
 
@@ -6294,7 +6288,7 @@ void CreatePlayer__Fic(int pnum,char c)
 void StartStand__Fii(int pnum,int dir)
 
 {
-	StartStand__FP12PlayerStructi(&plr + pnum,dir);
+	StartStand__FP12PlayerStructi(plr + pnum,dir);
 	return;
 }
 
@@ -6321,7 +6315,7 @@ void StartStand__Fii(int pnum,int dir)
 void SetPlayerHitPoints__Fii(int pnum,int val)
 
 {
-	SetPlayerHitPoints__FP12PlayerStructi(&plr + pnum,val);
+	SetPlayerHitPoints__FP12PlayerStructi(plr + pnum,val);
 	return;
 }
 
@@ -6348,7 +6342,7 @@ void SetPlayerHitPoints__Fii(int pnum,int val)
 void MakePlrPath__FiiiUc(int pnum,int xx,int yy,uchar endspace)
 
 {
-	MakePlrPath__FP12PlayerStructiiUc(&plr + pnum,xx,yy,endspace);
+	MakePlrPath__FP12PlayerStructiiUc(plr + pnum,xx,yy,endspace);
 	return;
 }
 
@@ -6375,7 +6369,7 @@ void MakePlrPath__FiiiUc(int pnum,int xx,int yy,uchar endspace)
 void StartWarpLvl__Fii(int pnum,int pidx)
 
 {
-	StartWarpLvl__FP12PlayerStructi(&plr + pnum,pidx);
+	StartWarpLvl__FP12PlayerStructi(plr + pnum,pidx);
 	return;
 }
 
@@ -6402,7 +6396,7 @@ void StartWarpLvl__Fii(int pnum,int pidx)
 void SyncPlrKill__Fii(int pnum,int earflag)
 
 {
-	SyncPlrKill__FP12PlayerStructi(&plr + pnum,earflag);
+	SyncPlrKill__FP12PlayerStructi(plr + pnum,earflag);
 	return;
 }
 
@@ -6429,7 +6423,7 @@ void SyncPlrKill__Fii(int pnum,int earflag)
 void StartPlrKill__Fii(int pnum,int val)
 
 {
-	StartPlrKill__FP12PlayerStructi(&plr + pnum,val);
+	StartPlrKill__FP12PlayerStructi(plr + pnum,val);
 	return;
 }
 
@@ -6456,7 +6450,7 @@ void StartPlrKill__Fii(int pnum,int val)
 void NewPlrAnim__Fiiii(int pnum,int Peq,int numFrames,int Delay)
 
 {
-	NewPlrAnim__FP12PlayerStructiii(&plr + pnum,Peq,numFrames,Delay);
+	NewPlrAnim__FP12PlayerStructiii(plr + pnum,Peq,numFrames,Delay);
 	return;
 }
 
@@ -6483,7 +6477,7 @@ void NewPlrAnim__Fiiii(int pnum,int Peq,int numFrames,int Delay)
 void AddPlrExperience__Fiil(int pnum,int lvl,long exp)
 
 {
-	AddPlrExperience__FP12PlayerStructil(&plr + pnum,lvl,exp);
+	AddPlrExperience__FP12PlayerStructil(plr + pnum,lvl,exp);
 	return;
 }
 
@@ -6510,7 +6504,7 @@ void AddPlrExperience__Fiil(int pnum,int lvl,long exp)
 void StartPlrBlock__Fii(int pnum,int dir)
 
 {
-	StartPlrBlock__FP12PlayerStructi(&plr + pnum,dir);
+	StartPlrBlock__FP12PlayerStructi(plr + pnum,dir);
 	return;
 }
 
@@ -6537,7 +6531,7 @@ void StartPlrBlock__Fii(int pnum,int dir)
 void StartPlrHit__FiiUc(int pnum,int dam,uchar forcehit)
 
 {
-	StartPlrHit__FP12PlayerStructiUc(&plr + pnum,dam,forcehit);
+	StartPlrHit__FP12PlayerStructiUc(plr + pnum,dam,forcehit);
 	return;
 }
 
@@ -6564,7 +6558,7 @@ void StartPlrHit__FiiUc(int pnum,int dam,uchar forcehit)
 void StartSpell__Fiiii(int pnum,int d,int cx,int cy)
 
 {
-	StartSpell__FP12PlayerStructiii(&plr + pnum,d,cx,cy);
+	StartSpell__FP12PlayerStructiii(plr + pnum,d,cx,cy);
 	return;
 }
 
@@ -6591,7 +6585,7 @@ void StartSpell__Fiiii(int pnum,int d,int cx,int cy)
 void InitPlayer__FiUc(int pnum,uchar FirstTime)
 
 {
-	InitPlayer__FP12PlayerStructUc(&plr + pnum,FirstTime);
+	InitPlayer__FP12PlayerStructUc(plr + pnum,FirstTime);
 	return;
 }
 
@@ -6618,7 +6612,7 @@ void InitPlayer__FiUc(int pnum,uchar FirstTime)
 void PM_ChangeLightOff__Fi(int pnum)
 
 {
-	PM_ChangeLightOff__FP12PlayerStruct(&plr + pnum);
+	PM_ChangeLightOff__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6645,7 +6639,7 @@ void PM_ChangeLightOff__Fi(int pnum)
 void CheckNewPath__Fi(int pnum)
 
 {
-	CheckNewPath__FP12PlayerStruct(&plr + pnum);
+	CheckNewPath__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6672,7 +6666,7 @@ void CheckNewPath__Fi(int pnum)
 void FreePlayerGFX__Fi(int pnum)
 
 {
-	FreePlayerGFX__FP12PlayerStruct(&plr + pnum);
+	FreePlayerGFX__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6699,7 +6693,7 @@ void FreePlayerGFX__Fi(int pnum)
 void InitDungMsgs__Fi(int pnum)
 
 {
-	InitDungMsgs__FP12PlayerStruct(&plr + pnum);
+	InitDungMsgs__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6726,7 +6720,7 @@ void InitDungMsgs__Fi(int pnum)
 void InitPlayerGFX__Fi(int pnum)
 
 {
-	InitPlayerGFX__FP12PlayerStruct(&plr + pnum);
+	InitPlayerGFX__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6753,7 +6747,7 @@ void InitPlayerGFX__Fi(int pnum)
 void SyncInitPlrPos__Fi(int pnum)
 
 {
-	SyncInitPlrPos__FP12PlayerStruct(&plr + pnum);
+	SyncInitPlrPos__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6780,7 +6774,7 @@ void SyncInitPlrPos__Fi(int pnum)
 void SetPlrAnims__Fi(int pnum)
 
 {
-	SetPlrAnims__FP12PlayerStruct(&plr + pnum);
+	SetPlrAnims__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6807,7 +6801,7 @@ void SetPlrAnims__Fi(int pnum)
 void ClrPlrPath__Fi(int pnum)
 
 {
-	ClrPlrPath__FP12PlayerStruct(&plr + pnum);
+	ClrPlrPath__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6834,7 +6828,7 @@ void ClrPlrPath__Fi(int pnum)
 void SyncInitPlr__Fi(int pnum)
 
 {
-	SyncInitPlr__FP12PlayerStruct(&plr + pnum);
+	SyncInitPlr__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6861,7 +6855,7 @@ void SyncInitPlr__Fi(int pnum)
 void RestartTownLvl__Fi(int pnum)
 
 {
-	RestartTownLvl__FP12PlayerStruct(&plr + pnum);
+	RestartTownLvl__FP12PlayerStruct(plr + pnum);
 	return;
 }
 
@@ -6888,7 +6882,7 @@ void RestartTownLvl__Fi(int pnum)
 void SetPlayerOld__Fi(int pnum)
 
 {
-	SetPlayerOld__FP12PlayerStruct(&plr + pnum);
+	SetPlayerOld__FP12PlayerStruct(plr + pnum);
 	return;
 }
 

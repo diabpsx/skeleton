@@ -116,8 +116,6 @@ int GetLastScrX__C7CPlayer(CPlayer *this)
 	/* end block 2 */
 	// End Line: 117
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int GetLastScrX__C7CPlayer(CPlayer *this)
 
 {
@@ -167,8 +165,6 @@ int GetLastScrY__C7CPlayer(CPlayer *this)
 		// Start line: 118
 	/* end block 2 */
 	// End Line: 119
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int GetLastScrY__C7CPlayer(CPlayer *this)
 
@@ -246,8 +242,6 @@ int GetLastOtPos__C7CPlayer(CPlayer *this)
 	/* end block 2 */
 	// End Line: 129
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 CPlayer * GetPlayer__7CPlayeri(int PNum)
 
 {
@@ -303,8 +297,6 @@ CPlayer * GetPlayer__7CPlayeri(int PNum)
 		// Start line: 128
 	/* end block 2 */
 	// End Line: 129
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 CPlayer * GetPlayer__7CPlayeri(int PNum)
 

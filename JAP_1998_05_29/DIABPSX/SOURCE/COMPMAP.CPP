@@ -18,8 +18,6 @@
 	/* end block 2 */
 	// End Line: 121
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 CompLevelMaps * __13CompLevelMapsRC9CompClass(CompLevelMaps *this,CompClass *NewCompObj)
 
 {
@@ -55,8 +53,6 @@ CompLevelMaps * __13CompLevelMapsRC9CompClass(CompLevelMaps *this,CompClass *New
 		// Start line: 145
 	/* end block 2 */
 	// End Line: 146
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ___13CompLevelMaps(CompLevelMaps *this,int __in_chrg)
 
@@ -97,8 +93,6 @@ void ___13CompLevelMaps(CompLevelMaps *this,int __in_chrg)
 	/* end block 2 */
 	// End Line: 164
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void Init__13CompLevelMaps(CompLevelMaps *this)
 
 {
@@ -135,8 +129,6 @@ void Init__13CompLevelMaps(CompLevelMaps *this)
 	/* end block 2 */
 	// End Line: 186
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void InitAllMaps__13CompLevelMaps(CompLevelMaps *this)
 
 {
@@ -171,8 +163,6 @@ void InitAllMaps__13CompLevelMaps(CompLevelMaps *this)
 	/* end block 2 */
 	// End Line: 208
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 DLevel * GetMap__13CompLevelMapsi(CompLevelMaps *this,int MapNum)
 
 {
@@ -206,8 +196,6 @@ DLevel * GetMap__13CompLevelMapsi(CompLevelMaps *this,int MapNum)
 		// Start line: 246
 	/* end block 2 */
 	// End Line: 247
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ReleaseMap__13CompLevelMapsP6DLevel(CompLevelMaps *this,DLevel *Dl)
 
@@ -258,8 +246,6 @@ void ReleaseMap__13CompLevelMapsP6DLevel(CompLevelMaps *this,DLevel *Dl)
 		// Start line: 312
 	/* end block 2 */
 	// End Line: 313
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ImportData__13CompLevelMapsP14CompressedLevs(CompLevelMaps *this,CompressedLevs *Levs)
 
@@ -320,8 +306,6 @@ void ImportData__13CompLevelMapsP14CompressedLevs(CompLevelMaps *this,Compressed
 		// Start line: 363
 	/* end block 2 */
 	// End Line: 364
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int ExportData__13CompLevelMapsPUc(CompLevelMaps *this,uchar *U8Dest)
 
@@ -401,8 +385,6 @@ int ExportData__13CompLevelMapsPUc(CompLevelMaps *this,uchar *U8Dest)
 	/* end block 2 */
 	// End Line: 447
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void MakeSureMapXDecomped__13CompLevelMapsi(CompLevelMaps *this,int MapNum)
 
 {
@@ -460,8 +442,6 @@ void MakeSureMapXDecomped__13CompLevelMapsi(CompLevelMaps *this,int MapNum)
 	/* end block 2 */
 	// End Line: 515
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void Init__4AMap(AMap *this)
 
 {
@@ -495,8 +475,6 @@ void Init__4AMap(AMap *this)
 		// Start line: 552
 	/* end block 2 */
 	// End Line: 553
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int WriteCompressed__4AMapPUcRC9CompClass(AMap *this,uchar *Dest,CompClass *CompObj)
 
@@ -532,8 +510,6 @@ int WriteCompressed__4AMapPUcRC9CompClass(AMap *this,uchar *Dest,CompClass *Comp
 		// Start line: 587
 	/* end block 2 */
 	// End Line: 588
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetCompData__4AMapPCUci(AMap *this,uchar *Data,int NewSize)
 
@@ -598,8 +574,6 @@ void SetCompData__4AMapPCUci(AMap *this,uchar *Data,int NewSize)
 	/* end block 2 */
 	// End Line: 645
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 DLevel * GetMap__4AMap(AMap *this)
 
 {
@@ -653,8 +627,6 @@ DLevel * GetMap__4AMap(AMap *this)
 	/* end block 2 */
 	// End Line: 737
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ReleaseMap__4AMapP6DLevel(AMap *this,DLevel *Dl)
 
 {
@@ -696,8 +668,6 @@ void ReleaseMap__4AMapP6DLevel(AMap *this,DLevel *Dl)
 		// Start line: 780
 	/* end block 2 */
 	// End Line: 781
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void CompressMap__4AMapRC9CompClass(AMap *this,CompClass *CompObj)
 
@@ -768,8 +738,6 @@ void CompressMap__4AMapRC9CompClass(AMap *this,CompClass *CompObj)
 		// Start line: 901
 	/* end block 2 */
 	// End Line: 902
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DecompressMap__4AMapRC9CompClass(AMap *this,CompClass *CompObj)
 

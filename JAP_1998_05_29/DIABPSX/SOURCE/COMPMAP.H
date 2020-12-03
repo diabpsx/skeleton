@@ -80,8 +80,6 @@ int GetSize__14CompressedLevs(CompressedLevs *this)
 	/* end block 2 */
 	// End Line: 151
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 AMap * __4AMap(AMap *this)
 
 {
@@ -107,8 +105,6 @@ AMap * __4AMap(AMap *this)
 		// Start line: 160
 	/* end block 2 */
 	// End Line: 161
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ___4AMap(AMap *this,int __in_chrg)
 
@@ -138,8 +134,6 @@ void ___4AMap(AMap *this,int __in_chrg)
 	/* end block 2 */
 	// End Line: 173
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * IsCompressed__4AMap(AMap *this)
 
 {
@@ -163,8 +157,6 @@ void * IsCompressed__4AMap(AMap *this)
 		// Start line: 258
 	/* end block 2 */
 	// End Line: 259
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void CheckMapNum__13CompLevelMapsi(CompLevelMaps *this,int MapNum)
 

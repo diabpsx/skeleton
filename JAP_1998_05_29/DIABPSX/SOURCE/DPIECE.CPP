@@ -179,8 +179,8 @@ void ConvertdPiece__Fv(void)
 			if (0x801 < uVar1) {
 				DBG_Error((char *)0x0,"source/DPIECE.cpp",0x7a);
 			}
-			(&dung_map.dBits)[iVar2] = (&dung_map.dBits)[iVar2] & 0xf0;
-			if (nSolidTable[(int)(short)uVar1] == '\0') {
+			(&dung_map[0].dBits)[iVar2] = (&dung_map[0].dBits)[iVar2] & 0xf0;
+			if ((&nSolidTable)[(int)(short)uVar1] == '\0') {
 				ClearSOLID__Fii(x,y);
 			}
 			else {
@@ -192,7 +192,7 @@ void ConvertdPiece__Fv(void)
 			else {
 				SetMISSILE__Fii(x,y);
 			}
-			if (nBlockTable[(int)(short)uVar1] == '\0') {
+			if ((&nBlockTable)[(int)(short)uVar1] == '\0') {
 				ClearBLOCK__Fii(x,y);
 			}
 			else {
@@ -233,8 +233,6 @@ void ConvertdPiece__Fv(void)
 	/* end block 2 */
 	// End Line: 307
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 short GetDPiece__Fii(int x,int y)
 
 {
@@ -264,8 +262,6 @@ short GetDPiece__Fii(int x,int y)
 		// Start line: 321
 	/* end block 2 */
 	// End Line: 322
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetDPiece__Fiis(int x,int y,short v)
 
@@ -298,12 +294,10 @@ void SetDPiece__Fiis(int x,int y,short v)
 	/* end block 2 */
 	// End Line: 343
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetdDead__FiiUc(int x,int y,uchar v)
 
 {
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits & 0xf | v << 4;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits & 0xf | v << 4;
 	return;
 }
 
@@ -325,12 +319,10 @@ void SetdDead__FiiUc(int x,int y,uchar v)
 	/* end block 2 */
 	// End Line: 356
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GetdDead__Fii(int x,int y)
 
 {
-	return (&dung_map)[x * 0x70 + y].dBits >> 4;
+	return dung_map[x * 0x70 + y].dBits >> 4;
 }
 
 
@@ -351,15 +343,13 @@ uchar GetdDead__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 371
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetSOLID__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xb7);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits | 1;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits | 1;
 	return;
 }
 
@@ -381,15 +371,13 @@ void SetSOLID__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 383
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ClearSOLID__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xbd);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits & 0xfe;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits & 0xfe;
 	return;
 }
 
@@ -411,15 +399,13 @@ void ClearSOLID__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 396
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GetSOLID__Fii(int x,int y)
 
 {
 	undefined *puVar1;
 	
 	if ((x < 0x70) && (y < 0x70)) {
-		puVar1 = (undefined *)((uint)(&dung_map)[x * 0x70 + y].dBits & 1);
+		puVar1 = (undefined *)((uint)dung_map[x * 0x70 + y].dBits & 1);
 	}
 	else {
 		puVar1 = &DAT_00000001;
@@ -445,15 +431,13 @@ void * GetSOLID__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 421
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetMISSILE__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xd0);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits | 2;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits | 2;
 	return;
 }
 
@@ -475,15 +459,13 @@ void SetMISSILE__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 433
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ClearMISSILE__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xd6);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits & 0xfd;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits & 0xfd;
 	return;
 }
 
@@ -505,12 +487,10 @@ void ClearMISSILE__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 446
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GetMISSILE__Fii(int x,int y)
 
 {
-	return (void *)(uint)(((&dung_map)[x * 0x70 + y].dBits & 2) != 0);
+	return (void *)(uint)((dung_map[x * 0x70 + y].dBits & 2) != 0);
 }
 
 
@@ -531,15 +511,13 @@ void * GetMISSILE__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 467
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetBLOCK__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xe7);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits | 4;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits | 4;
 	return;
 }
 
@@ -561,15 +539,13 @@ void SetBLOCK__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 479
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ClearBLOCK__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xed);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits & 0xfb;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits & 0xfb;
 	return;
 }
 
@@ -591,12 +567,10 @@ void ClearBLOCK__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 492
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GetBLOCK__Fii(int x,int y)
 
 {
-	return (void *)(uint)(((&dung_map)[x * 0x70 + y].dBits & 4) != 0);
+	return (void *)(uint)((dung_map[x * 0x70 + y].dBits & 4) != 0);
 }
 
 
@@ -617,15 +591,13 @@ void * GetBLOCK__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 513
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetTRAP__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0xfe);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits | 8;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits | 8;
 	return;
 }
 
@@ -647,15 +619,13 @@ void SetTRAP__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 525
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ClearTRAP__Fii(int x,int y)
 
 {
 	if ((0x70 < (uint)x) || (0x70 < (uint)y)) {
 		DBG_Error((char *)0x0,"source/DPIECE.cpp",0x104);
 	}
-	(&dung_map)[x * 0x70 + y].dBits = (&dung_map)[x * 0x70 + y].dBits & 0xf7;
+	dung_map[x * 0x70 + y].dBits = dung_map[x * 0x70 + y].dBits & 0xf7;
 	return;
 }
 
@@ -677,12 +647,10 @@ void ClearTRAP__Fii(int x,int y)
 	/* end block 2 */
 	// End Line: 538
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GetTRAP__Fii(int x,int y)
 
 {
-	return (void *)(uint)(((&dung_map)[x * 0x70 + y].dBits & 8) != 0);
+	return (void *)(uint)((dung_map[x * 0x70 + y].dBits & 8) != 0);
 }
 
 

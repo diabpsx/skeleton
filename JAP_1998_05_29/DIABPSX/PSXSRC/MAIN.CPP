@@ -175,7 +175,7 @@ void GameTask__FP4TASK(TASK *T)
 			MSG_ClearOutCompMap__Fv();
 			uVar1 = (uint)gbDoEnding;
 			gbDoEnding = '\0';
-			FUN_8014eb1c(uVar1 - 1);
+			DoEnding__Fi(uVar1 - 1);
 		}
 	} while( true );
 }

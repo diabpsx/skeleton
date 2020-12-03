@@ -346,7 +346,7 @@ void penta_cycle_task__FP4TASK(TASK *T)
 		}
 		TSK_Sleep(1);
 	} while (penta_clut == 0);
-	while ((gbMaxPlayers == '\x01' && (QuestStruct_ARRAY_800dda90[1]._qactive != '\x02'))) {
+	while ((gbMaxPlayers == '\x01' && (quests[5]._qactive != '\x02'))) {
 		pvVar1 = GLUE_Finished__Fv();
 		if (pvVar1 != (void *)0x0) {
 			return;

@@ -398,15 +398,15 @@ void delta_leave_sync__FUc(uchar bLevel)
 	undefined4 *puVar7;
 	LocalLevel *pLVar8;
 	DMonsterStr *pDVar9;
-	short *psVar10;
+	MonsterStruct *pMVar10;
 	int iVar11;
 	
 	if ((currlevel != '\0') || (glSeedTbl[0] = GetRndSeed__Fv(), currlevel != '\0')) {
 		iVar11 = 0;
-		psVar10 = &monstactive;
+		pMVar10 = monster + 0xbe;
 		Dl = GetDLevel__Fib((uint)bLevel,(void *)(uint)(setlevel != '\0'));
 		while (iVar11 < nummonsters) {
-			m = (int)*psVar10;
+			m = (int)*(short *)&pMVar10->mtalkmsg;
 			if (monster[m]._mhitpoints != 0) {
 				sgbDeltaChanged = '\x01';
 				pDVar9 = Dl->monster + m;
@@ -417,7 +417,7 @@ void delta_leave_sync__FUc(uchar bLevel)
 				pDVar9->_menemy = (uchar)iVar3;
 				pDVar9->_mhitpoints = monster[m]._mhitpoints;
 			}
-			psVar10 = psVar10 + 1;
+			pMVar10 = (MonsterStruct *)((int)&pMVar10->mtalkmsg + 2);
 			iVar11 = iVar11 + 1;
 		}
 		ReleaseDLevel__FP6DLevel(Dl);
@@ -932,7 +932,7 @@ void DeltaSaveLevel__Fv(void)
 	puVar4 = (undefined *)0x0;
 	do {
 		if (iVar2 != iVar3) {
-			*(undefined4 *)((int)&plr._pGFXLoad + (int)puVar4) = 0;
+			*(undefined4 *)((int)&plr[0]._pGFXLoad + (int)puVar4) = 0;
 		}
 		iVar2 = iVar2 + 1;
 		puVar4 = &DAT_000019e8 + (int)puVar4;
@@ -1327,9 +1327,9 @@ void NetSendCmdQuest__FUcUc(uchar bHiPri,uchar q)
 	
 	uVar1 = (uint)q;
 	local_10 = 'X';
-	local_e = (&quests)[uVar1]._qactive;
-	local_d = (&quests)[uVar1]._qlog;
-	local_c = (&quests)[uVar1]._qvar1;
+	local_e = quests[uVar1]._qactive;
+	local_d = quests[uVar1]._qlog;
+	local_c = quests[uVar1]._qvar1;
 	local_f = q;
 	NetSendLoPri__FPCUcUc(&local_10,'\x05');
 	return;
@@ -1567,16 +1567,16 @@ void NetSendCmdPItem__FUcUcUcUc(uchar bHiPri,uchar bCmd,uchar x,uchar y)
 	int local_10;
 	int local_c;
 	
-	local_16 = (&plr)[myplr].HoldItem.IDidx;
-	local_14 = (&plr)[myplr].HoldItem._iCreateInfo;
-	local_10 = (&plr)[myplr].HoldItem._iSeed;
-	local_1d = (&plr)[myplr].HoldItem._iIdentified;
-	local_1c = (undefined)(&plr)[myplr].HoldItem._iDurability;
-	local_1b = (undefined)(&plr)[myplr].HoldItem._iMaxDur;
-	local_1a = (&plr)[myplr].HoldItem._iCharges;
-	local_19 = (&plr)[myplr].HoldItem._iMaxCharges;
-	local_18 = (undefined2)(&plr)[myplr].HoldItem._ivalue;
-	local_c = (int)(&plr)[myplr].HoldItem._PlrCreate;
+	local_16 = plr[myplr].HoldItem.IDidx;
+	local_14 = plr[myplr].HoldItem._iCreateInfo;
+	local_10 = plr[myplr].HoldItem._iSeed;
+	local_1d = plr[myplr].HoldItem._iIdentified;
+	local_1c = (undefined)plr[myplr].HoldItem._iDurability;
+	local_1b = (undefined)plr[myplr].HoldItem._iMaxDur;
+	local_1a = plr[myplr].HoldItem._iCharges;
+	local_19 = plr[myplr].HoldItem._iMaxCharges;
+	local_18 = (undefined2)plr[myplr].HoldItem._ivalue;
+	local_c = (int)plr[myplr].HoldItem._PlrCreate;
 	local_20 = bCmd;
 	local_1f = x;
 	local_1e = y;
@@ -1617,10 +1617,10 @@ void NetSendCmdChItem__FUcUc(uchar bHiPri,uchar bLoc)
 	char local_c;
 	
 	local_18 = '0';
-	local_16 = (&plr)[myplr].HoldItem.IDidx;
-	local_14 = (&plr)[myplr].HoldItem._iCreateInfo;
-	local_10 = (&plr)[myplr].HoldItem._iSeed;
-	local_c = (&plr)[myplr].HoldItem._iIdentified;
+	local_16 = plr[myplr].HoldItem.IDidx;
+	local_14 = plr[myplr].HoldItem._iCreateInfo;
+	local_10 = plr[myplr].HoldItem._iSeed;
+	local_c = plr[myplr].HoldItem._iIdentified;
 	local_17 = bLoc;
 	NetSendLoPri__FPCUcUc(&local_18,'\x10');
 	return;
@@ -1857,7 +1857,7 @@ void On_WALKXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 {
 	ClrPlrPath__Fi(pnum);
 	MakePlrPath__FiiiUc(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,'\x01');
-	(&plr)[pnum].destAction = -1;
+	plr[pnum].destAction = -1;
 	return;
 }
 
@@ -2004,11 +2004,11 @@ void On_SBSPELL__FPC4TCmdi(TCmd *pCmd,int pnum)
 	undefined2 uVar2;
 	
 	uVar2 = *(undefined2 *)(pCmd + 2);
-	cVar1 = (&plr)[pnum]._pSBkSplType;
-	(&plr)[pnum]._pSplFrom = '\x01';
-	(&plr)[pnum].destAction = '\f';
-	(&plr)[pnum]._pSpell = (char)uVar2;
-	(&plr)[pnum]._pSplType = cVar1;
+	cVar1 = plr[pnum]._pSBkSplType;
+	plr[pnum]._pSplFrom = '\x01';
+	plr[pnum].destAction = '\f';
+	plr[pnum]._pSpell = (char)uVar2;
+	plr[pnum]._pSplType = cVar1;
 	return;
 }
 
@@ -2039,8 +2039,8 @@ void On_GOTOGETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	MakePlrPath__FiiiUc(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,'\0');
 	uVar1 = *(undefined2 *)(pCmd + 4);
-	(&plr)[pnum].destAction = '\x0f';
-	(&plr)[pnum].destParam1 = (char)uVar1;
+	plr[pnum].destAction = '\x0f';
+	plr[pnum].destParam1 = (char)uVar1;
 	return;
 }
 
@@ -2084,19 +2084,19 @@ void On_REQUESTGITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	byte pnum_00;
+	ushort uVar1;
 	ushort ci;
-	uchar uVar1;
-	int iVar2;
-	uint idx;
+	uchar uVar2;
+	int ii;
 	
-	uVar1 = i_own_level__Fi((&plr)[pnum].plrlevel);
-	if (uVar1 != '\0') {
-		idx = (uint)*(ushort *)(pCmd + 0xe);
+	uVar2 = i_own_level__Fi(plr[pnum].plrlevel);
+	if (uVar2 != '\0') {
+		uVar1 = *(ushort *)(pCmd + 0xe);
 		ci = *(ushort *)(pCmd + 0x10);
-		iVar2 = FindGetItem__FiUsi(idx,ci,*(int *)(pCmd + 0x14));
-		if (iVar2 == -1) {
-			uVar1 = NetSendCmdReq2__FUcUcUcPC9TCmdGItem('\'',(uchar)myplr,pCmd[2].bCmd,(TCmdGItem *)pCmd);
-			if (uVar1 == '\0') {
+		ii = FindGetItem__FiUsi((uint)uVar1,ci,*(int *)(pCmd + 0x14));
+		if (ii == -1) {
+			uVar2 = NetSendCmdReq2__FUcUcUcPC9TCmdGItem('\'',(uchar)myplr,pCmd[2].bCmd,(TCmdGItem *)pCmd);
+			if (uVar2 == '\0') {
 				NetSendCmdExtra__FPC9TCmdGItem((TCmdGItem *)pCmd);
 			}
 		}
@@ -2104,11 +2104,11 @@ void On_REQUESTGITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 			pnum_00 = pCmd[2].bCmd;
 			NetSendCmdGItem2__FUcUcUcUcPC9TCmdGItem('\0','\b',(uchar)myplr,pnum_00,(TCmdGItem *)pCmd);
 			if ((uint)pnum_00 == myplr) {
-				FUN_8015e180((uint)pnum_00,iVar2,idx);
+				InvGetItem__Fii((uint)pnum_00,ii);
 			}
 			else {
-				FUN_8015eeb8((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,(uint)ci,*(undefined4 *)(pCmd + 0x14)
-										);
+				SyncGetItem__FiiiUsi
+									((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)uVar1,ci,*(int *)(pCmd + 0x14));
 			}
 		}
 	}
@@ -2216,13 +2216,13 @@ void On_GETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uchar bLevel;
 	ushort ci;
 	uchar uVar1;
-	int iVar2;
-	uint uVar3;
+	int ii;
+	uint pnum_00;
 	uint idx;
 	
 	idx = (uint)*(ushort *)(pCmd + 0xe);
 	ci = *(ushort *)(pCmd + 0x10);
-	iVar2 = FindGetItem__FiUsi(idx,ci,*(int *)(pCmd + 0x14));
+	ii = FindGetItem__FiUsi(idx,ci,*(int *)(pCmd + 0x14));
 	bLevel = pCmd[4].bCmd;
 	uVar1 = delta_get_item__FPC9TCmdGItemUc((TCmdGItem *)pCmd,bLevel);
 	if (uVar1 == '\0') {
@@ -2231,24 +2231,24 @@ void On_GETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	}
 	else {
 		if (((currlevel == bLevel) || ((uint)pCmd[2].bCmd == myplr)) && ((uint)pCmd[1].bCmd != myplr)) {
-			uVar3 = (uint)pCmd[2].bCmd;
-			if (uVar3 == myplr) {
+			pnum_00 = (uint)pCmd[2].bCmd;
+			if (pnum_00 == myplr) {
 				if (currlevel == bLevel) {
-					FUN_8015e180(uVar3,iVar2);
+					InvGetItem__Fii(pnum_00,ii);
 				}
 				else {
-					iVar2 = FUN_8015f504(uVar3,(int)(&plr)[uVar3]._px,(int)(&plr)[uVar3]._py,idx,(uint)ci,
-															 *(undefined4 *)(pCmd + 0x14),(uint)pCmd[7].bCmd,(uint)pCmd[8].bCmd,
-															 (uint)pCmd[9].bCmd,(uint)pCmd[10].bCmd,(uint)pCmd[0xb].bCmd,
-															 (uint)*(ushort *)(pCmd + 0xc),*(undefined4 *)(pCmd + 0x18));
-					if (iVar2 != -1) {
-						FUN_8015e180(myplr);
+					ii = SyncPutItem__FiiiiUsiUciiiiiUl
+												 (pnum_00,(int)plr[pnum_00]._px,(int)plr[pnum_00]._py,idx,(uint)ci,
+													*(int *)(pCmd + 0x14),(uint)pCmd[7].bCmd,(uint)pCmd[8].bCmd,
+													(uint)pCmd[9].bCmd,(uint)pCmd[10].bCmd,(uint)pCmd[0xb].bCmd,
+													(uint)*(ushort *)(pCmd + 0xc),*(ulong *)(pCmd + 0x18));
+					if (ii != -1) {
+						InvGetItem__Fii(myplr,ii);
 					}
 				}
 			}
 			else {
-				FUN_8015eeb8((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,(uint)ci,*(undefined4 *)(pCmd + 0x14)
-										);
+				SyncGetItem__FiiiUsi((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,ci,*(int *)(pCmd + 0x14));
 			}
 		}
 	}
@@ -2282,8 +2282,8 @@ void On_GOTOAGETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	MakePlrPath__FiiiUc(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,'\0');
 	uVar1 = *(undefined2 *)(pCmd + 4);
-	(&plr)[pnum].destAction = '\x10';
-	(&plr)[pnum].destParam1 = (char)uVar1;
+	plr[pnum].destAction = '\x10';
+	plr[pnum].destParam1 = (char)uVar1;
 	return;
 }
 
@@ -2325,19 +2325,19 @@ void On_REQUESTAGITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	byte pnum_00;
+	ushort uVar1;
 	ushort ci;
-	uchar uVar1;
-	int iVar2;
-	uint idx;
+	uchar uVar2;
+	int iVar3;
 	
-	uVar1 = i_own_level__Fi((&plr)[pnum].plrlevel);
-	if (uVar1 != '\0') {
-		idx = (uint)*(ushort *)(pCmd + 0xe);
+	uVar2 = i_own_level__Fi(plr[pnum].plrlevel);
+	if (uVar2 != '\0') {
+		uVar1 = *(ushort *)(pCmd + 0xe);
 		ci = *(ushort *)(pCmd + 0x10);
-		iVar2 = FindGetItem__FiUsi(idx,ci,*(int *)(pCmd + 0x14));
-		if (iVar2 == -1) {
-			uVar1 = NetSendCmdReq2__FUcUcUcPC9TCmdGItem('(',(uchar)myplr,pCmd[2].bCmd,(TCmdGItem *)pCmd);
-			if (uVar1 == '\0') {
+		iVar3 = FindGetItem__FiUsi((uint)uVar1,ci,*(int *)(pCmd + 0x14));
+		if (iVar3 == -1) {
+			uVar2 = NetSendCmdReq2__FUcUcUcPC9TCmdGItem('(',(uchar)myplr,pCmd[2].bCmd,(TCmdGItem *)pCmd);
+			if (uVar2 == '\0') {
 				NetSendCmdExtra__FPC9TCmdGItem((TCmdGItem *)pCmd);
 			}
 		}
@@ -2345,11 +2345,11 @@ void On_REQUESTAGITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 			pnum_00 = pCmd[2].bCmd;
 			NetSendCmdGItem2__FUcUcUcUcPC9TCmdGItem('\0','\t',(uchar)myplr,pnum_00,(TCmdGItem *)pCmd);
 			if ((uint)pnum_00 == myplr) {
-				FUN_8015e45c((uint)pnum_00,(uint)pCmd[3].bCmd,idx);
+				AutoGetItem__Fii((uint)pnum_00,(uint)pCmd[3].bCmd);
 			}
 			else {
-				FUN_8015eeb8((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,(uint)ci,*(undefined4 *)(pCmd + 0x14)
-										);
+				SyncGetItem__FiiiUsi
+									((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)uVar1,ci,*(int *)(pCmd + 0x14));
 			}
 		}
 	}
@@ -2456,8 +2456,8 @@ void On_AGETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uchar bLevel;
 	ushort ci;
 	uchar uVar1;
-	int iVar2;
-	uint uVar3;
+	int ii;
+	uint pnum_00;
 	uint idx;
 	
 	idx = (uint)*(ushort *)(pCmd + 0xe);
@@ -2471,24 +2471,24 @@ void On_AGETITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	}
 	else {
 		if (((currlevel == bLevel) || ((uint)pCmd[2].bCmd == myplr)) && ((uint)pCmd[1].bCmd != myplr)) {
-			uVar3 = (uint)pCmd[2].bCmd;
-			if (uVar3 == myplr) {
+			pnum_00 = (uint)pCmd[2].bCmd;
+			if (pnum_00 == myplr) {
 				if (currlevel == bLevel) {
-					FUN_8015e45c(uVar3,(uint)pCmd[3].bCmd);
+					AutoGetItem__Fii(pnum_00,(uint)pCmd[3].bCmd);
 				}
 				else {
-					iVar2 = FUN_8015f504(uVar3,(int)(&plr)[uVar3]._px,(int)(&plr)[uVar3]._py,idx,(uint)ci,
-															 *(undefined4 *)(pCmd + 0x14),(uint)pCmd[7].bCmd,(uint)pCmd[8].bCmd,
-															 (uint)pCmd[9].bCmd,(uint)pCmd[10].bCmd,(uint)pCmd[0xb].bCmd,
-															 (uint)*(ushort *)(pCmd + 0xc),*(undefined4 *)(pCmd + 0x18));
-					if (iVar2 != -1) {
-						FUN_8015e45c(myplr);
+					ii = SyncPutItem__FiiiiUsiUciiiiiUl
+												 (pnum_00,(int)plr[pnum_00]._px,(int)plr[pnum_00]._py,idx,(uint)ci,
+													*(int *)(pCmd + 0x14),(uint)pCmd[7].bCmd,(uint)pCmd[8].bCmd,
+													(uint)pCmd[9].bCmd,(uint)pCmd[10].bCmd,(uint)pCmd[0xb].bCmd,
+													(uint)*(ushort *)(pCmd + 0xc),*(ulong *)(pCmd + 0x18));
+					if (ii != -1) {
+						AutoGetItem__Fii(myplr,ii);
 					}
 				}
 			}
 			else {
-				FUN_8015eeb8((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,(uint)ci,*(undefined4 *)(pCmd + 0x14)
-										);
+				SyncGetItem__FiiiUsi((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,idx,ci,*(int *)(pCmd + 0x14));
 			}
 		}
 	}
@@ -2519,8 +2519,9 @@ void On_ITEMEXTRA__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	delta_get_item__FPC9TCmdGItemUc((TCmdGItem *)pCmd,pCmd[4].bCmd);
-	FUN_8015eeb8((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)*(ushort *)(pCmd + 0xe),
-							 (uint)*(ushort *)(pCmd + 0x10),*(undefined4 *)(pCmd + 0x14));
+	SyncGetItem__FiiiUsi
+						((uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)*(ushort *)(pCmd + 0xe),
+						 *(ushort *)(pCmd + 0x10),*(int *)(pCmd + 0x14));
 	return;
 }
 
@@ -2552,11 +2553,11 @@ void On_PUTITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 	int iVar1;
 	
 	if (numitems < 0x7a) {
-		iVar1 = FUN_8015f16c(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd);
+		iVar1 = InvPutItem__Fiii(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd);
 		if (iVar1 != -1) {
 			delta_put_item__FPC9TCmdPItemiiUc
 								((TCmdPItem *)pCmd,(int)item[iVar1]._ix,(int)item[iVar1]._iy,
-								 *(uchar *)&(&plr)[pnum].plrlevel);
+								 *(uchar *)&plr[pnum].plrlevel);
 			check_update_plr__Fi(pnum);
 		}
 		check_update_plr__Fi(pnum);
@@ -2594,14 +2595,15 @@ void On_SYNCPUTITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 {
 	int iVar1;
 	
-	iVar1 = FUN_8015f504(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,(uint)*(ushort *)(pCmd + 10),
-											 (uint)*(ushort *)(pCmd + 0xc),*(undefined4 *)(pCmd + 0x10),(uint)pCmd[3].bCmd
-											 ,(uint)pCmd[4].bCmd,(uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)pCmd[7].bCmd,
-											 (uint)*(ushort *)(pCmd + 8),*(undefined4 *)(pCmd + 0x14));
+	iVar1 = SyncPutItem__FiiiiUsiUciiiiiUl
+										(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,(uint)*(ushort *)(pCmd + 10),
+										 (uint)*(ushort *)(pCmd + 0xc),*(int *)(pCmd + 0x10),(uint)pCmd[3].bCmd,
+										 (uint)pCmd[4].bCmd,(uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)pCmd[7].bCmd,
+										 (uint)*(ushort *)(pCmd + 8),*(ulong *)(pCmd + 0x14));
 	if (iVar1 != -1) {
 		delta_put_item__FPC9TCmdPItemiiUc
 							((TCmdPItem *)pCmd,(int)item[iVar1]._ix,(int)item[iVar1]._iy,
-							 *(uchar *)&(&plr)[pnum].plrlevel);
+							 *(uchar *)&plr[pnum].plrlevel);
 		check_update_plr__Fi(pnum);
 	}
 	return;
@@ -2632,15 +2634,15 @@ void On_SYNCPUTITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 void On_RESPAWNITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
-	if (((uint)currlevel == (&plr)[pnum].plrlevel) && (pnum != myplr)) {
-		FUN_8015f504(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,(uint)*(ushort *)(pCmd + 10),
-								 (uint)*(ushort *)(pCmd + 0xc),*(undefined4 *)(pCmd + 0x10),(uint)pCmd[3].bCmd,
-								 (uint)pCmd[4].bCmd,(uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)pCmd[7].bCmd,
-								 (uint)*(ushort *)(pCmd + 8),*(undefined4 *)(pCmd + 0x14));
+	if (((uint)currlevel == plr[pnum].plrlevel) && (pnum != myplr)) {
+		SyncPutItem__FiiiiUsiUciiiiiUl
+							(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,(uint)*(ushort *)(pCmd + 10),
+							 (uint)*(ushort *)(pCmd + 0xc),*(int *)(pCmd + 0x10),(uint)pCmd[3].bCmd,
+							 (uint)pCmd[4].bCmd,(uint)pCmd[5].bCmd,(uint)pCmd[6].bCmd,(uint)pCmd[7].bCmd,
+							 (uint)*(ushort *)(pCmd + 8),*(ulong *)(pCmd + 0x14));
 	}
 	delta_put_item__FPC9TCmdPItemiiUc
-						((TCmdPItem *)pCmd,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,
-						 *(uchar *)&(&plr)[pnum].plrlevel);
+						((TCmdPItem *)pCmd,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -2673,9 +2675,9 @@ void On_SATTACKXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	ClrPlrPath__Fi(pnum);
 	uVar1 = pCmd[1].bCmd;
 	uVar2 = pCmd[2].bCmd;
-	(&plr)[pnum].destAction = '\t';
-	(&plr)[pnum].destParam1 = uVar1;
-	(&plr)[pnum].destParam2 = uVar2;
+	plr[pnum].destAction = '\t';
+	plr[pnum].destParam1 = uVar1;
+	plr[pnum].destParam2 = uVar2;
 	return;
 }
 
@@ -2715,15 +2717,15 @@ void On_SPELLXYD__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar2 = pCmd[2].bCmd;
 	uVar5 = *(undefined2 *)(pCmd + 6);
 	uVar6 = *(undefined2 *)(pCmd + 8);
-	cVar3 = (&plr)[pnum]._pRSplType;
-	(&plr)[pnum].destAction = '\x1a';
-	(&plr)[pnum]._pSplFrom = '\0';
-	(&plr)[pnum].destParam1 = uVar1;
-	(&plr)[pnum].destParam2 = uVar2;
-	(&plr)[pnum].destParam3 = (char)uVar5;
-	(&plr)[pnum].destParam4 = (char)uVar6;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar3;
+	cVar3 = plr[pnum]._pRSplType;
+	plr[pnum].destAction = '\x1a';
+	plr[pnum]._pSplFrom = '\0';
+	plr[pnum].destParam1 = uVar1;
+	plr[pnum].destParam2 = uVar2;
+	plr[pnum].destParam3 = (char)uVar5;
+	plr[pnum].destParam4 = (char)uVar6;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar3;
 	return;
 }
 
@@ -2761,14 +2763,14 @@ void On_SPELLXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar1 = pCmd[1].bCmd;
 	uVar2 = pCmd[2].bCmd;
 	uVar5 = *(undefined2 *)(pCmd + 6);
-	cVar3 = (&plr)[pnum]._pRSplType;
-	(&plr)[pnum].destAction = '\f';
-	(&plr)[pnum]._pSplFrom = '\0';
-	(&plr)[pnum].destParam1 = uVar1;
-	(&plr)[pnum].destParam2 = uVar2;
-	(&plr)[pnum].destParam3 = (char)uVar5;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar3;
+	cVar3 = plr[pnum]._pRSplType;
+	plr[pnum].destAction = '\f';
+	plr[pnum]._pSplFrom = '\0';
+	plr[pnum].destParam1 = uVar1;
+	plr[pnum].destParam2 = uVar2;
+	plr[pnum].destParam3 = (char)uVar5;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar3;
 	return;
 }
 
@@ -2806,14 +2808,14 @@ void On_TSPELLXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar1 = pCmd[1].bCmd;
 	uVar2 = pCmd[2].bCmd;
 	uVar5 = *(undefined2 *)(pCmd + 6);
-	cVar3 = (&plr)[pnum]._pTSplType;
-	(&plr)[pnum].destAction = '\f';
-	(&plr)[pnum]._pSplFrom = '\x02';
-	(&plr)[pnum].destParam1 = uVar1;
-	(&plr)[pnum].destParam2 = uVar2;
-	(&plr)[pnum].destParam3 = (char)uVar5;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar3;
+	cVar3 = plr[pnum]._pTSplType;
+	plr[pnum].destAction = '\f';
+	plr[pnum]._pSplFrom = '\x02';
+	plr[pnum].destParam1 = uVar1;
+	plr[pnum].destParam2 = uVar2;
+	plr[pnum].destParam3 = (char)uVar5;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar3;
 	return;
 }
 
@@ -2860,8 +2862,8 @@ void On_OPOBJXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	}
 	MakePlrPath__FiiiUc(pnum,(uint)bVar1,(uint)bVar2,endspace);
 	uVar3 = *(undefined2 *)(pCmd + 4);
-	(&plr)[pnum].destAction = '\r';
-	(&plr)[pnum].destParam1 = (char)uVar3;
+	plr[pnum].destAction = '\r';
+	plr[pnum].destParam1 = (char)uVar3;
 	return;
 }
 
@@ -2908,8 +2910,8 @@ void On_DISARMXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	}
 	MakePlrPath__FiiiUc(pnum,(uint)bVar1,(uint)bVar2,endspace);
 	uVar3 = *(undefined2 *)(pCmd + 4);
-	(&plr)[pnum].destAction = '\x0e';
-	(&plr)[pnum].destParam1 = (char)uVar3;
+	plr[pnum].destAction = '\x0e';
+	plr[pnum].destParam1 = (char)uVar3;
 	return;
 }
 
@@ -2939,8 +2941,8 @@ void On_OPOBJT__FPC4TCmdi(TCmd *pCmd,int pnum)
 	undefined2 uVar1;
 	
 	uVar1 = *(undefined2 *)(pCmd + 2);
-	(&plr)[pnum].destAction = '\x12';
-	(&plr)[pnum].destParam1 = (char)uVar1;
+	plr[pnum].destAction = '\x12';
+	plr[pnum].destParam1 = (char)uVar1;
 	return;
 }
 
@@ -2977,14 +2979,14 @@ void On_ATTACKID__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uint uVar4;
 	
 	uVar4 = (uint)*(ushort *)(pCmd + 2);
-	iVar2 = abs((int)(&plr)[pnum]._px - (int)monster[uVar4]._mfutx);
-	iVar3 = abs((int)(&plr)[pnum]._py - (int)monster[uVar4]._mfuty);
+	iVar2 = abs((int)plr[pnum]._px - (int)monster[uVar4]._mfutx);
+	iVar3 = abs((int)plr[pnum]._py - (int)monster[uVar4]._mfuty);
 	if ((1 < iVar2) || (1 < iVar3)) {
 		MakePlrPath__FiiiUc(pnum,(int)monster[uVar4]._mfutx,(int)monster[uVar4]._mfuty,'\0');
 	}
 	uVar1 = *(undefined2 *)(pCmd + 2);
-	(&plr)[pnum].destAction = '\x14';
-	(&plr)[pnum].destParam1 = (char)uVar1;
+	plr[pnum].destAction = '\x14';
+	plr[pnum].destParam1 = (char)uVar1;
 	return;
 }
 
@@ -3020,13 +3022,13 @@ void On_SPELLID__FPC4TCmdi(TCmd *pCmd,int pnum)
 	ClrPlrPath__Fi(pnum);
 	uVar3 = *(undefined2 *)(pCmd + 2);
 	uVar4 = *(undefined2 *)(pCmd + 6);
-	cVar1 = (&plr)[pnum]._pRSplType;
-	(&plr)[pnum].destAction = '\x18';
-	(&plr)[pnum]._pSplFrom = '\0';
-	(&plr)[pnum].destParam1 = (char)uVar3;
-	(&plr)[pnum].destParam2 = (char)uVar4;
-	(&plr)[pnum]._pSpell = (char)uVar2;
-	(&plr)[pnum]._pSplType = cVar1;
+	cVar1 = plr[pnum]._pRSplType;
+	plr[pnum].destAction = '\x18';
+	plr[pnum]._pSplFrom = '\0';
+	plr[pnum].destParam1 = (char)uVar3;
+	plr[pnum].destParam2 = (char)uVar4;
+	plr[pnum]._pSpell = (char)uVar2;
+	plr[pnum]._pSplType = cVar1;
 	return;
 }
 
@@ -3062,13 +3064,13 @@ void On_SPELLPID__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar2 = *(undefined2 *)(pCmd + 2);
 	uVar3 = *(undefined2 *)(pCmd + 6);
 	uVar4 = *(undefined2 *)(pCmd + 4);
-	cVar1 = (&plr)[pnum]._pRSplType;
-	(&plr)[pnum].destAction = '\x19';
-	(&plr)[pnum]._pSplFrom = '\0';
-	(&plr)[pnum].destParam1 = (char)uVar2;
-	(&plr)[pnum].destParam2 = (char)uVar3;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar1;
+	cVar1 = plr[pnum]._pRSplType;
+	plr[pnum].destAction = '\x19';
+	plr[pnum]._pSplFrom = '\0';
+	plr[pnum].destParam1 = (char)uVar2;
+	plr[pnum].destParam2 = (char)uVar3;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar1;
 	return;
 }
 
@@ -3104,13 +3106,13 @@ void On_TSPELLID__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar2 = *(undefined2 *)(pCmd + 2);
 	uVar3 = *(undefined2 *)(pCmd + 6);
 	uVar4 = *(undefined2 *)(pCmd + 4);
-	cVar1 = (&plr)[pnum]._pTSplType;
-	(&plr)[pnum].destAction = '\x18';
-	(&plr)[pnum]._pSplFrom = '\x02';
-	(&plr)[pnum].destParam1 = (char)uVar2;
-	(&plr)[pnum].destParam2 = (char)uVar3;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar1;
+	cVar1 = plr[pnum]._pTSplType;
+	plr[pnum].destAction = '\x18';
+	plr[pnum]._pSplFrom = '\x02';
+	plr[pnum].destParam1 = (char)uVar2;
+	plr[pnum].destParam2 = (char)uVar3;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar1;
 	return;
 }
 
@@ -3146,13 +3148,13 @@ void On_TSPELLPID__FPC4TCmdi(TCmd *pCmd,int pnum)
 	uVar2 = *(undefined2 *)(pCmd + 2);
 	uVar3 = *(undefined2 *)(pCmd + 6);
 	uVar4 = *(undefined2 *)(pCmd + 4);
-	cVar1 = (&plr)[pnum]._pTSplType;
-	(&plr)[pnum].destAction = '\x19';
-	(&plr)[pnum]._pSplFrom = '\x02';
-	(&plr)[pnum].destParam1 = (char)uVar2;
-	(&plr)[pnum].destParam2 = (char)uVar3;
-	(&plr)[pnum]._pSpell = (char)uVar4;
-	(&plr)[pnum]._pSplType = cVar1;
+	cVar1 = plr[pnum]._pTSplType;
+	plr[pnum].destAction = '\x19';
+	plr[pnum]._pSplFrom = '\x02';
+	plr[pnum].destParam1 = (char)uVar2;
+	plr[pnum].destParam2 = (char)uVar3;
+	plr[pnum]._pSpell = (char)uVar4;
+	plr[pnum]._pSplType = cVar1;
 	return;
 }
 
@@ -3179,14 +3181,14 @@ void On_TSPELLPID__FPC4TCmdi(TCmd *pCmd,int pnum)
 void On_KNOCKBACK__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
-	int iVar1;
-	uint uVar2;
+	int d;
+	uint i;
 	
-	uVar2 = (uint)*(ushort *)(pCmd + 2);
-	iVar1 = GetDirection__Fiiii((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)monster[uVar2]._mx,
-															(int)monster[uVar2]._my);
-	FUN_8014b0bc(uVar2,iVar1);
-	FUN_8014b2d8(uVar2,pnum,0);
+	i = (uint)*(ushort *)(pCmd + 2);
+	d = GetDirection__Fiiii((int)plr[pnum]._px,(int)plr[pnum]._py,(int)monster[i]._mx,
+													(int)monster[i]._my);
+	M_GetKnockback__Fii(i,d);
+	M_StartHit__Fiii(i,pnum,0);
 	return;
 }
 
@@ -3272,8 +3274,8 @@ void On_TALKXY__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	MakePlrPath__FiiiUc(pnum,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,'\0');
 	uVar1 = *(undefined2 *)(pCmd + 4);
-	(&plr)[pnum].destAction = '\x11';
-	(&plr)[pnum].destParam1 = (char)uVar1;
+	plr[pnum].destAction = '\x11';
+	plr[pnum].destParam1 = (char)uVar1;
 	return;
 }
 
@@ -3341,7 +3343,7 @@ void On_WARP__FPC4TCmdi(TCmd *pCmd,int pnum)
 	StartWarpLvl__Fii(pnum,(uint)*(ushort *)(pCmd + 2));
 	TeleStop__Fi(pnum);
 	if ((pnum == myplr) && (0xb < (&_pcurs)[pnum])) {
-		pIVar6 = &(&plr)[pnum].HoldItem;
+		pIVar6 = &plr[pnum].HoldItem;
 		pIVar1 = &ItemStruct_800d52e8;
 		do {
 			pIVar7 = pIVar1;
@@ -3355,13 +3357,13 @@ void On_WARP__FPC4TCmdi(TCmd *pCmd,int pnum)
 			pIVar7->_iVMult2 = iVar4;
 			pIVar6 = (ItemStruct *)&pIVar5->_iSeed;
 			pIVar1 = (ItemStruct *)&pIVar7->_iSeed;
-		} while (pIVar6 != (ItemStruct *)&(&plr)[pnum].HoldItem._iSufPower);
+		} while (pIVar6 != (ItemStruct *)&plr[pnum].HoldItem._iSufPower);
 		iVar2 = pIVar5->_ivalue;
 		iVar3 = pIVar5->_iIvalue;
 		((ItemStruct *)&pIVar7->_iSeed)->_iVAdd1 = pIVar6->_iVAdd1;
 		pIVar7->_ivalue = iVar2;
 		pIVar7->_iIvalue = iVar3;
-		FUN_8015e45c(myplr,0x7f);
+		AutoGetItem__Fii(myplr,0x7f);
 	}
 	return;
 }
@@ -3404,12 +3406,12 @@ void On_MONSTDEATH__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	if (pnum != myplr) {
-		if ((uint)currlevel == (&plr)[pnum].plrlevel) {
-			FUN_8014c4e0((uint)*(ushort *)(pCmd + 4),(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd);
+		if ((uint)currlevel == plr[pnum].plrlevel) {
+			M_SyncStartKill__Fiiii((uint)*(ushort *)(pCmd + 4),(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,pnum)
+			;
 		}
 		delta_kill_monster__FiUcUcUc
-							((uint)*(ushort *)(pCmd + 4),pCmd[1].bCmd,pCmd[2].bCmd,
-							 *(uchar *)&(&plr)[pnum].plrlevel);
+							((uint)*(ushort *)(pCmd + 4),pCmd[1].bCmd,pCmd[2].bCmd,*(uchar *)&plr[pnum].plrlevel);
 	}
 	return;
 }
@@ -3452,7 +3454,7 @@ void On_KILLGOLEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	if (pnum != myplr) {
-		delta_kill_monster__FiUcUcUc(pnum,pCmd[1].bCmd,pCmd[2].bCmd,*(uchar *)&(&plr)[pnum].plrlevel);
+		delta_kill_monster__FiUcUcUc(pnum,pCmd[1].bCmd,pCmd[2].bCmd,*(uchar *)&plr[pnum].plrlevel);
 	}
 	return;
 }
@@ -3538,8 +3540,9 @@ void On_AWAKEGOLEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 			iVar3 = iVar3 + 1;
 		}
 		if (bVar1) {
-			FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd
-									 ,(uint)pCmd[3].bCmd,0x21,0,pnum,0,1);
+			AddMissile__Fiiiiiiciii
+								((int)plr[pnum]._px,(int)plr[pnum]._py,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,
+								 (uint)pCmd[3].bCmd,0x21,0,pnum,0,1);
 		}
 	}
 	return;
@@ -3595,7 +3598,7 @@ void On_MONSTDAMAGE__FPC4TCmdi(TCmd *pCmd,int pnum)
 			if (iVar1 >> 6 < 1) {
 				monster[mi]._mhitpoints = 0x40;
 			}
-			delta_monster_hp__FilUc(mi,monster[mi]._mhitpoints,*(uchar *)&(&plr)[pnum].plrlevel);
+			delta_monster_hp__FilUc(mi,monster[mi]._mhitpoints,*(uchar *)&plr[pnum].plrlevel);
 		}
 	}
 	return;
@@ -3679,20 +3682,19 @@ void On_PLRDAMAGE__FPC4TCmdi(TCmd *pCmd,int pnum)
 	int iVar5;
 	
 	uVar2 = (uint)pCmd[1].bCmd;
-	if ((((currlevel != '\0') && (gbBufferMsgs != '\x01')) &&
-			((uint)currlevel == (&plr)[uVar2].plrlevel)) &&
-		 ((uVar4 = *(uint *)(pCmd + 4), uVar4 < 0x2ee01 && (0 < (&plr)[uVar2]._pHitPoints >> 6)))) {
-		(&plr)[uVar2]._pHitPoints = (&plr)[uVar2]._pHitPoints - uVar4;
-		iVar3 = (&plr)[uVar2]._pHitPoints;
-		iVar5 = (&plr)[uVar2]._pMaxHP;
-		(&plr)[uVar2]._pHPBase = (&plr)[uVar2]._pHPBase - uVar4;
+	if ((((currlevel != '\0') && (gbBufferMsgs != '\x01')) && ((uint)currlevel == plr[uVar2].plrlevel)
+			) && ((uVar4 = *(uint *)(pCmd + 4), uVar4 < 0x2ee01 && (0 < plr[uVar2]._pHitPoints >> 6)))) {
+		plr[uVar2]._pHitPoints = plr[uVar2]._pHitPoints - uVar4;
+		iVar3 = plr[uVar2]._pHitPoints;
+		iVar5 = plr[uVar2]._pMaxHP;
+		plr[uVar2]._pHPBase = plr[uVar2]._pHPBase - uVar4;
 		if (iVar5 < iVar3) {
-			lVar1 = (&plr)[uVar2]._pMaxHPBase;
-			(&plr)[uVar2]._pHitPoints = iVar5;
-			(&plr)[uVar2]._pHPBase = lVar1;
+			lVar1 = plr[uVar2]._pMaxHPBase;
+			plr[uVar2]._pHitPoints = iVar5;
+			plr[uVar2]._pHPBase = lVar1;
 		}
-		if ((&plr)[pnum]._pHitPoints >> 6 < 1) {
-			StartPlrKill__FP12PlayerStructi(&plr + pnum,1);
+		if (plr[pnum]._pHitPoints >> 6 < 1) {
+			StartPlrKill__FP12PlayerStructi(plr + pnum,1);
 		}
 	}
 	return;
@@ -3725,7 +3727,7 @@ void On_OPENDOOR__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	uVar1 = *(ushort *)(pCmd + 2);
 	SyncOpObject__Fiii(pnum,0x2b,(uint)uVar1);
-	delta_sync_object__FiUcUc((uint)uVar1,'+',*(uchar *)&(&plr)[pnum].plrlevel);
+	delta_sync_object__FiUcUc((uint)uVar1,'+',*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -3756,7 +3758,7 @@ void On_CLOSEDOOR__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	uVar1 = *(ushort *)(pCmd + 2);
 	SyncOpObject__Fiii(pnum,0x2c,(uint)uVar1);
-	delta_sync_object__FiUcUc((uint)uVar1,',',*(uchar *)&(&plr)[pnum].plrlevel);
+	delta_sync_object__FiUcUc((uint)uVar1,',',*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -3787,7 +3789,7 @@ void On_OPERATEOBJ__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	uVar1 = *(ushort *)(pCmd + 2);
 	SyncOpObject__Fiii(pnum,0x2d,(uint)uVar1);
-	delta_sync_object__FiUcUc((uint)uVar1,'-',*(uchar *)&(&plr)[pnum].plrlevel);
+	delta_sync_object__FiUcUc((uint)uVar1,'-',*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -3818,7 +3820,7 @@ void On_PLROPOBJ__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	uVar1 = *(ushort *)(pCmd + 4);
 	SyncOpObject__Fiii((uint)*(ushort *)(pCmd + 2),0x2e,(uint)uVar1);
-	delta_sync_object__FiUcUc((uint)uVar1,'.',*(uchar *)&(&plr)[pnum].plrlevel);
+	delta_sync_object__FiUcUc((uint)uVar1,'.',*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -3849,7 +3851,7 @@ void On_BREAKOBJ__FPC4TCmdi(TCmd *pCmd,int pnum)
 	
 	uVar1 = *(ushort *)(pCmd + 4);
 	SyncBreakObj__Fii((uint)*(ushort *)(pCmd + 2),(uint)uVar1);
-	delta_sync_object__FiUcUc((uint)uVar1,'/',*(uchar *)&(&plr)[pnum].plrlevel);
+	delta_sync_object__FiUcUc((uint)uVar1,'/',*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -3955,8 +3957,7 @@ void On_DROPITEM__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
 	delta_put_item__FPC9TCmdPItemiiUc
-						((TCmdPItem *)pCmd,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,
-						 *(uchar *)&(&plr)[pnum].plrlevel);
+						((TCmdPItem *)pCmd,(uint)pCmd[1].bCmd,(uint)pCmd[2].bCmd,*(uchar *)&plr[pnum].plrlevel);
 	return;
 }
 
@@ -4003,35 +4004,35 @@ void On_PLAYER_JOINLEVEL__FPC4TCmdi(TCmd *pCmd,int pnum)
 	ushort uVar4;
 	int numFrames;
 	
-	uVar1 = (&plr)[pnum].plractive;
-	(&plr)[pnum]._pLvlChanging = '\0';
+	uVar1 = plr[pnum].plractive;
+	plr[pnum]._pLvlChanging = '\0';
 	if ((uVar1 != '\0') && (pnum != 0)) {
 		bVar2 = pCmd[1].bCmd;
 		bVar3 = pCmd[2].bCmd;
 		uVar4 = *(ushort *)(pCmd + 4);
-		(&plr)[pnum]._pGFXLoad = 0;
-		(&plr)[pnum]._px = (ushort)bVar2;
-		(&plr)[pnum]._py = (ushort)bVar3;
-		(&plr)[pnum].plrlevel = (uint)uVar4;
+		plr[pnum]._pGFXLoad = 0;
+		plr[pnum]._px = (ushort)bVar2;
+		plr[pnum]._py = (ushort)bVar3;
+		plr[pnum].plrlevel = (uint)uVar4;
 		SyncInitPlr__Fi(pnum);
-		if ((&plr)[pnum]._pHitPoints >> 6 < 1) {
-			numFrames = (&plr)[pnum]._pDFrames;
-			(&plr)[pnum]._pgfxnum = '\0';
-			(&plr)[pnum]._pmode = PM_DEATH;
+		if (plr[pnum]._pHitPoints >> 6 < 1) {
+			numFrames = plr[pnum]._pDFrames;
+			plr[pnum]._pgfxnum = '\0';
+			plr[pnum]._pmode = PM_DEATH;
 			NewPlrAnim__Fiiii(pnum,1,numFrames,1);
-			numFrames = (&plr)[pnum]._pAnimLen;
-			(&plr)[pnum]._pAnimFrame = (&plr)[pnum]._pAnimLen + -1;
-			(&plr)[pnum]._pVar8 = (short)(numFrames << 1);
+			numFrames = plr[pnum]._pAnimLen;
+			plr[pnum]._pAnimFrame = plr[pnum]._pAnimLen + -1;
+			plr[pnum]._pVar8 = (short)(numFrames << 1);
 		}
 		else {
 			StartStand__Fii(pnum,0);
 		}
-		if ((&plr)[pnum]._pvid == -1) {
-			numFrames = AddVision__FiiiUc((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,10,(uchar)pnum);
-			(&plr)[pnum]._pvid = (char)numFrames;
+		if (plr[pnum]._pvid == -1) {
+			numFrames = AddVision__FiiiUc((int)plr[pnum]._px,(int)plr[pnum]._py,10,(uchar)pnum);
+			plr[pnum]._pvid = (char)numFrames;
 		}
-		gbActivePlayers = plr.plractive != '\0';
-		if (PlayerStruct_800dbf20.plractive != '\0') {
+		gbActivePlayers = plr[0].plractive != '\0';
+		if (plr[1].plractive != '\0') {
 			gbActivePlayers = gbActivePlayers + '\x01';
 		}
 	}
@@ -4351,21 +4352,21 @@ void On_SYNCQUEST__FPC4TCmdi(TCmd *pCmd,int pnum)
 void On_ENDSHIELD__FPC4TCmdi(TCmd *pCmd,int pnum)
 
 {
-	int iVar1;
-	int iVar2;
-	short *psVar3;
+	int mi;
+	int i;
+	short *psVar1;
 	
 	if (pnum != myplr) {
-		iVar2 = 0;
-		psVar3 = &missileactive;
-		while (iVar2 < nummissiles) {
-			iVar1 = (int)*psVar3;
-			if ((missile[iVar1]._mitype == '\r') && ((int)missile[iVar1]._misource == pnum)) {
-				FUN_8014aac0(iVar1);
-				FUN_8013a8e8(iVar1,iVar2);
+		i = 0;
+		psVar1 = &missileactive;
+		while (i < nummissiles) {
+			mi = (int)*psVar1;
+			if ((missile[mi]._mitype == '\r') && ((int)missile[mi]._misource == pnum)) {
+				ClearMissileSpot__Fi(mi);
+				DeleteMissile__Fii(mi,i);
 			}
-			psVar3 = psVar3 + 1;
-			iVar2 = iVar2 + 1;
+			psVar1 = psVar1 + 1;
+			i = i + 1;
 		}
 	}
 	return;

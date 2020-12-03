@@ -37,15 +37,15 @@ void T_DrawView__Fii(int StartX,int StartY)
 		}
 		if ((chrflag == '\0') && (questlog == '\0')) {
 			if (invflag == '\0') {
-				if ((plr.plractive != '\0') && (plr._pStatPts != 0)) {
+				if ((plr[0].plractive != '\0') && (plr[0]._pStatPts != 0)) {
 					DrawLevelUpIcon__Fi(0);
 				}
-				if ((PlayerStruct_800dbf20.plractive != '\0') && (PlayerStruct_800dbf20._pStatPts != 0)) {
+				if ((plr[1].plractive != '\0') && (plr[1]._pStatPts != 0)) {
 					DrawLevelUpIcon__Fi(1);
 				}
 			}
 			else {
-				FUN_801590b4();
+				DrawInv__Fv();
 			}
 		}
 		if ((((msgflag != '\0') && (_spselflag2 == (TASK *)0x0)) && (PTR_8011b654 == (TASK *)0x0)) &&
@@ -400,14 +400,14 @@ void T_Pass3__Fv(void)
 	T_FillSector__FPUcT0iiiib(P3Tiles,pSector,0,0,0x17,0x17,&DAT_00000001);
 	mem_free_dbg__FPv(pSector);
 	TownFixupBodges__Fv();
-	if (((&plr)[myplr].pTownWarps & 1) == 0) {
+	if ((plr[myplr].pTownWarps & 1) == 0) {
 		T_FillTile__FPUciii(P3Tiles,0x30,0x14,0x140);
 	}
-	if (((&plr)[myplr].pTownWarps & 2) == 0) {
+	if ((plr[myplr].pTownWarps & 2) == 0) {
 		T_FillTile__FPUciii(P3Tiles,0x10,0x44,0x14c);
 		T_FillTile__FPUciii(P3Tiles,0x10,0x46,0x14b);
 	}
-	if (((&plr)[myplr].pTownWarps & 4) == 0) {
+	if ((plr[myplr].pTownWarps & 4) == 0) {
 		y = 0x24;
 		do {
 			lVar1 = ENG_random__Fl(4);
@@ -416,7 +416,7 @@ void T_Pass3__Fv(void)
 			y = x;
 		} while (x < 0x2e);
 	}
-	if ((QuestStruct_800ddb44._qactive == '\x03') || (QuestStruct_800ddb44._qactive == '\0')) {
+	if ((quests[13]._qactive == '\x03') || (quests[13]._qactive == '\0')) {
 		y = 0x47;
 	}
 	else {
@@ -513,10 +513,10 @@ void CreateTown__Fi(int entry)
 	while (iVar2 = 0, iVar3 < 0x70) {
 		iVar1 = iVar3 << 3;
 		do {
-			(&dung_map.dFlags)[iVar1] = '\0';
-			*(undefined2 *)((int)&dung_map.dMonster + iVar1) = 0;
-			(&dung_map.dObject)[iVar1] = '\0';
-			(&dung_map.dItem)[iVar1] = '\0';
+			(&dung_map[0].dFlags)[iVar1] = '\0';
+			*(undefined2 *)((int)&dung_map[0].dMonster + iVar1) = 0;
+			(&dung_map[0].dObject)[iVar1] = '\0';
+			(&dung_map[0].dItem)[iVar1] = '\0';
 			iVar2 = iVar2 + 1;
 			iVar1 = iVar1 + 0x380;
 		} while (iVar2 < 0x70);

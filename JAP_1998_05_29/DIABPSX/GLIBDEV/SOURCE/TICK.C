@@ -31,8 +31,6 @@ void TICK_InitModule(void)
 	/* end block 1 */
 	// End Line: 84
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TICK_Set(ulong Val)
 
 {
@@ -89,8 +87,6 @@ void TICK_Update(void)
 		// Start line: 132
 	/* end block 1 */
 	// End Line: 133
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 ulong TICK_GetAge(ulong OldTick)
 

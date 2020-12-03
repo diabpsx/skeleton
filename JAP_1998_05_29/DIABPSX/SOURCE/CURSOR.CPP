@@ -268,8 +268,8 @@ void CheckTown__Fv(void)
 		iVar6 = 0;
 		if (missile[iVar3]._mitype == '\n') {
 			do {
-				cursmx = iVar1 + (int)(&offset_x)[iVar6];
-				cursmy = iVar2 + (int)(&offset_y)[iVar6];
+				cursmx = iVar1 + (int)offset_x[iVar6];
+				cursmy = iVar2 + (int)offset_y[iVar6];
 				iVar4 = (int)missile[iVar3]._mix;
 				iVar5 = iVar4 + -1;
 				if ((((cursmx == iVar5) && (cursmy == (int)missile[iVar3]._miy)) ||
@@ -282,11 +282,11 @@ void CheckTown__Fv(void)
 						 ((cursmx == iVar4 && (cursmy == (int)missile[iVar3]._miy)))))))) {
 					_trigflag[sel_data] = '\x01';
 					ClearPanel__Fv();
-					__src = GetStr__Fi(0x494);
+					__src = GetStr__Fi(STR_TOWN_PORTAL_1172);
 					strcpy(_infostr + sel_data * 0x100,__src);
-					__src = GetStr__Fi(0x16e);
-					sprintf(&tempstr,__src,(int)missile[iVar3]._misource * 0x19e8 + -0x7ff259f2);
-					AddPanelString__FPCci(&tempstr,1);
+					__src = GetStr__Fi(STR_FROM__S_366);
+					sprintf(tempstr,__src,(int)missile[iVar3]._misource * 0x19e8 + -0x7ff259f2);
+					AddPanelString__FPCci(tempstr,1);
 					cursmx = (int)missile[iVar3]._mix;
 					cursmy = (int)missile[iVar3]._miy;
 					return;
@@ -366,56 +366,57 @@ void CheckRportal__Fv(void)
 
 {
 	int iVar1;
-	char *__src;
 	int iVar2;
-	int StrId;
+	char *__src;
 	int iVar3;
+	text_strs StrId;
 	int iVar4;
 	int iVar5;
 	int iVar6;
+	int iVar7;
 	
-	iVar1 = cursmy;
-	StrId = cursmx;
-	iVar6 = 0;
+	iVar2 = cursmy;
+	iVar1 = cursmx;
+	iVar7 = 0;
 	do {
-		if (nummissiles <= iVar6) {
+		if (nummissiles <= iVar7) {
 			return;
 		}
-		iVar2 = (int)(&missileactive)[iVar6];
-		iVar5 = 0;
-		if (missile[iVar2]._mitype == 'A') {
+		iVar3 = (int)(&missileactive)[iVar7];
+		iVar6 = 0;
+		if (missile[iVar3]._mitype == 'A') {
 			do {
-				cursmx = StrId + (int)(&offset_x)[iVar5];
-				cursmy = iVar1 + (int)(&offset_y)[iVar5];
-				iVar3 = (int)missile[iVar2]._mix;
-				iVar4 = iVar3 + -1;
-				if ((((cursmx == iVar4) && (cursmy == (int)missile[iVar2]._miy)) ||
-						((cursmx == iVar3 && (cursmy == (int)missile[iVar2]._miy + -1)))) ||
-					 ((((cursmx == iVar4 && (cursmy == (int)missile[iVar2]._miy + -1)) ||
-						 ((cursmx == iVar3 + -2 &&
-							((cursmy == (int)missile[iVar2]._miy + -1 || (cursmy == (int)missile[iVar2]._miy + -2)
+				cursmx = iVar1 + (int)offset_x[iVar6];
+				cursmy = iVar2 + (int)offset_y[iVar6];
+				iVar4 = (int)missile[iVar3]._mix;
+				iVar5 = iVar4 + -1;
+				if ((((cursmx == iVar5) && (cursmy == (int)missile[iVar3]._miy)) ||
+						((cursmx == iVar4 && (cursmy == (int)missile[iVar3]._miy + -1)))) ||
+					 ((((cursmx == iVar5 && (cursmy == (int)missile[iVar3]._miy + -1)) ||
+						 ((cursmx == iVar4 + -2 &&
+							((cursmy == (int)missile[iVar3]._miy + -1 || (cursmy == (int)missile[iVar3]._miy + -2)
 							 ))))) ||
-						(((cursmx == iVar4 && (cursmy == (int)missile[iVar2]._miy + -2)) ||
-						 ((cursmx == iVar3 && (cursmy == (int)missile[iVar2]._miy)))))))) {
+						(((cursmx == iVar5 && (cursmy == (int)missile[iVar3]._miy + -2)) ||
+						 ((cursmx == iVar4 && (cursmy == (int)missile[iVar3]._miy)))))))) {
 					_trigflag[sel_data] = '\x01';
 					ClearPanel__Fv();
-					__src = GetStr__Fi(0x31e);
+					__src = GetStr__Fi(STR_PORTAL_TO_798);
 					strcpy(_infostr + sel_data * 0x100,__src);
-					StrId = 0x244;
+					StrId = STR_LEVEL_15_580;
 					if (setlevel == '\0') {
-						StrId = 0x479;
+						StrId = STR_THE_UNHOLY_ALTAR_1145;
 					}
 					__src = GetStr__Fi(StrId);
-					strcpy(&tempstr,__src);
-					AddPanelString__FPCci(&tempstr,1);
-					cursmx = (int)missile[iVar2]._mix;
-					cursmy = (int)missile[iVar2]._miy;
+					strcpy(tempstr,__src);
+					AddPanelString__FPCci(tempstr,1);
+					cursmx = (int)missile[iVar3]._mix;
+					cursmy = (int)missile[iVar3]._miy;
 					return;
 				}
-				iVar5 = iVar5 + 1;
-			} while (iVar5 < 8);
+				iVar6 = iVar6 + 1;
+			} while (iVar6 < 8);
 		}
-		iVar6 = iVar6 + 1;
+		iVar7 = iVar7 + 1;
 	} while( true );
 }
 

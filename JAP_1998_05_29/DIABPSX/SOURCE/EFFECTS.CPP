@@ -271,7 +271,8 @@ void InitMonsterSND__Fi(int monst)
 
 {
 	if (gbSndInited != '\0') {
-		Monsters[monst].Snds = monsterdata[(uint)Monsters[monst].mtype].sndfile;
+		(&monster[0xc5].mMagicRes)[monst * 0xe] =
+				 monsterdata[(uint)(byte)(&monster[0xc5]._mMTidx)[monst * 0x1c]].sndfile;
 	}
 	return;
 }
@@ -342,7 +343,7 @@ uchar calc_snd_position__FiiPlT2(int x,int y,long *plVolume,long *plPan)
 	
 	*plVolume = sglSoundVolume * sglMasterVolume >> 8;
 	*plPan = 0x8000;
-	if ((&dung_map)[x * 0x70 + y].dFlags != '\0') {
+	if (dung_map[x * 0x70 + y].dFlags != '\0') {
 		if (x + y == 0) {
 			return '\x01';
 		}
@@ -473,14 +474,15 @@ void PlayEffect__Fii(int i,int mode)
 	long local_14;
 	
 	ENG_random__Fl(2);
-	if ((((&plr)[myplr].pLvlLoad == '\0') && (gbSndInited != '\0')) && (gbBufferMsgs == '\0')) {
+	if (((plr[myplr].pLvlLoad == '\0') && (gbSndInited != '\0')) && (gbBufferMsgs == '\0')) {
 		cVar1 = monster[i]._mMTidx;
-		uVar2 = snd_playing__Fi((uint)Monsters[(int)cVar1].Snds + mode);
+		uVar2 = snd_playing__Fi((uint)(&monster[0xc5].mMagicRes)[(int)cVar1 * 0xe] + mode);
 		if ((uVar2 == '\0') &&
 			 (uVar2 = calc_snd_position__FiiPlT2
 													((int)monster[i]._mx,(int)monster[i]._my,&local_18,&local_14),
 			 uVar2 != '\0')) {
-			snd_play_msnd__FUsll(Monsters[(int)cVar1].Snds + (short)mode,local_18,local_14);
+			snd_play_msnd__FUsll
+								((&monster[0xc5].mMagicRes)[(int)cVar1 * 0xe] + (short)mode,local_18,local_14);
 		}
 	}
 	return;
@@ -557,8 +559,7 @@ void PlaySFX__Fi(_135fake psfx)
 {
 	int iVar1;
 	
-	if (((psfx != PS_WALK1) || (plr.plractive == '\0')) || (PlayerStruct_800dbf20.plractive == '\0'))
-	{
+	if (((psfx != PS_WALK1) || (plr[0].plractive == '\0')) || (plr[1].plractive == '\0')) {
 		iVar1 = RndSFX__Fi(psfx);
 		PlaySFX_priv__FP4TSFXUcii(sgSFX + iVar1,'\0',0,0);
 	}
@@ -593,7 +594,7 @@ void PlaySfxLoc__Fiii(int psfx,int x,int y)
 	
 	uVar1 = RndSFX__Fi(psfx);
 	if (uVar1 < 4) {
-		if ((plr.plractive != '\0') && (PlayerStruct_800dbf20.plractive != '\0')) {
+		if ((plr[0].plractive != '\0') && (plr[1].plractive != '\0')) {
 			return;
 		}
 		loc = '\0';
@@ -798,7 +799,7 @@ void sound_init__Fv(void)
 	
 	bLoadMask = '\0';
 	if (gbMaxPlayers < 2) {
-		cVar1 = (&plr)[myplr]._pClass;
+		cVar1 = plr[myplr]._pClass;
 		if (cVar1 == '\0') {
 			bLoadMask = ' ';
 		}

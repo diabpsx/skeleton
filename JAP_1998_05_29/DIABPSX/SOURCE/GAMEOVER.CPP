@@ -132,8 +132,6 @@ void GO_DoGameOver__Fv(void)
 	/* end block 2 */
 	// End Line: 233
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GameOverTask__FP4TASK(TASK *T)
 
 {
@@ -260,7 +258,7 @@ void PrintGameOver__Fv(void)
 	local_18.y = 0x70;
 	local_18.w = 0xa0;
 	local_18.h = 0x10;
-	Str = GetStr__Fi(0x177);
+	Str = GetStr__Fi(STR_GAME_OVER_375);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,0,0xc,Str,JustCentre,&local_18,0xff,0xff,0xff);
 	SetOTpos__5CFonti(&MediumFont,OT);
 	SetOTpos__6Dialogi(&DStack40,OT_00);

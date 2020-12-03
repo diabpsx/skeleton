@@ -1057,8 +1057,6 @@ ushort GetDown__C4CPad(CPad *this)
 	/* end block 2 */
 	// End Line: 242
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ushort GetDown__C4CPad(CPad *this)
 
 {

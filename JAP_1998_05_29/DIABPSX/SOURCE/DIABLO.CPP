@@ -119,7 +119,7 @@ void free_game__Fv(void)
 	
 	FreeControlPan__Fv();
 	pnum = 0;
-	FUN_80157274();
+	FreeInvGFX__Fv();
 	FreeQuestText__Fv();
 	FreeStoreMem__Fv();
 	do {
@@ -255,13 +255,11 @@ LAB_800382f8:
 			func_0x8015e77c();
 			InitDungMsgs__Fi(myplr);
 		}
-		if (((FePlayerNo != 0) && (PlayerStruct_800dbf20.plractive == '\0')) &&
-			 (PlayerStruct_800dbf20._pHitPoints != 0)) {
+		if (((FePlayerNo != 0) && (plr[1].plractive == '\0')) && (plr[1]._pHitPoints != 0)) {
 			myplr = 1;
 			NetSendCmdLocParam1__FUcUcUcUcUs
-								('\x01','5',(uchar)PlayerStruct_800dbf20._px,(uchar)PlayerStruct_800dbf20._py,
-								 (uint)(ushort)plr.plrlevel);
-			PlayerStruct_800dbf20.plractive = '\x01';
+								('\x01','5',(uchar)plr[1]._px,(uchar)plr[1]._py,(uint)(ushort)plr[0].plrlevel);
+			plr[1].plractive = '\x01';
 			myplr = 0;
 		}
 		SetAmbientLight__Fv();
@@ -320,7 +318,7 @@ void run_game_loop__FUi(uint uMsg)
 	DoLoadedGame = (void *)0x0;
 	DiabloDieFlag = (void *)0x0;
 	while (gbRunGame != '\0') {
-		if (plr.plractive == '\0') {
+		if (plr[0].plractive == '\0') {
 			myplr = 1;
 		}
 		plr_encrypt__FUc('\0');
@@ -382,7 +380,7 @@ uchar TryIconCurs__Fv(void)
 		bCmd = 'M';
 		if (iVar3 != 10) {
 			if (iVar3 == 7) {
-				FUN_80160a34();
+				DoTelekinesis__Fv();
 				return '\x01';
 			}
 			if (iVar3 == 2) {
@@ -405,16 +403,16 @@ uchar TryIconCurs__Fv(void)
 					else {
 						if (iVar3 == 9) {
 							if ((&_pcursplr)[sel_data] == -1) {
-								uVar2 = FUN_8013a43c(myplr,(int)(&plr)[myplr]._pTSpell);
+								uVar2 = GetSpellLevel__Fii(myplr,(int)plr[myplr]._pTSpell);
 								NetSendCmdLocParam2__FUcUcUcUcUsUs
 													('\x01','\x0f',(uchar)cursmx,(uchar)cursmy,
-													 (int)(&plr)[myplr]._pTSpell & 0xffff,uVar2 & 0xffff);
+													 (int)plr[myplr]._pTSpell & 0xffff,uVar2 & 0xffff);
 							}
 							else {
-								uVar2 = FUN_8013a43c(myplr,(int)(&plr)[myplr]._pTSpell);
+								uVar2 = GetSpellLevel__Fii(myplr,(int)plr[myplr]._pTSpell);
 								NetSendCmdParam3__FUcUcUsUsUs
-													('\x01','\x19',(short)(&_pcursplr)[sel_data],(short)(&plr)[myplr]._pTSpell
-													 ,uVar2 & 0xffff);
+													('\x01','\x19',(short)(&_pcursplr)[sel_data],(short)plr[myplr]._pTSpell,
+													 uVar2 & 0xffff);
 							}
 						}
 						else {
@@ -873,7 +871,7 @@ void ClearOutDungeonMap__Fv(void)
 
 {
 	bool bVar1;
-	uchar *puVar2;
+	undefined *puVar2;
 	ushort *puVar3;
 	int iVar4;
 	int iVar5;
@@ -916,13 +914,13 @@ void ClearOutDungeonMap__Fv(void)
 	iVar6 = 0;
 	while (iVar4 = 0, iVar5 = iVar6, iVar7 < 0x70) {
 		do {
-			(&dung_map.dBits)[iVar5] = '\0';
-			(&dung_map.dObject)[iVar5] = '\0';
-			(&dung_map.dItem)[iVar5] = '\0';
-			(&dung_map.dMissile)[iVar5] = '\0';
-			(&dung_map.dFlags)[iVar5] = '\0';
-			(&dung_map.dTransVal)[iVar5] = '\0';
-			*(undefined2 *)((int)&dung_map.dMonster + iVar5) = 0;
+			(&dung_map[0].dBits)[iVar5] = '\0';
+			(&dung_map[0].dObject)[iVar5] = '\0';
+			(&dung_map[0].dItem)[iVar5] = '\0';
+			(&dung_map[0].dMissile)[iVar5] = '\0';
+			(&dung_map[0].dFlags)[iVar5] = '\0';
+			(&dung_map[0].dTransVal)[iVar5] = '\0';
+			*(undefined2 *)((int)&dung_map[0].dMonster + iVar5) = 0;
 			iVar4 = iVar4 + 1;
 			iVar5 = iVar5 + 8;
 		} while (iVar4 < 0x70);
@@ -942,9 +940,9 @@ void ClearOutDungeonMap__Fv(void)
 			iVar6 = iVar6 + 1;
 		}
 		iVar6 = 0;
-		while (iVar7 = 0, puVar2 = pdungeon, iVar6 < 0x28) {
+		while (iVar7 = 0, puVar2 = &pdungeon, iVar6 < 0x28) {
 			do {
-				puVar2[iVar6] = '\0';
+				puVar2[iVar6] = 0;
 				iVar7 = iVar7 + 1;
 				puVar2 = puVar2 + 0x28;
 			} while (iVar7 < 0x28);
@@ -989,11 +987,11 @@ void AddQuestItems__Fv(void)
 	uchar uVar1;
 	
 	uVar1 = QuestStatus__Fi(0);
-	if ((uVar1 != '\0') && (quests.pad_for_laz == '\0')) {
+	if ((uVar1 != '\0') && (quests[0].pad_for_laz == '\0')) {
 		SpawnRock__Fv();
 	}
 	uVar1 = QuestStatus__Fi(10);
-	if ((uVar1 != '\0') && (QuestStruct_ARRAY_800dda90[6].pad_for_laz == '\0')) {
+	if ((uVar1 != '\0') && (quests[10].pad_for_laz == '\0')) {
 		SpawnQuestItem__Fiiiii(0x10,setpc_x * 2 + 0x1b,setpc_y * 2 + 0x1b,0,1);
 	}
 	return;
@@ -1090,12 +1088,12 @@ void FillCrapBits__Fv(void)
 		if (setlevel != '\0') {
 			return;
 		}
-		if (QuestStruct_800ddb30._qactive == '\0') {
+		if (quests[12]._qactive == '\0') {
 			return;
 		}
-		AllSolid__Fii(QuestStruct_800ddb30._qtx + -1,QuestStruct_800ddb30._qty);
-		y = QuestStruct_800ddb30._qtx + -1;
-		x = QuestStruct_800ddb30._qty + -2;
+		AllSolid__Fii(quests[12]._qtx + -1,quests[12]._qty);
+		y = quests[12]._qtx + -1;
+		x = quests[12]._qty + -2;
 	}
 	else {
 		if (currlevel != '\x0f') {
@@ -1104,11 +1102,11 @@ void FillCrapBits__Fv(void)
 		if (setlevel == '\0') {
 			return;
 		}
-		if (QuestStruct_800ddb6c._qactive == '\0') {
+		if (quests[15]._qactive == '\0') {
 			return;
 		}
 		y = 0x12;
-		if (setlvlnum != QuestStruct_800ddb6c._qslvl) {
+		if (setlvlnum != quests[15]._qslvl) {
 			return;
 		}
 		do {
@@ -1128,7 +1126,7 @@ void FillCrapBits__Fv(void)
 			} while (x < 0x2e);
 			y = y + 1;
 		} while (y < 0x3e);
-		if (3 < QuestStruct_800ddb6c._qvar1) {
+		if (3 < quests[15]._qvar1) {
 			return;
 		}
 		AllSolid__Fii(0x20,0x30);
@@ -1164,20 +1162,20 @@ void FillCrapBits__Fv(void)
 void Lsaveplrpos__Fv(void)
 
 {
-	PlayerStruct_800dbf20._pVar4 = PlayerStruct_800dbf20._py;
-	PlayerStruct_800dbf20._pVar3 = PlayerStruct_800dbf20._px;
-	PlayerStruct_800dbf20._pVar6 = plr._py;
-	PlayerStruct_800dbf20._pVar5 = plr._px;
-	if (PlayerStruct_800dbf20.plractive != '\0') {
-		PlayerStruct_800dbf20._py = 0;
-		PlayerStruct_800dbf20._px = 0;
+	plr[1]._pVar4 = plr[1]._py;
+	plr[1]._pVar3 = plr[1]._px;
+	plr[1]._pVar6 = plr[0]._py;
+	plr[1]._pVar5 = plr[0]._px;
+	if (plr[1].plractive != '\0') {
+		plr[1]._py = 0;
+		plr[1]._px = 0;
 	}
-	if (plr.plractive != '\0') {
-		plr._py = 0;
-		plr._px = 0;
+	if (plr[0].plractive != '\0') {
+		plr[0]._py = 0;
+		plr[0]._px = 0;
 	}
-	PlayerStruct_800dbf20._pVar1 = (short)ViewX;
-	PlayerStruct_800dbf20._pVar2 = (short)ViewY;
+	plr[1]._pVar1 = (short)ViewX;
+	plr[1]._pVar2 = (short)ViewY;
 	return;
 }
 
@@ -1204,8 +1202,8 @@ void Lsaveplrpos__Fv(void)
 void Lrestoreplrpos__Fv(void)
 
 {
-	PlacePlayer__FiiiUc(1,(int)PlayerStruct_800dbf20._pVar3,(int)PlayerStruct_800dbf20._pVar4,'\0');
-	PlacePlayer__FiiiUc(0,(int)PlayerStruct_800dbf20._pVar5,(int)PlayerStruct_800dbf20._pVar6,'\0');
+	PlacePlayer__FiiiUc(1,(int)plr[1]._pVar3,(int)plr[1]._pVar4,'\0');
+	PlacePlayer__FiiiUc(0,(int)plr[1]._pVar5,(int)plr[1]._pVar6,'\0');
 	return;
 }
 
@@ -1301,8 +1299,8 @@ void LoadGameLevel__FUci(uchar firstflag,int lvldir)
 		if (lvldir == 3) {
 			GetReturnLvlPos__Fv();
 		}
-		if (((lvldir == 5) && (GetPortalLvlPos__Fv(), plr.plractive != '\0')) &&
-			 (PlayerStruct_800dbf20.plractive != '\0')) {
+		if (((lvldir == 5) && (GetPortalLvlPos__Fv(), plr[0].plractive != '\0')) &&
+			 (plr[1].plractive != '\0')) {
 			WorldToOffset__Fiii(0,ViewX << 3,ViewY << 3);
 		}
 		pnum = 0;
@@ -1313,7 +1311,7 @@ void LoadGameLevel__FUci(uchar firstflag,int lvldir)
 			puVar7 = (undefined *)0x800da69e;
 			puVar5 = (undefined *)0x0;
 			do {
-				if ((&plr.plractive)[(int)puVar5] != '\0') {
+				if ((&plr[0].plractive)[(int)puVar5] != '\0') {
 					if (!bVar1) {
 						bVar1 = false;
 						if (puVar7[(uint)currlevel] == '\0') goto LAB_80039534;
@@ -1335,7 +1333,7 @@ LAB_80039534:
 				iVar4 = pnum;
 				do {
 					iVar6 = iVar6 + 1;
-					(&dung_map.dFlags)[iVar4] = (&dung_map.dFlags)[iVar4] | 3;
+					(&dung_map[0].dFlags)[iVar4] = (&dung_map[0].dFlags)[iVar4] | 3;
 					iVar4 = iVar4 + 8;
 				} while (iVar6 < 0x60);
 				iVar3 = iVar3 + 1;
@@ -1443,12 +1441,12 @@ LAB_80039534:
 		ppvVar8 = &LoadedChar;
 		puVar5 = (undefined *)0x0;
 		do {
-			*(uint *)((int)&plr.plrlevel + (int)puVar5) = (uint)currlevel;
+			*(uint *)((int)&plr[0].plrlevel + (int)puVar5) = (uint)currlevel;
 			InitPlayerGFX__Fi(pnum);
 			if (lvldir == 4) {
-				iVar3 = AddVision__FiiiUc((int)*(short *)((int)&plr._px + (int)puVar5),
-																	(int)*(short *)((int)&plr._py + (int)puVar5),10,(uchar)pnum);
-				(&plr._pvid)[(int)puVar5] = (char)iVar3;
+				iVar3 = AddVision__FiiiUc((int)*(short *)((int)&plr[0]._px + (int)puVar5),
+																	(int)*(short *)((int)&plr[0]._py + (int)puVar5),10,(uchar)pnum);
+				(&plr[0]._pvid)[(int)puVar5] = (char)iVar3;
 			}
 			else {
 				if (*ppvVar8 == (void *)0x0) {
@@ -1463,14 +1461,11 @@ LAB_80039534:
 			puVar5 = &DAT_000019e8 + (int)puVar5;
 		} while (pnum <= FePlayerNo);
 	}
-	ChangeLightXY__Fiii((int)plr._plid,(int)plr._px,(int)plr._py);
-	ChangeLightOff__Fiii((int)plr._plid,(plr.WorldX & 0xfU) - 8,(plr.WorldY & 0xfU) - 8);
+	ChangeLightXY__Fiii((int)plr[0]._plid,(int)plr[0]._px,(int)plr[0]._py);
+	ChangeLightOff__Fiii((int)plr[0]._plid,(plr[0].WorldX & 0xfU) - 8,(plr[0].WorldY & 0xfU) - 8);
 	if (FePlayerNo != 0) {
-		ChangeLightXY__Fiii((int)PlayerStruct_800dbf20._plid,(int)PlayerStruct_800dbf20._px,
-												(int)PlayerStruct_800dbf20._py);
-		ChangeLightOff__Fiii
-							((int)PlayerStruct_800dbf20._plid,(PlayerStruct_800dbf20.WorldX & 0xfU) - 8,
-							 (PlayerStruct_800dbf20.WorldY & 0xfU) - 8);
+		ChangeLightXY__Fiii((int)plr[1]._plid,(int)plr[1]._px,(int)plr[1]._py);
+		ChangeLightOff__Fiii((int)plr[1]._plid,(plr[1].WorldX & 0xfU) - 8,(plr[1].WorldY & 0xfU) - 8);
 	}
 	if (leveltype != '\0') {
 		ProcessLightList__Fv();
@@ -1604,22 +1599,22 @@ void game_logic__Fv(void)
 				ProcessItems__Fv();
 				ProcessLightList__Fv();
 				ProcessBird__Fv();
-				FUN_8014a694();
+				ProcessMissiles__Fv();
 			}
 			else {
-				FUN_801549e4();
+				ProcessMonsters__Fv();
 				ProcessObjects__Fv();
-				FUN_8014a694();
+				ProcessMissiles__Fv();
 				ProcessItems__Fv();
 				ProcessLightList__Fv();
 				ProcessVisionList__Fv();
 			}
 			sound_update__Fv();
-			if (plr.plractive != '\0') {
+			if (plr[0].plractive != '\0') {
 				myplr = 0;
 				CheckTriggers__Fi(0);
 			}
-			if (PlayerStruct_800dbf20.plractive != '\0') {
+			if (plr[1].plractive != '\0') {
 				myplr = 1;
 				CheckTriggers__Fi(1);
 			}

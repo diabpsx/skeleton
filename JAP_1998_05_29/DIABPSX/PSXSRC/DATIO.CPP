@@ -240,8 +240,6 @@ void * LoSave__5DatIOPCcPUci(DatIO *this,char *Name,uchar *Addr,int Len)
 	/* end block 2 */
 	// End Line: 359
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * LoStreamFile__5DatIOPCciPFPUciib_bii
 								 (DatIO *this,char *Name,int Slice,
 								 TDRFuncPtr_LoStreamFile__5DatIOPCciPFPUciib_bii3Func Func,int Offset,int Size)

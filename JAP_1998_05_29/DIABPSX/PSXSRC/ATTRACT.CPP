@@ -125,8 +125,8 @@ void CreatePlayersFromFeData__FR9FE_CREATE(FE_CREATE *CStruct)
 	pnum = 0;
 	if (0 < CStruct->NumOfPlayers) {
 		iVar3 = 4;
-		P = &plr;
-		__dest = plr._pName;
+		P = plr;
+		__dest = plr[0]._pName;
 		ppvVar1 = &LoadedChar;
 		pFVar2 = CStruct;
 		do {

@@ -245,8 +245,6 @@ void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 	/* end block 2 */
 	// End Line: 134
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PRIM_GetPrim__FPP7POLY_G4(POLY_G4 **Prim)
 
 {
@@ -276,8 +274,6 @@ void PRIM_GetPrim__FPP7POLY_G4(POLY_G4 **Prim)
 	/* end block 2 */
 	// End Line: 134
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PRIM_GetPrim__FPP7POLY_F4(POLY_F4 **Prim)
 
 {
@@ -306,8 +302,6 @@ void PRIM_GetPrim__FPP7POLY_F4(POLY_F4 **Prim)
 		// Start line: 133
 	/* end block 2 */
 	// End Line: 134
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 
@@ -493,8 +487,6 @@ void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 	/* end block 2 */
 	// End Line: 134
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 
 {
@@ -523,8 +515,6 @@ void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 		// Start line: 133
 	/* end block 2 */
 	// End Line: 134
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void PRIM_GetPrim__FPP8POLY_FT4(POLY_FT4 **Prim)
 
@@ -661,8 +651,6 @@ void PRIM_CopyPrim__FP8POLY_FT4T0(POLY_FT4 *Dest,POLY_FT4 *Source)
 	/* end block 2 */
 	// End Line: 155
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PRIM_CopyPrim__FP8POLY_FT4T0(POLY_FT4 *Dest,POLY_FT4 *Source)
 
 {
@@ -759,8 +747,6 @@ POLY_FT4 * PRIM_GetCopy__FP8POLY_FT4(POLY_FT4 *Prim)
 		// Start line: 168
 	/* end block 2 */
 	// End Line: 169
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 POLY_FT4 * PRIM_GetCopy__FP8POLY_FT4(POLY_FT4 *Prim)
 

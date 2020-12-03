@@ -76,8 +76,6 @@ void VID_ScrOn__Fv(void)
 	/* end block 2 */
 	// End Line: 500
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void VID_DoThisNextSync__FPFv_v(TDRFuncPtr_VID_DoThisNextSync__FPFv_v0Func Func)
 
 {

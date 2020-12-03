@@ -257,7 +257,7 @@ void PlaceStoreGold2__Fil(int myplr,long v)
 	iVar10 = myplr * 0x19e8;
 	while ((iVar11 < 0x28 && (!bVar1))) {
 		if (*(char *)(iVar11 + iVar10 + -0x7ff24540) == '\0') {
-			i = (&plr)[myplr]._pNumInv;
+			i = plr[myplr]._pNumInv;
 			GetGoldSeed__FiP10ItemStruct(myplr,_golditem + StorePlrNo);
 			pIVar2 = _golditem + StorePlrNo;
 			pIVar8 = _golditem + StorePlrNo;
@@ -280,9 +280,9 @@ void PlaceStoreGold2__Fil(int myplr,long v)
 			piVar9[4] = pIVar8->_iVAdd1;
 			piVar9[5] = iVar4;
 			piVar9[6] = iVar5;
-			(&plr)[myplr]._pNumInv = (&plr)[myplr]._pNumInv + 1;
-			*(undefined *)(iVar10 + -0x7ff24540 + iVar11) = (char)(&plr)[myplr]._pNumInv;
-			(&plr)[myplr].InvList[i]._ivalue = v;
+			plr[myplr]._pNumInv = plr[myplr]._pNumInv + 1;
+			*(undefined *)(iVar10 + -0x7ff24540 + iVar11) = (char)plr[myplr]._pNumInv;
+			plr[myplr].InvList[i]._ivalue = v;
 			SetGoldCurs__Fii(myplr,i);
 			bVar1 = true;
 		}
@@ -318,8 +318,8 @@ void GivePlayerDosh__Fil(int PlayerNo,long cost)
 	int iVar2;
 	int i;
 	
-	iVar2 = (&plr)[PlayerNo]._pNumInv;
-	(&plr)[PlayerNo]._pGold = (&plr)[PlayerNo]._pGold + cost;
+	iVar2 = plr[PlayerNo]._pNumInv;
+	plr[PlayerNo]._pGold = plr[PlayerNo]._pGold + cost;
 	i = 0;
 	if (0 < iVar2) {
 		iVar2 = 0;
@@ -327,24 +327,24 @@ void GivePlayerDosh__Fil(int PlayerNo,long cost)
 			if (cost < 1) {
 				return;
 			}
-			if (*(short *)((int)&(&plr)[PlayerNo].InvList[0]._itype + iVar2) == 0xb) {
-				puVar1 = *(undefined **)((int)&(&plr)[PlayerNo].InvList[0]._ivalue + iVar2);
+			if (*(short *)((int)&plr[PlayerNo].InvList[0]._itype + iVar2) == 0xb) {
+				puVar1 = *(undefined **)((int)&plr[PlayerNo].InvList[0]._ivalue + iVar2);
 				if (puVar1 != &DAT_00001388) {
 					if ((int)(puVar1 + cost) < 0x1389) {
-						*(undefined **)((int)&(&plr)[PlayerNo].InvList[0]._ivalue + iVar2) = puVar1 + cost;
+						*(undefined **)((int)&plr[PlayerNo].InvList[0]._ivalue + iVar2) = puVar1 + cost;
 						SetGoldCurs__Fii(PlayerNo,i);
 						cost = 0;
 					}
 					else {
 						cost = (long)(puVar1 + (int)((undefined *)cost + -5000));
-						*(undefined4 *)((int)&(&plr)[PlayerNo].InvList[0]._ivalue + iVar2) = 5000;
+						*(undefined4 *)((int)&plr[PlayerNo].InvList[0]._ivalue + iVar2) = 5000;
 						SetGoldCurs__Fii(PlayerNo,i);
 					}
 				}
 			}
 			i = i + 1;
 			iVar2 = iVar2 + 0x6c;
-		} while (i < (&plr)[PlayerNo]._pNumInv);
+		} while (i < plr[PlayerNo]._pNumInv);
 	}
 	if (0 < cost) {
 		while (5000 < cost) {
@@ -431,16 +431,16 @@ void RemoveDupInvItem__Fii(int pnum,int iv)
 	undefined4 *puVar11;
 	undefined4 *puVar12;
 	
-	pcVar3 = (&plr)[pnum].InvGrid;
+	pcVar3 = plr[pnum].InvGrid;
 	do {
 		if (((int)*pcVar3 == iv + 1) || ((int)*pcVar3 == -(iv + 1))) {
 			*pcVar3 = '\0';
 		}
 		pcVar3 = pcVar3 + 1;
 	} while ((int)pcVar3 < pnum * 0x19e8 + -0x7ff24518);
-	if ((&plr)[pnum]._pNumInv != 0) {
-		(&plr)[pnum]._pNumInv = (&plr)[pnum]._pNumInv + -1;
-		iVar6 = (&plr)[pnum]._pNumInv;
+	if (plr[pnum]._pNumInv != 0) {
+		plr[pnum]._pNumInv = plr[pnum]._pNumInv + -1;
+		iVar6 = plr[pnum]._pNumInv;
 		if ((0 < iVar6) && (iVar6 != iv)) {
 			iVar4 = pnum * 0x19e8 + -0x7ff25624;
 			puVar9 = (undefined4 *)(iVar6 * 0x6c + iVar4);
@@ -465,12 +465,12 @@ void RemoveDupInvItem__Fii(int pnum,int iv)
 			puVar12[5] = uVar5;
 			puVar12[6] = uVar7;
 			cVar1 = (char)iv + '\x01';
-			pcVar3 = (&plr)[pnum].InvGrid;
+			pcVar3 = plr[pnum].InvGrid;
 			do {
-				if ((int)*pcVar3 == (&plr)[pnum]._pNumInv + 1) {
+				if ((int)*pcVar3 == plr[pnum]._pNumInv + 1) {
 					*pcVar3 = cVar1;
 				}
-				if ((int)*pcVar3 == ~(&plr)[pnum]._pNumInv) {
+				if ((int)*pcVar3 == ~plr[pnum]._pNumInv) {
 					*pcVar3 = -cVar1;
 				}
 				pcVar3 = pcVar3 + 1;
@@ -519,7 +519,7 @@ long DetectDup__FP10ItemStructi(ItemStruct *Item,int PlayerNo)
 	lVar2 = CalcItemVal__FP10ItemStruct(Item);
 	iVar6 = 0;
 	iVar5 = 6;
-	psVar3 = &(&plr)[PlayerNo].InvBody[0]._itype;
+	psVar3 = &plr[PlayerNo].InvBody[0]._itype;
 	do {
 		if (((*psVar3 != -1) && (Item->_iCreateInfo == psVar3[-4])) &&
 			 (Item->_iSeed == *(int *)(psVar3 + -0xe))) {
@@ -533,9 +533,9 @@ LAB_80085034:
 	do {
 		bVar1 = true;
 		iv = 0;
-		iVar5 = (&plr)[PlayerNo]._pNumInv + -1;
+		iVar5 = plr[PlayerNo]._pNumInv + -1;
 		if (iVar5 != -1) {
-			piVar4 = &(&plr)[PlayerNo].InvList[0]._iSeed;
+			piVar4 = &plr[PlayerNo].InvList[0]._iSeed;
 			do {
 				if (!bVar1) goto LAB_80085034;
 				if (((*(short *)(piVar4 + 7) != -1) && (*(short *)(piVar4 + 7) != 0xb)) &&
@@ -551,7 +551,7 @@ LAB_80085034:
 		}
 		if (bVar1) {
 			iVar5 = 7;
-			psVar3 = &(&plr)[PlayerNo].SpdList[0]._itype;
+			psVar3 = &plr[PlayerNo].SpdList[0]._itype;
 			do {
 				if (((*psVar3 != -1) && (Item->_iCreateInfo == psVar3[-4])) &&
 					 (Item->_iSeed == *(int *)(psVar3 + -0xe))) {
@@ -609,9 +609,9 @@ void WinterSales__Fi(int PlayerNo)
 	if (PlayerNo != 0) {
 		CalcPlrInv__FiUc(0,'\x01');
 		CalcPlrInv__FiUc(1,'\x01');
-		Item = plr.InvBody;
+		Item = plr[0].InvBody;
 		iv = 6;
-		psVar4 = &plr.InvBody[0]._itype;
+		psVar4 = &plr[0].InvBody[0]._itype;
 		LONG_8011ab1c = 0;
 		PDosh = 0;
 		do {
@@ -627,8 +627,8 @@ LAB_80085284:
 		do {
 			bVar1 = true;
 			iv = 0;
-			Item = plr.InvList;
-			iVar2 = plr._pNumInv;
+			Item = plr[0].InvList;
+			iVar2 = plr[0]._pNumInv;
 			while (iVar2 = iVar2 + -1, iVar2 != -1) {
 				if (!bVar1) goto LAB_80085284;
 				if (((Item->_itype != -1) && (Item->_itype != 0xb)) &&
@@ -641,9 +641,9 @@ LAB_80085284:
 				Item = Item + 1;
 			}
 		} while (!bVar1);
-		Item = plr.SpdList;
+		Item = plr[0].SpdList;
 		iv = 7;
-		psVar4 = &plr.SpdList[0]._itype;
+		psVar4 = &plr[0].SpdList[0]._itype;
 		do {
 			if ((*psVar4 != -1) && (lVar3 = DetectDup__FP10ItemStructi(Item,1), lVar3 != 0)) {
 				*psVar4 = -1;
@@ -779,10 +779,10 @@ void KeefDaFeef__Fi(int PlayerNo)
 	
 	CalcPlrInv__FiUc(0,'\x01');
 	CalcPlrInv__FiUc(1,'\x01');
-	pi = (&plr)[PlayerNo].InvBody;
+	pi = plr[PlayerNo].InvBody;
 	iVar6 = 6;
 	plVar2 = &PDosh + PlayerNo;
-	pcVar4 = &(&plr)[PlayerNo].InvBody[0]._iUid;
+	pcVar4 = &plr[PlayerNo].InvBody[0]._iUid;
 	LONG_8011ab1c = 0;
 	*plVar2 = 0;
 	do {
@@ -800,10 +800,10 @@ LAB_80085640:
 	do {
 		bVar1 = true;
 		iv = 0;
-		iVar6 = (&plr)[PlayerNo]._pNumInv + -1;
-		pi = (&plr)[PlayerNo].InvList;
+		iVar6 = plr[PlayerNo]._pNumInv + -1;
+		pi = plr[PlayerNo].InvList;
 		if (iVar6 != -1) {
-			pcVar4 = &(&plr)[PlayerNo].InvList[0]._iUid;
+			pcVar4 = &plr[PlayerNo].InvList[0]._iUid;
 			do {
 				if (!bVar1) goto LAB_80085640;
 				if ((*(short *)(pcVar4 + -8) != -1) && (iVar3 = SpecUn__FP10ItemStruct(pi), iVar3 != 0)) {
@@ -820,9 +820,9 @@ LAB_80085640:
 			} while (iVar6 != -1);
 		}
 		if (bVar1) {
-			pi = (&plr)[PlayerNo].SpdList;
+			pi = plr[PlayerNo].SpdList;
 			iVar6 = 7;
-			psVar5 = &(&plr)[PlayerNo].SpdList[0]._itype;
+			psVar5 = &plr[PlayerNo].SpdList[0]._itype;
 			do {
 				if ((*psVar5 != -1) && (iv = SpecUn__FP10ItemStruct(pi), iv != 0)) {
 					iv = CalcItemVal__FP10ItemStruct(pi);

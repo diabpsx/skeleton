@@ -121,7 +121,7 @@ uchar any_belt_items__Fv(void)
 	iVar2 = 0;
 	iVar1 = myplr * 0x19e8;
 	do {
-		if (*(short *)((int)&plr.SpdList[0]._itype + iVar1) != -1) {
+		if (*(short *)((int)&plr[0].SpdList[0]._itype + iVar1) != -1) {
 			return '\x01';
 		}
 		iVar2 = iVar2 + 1;
@@ -163,7 +163,7 @@ void get_last_inv__Fv(void)
 	if (-1 < iVar3) {
 		iVar2 = iVar3 * 0x6c + myplr * 0x19e8;
 		do {
-			if (*(short *)((int)&plr.SpdList[0]._itype + iVar2) != -1) {
+			if (*(short *)((int)&plr[0].SpdList[0]._itype + iVar2) != -1) {
 				_pcurr_inv[sel_data] = iVar3;
 				return;
 			}
@@ -215,7 +215,7 @@ void get_next_inv__Fv(void)
 	if (iVar3 < 8) {
 		iVar2 = iVar3 * 0x6c + myplr * 0x19e8;
 		do {
-			if (*(short *)((int)&plr.SpdList[0]._itype + iVar2) != -1) {
+			if (*(short *)((int)&plr[0].SpdList[0]._itype + iVar2) != -1) {
 				_pcurr_inv[sel_data] = iVar3;
 				return;
 			}
@@ -564,9 +564,9 @@ void pad_func_Attack__Fi(int pnum)
 	short sVar3;
 	short sVar4;
 	bool bVar5;
+	uchar uVar6;
 	SpellTarget *this;
-	void *pvVar6;
-	uint uVar7;
+	void *pvVar7;
 	uchar x;
 	uchar y;
 	int x1;
@@ -576,12 +576,12 @@ void pad_func_Attack__Fi(int pnum)
 	PlayerStruct *p;
 	uint pnum_00;
 	
-	p = &plr + pnum;
-	x1 = (int)(&plr)[pnum]._px;
-	y1 = (int)(&plr)[pnum]._py;
+	p = plr + pnum;
+	x1 = (int)plr[pnum]._px;
+	y1 = (int)plr[pnum]._py;
 	this = GetSpellTarget__Fi(pnum);
-	pvVar6 = Active__11SpellTarget(this);
-	if (pvVar6 != (void *)0x0) {
+	pvVar7 = Active__11SpellTarget(this);
+	if (pvVar7 != (void *)0x0) {
 		NewCursor__Fi(1);
 		RemoveTargetCursor__Fi(pnum);
 		return;
@@ -590,7 +590,7 @@ void pad_func_Attack__Fi(int pnum)
 		if (1 < p->_pmode + ~PM_WALK3) {
 			return;
 		}
-		if ((&plr)[pnum]._pAnimFrame < (&plr)[pnum]._pAFNum) {
+		if (plr[pnum]._pAnimFrame < plr[pnum]._pAFNum) {
 			return;
 		}
 	}
@@ -610,10 +610,10 @@ LAB_800a1114:
 			}
 			x = object[x2]._ox;
 			y = object[x2]._oy;
-			(&plr)[pnum]._pVar6 = (short)(char)x;
-			(&plr)[pnum]._pVar7 = (short)(char)y;
+			plr[pnum]._pVar6 = (short)(char)x;
+			plr[pnum]._pVar7 = (short)(char)y;
 			x1 = GetDirection__Fiiii(x1,y1,(int)(char)x,(int)(char)y);
-			(&plr)[pnum]._pdir = (char)x1;
+			plr[pnum]._pdir = (char)x1;
 			StartStand__Fii(pnum,(int)(char)x1);
 			goto LAB_800a1364;
 		}
@@ -622,16 +622,16 @@ LAB_800a1114:
 		if ((&_pcursmonst)[sel_data] == -1) {
 			if (((int)(&_pcursobj)[sel_data] == -1) ||
 				 (object[(int)(&_pcursobj)[sel_data]]._oBreak != '\x01')) {
-				cVar2 = (&offset_x)[(int)(&plr)[pnum]._pdir];
-				cVar1 = (&plr)[pnum]._pdir;
-				(&plr)[pnum]._pVar6 = (short)((int)cVar2 + x1);
+				cVar2 = offset_x[(int)plr[pnum]._pdir];
+				cVar1 = plr[pnum]._pdir;
+				plr[pnum]._pVar6 = (short)((int)cVar2 + x1);
 				x2 = ((int)cVar2 + x1) * 0x10000;
-				y2 = ((int)(&offset_y)[(int)cVar1] + y1) * 0x10000;
-				(&plr)[pnum]._pVar7 = (short)((int)(&offset_y)[(int)cVar1] + y1);
+				y2 = ((int)offset_y[(int)cVar1] + y1) * 0x10000;
+				plr[pnum]._pVar7 = (short)((int)offset_y[(int)cVar1] + y1);
 				x1 = GetDirection__Fiiii(x1,y1,x2 >> 0x10,y2 >> 0x10);
 				x = (uchar)((uint)x2 >> 0x10);
 				y = (uchar)((uint)y2 >> 0x10);
-				(&plr)[pnum]._pdir = (char)x1;
+				plr[pnum]._pdir = (char)x1;
 				goto LAB_800a1364;
 			}
 			goto LAB_800a1114;
@@ -639,36 +639,36 @@ LAB_800a1114:
 	}
 	pnum_00 = pnum ^ 1;
 	SetFindMonsterXY__FP12PlayerStructi(p,(&_pcursmonst)[sel_data]);
-	sVar3 = (&plr)[pnum]._pVar6;
+	sVar3 = plr[pnum]._pVar6;
 	x2 = (int)sVar3;
-	sVar4 = (&plr)[pnum]._pVar7;
+	sVar4 = plr[pnum]._pVar7;
 	y2 = (int)sVar4;
 	x1 = GetDirection__Fiiii(x1,y1,x2,y2);
-	(&plr)[pnum]._pdir = (char)x1;
-	(&plr)[pnum].walkpath[0] = -1;
+	plr[pnum]._pdir = (char)x1;
+	plr[pnum].walkpath[0] = -1;
 	x = (uchar)sVar3;
 	y = (uchar)sVar4;
 	if (leveltype != '\0') {
-		uVar7 = FUN_8015694c((&_pcursmonst)[sel_data]);
-		if ((uVar7 & 0xff) == 0) {
+		uVar6 = CanTalkToMonst__Fi((&_pcursmonst)[sel_data]);
+		if (uVar6 == '\0') {
 LAB_800a1364:
 			NetSendCmdLoc__FUcUcUcUc('\x01','7',x,y);
 			return;
 		}
 		SetFindMonsterXY__FP12PlayerStructi(p,(&_pcursmonst)[sel_data]);
 		bVar5 = false;
-		x1 = abs((int)(&plr)[pnum]._px - x2);
+		x1 = abs((int)plr[pnum]._px - x2);
 		if (x1 < 2) {
-			x1 = abs((int)(&plr)[pnum]._py - y2);
+			x1 = abs((int)plr[pnum]._py - y2);
 			bVar5 = x1 < 2;
 		}
 		if (!bVar5) {
 			return;
 		}
 	}
-	StartStand__Fii(pnum,(int)(&plr)[pnum]._pdir);
-	if ((&plr)[pnum_00]._pmode == PM_WALK) {
-		x1 = GetDirection__Fiiii((int)(&plr)[pnum_00]._px,(int)(&plr)[pnum_00]._py,x2,y2);
+	StartStand__Fii(pnum,(int)plr[pnum]._pdir);
+	if (plr[pnum_00]._pmode == PM_WALK) {
+		x1 = GetDirection__Fiiii((int)plr[pnum_00]._px,(int)plr[pnum_00]._py,x2,y2);
 		StartStand__Fii(pnum_00,x1);
 	}
 	NetSendCmdLocParam1__FUcUcUcUcUs('\x01','\x1d',x,y,(uint)*(ushort *)(&_pcursmonst + sel_data));
@@ -759,13 +759,13 @@ void pad_func_Action__Fi(int pnum)
 	int dir;
 	uchar bCmd;
 	
-	sVar1 = (&plr)[pnum]._px;
-	sVar2 = (&plr)[pnum]._py;
+	sVar1 = plr[pnum]._px;
+	sVar2 = plr[pnum]._py;
 	pTVar4 = TSK_Exist((TASK *)DrawObjTask__FP4TASK,0x666,0xffffffff);
 	if ((pTVar4 == (TASK *)0x0) &&
 		 (((uint)questlog | (int)stextflag | (uint)qtextflag | (uint)chrflag | (uint)invflag |
 			 (uint)optionsflag | (uint)(&_spselflag2)[pnum] | (uint)sbookflag) == 0)) {
-		(&plr)[pnum].walkpath[0] = -1;
+		plr[pnum].walkpath[0] = -1;
 		dir = (int)(&_pcursobj)[sel_data];
 		if ((dir != -1) &&
 			 (((&_pcursitem)[sel_data] == -1 ||
@@ -781,8 +781,7 @@ void pad_func_Action__Fi(int pnum)
 				bVar3 = true;
 			}
 			if (bVar3) {
-				dir = GetDirection__Fiiii((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)(char)x,
-																	(int)(char)y);
+				dir = GetDirection__Fiiii((int)plr[pnum]._px,(int)plr[pnum]._py,(int)(char)x,(int)(char)y);
 				StartStand__Fii(pnum,dir);
 				bCmd = '\x10';
 				if ((&_pcurs)[myplr] == 5) {
@@ -798,7 +797,7 @@ void pad_func_Action__Fi(int pnum)
 				x = (&_pfind_list)[sel_data * 10].x;
 				y = (&_pfind_list)[sel_data * 10].y;
 				SetItemMinStats__FPC12PlayerStructP10ItemStruct
-									(&plr + pnum,item + (int)(&_pcursitem)[sel_data]);
+									(plr + pnum,item + (int)(&_pcursitem)[sel_data]);
 				NetSendCmdLocParam1__FUcUcUcUcUs('\x01','*',x,y,(int)(&_pcursitem)[sel_data] & 0xffff);
 			}
 			else {
@@ -978,14 +977,14 @@ void pad_func_Cast_Spell__Fi(int pnum)
 	uint uVar8;
 	int sp;
 	
-	sp = (&plr)[pnum]._pRSpell;
+	sp = plr[pnum]._pRSpell;
 	pCVar4 = BL_GetCurrentBlocks__Fv();
 	iVar3 = myplr;
 	PAD_GetPad__FiUc(pnum,'\0');
 	if (pCVar4 == (CBlocks *)0x0) {
 		return;
 	}
-	if (((&plr)[pnum]._pmode == PM_SPELL) && ((int)(&plr)[pnum]._pVar8 <= (&plr)[pnum]._pSFNum)) {
+	if ((plr[pnum]._pmode == PM_SPELL) && ((int)plr[pnum]._pVar8 <= plr[pnum]._pSFNum)) {
 		return;
 	}
 	if (((uint)questlog | (int)stextflag | (uint)qtextflag | (uint)chrflag | (uint)invflag |
@@ -1003,11 +1002,11 @@ LAB_800a1978:
 	}
 	else {
 		if ((sp == 0x17) || (sp == 10)) goto LAB_800a1978;
-		if ((sp == 0x20) && ((&plr)[pnum ^ 1].plractive != '\0')) {
+		if ((sp == 0x20) && (plr[pnum ^ 1].plractive != '\0')) {
 			myplr = pnum;
 			return;
 		}
-		if ((sp == 0x22) && ((&plr)[pnum ^ 1].plractive == '\0')) {
+		if ((sp == 0x22) && (plr[pnum ^ 1].plractive == '\0')) {
 			myplr = pnum;
 			return;
 		}
@@ -1019,7 +1018,7 @@ LAB_800a1978:
 		if (pvVar5 == (void *)0x0) {
 			dir = (&_pcursmonst)[sel_data];
 			if (dir != -1) {
-				dir = GetDirection__Fiiii((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)monster[dir]._mx,
+				dir = GetDirection__Fiiii((int)plr[pnum]._px,(int)plr[pnum]._py,(int)monster[dir]._mx,
 																	(int)monster[dir]._my);
 				StartStand__Fii(pnum,dir);
 			}
@@ -1027,9 +1026,9 @@ LAB_800a1978:
 			if ((sp == 0x22) || (sp == 0x20)) {
 				uVar8 = pnum ^ 1;
 				*(undefined **)&pSVar7->active = &DAT_00000001;
-				pSVar7->_sx = (&plr)[uVar8]._px;
+				pSVar7->_sx = plr[uVar8]._px;
 				sp = sel_data;
-				pSVar7->_sy = (&plr)[uVar8]._py;
+				pSVar7->_sy = plr[uVar8]._py;
 				(&_pcursplr)[sp] = (char)uVar8;
 			}
 			else {
@@ -1038,7 +1037,7 @@ LAB_800a1978:
 				}
 			}
 			CheckPlrSpell__Fv();
-			if ((&plr)[pnum].destAction == -1) {
+			if (plr[pnum].destAction == -1) {
 				(&_pcursplr)[sel_data] = -1;
 			}
 			RemoveTargetCursor__Fi(pnum);
@@ -1056,13 +1055,13 @@ LAB_800a1978:
 					myplr = iVar3;
 				}
 				else {
-					cVar1 = (&plr)[pnum]._pRSplType;
-					sp = (&plr)[pnum]._pRSpell;
-					cVar2 = (&plr)[pnum]._pRSplType;
-					(&plr)[pnum]._pTSpell = (char)(&plr)[pnum]._pRSpell;
-					(&plr)[pnum]._pTSplType = cVar1;
-					(&plr)[pnum]._pSpell = (char)sp;
-					(&plr)[pnum]._pSplType = cVar2;
+					cVar1 = plr[pnum]._pRSplType;
+					sp = plr[pnum]._pRSpell;
+					cVar2 = plr[pnum]._pRSplType;
+					plr[pnum]._pTSpell = (char)plr[pnum]._pRSpell;
+					plr[pnum]._pTSplType = cVar1;
+					plr[pnum]._pSpell = (char)sp;
+					plr[pnum]._pSplType = cVar2;
 					InitTargetCursor__Fi(pnum);
 					myplr = iVar3;
 				}
@@ -1126,7 +1125,7 @@ void pad_func_Use_Item__Fi(int pnum)
 	pvVar2 = Active__11SpellTarget(this);
 	if (((uVar4 | (uint)pvVar2) == 0) && (_pcurr_inv[sel_data] != -1)) {
 		NewCursor__Fi(1);
-		if ((&plr)[pnum].SpdList[_pcurr_inv[sel_data]]._iMiscId == '\x15') {
+		if (plr[pnum].SpdList[_pcurr_inv[sel_data]]._iMiscId == '\x15') {
 			this = GetSpellTarget__Fi(pnum);
 			puVar3 = (undefined *)Active__11SpellTarget(this);
 			if (puVar3 == &DAT_00000001) {
@@ -1134,8 +1133,8 @@ void pad_func_Use_Item__Fi(int pnum)
 				return;
 			}
 		}
-		uVar4 = FUN_80160470(pnum,_pcurr_inv[sel_data] + 0x2f);
-		if ((uVar4 & 0xff) == 0) {
+		uVar1 = UseInvItem__Fii(pnum,_pcurr_inv[sel_data] + 0x2f);
+		if (uVar1 == '\0') {
 			PlaySFX__Fi(IS_TITERR);
 		}
 		else {
@@ -1186,7 +1185,7 @@ void pad_func_BeltList__Fi(int pnum)
 	code *var3;
 	
 	uVar1 = any_belt_items__Fv();
-	if ((uVar1 == '\0') || ((&plr)[pnum]._pmode == PM_SPELL)) {
+	if ((uVar1 == '\0') || (plr[pnum]._pmode == PM_SPELL)) {
 		PlaySFX__Fi(IS_TITERR);
 	}
 	else {
@@ -1515,19 +1514,19 @@ void pad_func_Quick_Spell__Fi(int pnum)
 	
 	iVar6 = (int)QSpell[pnum];
 	cVar7 = _spltotype[pnum];
-	Spell = (&plr)[pnum]._pRSpell;
-	cVar1 = (&plr)[pnum]._pRSplType;
+	Spell = plr[pnum]._pRSpell;
+	cVar1 = plr[pnum]._pRSplType;
 	this = GetSpellTarget__Fi(pnum);
 	pvVar2 = Active__11SpellTarget(this);
 	if (pvVar2 == (void *)0x0) {
 		if (_spltotype[pnum] == '\x03') {
-			uVar3 = *(uint *)((int)&(&plr)[pnum]._pISpells + 4);
+			uVar3 = *(uint *)((int)&plr[pnum]._pISpells + 4);
 			uVar4 = iVar6 - 1;
 			if ((int)(uVar4 * 0x4000000) < 0) {
 				uVar5 = uVar3 >> (uVar4 & 0x1f);
 			}
 			else {
-				uVar5 = *(uint *)&(&plr)[pnum]._pISpells >> (uVar4 & 0x1f);
+				uVar5 = *(uint *)&plr[pnum]._pISpells >> (uVar4 & 0x1f);
 				if (uVar4 * 0x4000000 != 0) {
 					uVar5 = uVar5 | uVar3 << (-uVar4 & 0x1f);
 				}
@@ -1537,8 +1536,8 @@ void pad_func_Quick_Spell__Fi(int pnum)
 				cVar7 = '\x04';
 			}
 		}
-		(&plr)[pnum]._pRSpell = iVar6;
-		(&plr)[pnum]._pRSplType = cVar7;
+		plr[pnum]._pRSpell = iVar6;
+		plr[pnum]._pRSplType = cVar7;
 		SetQSpell__Fiii(pnum,Spell,(int)cVar1);
 		PlaySFX__Fi(IS_TITLEMOV);
 		CalcPlrScrolls__Fi(pnum);
@@ -1584,57 +1583,58 @@ void check_inv__FiPci(int pnum,char *ilist,int entries)
 
 {
 	byte bVar1;
-	uint uVar2;
+	uchar uVar2;
+	uint uVar3;
 	SpellTarget *this;
-	void *pvVar3;
-	PLR_MODE *pPVar4;
-	int iVar5;
-	uint uVar6;
-	PlayerStruct *pPVar7;
-	int iVar8;
-	char *pcVar9;
-	PlayerStruct *pPVar10;
+	void *pvVar4;
+	PLR_MODE *pPVar5;
+	int iVar6;
+	uint uVar7;
+	PlayerStruct *pPVar8;
+	int iVar9;
+	char *pcVar10;
+	PlayerStruct *pPVar11;
 	
-	pPVar10 = &plr + pnum;
-	uVar6 = (int)stextflag | (uint)qtextflag | (uint)PauseMode | (uint)chrflag | (uint)invflag |
+	pPVar11 = plr + pnum;
+	uVar7 = (int)stextflag | (uint)qtextflag | (uint)PauseMode | (uint)chrflag | (uint)invflag |
 					(uint)questlog | (uint)optionsflag;
-	uVar2 = (uint)sbookflag;
+	uVar3 = (uint)sbookflag;
 	bVar1 = (&_SpdBeltSelFlag)[pnum];
 	this = GetSpellTarget__Fi(pnum);
-	pvVar3 = Active__11SpellTarget(this);
-	if (((uVar6 | uVar2 | (uint)bVar1 | (uint)pvVar3) == 0) &&
-		 (NewCursor__Fi(1), pcVar9 = ilist, 0 < entries)) {
+	pvVar4 = Active__11SpellTarget(this);
+	if (((uVar7 | uVar3 | (uint)bVar1 | (uint)pvVar4) == 0) &&
+		 (NewCursor__Fi(1), pcVar10 = ilist, 0 < entries)) {
 		do {
-			iVar8 = 0;
+			iVar9 = 0;
 			do {
-				iVar5 = (int)pPVar10->InvGrid[iVar8];
-				if (((((0 < iVar5) &&
-							(pPVar4 = &pPVar10->_pmode + (iVar5 + -1) * 0x1b, *(short *)(pPVar4 + 0x134) != -1))
-						 && ((uint)*(byte *)((int)pPVar4 + 0x4f1) == (int)*pcVar9)) &&
-						((*(byte *)((int)pPVar4 + 0x4f1) != 0x15 || (*(char *)((int)pPVar4 + 0x4e1) == '\x02')))
-						) && (uVar2 = FUN_80160470(pnum,iVar5 + 6), (uVar2 & 0xff) != 0)) {
+				iVar6 = (int)pPVar11->InvGrid[iVar9];
+				if (((((0 < iVar6) &&
+							(pPVar5 = &pPVar11->_pmode + (iVar6 + -1) * 0x1b, *(short *)(pPVar5 + 0x134) != -1))
+						 && ((uint)*(byte *)((int)pPVar5 + 0x4f1) == (int)*pcVar10)) &&
+						((*(byte *)((int)pPVar5 + 0x4f1) != 0x15 || (*(char *)((int)pPVar5 + 0x4e1) == '\x02')))
+						) && (uVar2 = UseInvItem__Fii(pnum,iVar6 + 6), uVar2 != '\0')) {
 					return;
 				}
-				iVar8 = iVar8 + 1;
-			} while (iVar8 < 0x28);
-			iVar8 = 0;
-			pPVar7 = pPVar10;
+				iVar9 = iVar9 + 1;
+			} while (iVar9 < 0x28);
+			iVar9 = 0;
+			pPVar8 = pPVar11;
 			do {
-				if ((((*(short *)(&DAT_000015dc + (int)pPVar7) != -1) &&
-						 ((uint)(byte)(&DAT_000015fd)[(int)pPVar7] == (int)*pcVar9)) &&
-						(((&DAT_000015fd)[(int)pPVar7] != 0x15 || (pPVar7->SpdList[0]._iSpell == '\x02')))) &&
-					 (uVar2 = FUN_80160470(pnum,iVar8 + 0x2f), (uVar2 & 0xff) != 0)) {
-					if (_pcurr_inv[sel_data] != iVar8) {
+				if ((((*(short *)(&DAT_000015dc + (int)pPVar8) != -1) &&
+						 ((uint)(byte)(&DAT_000015fd)[(int)pPVar8] == (int)*pcVar10)) &&
+						(((&DAT_000015fd)[(int)pPVar8] != 0x15 || (pPVar8->SpdList[0]._iSpell == '\x02')))) &&
+					 (uVar2 = UseInvItem__Fii(pnum,iVar9 + 0x2f), uVar2 != '\0')) {
+					if (_pcurr_inv[sel_data] != iVar9) {
 						return;
 					}
 					get_next_inv__Fv();
 					return;
 				}
-				iVar8 = iVar8 + 1;
-				pPVar7 = (PlayerStruct *)&pPVar7->_pSBkSpell;
-			} while (iVar8 < 8);
-			pcVar9 = pcVar9 + 1;
-		} while ((int)pcVar9 < (int)(ilist + entries));
+				iVar9 = iVar9 + 1;
+				pPVar8 = (PlayerStruct *)&pPVar8->_pSBkSpell;
+			} while (iVar9 < 8);
+			pcVar10 = pcVar10 + 1;
+		} while ((int)pcVar10 < (int)(ilist + entries));
 	}
 	return;
 }
@@ -1967,11 +1967,9 @@ void DrawObjSelector__FiP12PlayerStruct(int pnum,PlayerStruct *player)
 						iVar3 = local_48 + 0x7d;
 						y_00 = Y + local_40;
 						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											((iVar3 - DH) + -0xb,y_00,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0xffff,
-											 &DAT_00000001,(void *)0x0,8);
+											((iVar3 - DH) + -0xb,y_00,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8);
 						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											(iVar3 + DH + 3,y_00,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0xffff,
-											 &DAT_00000001,(void *)0x0,8);
+											(iVar3 + DH + 3,y_00,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8);
 					}
 					cVar1 = _infoclr[sel_data];
 					if (cVar1 == '\x01') {
@@ -2113,7 +2111,7 @@ void DrawObjTask__FP4TASK(TASK *T)
 	bVar1 = automapflag != '\0';
 	sel_data = pnum;
 	myplr = pnum;
-	CheckArea__FiiiUci((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,2,'\x01',pnum);
+	CheckArea__FiiiUci((int)plr[pnum]._px,(int)plr[pnum]._py,2,'\x01',pnum);
 	pvVar5 = sort_gold__Fi(pnum);
 	if (pvVar5 == (void *)0x0) {
 		GLUE_SuspendGame__Fv();
@@ -2126,7 +2124,7 @@ void DrawObjTask__FP4TASK(TASK *T)
 			x = (&_pfind_list)[pnum * 10].x;
 			y = (&_pfind_list)[pnum * 10].y;
 			SetItemMinStats__FPC12PlayerStructP10ItemStruct
-								(&plr + pnum,item + (int)(&_pcursitem)[sel_data]);
+								(plr + pnum,item + (int)(&_pcursitem)[sel_data]);
 			NetSendCmdLocParam1__FUcUcUcUcUs('\x01','*',x,y,(int)(&_pcursitem)[sel_data] & 0xffff);
 			select_flag = '\0';
 			pvVar5 = DoShowPanel;
@@ -2145,7 +2143,7 @@ void DrawObjTask__FP4TASK(TASK *T)
 			PostGamePad__Fiiii(2,0,0,0);
 			sel_data = pnum;
 			myplr = pnum;
-			DrawObjSelector__FiP12PlayerStruct(pnum,&plr + pnum);
+			DrawObjSelector__FiP12PlayerStruct(pnum,plr + pnum);
 			ClrCursor__Fi(0);
 			ClrCursor__Fi(1);
 			ClearPanel__Fv();
@@ -2278,76 +2276,77 @@ uchar CheckRangeObject__Fiii(int x,int y,int distance)
 	char cVar1;
 	byte bVar2;
 	uchar uVar3;
-	byte bVar4;
-	uint uVar5;
-	int index;
-	map_info *pmVar6;
-	uint uVar7;
+	uchar uVar4;
+	byte bVar5;
+	uint uVar6;
+	int m;
+	map_info *pmVar7;
+	uint uVar8;
 	
-	pmVar6 = &dung_map + y + x * 0x70;
-	cVar1 = pmVar6->dItem;
-	uVar7 = SEXT24(pmVar6->dMonster);
-	bVar2 = pmVar6->dObject;
-	uVar3 = '\0';
+	pmVar7 = dung_map + y + x * 0x70;
+	cVar1 = pmVar7->dItem;
+	uVar8 = SEXT24(pmVar7->dMonster);
+	bVar2 = pmVar7->dObject;
+	uVar4 = '\0';
 	if (((uint)x < 0x60) && ((uint)y < 0x60)) {
 		if (leveltype == '\0') {
-			if (((&_pcursmonst)[sel_data] == 0xffffffff) && (uVar7 != 0)) {
-				uVar3 = '\x01';
-				if ((int)uVar7 < 1) {
-					uVar7 = ~uVar7;
+			if (((&_pcursmonst)[sel_data] == 0xffffffff) && (uVar8 != 0)) {
+				uVar4 = '\x01';
+				if ((int)uVar8 < 1) {
+					uVar8 = ~uVar8;
 				}
 				else {
-					uVar7 = uVar7 - 1;
+					uVar8 = uVar8 - 1;
 				}
-				(&_pcursmonst)[sel_data] = uVar7;
+				(&_pcursmonst)[sel_data] = uVar8;
 			}
 		}
 		else {
 			if (myplr == -1) {
-				uVar5 = 3;
+				uVar6 = 3;
 			}
 			else {
-				uVar5 = 1 << (myplr & 0x1fU);
-				if (((int)pmVar6->dFlags & uVar5) == 0) {
-					uVar5 = 0;
+				uVar6 = 1 << (myplr & 0x1fU);
+				if (((int)pmVar7->dFlags & uVar6) == 0) {
+					uVar6 = 0;
 				}
 			}
-			if ((((uVar5 != 0) && ((&_pcursmonst)[sel_data] == -1)) && (index = uVar7 - 1, 0 < (int)uVar7)
-					) && (((0 < monster[index]._mhitpoints >> 6 && ((monster[index].MType)->mtype != 'm')) &&
-								(((monster[index]._mFlags & 1) == 0 && ((pmVar6->dFlags & 4U) != 0)))))) {
-				uVar3 = '\x01';
-				uVar7 = FUN_8015694c();
-				if (((uVar7 & 0xff) == 0) || ((-1 < myplr && (distance != 0)))) {
-					(&_pcursmonst)[sel_data] = index;
+			if ((((uVar6 != 0) && ((&_pcursmonst)[sel_data] == -1)) && (m = uVar8 - 1, 0 < (int)uVar8)) &&
+				 (((0 < monster[m]._mhitpoints >> 6 && ((monster[m].MType)->mtype != 'm')) &&
+					(((monster[m]._mFlags & 1) == 0 && ((pmVar7->dFlags & 4U) != 0)))))) {
+				uVar4 = '\x01';
+				uVar3 = CanTalkToMonst__Fi(m);
+				if ((uVar3 == '\0') || ((-1 < myplr && (distance != 0)))) {
+					(&_pcursmonst)[sel_data] = m;
 				}
 			}
 		}
 		if (myplr != -1) {
 			if ((((&_pcursobj)[sel_data] == -1) && (bVar2 != 0)) && (distance != 0)) {
-				bVar4 = bVar2 - 1;
+				bVar5 = bVar2 - 1;
 				if ((char)bVar2 < '\x01') {
-					bVar4 = ~bVar2;
+					bVar5 = ~bVar2;
 				}
-				if ('\0' < object[(int)(char)bVar4]._oSelFlag) {
-					uVar3 = '\x01';
-					(&_pcursobj)[sel_data] = bVar4;
+				if ('\0' < object[(int)(char)bVar5]._oSelFlag) {
+					uVar4 = '\x01';
+					(&_pcursobj)[sel_data] = bVar5;
 				}
 			}
-			if (((0 < (int)cVar1) && (index = (int)cVar1 + -1, distance != 0)) &&
-				 ('\0' < item[index]._iSelFlag)) {
-				add_area_find_object__Fiii(index,x,y);
-				uVar3 = '\x01';
+			if (((0 < (int)cVar1) && (m = (int)cVar1 + -1, distance != 0)) && ('\0' < item[m]._iSelFlag))
+			{
+				add_area_find_object__Fiii(m,x,y);
+				uVar4 = '\x01';
 				if ((&_pcursitem)[sel_data] == -1) {
-					(&_pcursitem)[sel_data] = (char)index;
-					uVar3 = '\x01';
+					(&_pcursitem)[sel_data] = (char)m;
+					uVar4 = '\x01';
 				}
 			}
 		}
 	}
 	else {
-		uVar3 = '\0';
+		uVar4 = '\0';
 	}
-	return uVar3;
+	return uVar4;
 }
 
 
@@ -2566,7 +2565,7 @@ uchar CheckArea__FiiiUci(int xx,int yy,int range,uchar allflag,int pnum)
 LAB_800a3c24:
 		if (!bVar3) goto LAB_800a3dc4;
 		index = (&_pcursmonst)[sel_data];
-		if ((index != -1) && ((&plr)[pnum]._pwtype == '\0')) {
+		if ((index != -1) && (plr[pnum]._pwtype == '\0')) {
 			bVar4 = false;
 			y = abs(xx - (int)monster[index]._mx);
 			if ((1 < y) || (index = abs(yy - (int)monster[index]._my), 1 < index)) {
@@ -2581,9 +2580,9 @@ LAB_800a3c24:
 		(&_pcursitem)[sel_data] = -1;
 		(&_pcursobj)[index] = -1;
 		_pfind_index[sel_data] = '\0';
-		uVar7 = SEXT14((&plr)[pnum]._pdir);
-		index = (int)(&dung_map)[xx * 0x70 + yy].dItem + -1;
-		if ((int)(&dung_map)[xx * 0x70 + yy].dItem == 0) goto LAB_800a3dc8;
+		uVar7 = SEXT14(plr[pnum]._pdir);
+		index = (int)dung_map[xx * 0x70 + yy].dItem + -1;
+		if ((int)dung_map[xx * 0x70 + yy].dItem == 0) goto LAB_800a3dc8;
 		distance = uVar7 & 1;
 		if ('\0' < item[index]._iSelFlag) {
 			(&_pcursitem)[sel_data] = (char)index;
@@ -2594,10 +2593,10 @@ LAB_800a3c24:
 	else {
 		index = 0;
 		if (bVar3) {
-			cVar1 = (&offset_x)[(int)(&plr)[pnum]._pdir];
-			cVar2 = (&offset_y)[(int)(&plr)[pnum]._pdir];
-			x = (int)(&plr)[pnum]._px;
-			y = (int)(&plr)[pnum]._py;
+			cVar1 = offset_x[(int)plr[pnum]._pdir];
+			cVar2 = offset_y[(int)plr[pnum]._pdir];
+			x = (int)plr[pnum]._px;
+			y = (int)plr[pnum]._py;
 			do {
 				x = x + (int)cVar1;
 				y = y + (int)cVar2;
@@ -2626,8 +2625,8 @@ LAB_800a3dc8:
 	while (iVar9 = 0, x < 10) {
 		while (iVar8 = 0, iVar9 < 2) {
 			while (distance = 0, iVar8 < x) {
-				y = y + (int)(&offset_x)[uVar7];
-				index = index + (int)(&offset_y)[uVar7];
+				y = y + (int)offset_x[uVar7];
+				index = index + (int)offset_y[uVar7];
 				iVar6 = abs(xx - y);
 				if (iVar6 < 2) {
 					iVar6 = abs(yy - index);
@@ -2668,7 +2667,7 @@ LAB_800a3ff0:
 	else {
 		ForceTarget__11SpellTargetiii(this,monst,(int)monster[monst]._mx,(int)monster[monst]._my);
 		bVar3 = false;
-		if ((&plr)[pnum]._pwtype == '\0') {
+		if (plr[pnum]._pwtype == '\0') {
 			index = abs(xx - (int)monster[monst]._mx);
 			if ((1 < index) || (index = abs(yy - (int)monster[monst]._my), 1 < index)) {
 				bVar3 = true;
@@ -2737,7 +2736,7 @@ void PlacePlayer__FiiiUc(int pnum,int x,int y,uchar do_current)
 	char *pcVar5;
 	char *pcVar6;
 	
-	if ((&plr)[pnum]._pmode != PM_DEATH) {
+	if (plr[pnum]._pmode != PM_DEATH) {
 		bVar2 = false;
 		uVar3 = PosOkPlayer__Fiii(pnum,x,y);
 		if ((uVar3 == '\0') || (pvVar4 = IsTrigger__Fii(x,y), pvVar4 != (void *)0x0)) {
@@ -2745,8 +2744,8 @@ void PlacePlayer__FiiiUc(int pnum,int x,int y,uchar do_current)
 		}
 		if (bVar2) {
 			bVar2 = false;
-			pcVar5 = &offset_y;
-			pcVar6 = &offset_x;
+			pcVar5 = offset_y;
+			pcVar6 = offset_x;
 			do {
 				bVar1 = false;
 				x_00 = x + (int)*pcVar6;

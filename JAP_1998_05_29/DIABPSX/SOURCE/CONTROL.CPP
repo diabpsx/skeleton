@@ -350,8 +350,8 @@ void DrawSpellCel__FllUclUcc(long xp,long yp,uchar Trans,long nCel,int w,int sel
 		pPVar9->b3 = uVar6;
 LAB_80030764:
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(_sVar27 + (uVar26 >> 1) + -3,_sVar28 + (uVar25 >> 1) + 3,-0x60,'@',0xf0,0x20,0x60,0,
-							 (void *)0x0,0xffff,&DAT_00000001,(void *)0x0,8);
+							(_sVar27 + (uVar26 >> 1) + -3,_sVar28 + (uVar25 >> 1) + 3,-0x60,'@',0xf0,0x20,0x60,0,0
+							 ,0xffff,1,0,8);
 	}
 	else {
 		if ((char)w == '\x02') {
@@ -576,7 +576,7 @@ void DrawSpeedSpellTSK__FP4TASK(TASK *T)
 		}
 		options_pad = iVar3;
 		TSK_Sleep(1);
-		if ((&plr)[iVar6].plractive == '\0') {
+		if (plr[iVar6].plractive == '\0') {
 			bVar1 = false;
 		}
 	}
@@ -727,6 +727,7 @@ void DrawSpellList__Fv(void)
 	CPad *this;
 	char t;
 	PlayerStruct *pPVar7;
+	text_strs StrId;
 	bool Trans;
 	uint uVar8;
 	ushort uVar9;
@@ -744,7 +745,7 @@ void DrawSpellList__Fv(void)
 	int local_30;
 	
 	iVar1 = options_pad;
-	pPVar11 = &plr + options_pad;
+	pPVar11 = plr + options_pad;
 	local_58 = 0;
 	local_54 = 0;
 	uVar13 = 0;
@@ -752,7 +753,7 @@ void DrawSpellList__Fv(void)
 		return;
 	}
 	sel_data = options_pad;
-	if (PlayerStruct_800dbf20.plractive == '\0') {
+	if (plr[1].plractive == '\0') {
 		SPLICONNO = 6;
 		SPLICONY = 0x8e;
 		xp = 0xe3;
@@ -767,7 +768,7 @@ LAB_80031204:
 		SPLICONY = 0x6e;
 		SPLICONRIGHT = 0xfc;
 		xp = 0xde;
-		if (PlayerStruct_800dbf20.plractive != '\0') goto LAB_80031204;
+		if (plr[1].plractive != '\0') goto LAB_80031204;
 	}
 	xp = 0;
 	if (options_pad == 0) {
@@ -788,28 +789,28 @@ LAB_80031204:
 	ClearPanel__Fv();
 	while (iVar4 < 4) {
 		if (iVar4 == 1) {
-			local_58 = *(uint *)&(&plr)[iVar1]._pMemSpells;
-			local_54 = *(uint *)((int)&(&plr)[iVar1]._pMemSpells + 4);
+			local_58 = *(uint *)&plr[iVar1]._pMemSpells;
+			local_54 = *(uint *)((int)&plr[iVar1]._pMemSpells + 4);
 		}
 		else {
 			if (iVar4 < 2) {
 				if (iVar4 == 0) {
 					SetSpellTrans__Fc('\0');
-					local_58 = *(uint *)&(&plr)[iVar1]._pAblSpells;
-					local_54 = *(uint *)((int)&(&plr)[iVar1]._pAblSpells + 4);
+					local_58 = *(uint *)&plr[iVar1]._pAblSpells;
+					local_54 = *(uint *)((int)&plr[iVar1]._pAblSpells + 4);
 				}
 			}
 			else {
 				if (iVar4 == 2) {
 					SetSpellTrans__Fc('\x02');
-					local_58 = *(uint *)&(&plr)[iVar1]._pScrlSpells;
-					local_54 = *(uint *)((int)&(&plr)[iVar1]._pScrlSpells + 4);
+					local_58 = *(uint *)&plr[iVar1]._pScrlSpells;
+					local_54 = *(uint *)((int)&plr[iVar1]._pScrlSpells + 4);
 				}
 				else {
 					if (iVar4 == 3) {
 						SetSpellTrans__Fc('\x03');
-						local_58 = *(uint *)&(&plr)[iVar1]._pISpells;
-						local_54 = *(uint *)((int)&(&plr)[iVar1]._pISpells + 4);
+						local_58 = *(uint *)&plr[iVar1]._pISpells;
+						local_54 = *(uint *)((int)&plr[iVar1]._pISpells + 4);
 					}
 				}
 			}
@@ -823,7 +824,7 @@ LAB_80031204:
 			if ((((local_58 & local_60) != 0) || ((local_54 & local_5c) != 0)) &&
 				 (local_38->sName != '\0')) {
 				if (iVar4 == 1) {
-					uVar13 = (int)pPVar11->_pSplLvl[iVar12] + (int)(&plr)[iVar1]._pISplLvlAdd;
+					uVar13 = (int)pPVar11->_pSplLvl[iVar12] + (int)plr[iVar1]._pISplLvlAdd;
 					if ((int)uVar13 < 0) {
 						uVar13 = 0;
 					}
@@ -852,17 +853,17 @@ LAB_80031204:
 					(&_pSpell)[sel_data] = iVar12;
 					(&_pSplType)[local_64] = iVar4;
 					if (iVar4 == 1) {
-						__format = GetStr__Fi(0x519);
+						__format = GetStr__Fi(STR__S_SPELL_1305);
 						pcVar5 = GetStr__Fi((&spelldata)[(&_pSpell)[sel_data]].sNameText);
 						sprintf(_infostr + sel_data * 0x100,__format,pcVar5);
 						if ((&_pSpell)[sel_data] == 0x1f) {
-							__format = GetStr__Fi(0xe0);
-							strcpy(&tempstr,__format);
-							AddPanelString__FPCci(&tempstr,1);
+							__format = GetStr__Fi(STR_DAMAGES_UNDEAD_ONLY_224);
+							strcpy(tempstr,__format);
+							AddPanelString__FPCci(tempstr,1);
 						}
-						local_64 = 0x3f8;
+						StrId = STR_UNUSABLE_1016;
 						if (uVar13 != 0) {
-							__format = GetStr__Fi(0x3f9);
+							__format = GetStr__Fi(STR_SPELL_LEVEL__I_1017);
 							uVar8 = uVar13;
 							goto LAB_80031894;
 						}
@@ -870,19 +871,19 @@ LAB_80031204:
 					}
 					if (iVar4 < 2) {
 						if (iVar4 == 0) {
-							__format = GetStr__Fi(0x518);
+							__format = GetStr__Fi(STR__S_SKILL_1304);
 							pcVar5 = GetStr__Fi((&spelldata)[(&_pSpell)[sel_data]].sSkillText);
 							sprintf(_infostr + sel_data * 0x100,__format,pcVar5);
 						}
 					}
 					else {
 						if (iVar4 == 2) {
-							__format = GetStr__Fi(0x3af);
+							__format = GetStr__Fi(STR_SCROLL_OF__S_943);
 							uVar8 = 0;
 							pcVar5 = GetStr__Fi((&spelldata)[(&_pSpell)[sel_data]].sNameText);
 							sprintf(_infostr + sel_data * 0x100,__format,pcVar5);
 							local_64 = 0;
-							if (0 < (&plr)[iVar1]._pNumInv) {
+							if (0 < plr[iVar1]._pNumInv) {
 								pPVar7 = pPVar11;
 								do {
 									if (((pPVar7->InvList[0]._itype != -1) &&
@@ -892,7 +893,7 @@ LAB_80031204:
 									}
 									local_64 = local_64 + 1;
 									pPVar7 = (PlayerStruct *)&pPVar7->_pSBkSpell;
-								} while (local_64 < (&plr)[iVar1]._pNumInv);
+								} while (local_64 < plr[iVar1]._pNumInv);
 							}
 							local_64 = 0;
 							pPVar7 = pPVar11;
@@ -905,30 +906,30 @@ LAB_80031204:
 								local_64 = local_64 + 1;
 								pPVar7 = (PlayerStruct *)&pPVar7->_pSBkSpell;
 							} while (local_64 < 8);
-							local_64 = 2;
+							StrId = STR_1_SCROLL_2;
 							if (uVar8 == 1) goto LAB_8003185c;
-							__format = GetStr__Fi(0x500);
+							__format = GetStr__Fi(STR__I_SCROLLS_1280);
 LAB_80031894:
-							sprintf(&tempstr,__format,uVar8);
+							sprintf(tempstr,__format,uVar8);
 						}
 						else {
 							if (iVar4 != 3) goto LAB_800318ac;
-							__format = GetStr__Fi(0x402);
-							pcVar5 = GetStr__Fi(0x2e0);
+							__format = GetStr__Fi(STR_STAFF_1026);
+							pcVar5 = GetStr__Fi(STR_OF_736);
 							pcVar6 = GetStr__Fi((&spelldata)[(&_pSpell)[sel_data]].sNameText);
 							sprintf(_infostr + sel_data * 0x100,(char *)PTR_ARRAY_8011b698,__format,pcVar5,pcVar6)
 							;
-							local_64 = 1;
-							if ((&plr)[iVar1].InvBody[4]._iCharges != '\x01') {
-								__format = GetStr__Fi(0x4fe);
-								uVar8 = (uint)(&plr)[iVar1].InvBody[4]._iCharges;
+							StrId = STR_1_CHARGE_1;
+							if (plr[iVar1].InvBody[4]._iCharges != '\x01') {
+								__format = GetStr__Fi(STR__I_CHARGES_1278);
+								uVar8 = (uint)plr[iVar1].InvBody[4]._iCharges;
 								goto LAB_80031894;
 							}
 LAB_8003185c:
-							__format = GetStr__Fi(local_64);
-							strcpy(&tempstr,__format);
+							__format = GetStr__Fi(StrId);
+							strcpy(tempstr,__format);
 						}
-						AddPanelString__FPCci(&tempstr,1);
+						AddPanelString__FPCci(tempstr,1);
 					}
 				}
 LAB_800318ac:
@@ -944,7 +945,7 @@ LAB_800318ac:
 					}
 				}
 				if (((&my_cur_spel)[options_pad] == (uint)local_38->sName) &&
-					 ((int)(&plr)[options_pad]._pRSplType == iVar4)) {
+					 ((int)plr[options_pad]._pRSplType == iVar4)) {
 					t = (&SpellITbl)[iVar12];
 					local_64 = 1;
 				}
@@ -1085,8 +1086,8 @@ void SetSpell__Fi(int pnum)
 	if ((&_pSpell)[sel_data] != -1) {
 		(&my_cur_spel)[pnum] = (uint)(&spelldata)[(&_pSpell)[pnum]].sName;
 		ClearPanel__Fv();
-		(&plr)[pnum]._pRSpell = (&_pSpell)[pnum];
-		(&plr)[pnum]._pRSplType = (char)(&_pSplType)[pnum];
+		plr[pnum]._pRSpell = (&_pSpell)[pnum];
+		plr[pnum]._pRSplType = (char)(&_pSplType)[pnum];
 		force_redraw = 0xff;
 	}
 	return;
@@ -1260,10 +1261,10 @@ void InitControlPan__Fv(void)
 		(&chrbtn)[iVar2] = '\0';
 	} while (iVar4 < 4);
 	pDurIcons = (uchar *)0x0;
-	__src = GetStr__Fi(0x4fa);
+	__src = GetStr__Fi(STR__1274);
 	strcpy(_infostr + sel_data * 0x100,__src);
 	InitPanelStr__Fv();
-	cVar1 = (&plr)[myplr]._pClass;
+	cVar1 = plr[myplr]._pClass;
 	if (cVar1 == '\0') {
 		iVar4 = 0x1a;
 	}
@@ -1378,7 +1379,7 @@ void DoAutoMap__Fv(void)
 	}
 	else {
 		if (automapflag == '\0') {
-			FUN_80161f58();
+			StartAutomap__Fv();
 		}
 		else {
 			automapflag = '\0';
@@ -1523,20 +1524,20 @@ void CheckPanelInfo__Fv(void)
 	panelflag = '\x01';
 	_pinfoflag[sel_data] = '\x01';
 	__src = GetStr__Fi(0x4fa,auStack48[iVar1]);
-	strcpy(&tempstr,__src,auStack48[iVar1]);
-	AddPanelString__FPCci(&tempstr,1,auStack48[iVar1]);
+	strcpy(tempstr,__src,auStack48[iVar1]);
+	AddPanelString__FPCci(tempstr,1,auStack48[iVar1]);
 	iVar4 = myplr;
-	iVar3 = (&plr)[myplr]._pRSpell;
+	iVar3 = plr[myplr]._pRSpell;
 	piVar5[sel_data] = iVar3;
 	if (iVar3 == -1) goto LAB_800328f0;
-	cVar2 = (&plr)[iVar4]._pRSplType;
+	cVar2 = plr[iVar4]._pRSplType;
 	if (cVar2 == '\x01') {
 		__src = GetStr__Fi(0x519,auStack48[iVar1]);
 		__format = GetStr__Fi((&spelldata)[piVar5[sel_data]].sNameText,auStack48[iVar1]);
-		sprintf(&tempstr,__src,__format);
-		AddPanelString__FPCci(&tempstr,1,auStack48[iVar1]);
+		sprintf(tempstr,__src,__format);
+		AddPanelString__FPCci(tempstr,1,auStack48[iVar1]);
 		__src = (char *)((int)*(char *)(myplr * 0x19e8 + -0x7ff25a57 + piVar5[sel_data]) +
-										(int)(&plr)[myplr]._pISplLvlAdd);
+										(int)plr[myplr]._pISplLvlAdd);
 		if ((int)__src < 0) {
 			__src = (char *)0x0;
 		}
@@ -1545,7 +1546,7 @@ void CheckPanelInfo__Fv(void)
 			goto LAB_800328d8;
 		}
 		__src = GetStr__Fi(0x3f8,auStack48[iVar1]);
-		sprintf(&tempstr,__src);
+		sprintf(tempstr,__src);
 	}
 	else {
 		if (cVar2 < '\x02') {
@@ -1557,28 +1558,28 @@ void CheckPanelInfo__Fv(void)
 			if (cVar2 == '\x02') {
 				__src = GetStr__Fi(0x3af,auStack48[iVar1]);
 				__format = GetStr__Fi((&spelldata)[piVar5[sel_data]].sNameText,auStack48[iVar1]);
-				sprintf(&tempstr,__src,__format);
-				AddPanelString__FPCci(&tempstr,1,auStack48[iVar1]);
+				sprintf(tempstr,__src,__format);
+				AddPanelString__FPCci(tempstr,1,auStack48[iVar1]);
 				__src = (char *)0x0;
 				iVar4 = 0;
-				if (0 < (&plr)[myplr]._pNumInv) {
+				if (0 < plr[myplr]._pNumInv) {
 					iVar3 = 0;
 					do {
-						if (((*(short *)((int)&(&plr)[myplr].InvList[0]._itype + iVar3) != -1) &&
-								((uint)(&(&plr)[myplr].InvList[0]._iMiscId)[iVar3] - 0x15 < 2)) &&
-							 ((int)(&(&plr)[myplr].InvList[0]._iSpell)[iVar3] == piVar5[sel_data])) {
+						if (((*(short *)((int)&plr[myplr].InvList[0]._itype + iVar3) != -1) &&
+								((uint)(&plr[myplr].InvList[0]._iMiscId)[iVar3] - 0x15 < 2)) &&
+							 ((int)(&plr[myplr].InvList[0]._iSpell)[iVar3] == piVar5[sel_data])) {
 							__src = __src + 1;
 						}
 						iVar4 = iVar4 + 1;
 						iVar3 = iVar3 + 0x6c;
-					} while (iVar4 < (&plr)[myplr]._pNumInv);
+					} while (iVar4 < plr[myplr]._pNumInv);
 				}
 				iVar3 = 0;
 				iVar4 = myplr * 0x19e8;
 				do {
-					if (((*(short *)((int)&plr.SpdList[0]._itype + iVar4) != -1) &&
-							((uint)(&plr.SpdList[0]._iMiscId)[iVar4] - 0x15 < 2)) &&
-						 ((int)(&plr.SpdList[0]._iSpell)[iVar4] == piVar5[sel_data])) {
+					if (((*(short *)((int)&plr[0].SpdList[0]._itype + iVar4) != -1) &&
+							((uint)(&plr[0].SpdList[0]._iMiscId)[iVar4] - 0x15 < 2)) &&
+						 ((int)(&plr[0].SpdList[0]._iSpell)[iVar4] == piVar5[sel_data])) {
 						__src = __src + 1;
 					}
 					iVar3 = iVar3 + 1;
@@ -1588,7 +1589,7 @@ void CheckPanelInfo__Fv(void)
 				if (__src == &DAT_00000001) {
 LAB_80032870:
 					__src = GetStr__Fi(StrId,auStack48[iVar1]);
-					strcpy(&tempstr,__src,auStack48[iVar1]);
+					strcpy(tempstr,__src,auStack48[iVar1]);
 					goto LAB_800328e0;
 				}
 				__format = GetStr__Fi(0x500,auStack48[iVar1]);
@@ -1597,22 +1598,22 @@ LAB_80032870:
 				if (cVar2 != '\x03') goto LAB_800328f0;
 				__src = GetStr__Fi(0x405,auStack48[iVar1]);
 				__format = GetStr__Fi((&spelldata)[piVar5[sel_data]].sNameText,auStack48[iVar1]);
-				sprintf(&tempstr,__src,__format);
-				AddPanelString__FPCci(&tempstr,1,auStack48[iVar1]);
+				sprintf(tempstr,__src,__format);
+				AddPanelString__FPCci(tempstr,1,auStack48[iVar1]);
 				StrId = 1;
-				if ((&plr)[myplr].InvBody[4]._iCharges == '\x01') goto LAB_80032870;
+				if (plr[myplr].InvBody[4]._iCharges == '\x01') goto LAB_80032870;
 				__format = GetStr__Fi(0x4fe,auStack48[iVar1]);
-				__src = (char *)(uint)(&plr)[myplr].InvBody[4]._iCharges;
+				__src = (char *)(uint)plr[myplr].InvBody[4]._iCharges;
 			}
 		}
 LAB_800328d8:
-		sprintf(&tempstr,__format,__src);
+		sprintf(tempstr,__format,__src);
 	}
 LAB_800328e0:
-	AddPanelString__FPCci(&tempstr,1,auStack48[iVar1]);
+	AddPanelString__FPCci(tempstr,1,auStack48[iVar1]);
 LAB_800328f0:
 	if (invflag != '\0') {
-		cVar2 = FUN_8015fa64();
+		cVar2 = CheckInvHLight__Fv(auStack48[iVar1]);
 		_pcursinvitem[sel_data] = cVar2;
 	}
 	return;
@@ -2250,15 +2251,15 @@ void DrawInfoBox__FP4RECT(RECT *InfoRect)
 						if ((int)(&_pcursitem)[sel_data] == -1) {
 							if ((&_pcursplr)[sel_data] != -1) {
 								_infoclr[sel_data] = '\x03';
-								strcpy(_infostr + sel_data * 0x100,(&plr)[(int)(&_pcursplr)[sel_data]]._pName);
+								strcpy(_infostr + sel_data * 0x100,plr[(int)(&_pcursplr)[sel_data]]._pName);
 								ClearPanel__Fv();
-								__format = GetStr__Fi(0x247);
-								sprintf(&tempstr,__format,(int)(&plr)[(int)(&_pcursplr)[sel_data]]._pLevel);
-								AddPanelString__FPCci(&tempstr,1);
-								__format = GetStr__Fi(0x1f1);
-								sprintf(&tempstr,__format,(&plr)[(int)(&_pcursplr)[sel_data]]._pHitPoints >> 6,
-												(&plr)[(int)(&_pcursplr)[sel_data]]._pMaxHP >> 6);
-								AddPanelString__FPCci(&tempstr,1);
+								__format = GetStr__Fi(STR_LEVEL____I_583);
+								sprintf(tempstr,__format,(int)plr[(int)(&_pcursplr)[sel_data]]._pLevel);
+								AddPanelString__FPCci(tempstr,1);
+								__format = GetStr__Fi(STR_HIT_POINTS__I_OF__I_497);
+								sprintf(tempstr,__format,plr[(int)(&_pcursplr)[sel_data]]._pHitPoints >> 6,
+												plr[(int)(&_pcursplr)[sel_data]]._pMaxHP >> 6);
+								AddPanelString__FPCci(tempstr,1);
 							}
 						}
 						else {
@@ -2280,43 +2281,43 @@ void DrawInfoBox__FP4RECT(RECT *InfoRect)
 						strcpy(_infostr + sel_data * 0x100,__format);
 						ClearPanel__Fv();
 						if (monster[(&_pcursmonst)[sel_data]]._uniqtype == '\0') {
-							FUN_80155934((uint)(monster[(&_pcursmonst)[sel_data]].MType)->mtype);
+							PrintMonstHistory__Fi((uint)(monster[(&_pcursmonst)[sel_data]].MType)->mtype);
 						}
 						else {
 							_infoclr[sel_data] = '\x03';
-							FUN_80155bb8();
+							PrintUniqueHistory__Fv();
 						}
 					}
 				}
 			}
 		}
 		else {
-			if ((&plr)[myplr].HoldItem._itype == 0xb) {
-				nGold = (&plr)[myplr].HoldItem._ivalue;
-				__format = GetStr__Fi(0x4ff);
+			if (plr[myplr].HoldItem._itype == 0xb) {
+				nGold = plr[myplr].HoldItem._ivalue;
+				__format = GetStr__Fi(STR__I_GOLD__S_1279);
 				pcVar1 = get_pieces_str__Fi(nGold);
 				sprintf(_infostr + sel_data * 0x100,__format,nGold,pcVar1);
 			}
 			else {
-				if ((&plr)[myplr].HoldItem._iStatFlag == '\0') {
+				if (plr[myplr].HoldItem._iStatFlag == '\0') {
 					ClearPanel__Fv();
-					__format = GetStr__Fi(0x35e);
+					__format = GetStr__Fi(STR_REQUIREMENTS_NOT_MET_862);
 					AddPanelString__FPCci(__format,1);
 					_pinfoflag[sel_data] = '\x01';
 				}
 				else {
-					if ((&plr)[myplr].HoldItem._iIdentified == '\0') {
-						ItemNo = (&plr)[myplr].HoldItem._iName;
+					if (plr[myplr].HoldItem._iIdentified == '\0') {
+						ItemNo = plr[myplr].HoldItem._iName;
 					}
 					else {
-						ItemNo = (&plr)[myplr].HoldItem._iIName;
+						ItemNo = plr[myplr].HoldItem._iIName;
 					}
-					__format = MakeItemStr__FP10ItemStructUsUs(&(&plr)[myplr].HoldItem,ItemNo,0x100);
+					__format = MakeItemStr__FP10ItemStructUsUs(&plr[myplr].HoldItem,ItemNo,0x100);
 					strcpy(_infostr + sel_data * 0x100,__format);
-					if ((&plr)[myplr].HoldItem._iMagical == '\x01') {
+					if (plr[myplr].HoldItem._iMagical == '\x01') {
 						_infoclr[sel_data] = '\x01';
 					}
-					if ((&plr)[myplr].HoldItem._iMagical == '\x02') {
+					if (plr[myplr].HoldItem._iMagical == '\x02') {
 						_infoclr[sel_data] = '\x03';
 					}
 				}
@@ -2367,11 +2368,12 @@ void MY_PlrStringXY__Fv(void)
 	short sVar2;
 	int iVar3;
 	char *Str;
-	int StrId;
+	int X;
+	text_strs StrId;
 	uint local_58;
 	uint G;
 	uint R;
-	int X;
+	int X_00;
 	int Y;
 	TXT_JUST local_68;
 	RECT *local_64;
@@ -2416,14 +2418,14 @@ void MY_PlrStringXY__Fv(void)
 	}
 	Y = CS_Tab[CsNo].y;
 	local_30 = CS_Tab[CsNo].w;
-	X = CS_Tab[CsNo].x + 0x30 + CS_XOFF;
-	if ((-1 < X) && (X < 0x141)) {
+	X_00 = CS_Tab[CsNo].x + 0x30 + CS_XOFF;
+	if ((-1 < X_00) && (X_00 < 0x141)) {
 		if (local_30 != 0) {
 			SetBack__6Dialogi(&CSBack,0x94);
 			SetBorder__6Dialogi(&CSBack,0x12);
 			SetRGB__6DialogUcUcUc(&CSBack,BACKR,BACKG,BACKB);
-			Back__6Dialogiiii(&CSBack,X + 0x10,Y + 0x22,local_30,0xb);
-			CSRect.x = (short)(X + 0x10);
+			Back__6Dialogiiii(&CSBack,X_00 + 0x10,Y + 0x22,local_30,0xb);
+			CSRect.x = (short)(X_00 + 0x10);
 			CSRect.y = (short)(Y + 0x22);
 			CSRect.h = 0xb;
 			CSRect.w = (short)local_30;
@@ -2437,7 +2439,7 @@ void MY_PlrStringXY__Fv(void)
 		local_48 = WHITER;
 		CSRect.w = 0x118;
 		local_40 = WHITEG;
-		sVar2 = (short)X;
+		sVar2 = (short)X_00;
 		local_50.w = sVar2 + 8;
 		CSRect.y = 0x20;
 		CSRect.h = 0xb0;
@@ -2445,27 +2447,28 @@ void MY_PlrStringXY__Fv(void)
 		local_50.y = 0x20;
 		local_50.h = 0xb0;
 		local_38 = WHITEB;
-		if (CS_Tab[iVar3].Text1 != 0) {
+		if (CS_Tab[iVar3].Text1 != STR_10__OF_MANA_ADDED_TO_ARMOR_0) {
 			if (CS_Tab[iVar3].Text2 == 0) {
 				Str = GetStr__Fi(CS_Tab[iVar3].Text1);
-				StrId = GetStrWidth__5CFontPc(&MediumFont,Str);
-				if (CS_Tab[iVar3].Text1 == 0x29) {
-					Str = GetStr__Fi(0x29);
+				X = GetStrWidth__5CFontPc(&MediumFont,Str);
+				if (CS_Tab[iVar3].Text1 == STR_ARMOR_NCLASS_41) {
+					Str = GetStr__Fi(STR_ARMOR_NCLASS_41);
 					local_68 = JustRight;
 					local_64 = &local_50;
-					StrId = X;
+					X = X_00;
 				}
 				else {
 					Str = GetStr__Fi(CS_Tab[iVar3].Text1);
 					local_68 = JustLeft;
 					local_64 = &CSRect;
-					StrId = X - StrId;
+					X = X_00 - X;
 				}
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-									(&MediumFont,StrId + -6,Y + 0xb,Str,local_68,local_64,(uint)local_48,
-									 (uint)local_40,(uint)local_38);
+									(&MediumFont,X + -6,Y + 0xb,Str,local_68,local_64,(uint)local_48,(uint)local_40,
+									 (uint)local_38);
 			}
-			if ((CS_Tab[iVar3].Text1 != 0) && (StrId = CS_Tab[iVar3].Text2, StrId != 0)) {
+			if ((CS_Tab[iVar3].Text1 != 0) &&
+				 (StrId = CS_Tab[iVar3].Text2, StrId != STR_10__OF_MANA_ADDED_TO_ARMOR_0)) {
 				if (CsNo - 0xbU < 3) {
 					Str = GetStr__Fi(StrId);
 					GetStrWidth__5CFontPc(&MediumFont,Str);
@@ -2473,42 +2476,42 @@ void MY_PlrStringXY__Fv(void)
 					R = (uint)local_48;
 					G = (uint)local_40;
 					local_58 = (uint)local_38;
-					StrId = X + local_30 + 5;
+					X = X_00 + local_30 + 5;
 					Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-										(&MediumFont,StrId,Y + 0xf,Str,JustLeft,&CSRect,R,G,local_58);
+										(&MediumFont,X,Y + 0xf,Str,JustLeft,&CSRect,R,G,local_58);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text1);
 					GetStrWidth__5CFontPc(&MediumFont,Str);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text1);
 				}
 				else {
 					Str = GetStr__Fi(StrId);
-					StrId = GetStrWidth__5CFontPc(&MediumFont,Str);
+					X = GetStrWidth__5CFontPc(&MediumFont,Str);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text2);
 					R = (uint)local_48;
 					G = (uint)local_40;
 					local_58 = (uint)local_38;
 					Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-										(&MediumFont,(X - StrId) + -0x1e,Y + 0xf,Str,JustLeft,&CSRect,R,G,local_58);
+										(&MediumFont,(X_00 - X) + -0x1e,Y + 0xf,Str,JustLeft,&CSRect,R,G,local_58);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text1);
-					StrId = GetStrWidth__5CFontPc(&MediumFont,Str);
+					X = GetStrWidth__5CFontPc(&MediumFont,Str);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text1);
-					StrId = (X - StrId) + -0xe;
+					X = (X_00 - X) + -0xe;
 				}
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-									(&MediumFont,StrId,Y + 2,Str,JustLeft,&CSRect,R,G,local_58);
+									(&MediumFont,X,Y + 2,Str,JustLeft,&CSRect,R,G,local_58);
 			}
 		}
 		StrId = CS_Tab[iVar3].Text3;
-		if (StrId != 0) {
-			if (StrId == 0x41) {
-				Str = GetStr__Fi(0x41);
-				X = GetStrWidth__5CFontPc(&MediumFont,Str);
-				CSRect.x = sVar2 - ((short)X + -0x10);
+		if (StrId != STR_10__OF_MANA_ADDED_TO_ARMOR_0) {
+			if (StrId == STR_BASE_65) {
+				Str = GetStr__Fi(STR_BASE_65);
+				X_00 = GetStrWidth__5CFontPc(&MediumFont,Str);
+				CSRect.x = sVar2 - ((short)X_00 + -0x10);
 				CSRect.y = (short)Y + 0xe;
-				CSRect.w = (short)local_30 + (short)X;
+				CSRect.w = (short)local_30 + (short)X_00;
 				CSRect.h = 0x18;
 				Str = GetStr__Fi(CS_Tab[iVar3].Text3);
-				X = 0;
+				X_00 = 0;
 				Y = 0xd;
 				local_58 = (uint)local_48;
 				G = (uint)local_40;
@@ -2516,15 +2519,15 @@ void MY_PlrStringXY__Fv(void)
 				R = (uint)local_38;
 			}
 			else {
-				if (StrId == 0x2c2) {
-					Str = GetStr__Fi(0x2c2);
-					X = GetStrWidth__5CFontPc(&MediumFont,Str);
+				if (StrId == STR_NOW_706) {
+					Str = GetStr__Fi(STR_NOW_706);
+					X_00 = GetStrWidth__5CFontPc(&MediumFont,Str);
 					CSRect.x = sVar2 + 0x10;
 					CSRect.y = (short)Y + 0xe;
-					CSRect.w = (short)local_30 + (short)X;
+					CSRect.w = (short)local_30 + (short)X_00;
 					CSRect.h = 0x18;
 					Str = GetStr__Fi(CS_Tab[iVar3].Text3);
-					X = 0;
+					X_00 = 0;
 					local_58 = (uint)local_48;
 					Y = 0xd;
 					G = (uint)local_40;
@@ -2533,17 +2536,17 @@ void MY_PlrStringXY__Fv(void)
 				}
 				else {
 					Str = GetStr__Fi(StrId);
-					StrId = GetStrWidth__5CFontPc(&MediumFont,Str);
+					X = GetStrWidth__5CFontPc(&MediumFont,Str);
 					Str = GetStr__Fi(CS_Tab[iVar3].Text3);
 					Y = Y + -5;
 					local_68 = JustLeft;
 					local_58 = (uint)local_48;
 					G = (uint)local_40;
 					R = (uint)local_38;
-					X = X + ((int)((local_30 - StrId) + ((uint)(local_30 - StrId) >> 0x1f)) >> 1);
+					X_00 = X_00 + ((int)((local_30 - X) + ((uint)(local_30 - X) >> 0x1f)) >> 1);
 				}
 			}
-			Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,X,Y,Str,local_68,&CSRect,local_58,G,R);
+			Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,X_00,Y,Str,local_68,&CSRect,local_58,G,R);
 		}
 	}
 	return;
@@ -2704,10 +2707,10 @@ void ChrCheckValidButton__Fi(int move)
 	
 	iVar3 = 0;
 	lus = lus + move;
-	iVar2 = (int)(&plr)[options_pad]._pClass;
+	iVar2 = (int)plr[options_pad]._pClass;
 	do {
 		if (iVar3 == 1) {
-			if ((int)(&plr)[options_pad]._pBaseMag == (&INT_800da43c)[iVar2 * 4]) {
+			if ((int)plr[options_pad]._pBaseMag == (&INT_800da43c)[iVar2 * 4]) {
 				(&UCHAR_00h_8011c785)[options_pad * 4] = '\x01';
 			}
 			else {
@@ -2717,7 +2720,7 @@ void ChrCheckValidButton__Fi(int move)
 		else {
 			if (iVar3 < 2) {
 				if (iVar3 == 0) {
-					if ((int)(&plr)[options_pad]._pBaseStr == (&MaxStats)[iVar2 * 4]) {
+					if ((int)plr[options_pad]._pBaseStr == (&MaxStats)[iVar2 * 4]) {
 						(&chrbtn)[options_pad * 4] = '\x01';
 					}
 					else {
@@ -2727,7 +2730,7 @@ void ChrCheckValidButton__Fi(int move)
 			}
 			else {
 				if (iVar3 == 2) {
-					if ((int)(&plr)[options_pad]._pBaseDex == (&INT_800da440)[iVar2 * 4]) {
+					if ((int)plr[options_pad]._pBaseDex == (&INT_800da440)[iVar2 * 4]) {
 						*(undefined *)(options_pad * 4 + -0x7fee387a) = 1;
 					}
 					else {
@@ -2736,7 +2739,7 @@ void ChrCheckValidButton__Fi(int move)
 				}
 				else {
 					if (iVar3 == 3) {
-						if ((int)(&plr)[options_pad]._pBaseVit == *(int *)(&DAT_800da444 + iVar2 * 0x10)) {
+						if ((int)plr[options_pad]._pBaseVit == *(int *)(&DAT_800da444 + iVar2 * 0x10)) {
 							*(undefined *)(options_pad * 4 + -0x7fee3879) = 1;
 						}
 						else {
@@ -2887,216 +2890,217 @@ void BuildChr__Fv(void)
 	int iVar4;
 	int iVar5;
 	int iVar6;
-	int StrId;
+	text_strs StrId;
 	int iVar7;
 	int iVar8;
+	int iVar9;
 	char col;
 	bool col_00;
 	char local_50 [64];
 	
 	CsNo = 0;
-	ADD_PlrStringXY__FPCcc((&plr)[options_pad]._pName,'\0');
-	ADD_PlrStringXY__FPCcc((&plr)[options_pad]._pName,'\0');
-	col = (&plr)[options_pad]._pClass;
+	ADD_PlrStringXY__FPCcc(plr[options_pad]._pName,'\0');
+	ADD_PlrStringXY__FPCcc(plr[options_pad]._pName,'\0');
+	col = plr[options_pad]._pClass;
 	if (col == '\0') {
-		pszStr = GetStr__Fi(0x4be);
+		pszStr = GetStr__Fi(STR_WARRIOR_1214);
 		ADD_PlrStringXY__FPCcc(pszStr,'\0');
-		StrId = 0x4be;
+		StrId = STR_WARRIOR_1214;
 	}
 	else {
 		if (col == '\x01') {
-			pszStr = GetStr__Fi(0x375);
+			pszStr = GetStr__Fi(STR_ROGUE_885);
 			ADD_PlrStringXY__FPCcc(pszStr,'\0');
-			StrId = 0x375;
+			StrId = STR_ROGUE_885;
 		}
 		else {
 			if (col != '\x02') goto LAB_80034580;
-			pszStr = GetStr__Fi(1000);
+			pszStr = GetStr__Fi(STR_SORCERER_1000);
 			ADD_PlrStringXY__FPCcc(pszStr,'\0');
-			StrId = 1000;
+			StrId = STR_SORCERER_1000;
 		}
 	}
 	pszStr = GetStr__Fi(StrId);
 	ADD_PlrStringXY__FPCcc(pszStr,'\0');
 LAB_80034580:
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pLevel);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pLevel);
 	ADD_PlrStringXY__FPCcc(local_50,'\0');
-	pszStr = GetStr__Fi(0x504);
-	sprintf(local_50,pszStr,(&plr)[options_pad]._pExperience);
+	pszStr = GetStr__Fi(STR__LI_1284);
+	sprintf(local_50,pszStr,plr[options_pad]._pExperience);
 	ADD_PlrStringXY__FPCcc(local_50,'\0');
-	if ((&plr)[options_pad]._pLevel == '2') {
-		pszStr = GetStr__Fi(0x2ba);
+	if (plr[options_pad]._pLevel == '2') {
+		pszStr = GetStr__Fi(STR_NONE_698);
 		strcpy(local_50,pszStr);
 		col = '\x03';
 	}
 	else {
-		pszStr = GetStr__Fi(0x504);
+		pszStr = GetStr__Fi(STR__LI_1284);
 		col = '\0';
-		sprintf(local_50,pszStr,(&plr)[options_pad]._pNextExper);
+		sprintf(local_50,pszStr,plr[options_pad]._pNextExper);
 	}
 	ADD_PlrStringXY__FPCcc(local_50,col);
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(&plr)[options_pad]._pGold);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,plr[options_pad]._pGold);
 	ADD_PlrStringXY__FPCcc(local_50,'\0');
-	StrId = (&plr)[options_pad]._pIBonusAC;
-	col_00 = 0 < StrId;
-	if (StrId < 0) {
+	iVar7 = plr[options_pad]._pIBonusAC;
+	col_00 = 0 < iVar7;
+	if (iVar7 < 0) {
 		col_00 = true;
 	}
-	iVar6 = (uint)(ushort)(&plr)[options_pad]._pDexterity << 0x10;
+	iVar6 = (uint)(ushort)plr[options_pad]._pDexterity << 0x10;
 	iVar2 = iVar6 >> 0x10;
-	iVar7 = (&plr)[options_pad]._pIAC;
-	pszStr = GetStr__Fi(0x4fd);
+	iVar8 = plr[options_pad]._pIAC;
+	pszStr = GetStr__Fi(STR__I_1277);
 	sprintf(local_50,pszStr,
-					iVar7 + StrId + (((iVar2 / 5 + (iVar2 >> 0x1f)) - (iVar6 >> 0x1f)) * 0x10000 >> 0x10));
+					iVar8 + iVar7 + (((iVar2 / 5 + (iVar2 >> 0x1f)) - (iVar6 >> 0x1f)) * 0x10000 >> 0x10));
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	StrId = (&plr)[options_pad]._pIBonusToHit;
-	col_00 = 0 < StrId;
-	if (StrId < 0) {
+	iVar7 = plr[options_pad]._pIBonusToHit;
+	col_00 = 0 < iVar7;
+	if (iVar7 < 0) {
 		col_00 = true;
 	}
-	uVar1 = (&plr)[options_pad]._pDexterity;
-	pszStr = GetStr__Fi(0x503);
-	sprintf(local_50,pszStr,((int)((uint)uVar1 << 0x10) >> 0x11) + StrId + 0x32);
+	uVar1 = plr[options_pad]._pDexterity;
+	pszStr = GetStr__Fi(STR__I___1283);
+	sprintf(local_50,pszStr,((int)((uint)uVar1 << 0x10) >> 0x11) + iVar7 + 0x32);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	StrId = (&plr)[options_pad]._pIBonusDam;
-	col_00 = 0 < StrId;
-	if (StrId < 0) {
+	iVar7 = plr[options_pad]._pIBonusDam;
+	col_00 = 0 < iVar7;
+	if (iVar7 < 0) {
 		col_00 = true;
 	}
-	iVar6 = (&plr)[options_pad]._pIMinDam;
-	iVar2 = (&plr)[options_pad]._pIBonusDamMod;
-	if (((&plr)[options_pad].InvBody[4]._itype == 3) && ((&plr)[options_pad]._pClass != '\x01')) {
-		iVar7 = (&plr)[options_pad]._pDamageMod >> 1;
+	iVar6 = plr[options_pad]._pIMinDam;
+	iVar2 = plr[options_pad]._pIBonusDamMod;
+	if ((plr[options_pad].InvBody[4]._itype == 3) && (plr[options_pad]._pClass != '\x01')) {
+		iVar8 = plr[options_pad]._pDamageMod >> 1;
 	}
 	else {
-		iVar7 = (&plr)[options_pad]._pDamageMod;
+		iVar8 = plr[options_pad]._pDamageMod;
 	}
-	iVar8 = (&plr)[options_pad]._pIMaxDam;
-	iVar3 = (&plr)[options_pad]._pIBonusDam;
-	iVar4 = (&plr)[options_pad]._pIBonusDamMod;
-	if (((&plr)[options_pad].InvBody[4]._itype == 3) && ((&plr)[options_pad]._pClass != '\x01')) {
-		iVar5 = (&plr)[options_pad]._pDamageMod >> 1;
+	iVar9 = plr[options_pad]._pIMaxDam;
+	iVar3 = plr[options_pad]._pIBonusDam;
+	iVar4 = plr[options_pad]._pIBonusDamMod;
+	if ((plr[options_pad].InvBody[4]._itype == 3) && (plr[options_pad]._pClass != '\x01')) {
+		iVar5 = plr[options_pad]._pDamageMod >> 1;
 	}
 	else {
-		iVar5 = (&plr)[options_pad]._pDamageMod;
+		iVar5 = plr[options_pad]._pDamageMod;
 	}
-	pszStr = GetStr__Fi(0x501);
-	sprintf(local_50,pszStr,iVar6 + (iVar6 * StrId) / 100 + iVar2 + iVar7,
-					iVar8 + (iVar8 * iVar3) / 100 + iVar4 + iVar5);
+	pszStr = GetStr__Fi(STR__I__I_1281);
+	sprintf(local_50,pszStr,iVar6 + (iVar6 * iVar7) / 100 + iVar2 + iVar8,
+					iVar9 + (iVar9 * iVar3) / 100 + iVar4 + iVar5);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pMagResist != '\0';
-	if ((&plr)[options_pad]._pMagResist < 'K') {
-		pszStr = GetStr__Fi(0x503);
-		sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pMagResist);
+	col_00 = plr[options_pad]._pMagResist != '\0';
+	if (plr[options_pad]._pMagResist < 'K') {
+		pszStr = GetStr__Fi(STR__I___1283);
+		sprintf(local_50,pszStr,(int)plr[options_pad]._pMagResist);
 	}
 	else {
 		col_00 = true;
-		pszStr = GetStr__Fi(0x285);
+		pszStr = GetStr__Fi(STR_MAX_645);
 		sprintf(local_50,pszStr);
 	}
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pFireResist != '\0';
-	if ((&plr)[options_pad]._pFireResist < 'K') {
-		pszStr = GetStr__Fi(0x503);
-		sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pFireResist);
+	col_00 = plr[options_pad]._pFireResist != '\0';
+	if (plr[options_pad]._pFireResist < 'K') {
+		pszStr = GetStr__Fi(STR__I___1283);
+		sprintf(local_50,pszStr,(int)plr[options_pad]._pFireResist);
 	}
 	else {
 		col_00 = true;
-		pszStr = GetStr__Fi(0x285);
+		pszStr = GetStr__Fi(STR_MAX_645);
 		sprintf(local_50,pszStr);
 	}
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pLghtResist != '\0';
-	if ((&plr)[options_pad]._pLghtResist < 'K') {
-		pszStr = GetStr__Fi(0x503);
-		sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pLghtResist);
+	col_00 = plr[options_pad]._pLghtResist != '\0';
+	if (plr[options_pad]._pLghtResist < 'K') {
+		pszStr = GetStr__Fi(STR__I___1283);
+		sprintf(local_50,pszStr,(int)plr[options_pad]._pLghtResist);
 	}
 	else {
 		col_00 = true;
-		pszStr = GetStr__Fi(0x285);
+		pszStr = GetStr__Fi(STR_MAX_645);
 		sprintf(local_50,pszStr);
 	}
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pBaseStr);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pBaseStr);
 	ADD_PlrStringXY__FPCcc
-						(local_50,-((&MaxStats)[(int)(&plr)[options_pad]._pClass * 4] ==
-											 (int)(&plr)[options_pad]._pBaseStr) & 3);
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pBaseMag);
+						(local_50,-((&MaxStats)[(int)plr[options_pad]._pClass * 4] ==
+											 (int)plr[options_pad]._pBaseStr) & 3);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pBaseMag);
 	ADD_PlrStringXY__FPCcc
-						(local_50,-((&INT_800da43c)[(int)(&plr)[options_pad]._pClass * 4] ==
-											 (int)(&plr)[options_pad]._pBaseMag) & 3);
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pBaseDex);
+						(local_50,-((&INT_800da43c)[(int)plr[options_pad]._pClass * 4] ==
+											 (int)plr[options_pad]._pBaseMag) & 3);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pBaseDex);
 	ADD_PlrStringXY__FPCcc
-						(local_50,-((&INT_800da440)[(int)(&plr)[options_pad]._pClass * 4] ==
-											 (int)(&plr)[options_pad]._pBaseDex) & 3);
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pBaseVit);
+						(local_50,-((&INT_800da440)[(int)plr[options_pad]._pClass * 4] ==
+											 (int)plr[options_pad]._pBaseDex) & 3);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pBaseVit);
 	ADD_PlrStringXY__FPCcc
-						(local_50,-(*(int *)(&DAT_800da444 + (int)(&plr)[options_pad]._pClass * 0x10) ==
-											 (int)(&plr)[options_pad]._pBaseVit) & 3);
+						(local_50,-(*(int *)(&DAT_800da444 + (int)plr[options_pad]._pClass * 0x10) ==
+											 (int)plr[options_pad]._pBaseVit) & 3);
 	local_50[0] = '\0';
-	if (0 < (&plr)[options_pad]._pStatPts) {
-		pszStr = GetStr__Fi(0x4fd);
-		sprintf(local_50,pszStr,(&plr)[options_pad]._pStatPts);
+	if (0 < plr[options_pad]._pStatPts) {
+		pszStr = GetStr__Fi(STR__I_1277);
+		sprintf(local_50,pszStr,plr[options_pad]._pStatPts);
 	}
 	ADD_PlrStringXY__FPCcc(local_50,'\x02');
-	col_00 = (&plr)[options_pad]._pBaseStr < (&plr)[options_pad]._pStrength;
-	if ((&plr)[options_pad]._pStrength < (&plr)[options_pad]._pBaseStr) {
+	col_00 = plr[options_pad]._pBaseStr < plr[options_pad]._pStrength;
+	if (plr[options_pad]._pStrength < plr[options_pad]._pBaseStr) {
 		col_00 = true;
 	}
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pStrength);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pStrength);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pBaseMag < (&plr)[options_pad]._pMagic;
-	if ((&plr)[options_pad]._pMagic < (&plr)[options_pad]._pBaseMag) {
+	col_00 = plr[options_pad]._pBaseMag < plr[options_pad]._pMagic;
+	if (plr[options_pad]._pMagic < plr[options_pad]._pBaseMag) {
 		col_00 = true;
 	}
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pMagic);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pMagic);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pBaseDex < (&plr)[options_pad]._pDexterity;
-	if ((&plr)[options_pad]._pDexterity < (&plr)[options_pad]._pBaseDex) {
+	col_00 = plr[options_pad]._pBaseDex < plr[options_pad]._pDexterity;
+	if (plr[options_pad]._pDexterity < plr[options_pad]._pBaseDex) {
 		col_00 = true;
 	}
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pDexterity);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pDexterity);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pBaseVit < (&plr)[options_pad]._pVitality;
-	if ((&plr)[options_pad]._pVitality < (&plr)[options_pad]._pBaseVit) {
+	col_00 = plr[options_pad]._pBaseVit < plr[options_pad]._pVitality;
+	if (plr[options_pad]._pVitality < plr[options_pad]._pBaseVit) {
 		col_00 = true;
 	}
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(int)(&plr)[options_pad]._pVitality);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,(int)plr[options_pad]._pVitality);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	if (0 < (&plr)[options_pad]._pStatPts) {
-		StrId = CalcStatDiff__Fi(options_pad);
-		if (StrId < (&plr)[options_pad]._pStatPts) {
-			StrId = CalcStatDiff__Fi(options_pad);
-			(&plr)[options_pad]._pStatPts = StrId;
+	if (0 < plr[options_pad]._pStatPts) {
+		iVar7 = CalcStatDiff__Fi(options_pad);
+		if (iVar7 < plr[options_pad]._pStatPts) {
+			iVar7 = CalcStatDiff__Fi(options_pad);
+			plr[options_pad]._pStatPts = iVar7;
 		}
 	}
-	col_00 = (&plr)[options_pad]._pMaxHPBase < (&plr)[options_pad]._pMaxHP;
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(&plr)[options_pad]._pMaxHP >> 6);
+	col_00 = plr[options_pad]._pMaxHPBase < plr[options_pad]._pMaxHP;
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,plr[options_pad]._pMaxHP >> 6);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	if ((&plr)[options_pad]._pHitPoints != (&plr)[options_pad]._pMaxHP) {
+	if (plr[options_pad]._pHitPoints != plr[options_pad]._pMaxHP) {
 		col_00 = true;
 	}
-	pszStr = GetStr__Fi(0x4fd);
-	sprintf(local_50,pszStr,(&plr)[options_pad]._pHitPoints >> 6);
+	pszStr = GetStr__Fi(STR__I_1277);
+	sprintf(local_50,pszStr,plr[options_pad]._pHitPoints >> 6);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	col_00 = (&plr)[options_pad]._pMaxManaBase < (&plr)[options_pad]._pMaxMana;
-	sprintf(local_50,(char *)&PTR_DAT_8011b6a4,(&plr)[options_pad]._pMaxMana >> 6);
+	col_00 = plr[options_pad]._pMaxManaBase < plr[options_pad]._pMaxMana;
+	sprintf(local_50,(char *)&PTR_DAT_8011b6a4,plr[options_pad]._pMaxMana >> 6);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
-	if ((&plr)[options_pad]._pMana != (&plr)[options_pad]._pMaxMana) {
+	if (plr[options_pad]._pMana != plr[options_pad]._pMaxMana) {
 		col_00 = true;
 	}
-	sprintf(local_50,(char *)&PTR_DAT_8011b6a4,(&plr)[options_pad]._pMana >> 6);
+	sprintf(local_50,(char *)&PTR_DAT_8011b6a4,plr[options_pad]._pMana >> 6);
 	ADD_PlrStringXY__FPCcc(local_50,col_00);
 	ChrCheckValidButton__Fi(0);
 	CsNo = 0;
@@ -3157,7 +3161,7 @@ void DrawChr__Fv(void)
 	SetRGB__6DialogUcUcUc(&CSBack,'@','@','@');
 	if (initchr != (void *)0x0) {
 		initchr = (void *)0x0;
-		if ((&plr)[options_pad]._pStatPts == 0) {
+		if (plr[options_pad]._pStatPts == 0) {
 			CS_XOFF = 0;
 		}
 		else {
@@ -3181,23 +3185,23 @@ void DrawChr__Fv(void)
 	CSRect.w = 0x118;
 	CSRect.h = 0xb0;
 	Str = 0x4a0;
-	if ((0 < (&plr)[options_pad]._pStatPts) && (CS_XOFF != 0)) {
+	if ((0 < plr[options_pad]._pStatPts) && (CS_XOFF != 0)) {
 		Str = 0x4e6;
 	}
 	PrintSelectBack__FUs(Str);
 	DrawArrows__Fv();
-	if (0 < (&plr)[options_pad]._pStatPts) {
-		iVar1 = (int)(&plr)[options_pad]._pClass;
-		if ((int)(&plr)[options_pad]._pBaseStr < (&MaxStats)[iVar1 * 4]) {
+	if (0 < plr[options_pad]._pStatPts) {
+		iVar1 = (int)plr[options_pad]._pClass;
+		if ((int)plr[options_pad]._pBaseStr < (&MaxStats)[iVar1 * 4]) {
 			DrawPlus__Fii(0,0);
 		}
-		if ((int)(&plr)[options_pad]._pBaseMag < (&INT_800da43c)[iVar1 * 4]) {
+		if ((int)plr[options_pad]._pBaseMag < (&INT_800da43c)[iVar1 * 4]) {
 			DrawPlus__Fii(1,0);
 		}
-		if ((int)(&plr)[options_pad]._pBaseDex < (&INT_800da440)[iVar1 * 4]) {
+		if ((int)plr[options_pad]._pBaseDex < (&INT_800da440)[iVar1 * 4]) {
 			DrawPlus__Fii(2,0);
 		}
-		if ((int)(&plr)[options_pad]._pBaseVit < *(int *)(&DAT_800da444 + iVar1 * 0x10)) {
+		if ((int)plr[options_pad]._pBaseVit < *(int *)(&DAT_800da444 + iVar1 * 0x10)) {
 			DrawPlus__Fii(3,0);
 		}
 	}
@@ -3362,19 +3366,19 @@ void CheckChrBtns__Fv(void)
 	if (chrbtnactive == '\0') {
 		return;
 	}
-	if ((&plr)[options_pad]._pStatPts == 0) {
+	if (plr[options_pad]._pStatPts == 0) {
 		return;
 	}
 	ChrCheckValidButton__Fi(0);
 	if ((&chrbtn)[lus + myplr * 4] == '\0') {
 		PlaySFX__Fi(IS_TITLSLCT);
-		(&plr)[options_pad]._pStatPts = (&plr)[options_pad]._pStatPts + -1;
+		plr[options_pad]._pStatPts = plr[options_pad]._pStatPts + -1;
 	}
-	iVar3 = (int)(&plr)[options_pad]._pClass;
+	iVar3 = (int)plr[options_pad]._pClass;
 	if (lus == 1) {
 		NetSendCmdParam1__FUcUcUs('\x01','\x04',1);
 		piVar2 = &MaxStats + iVar3 * 4 + lus;
-		iVar3 = (int)(&plr)[options_pad]._pBaseMag;
+		iVar3 = (int)plr[options_pad]._pBaseMag;
 LAB_80035ecc:
 		iVar1 = options_pad * 4;
 		if (iVar3 == *piVar2) {
@@ -3388,19 +3392,19 @@ LAB_8003602c:
 			if (lus != 0) goto LAB_8003604c;
 			NetSendCmdParam1__FUcUcUs('\x01','\x03',1);
 			piVar2 = &MaxStats + iVar3 * 4 + lus;
-			iVar3 = (int)(&plr)[options_pad]._pBaseStr;
+			iVar3 = (int)plr[options_pad]._pBaseStr;
 			goto LAB_80035ecc;
 		}
 		if (lus == 2) {
 			NetSendCmdParam1__FUcUcUs('\x01','\x05',1);
 			piVar2 = &MaxStats + iVar3 * 4 + lus;
-			iVar3 = (int)(&plr)[options_pad]._pBaseDex;
+			iVar3 = (int)plr[options_pad]._pBaseDex;
 			goto LAB_80035ecc;
 		}
 		if (lus != 3) goto LAB_8003604c;
 		NetSendCmdParam1__FUcUcUs('\x01','\x06',1);
 		iVar1 = options_pad * 4;
-		if ((int)(&plr)[options_pad]._pBaseVit == (&MaxStats)[iVar3 * 4 + lus]) goto LAB_8003602c;
+		if ((int)plr[options_pad]._pBaseVit == (&MaxStats)[iVar3 * 4 + lus]) goto LAB_8003602c;
 	}
 	(&chrbtn)[lus + iVar1] = '\0';
 LAB_8003604c:
@@ -3542,7 +3546,7 @@ void PrintSBookStr__FiiiPCcUcUc(int x,int y,int cspel,char *pszStr,int bright,in
 	uint uVar4;
 	
 	uVar4 = bright & 0xff;
-	if ((&plr)[options_pad]._pRSplType == '\x02') {
+	if (plr[options_pad]._pRSplType == '\x02') {
 		cspel = -1;
 	}
 	LVar2 = LANG_GetLang__Fv();
@@ -3631,13 +3635,13 @@ char GetSBookTrans__FiUc(int ii,uchar townok)
 	uint uVar4;
 	uint uVar5;
 	
-	uVar3 = *(uint *)((int)&(&plr)[myplr]._pISpells + 4);
+	uVar3 = *(uint *)((int)&plr[myplr]._pISpells + 4);
 	uVar4 = ii - 1;
 	if ((int)(uVar4 * 0x4000000) < 0) {
 		uVar5 = uVar3 >> (uVar4 & 0x1f);
 	}
 	else {
-		uVar5 = *(uint *)&(&plr)[myplr]._pISpells >> (uVar4 & 0x1f);
+		uVar5 = *(uint *)&plr[myplr]._pISpells >> (uVar4 & 0x1f);
 		if (uVar4 * 0x4000000 != 0) {
 			uVar5 = uVar5 | uVar3 << (-uVar4 & 0x1f);
 		}
@@ -3647,8 +3651,8 @@ char GetSBookTrans__FiUc(int ii,uchar townok)
 		cVar2 = '\x03';
 	}
 	uVar3 = 1 << (uVar4 & 0x1f);
-	if (((*(uint *)&(&plr)[myplr]._pAblSpells & uVar3) != 0) ||
-		 ((*(uint *)((int)&(&plr)[myplr]._pAblSpells + 4) & (int)uVar3 >> 0x1f) != 0)) {
+	if (((*(uint *)&plr[myplr]._pAblSpells & uVar3) != 0) ||
+		 ((*(uint *)((int)&plr[myplr]._pAblSpells + 4) & (int)uVar3 >> 0x1f) != 0)) {
 		cVar2 = '\0';
 	}
 	if (cVar2 == '\x01') {
@@ -3657,12 +3661,12 @@ char GetSBookTrans__FiUc(int ii,uchar townok)
 			cVar2 = '\x04';
 		}
 		if ((int)(((uint)*(byte *)(myplr * 0x19e8 + -0x7ff25a57 + ii) +
-							(uint)(byte)(&plr)[myplr]._pISplLvlAdd) * 0x1000000) < 1) {
+							(uint)(byte)plr[myplr]._pISplLvlAdd) * 0x1000000) < 1) {
 			cVar2 = '\x04';
 		}
 	}
-	if ((((currlevel == '\0') && (ii == 0x20)) && (plr.plractive != '\0')) &&
-		 (PlayerStruct_800dbf20.plractive != '\0')) {
+	if ((((currlevel == '\0') && (ii == 0x20)) && (plr[0].plractive != '\0')) &&
+		 (plr[1].plractive != '\0')) {
 		cVar2 = '\x04';
 	}
 	if (((townok != '\0') && (currlevel == '\0')) &&
@@ -3735,7 +3739,7 @@ void DrawSpellBook__Fb(void *DrawBg)
 	int local_5c;
 	char acStack72 [8];
 	int local_40;
-	undefined4 local_3c;
+	int local_3c;
 	uint local_38;
 	uint local_34;
 	
@@ -3744,7 +3748,7 @@ void DrawSpellBook__Fb(void *DrawBg)
 	GLUE_SuspendGame__Fv();
 	if (DrawBg != (void *)0x0) {
 		PrintSelectBack__FUs(0x4e6);
-		t = (&plr)[myplr]._pClass;
+		t = plr[myplr]._pClass;
 		if (t == '\0') {
 			SpellPages[0] = 0x1a;
 		}
@@ -3790,11 +3794,11 @@ void DrawSpellBook__Fb(void *DrawBg)
 		SetBack__6Dialogi(&CSBack,0x94);
 		SetBorder__6Dialogi(&CSBack,0x12);
 		iVar4 = 1;
-		local_34 = *(uint *)((int)&(&plr)[myplr]._pISpells + 4) |
-							 *(uint *)((int)&(&plr)[myplr]._pMemSpells + 4) |
-							 *(uint *)((int)&(&plr)[myplr]._pAblSpells + 4);
-		local_38 = *(uint *)&(&plr)[myplr]._pISpells | *(uint *)&(&plr)[myplr]._pMemSpells |
-							 *(uint *)&(&plr)[myplr]._pAblSpells;
+		local_34 = *(uint *)((int)&plr[myplr]._pISpells + 4) |
+							 *(uint *)((int)&plr[myplr]._pMemSpells + 4) |
+							 *(uint *)((int)&plr[myplr]._pAblSpells + 4);
+		local_38 = *(uint *)&plr[myplr]._pISpells | *(uint *)&plr[myplr]._pMemSpells |
+							 *(uint *)&plr[myplr]._pAblSpells;
 		do {
 			Back__6Dialogiiii(&CSBack,0x2f,DX + 6,0xfc,0x18);
 			CSRect.x = 0x2f;
@@ -3851,49 +3855,49 @@ void DrawSpellBook__Fb(void *DrawBg)
 					pszStr = GetStr__Fi((&spelldata)[ii].sNameText);
 					PrintSBookStr__FiiiPCcUcUc(0,9,ii,pszStr,bright,(uint)(t == '\x03'));
 					if (t == '\0') {
-						pszStr = GetStr__Fi(0x3d5);
-						strcpy(&tempstr,pszStr);
+						pszStr = GetStr__Fi(STR_SKILL_981);
+						strcpy(tempstr,pszStr);
 					}
 					else {
 						if (t == '\x03') {
-							pszStr = GetStr__Fi(0x4fe);
-							R_00 = (uint)(&plr)[myplr].InvBody[4]._iCharges;
+							pszStr = GetStr__Fi(STR__I_CHARGES_1278);
+							R_00 = (uint)plr[myplr].InvBody[4]._iCharges;
 						}
 						else {
 							local_60 = GetManaAmount__Fii(myplr,ii);
 							local_60 = local_60 >> 6;
-							FUN_80139c04(ii,&local_40,&local_3c);
+							GetDamageAmt__FiPiT1(ii,&local_40,&local_3c);
 							if (local_40 == -1) {
-								pszStr = GetStr__Fi(0x27a);
-								pcVar2 = GetStr__Fi(0xe1);
-								sprintf(&tempstr,"%s:%i    %s: -",pszStr,local_60,pcVar2);
+								pszStr = GetStr__Fi(STR_MANA_634);
+								pcVar2 = GetStr__Fi(STR_DAMAGE_225);
+								sprintf(tempstr,"%s:%i    %s: -",pszStr,local_60,pcVar2);
 							}
 							else {
-								pszStr = GetStr__Fi(0x27a);
-								pcVar2 = GetStr__Fi(0xe1);
-								sprintf(&tempstr,"%s:%i    %s:%i - %i",pszStr,local_60,pcVar2,local_40,local_3c);
+								pszStr = GetStr__Fi(STR_MANA_634);
+								pcVar2 = GetStr__Fi(STR_DAMAGE_225);
+								sprintf(tempstr,"%s:%i    %s:%i - %i",pszStr,local_60,pcVar2,local_40,local_3c);
 							}
 							if (ii == 0x24) {
-								pszStr = GetStr__Fi(0x27c);
-								sprintf(&tempstr,pszStr,local_60);
+								pszStr = GetStr__Fi(STR_MANA___I__DAM__1_3_TGT_HP_636);
+								sprintf(tempstr,pszStr,local_60);
 							}
-							PrintSBookStr__FiiiPCcUcUc(0,0x14,ii,&tempstr,bright,(uint)(t == '\x03'));
+							PrintSBookStr__FiiiPCcUcUc(0,0x14,ii,tempstr,bright,(uint)(t == '\x03'));
 							R_00 = (int)*(char *)(myplr * 0x19e8 + -0x7ff25a57 + ii) +
-										 (int)(&plr)[myplr]._pISplLvlAdd;
+										 (int)plr[myplr]._pISplLvlAdd;
 							if ((int)R_00 < 0) {
 								R_00 = 0;
 							}
 							if (R_00 == 0) {
-								pszStr = GetStr__Fi(0x3f8);
-								sprintf(&tempstr,pszStr);
+								pszStr = GetStr__Fi(STR_UNUSABLE_1016);
+								sprintf(tempstr,pszStr);
 								goto LAB_80036e50;
 							}
-							pszStr = GetStr__Fi(0x3f9);
+							pszStr = GetStr__Fi(STR_SPELL_LEVEL__I_1017);
 						}
-						sprintf(&tempstr,pszStr,R_00);
+						sprintf(tempstr,pszStr,R_00);
 					}
 LAB_80036e50:
-					PrintSBookStr__FiiiPCcUcUc(0x88,9,ii,&tempstr,bright,(uint)(t == '\x03'));
+					PrintSBookStr__FiiiPCcUcUc(0x88,9,ii,tempstr,bright,(uint)(t == '\x03'));
 				}
 			}
 			DX = DX + 0x1e;
@@ -3926,7 +3930,7 @@ LAB_80036e50:
 		CSRect.w = 0x124;
 		CSRect.h = 0xbc;
 		Back__6Dialogiiii(&CSBack,0xe,0x16,0x124,0xbc);
-		pszStr = GetStr__Fi(0x3f7);
+		pszStr = GetStr__Fi(STR_FULL_SPELL_BOOK_1015);
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 							(&MediumFont,0,0xe,pszStr,JustCentre,&CSRect,(uint)BLUER,(uint)BLUEG,(uint)BLUEB);
 		this = PAD_GetPad__FiUc(options_pad,'\0');
@@ -4047,9 +4051,9 @@ void CheckSBook__Fv(void)
 	RemoveTargetCursor__Fi(options_pad);
 	iVar4 = options_pad;
 	iVar7 = SpellPages[sbooktab * 5 + (&cur_spel)[options_pad]];
-	uVar6 = *(uint *)((int)&(&plr)[options_pad]._pISpells + 4) |
-					*(uint *)((int)&(&plr)[options_pad]._pMemSpells + 4) |
-					*(uint *)((int)&(&plr)[options_pad]._pAblSpells + 4);
+	uVar6 = *(uint *)((int)&plr[options_pad]._pISpells + 4) |
+					*(uint *)((int)&plr[options_pad]._pMemSpells + 4) |
+					*(uint *)((int)&plr[options_pad]._pAblSpells + 4);
 	if (iVar7 != -1) {
 		uVar2 = 1;
 		if (2 < iVar7 - 0x1aU) {
@@ -4058,8 +4062,8 @@ void CheckSBook__Fv(void)
 				uVar2 = uVar6 >> (uVar3 & 0x1f);
 			}
 			else {
-				uVar2 = (*(uint *)&(&plr)[options_pad]._pISpells | *(uint *)&(&plr)[options_pad]._pMemSpells
-								| *(uint *)&(&plr)[options_pad]._pAblSpells) >> (uVar3 & 0x1f);
+				uVar2 = (*(uint *)&plr[options_pad]._pISpells | *(uint *)&plr[options_pad]._pMemSpells |
+								*(uint *)&plr[options_pad]._pAblSpells) >> (uVar3 & 0x1f);
 				if (uVar3 * 0x4000000 != 0) {
 					uVar2 = uVar2 | uVar6 << (-uVar3 & 0x1f);
 				}
@@ -4069,13 +4073,13 @@ void CheckSBook__Fv(void)
 		if (uVar2 != 0) {
 			(&my_cur_spel)[options_pad] = iVar7;
 			iVar1 = options_pad;
-			uVar6 = *(uint *)((int)&(&plr)[iVar4]._pISpells + 4);
+			uVar6 = *(uint *)((int)&plr[iVar4]._pISpells + 4);
 			uVar2 = iVar7 - 1;
 			if ((int)(uVar2 * 0x4000000) < 0) {
 				uVar3 = uVar6 >> (uVar2 & 0x1f);
 			}
 			else {
-				uVar3 = *(uint *)&(&plr)[iVar4]._pISpells >> (uVar2 & 0x1f);
+				uVar3 = *(uint *)&plr[iVar4]._pISpells >> (uVar2 & 0x1f);
 				if (uVar2 * 0x4000000 != 0) {
 					uVar3 = uVar3 | uVar6 << (-uVar2 & 0x1f);
 				}
@@ -4085,13 +4089,13 @@ void CheckSBook__Fv(void)
 				cVar5 = '\x03';
 			}
 			uVar6 = 1 << (uVar2 & 0x1f);
-			if (((*(uint *)&(&plr)[iVar4]._pAblSpells & uVar6) != 0) ||
-				 ((*(uint *)((int)&(&plr)[iVar4]._pAblSpells + 4) & (int)uVar6 >> 0x1f) != 0)) {
+			if (((*(uint *)&plr[iVar4]._pAblSpells & uVar6) != 0) ||
+				 ((*(uint *)((int)&plr[iVar4]._pAblSpells + 4) & (int)uVar6 >> 0x1f) != 0)) {
 				cVar5 = '\0';
 			}
 			iVar4 = (&my_cur_spel)[options_pad];
-			(&plr)[options_pad]._pRSplType = cVar5;
-			(&plr)[iVar1]._pRSpell = iVar4;
+			plr[options_pad]._pRSplType = cVar5;
+			plr[iVar1]._pRSpell = iVar4;
 		}
 		PlaySFX__Fi(IS_TITLSLCT);
 	}
@@ -4122,13 +4126,13 @@ char * get_pieces_str__Fi(int nGold)
 
 {
 	char *pcVar1;
-	int StrId;
+	text_strs StrId;
 	
 	if (nGold == 1) {
-		StrId = 0x30a;
+		StrId = STR_PIECE_778;
 	}
 	else {
-		StrId = 0x309;
+		StrId = STR_PIECES_777;
 	}
 	pcVar1 = GetStr__Fi(StrId);
 	return pcVar1;

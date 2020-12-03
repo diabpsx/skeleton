@@ -986,7 +986,7 @@ void Print__7CBlocks(CBlocks *this)
 	int y;
 	int x;
 	
-	if ((plr._pInfraFlag == '\0') && (PlayerStruct_800dbf20._pInfraFlag == '\0')) {
+	if ((plr[0]._pInfraFlag == '\0') && (plr[1]._pInfraFlag == '\0')) {
 		InfraFlag = (void *)0x0;
 	}
 	else {
@@ -1543,15 +1543,15 @@ void PrintMap__7CBlocksii(CBlocks *this,int x,int y)
 				local_f8.rgbb.r1 = *(byte *)(iVar13 + -0x7feffe10 + uVar15);
 				local_f8.rgbb.g1 = *(byte *)(iVar13 + -0x7feff1d0 + uVar15);
 				local_f8.rgbb.b1 = *(byte *)(iVar13 + -0x7fefe590 + uVar15);
-				local_f8.rgbb.r2 = (&dung_map_r + uVar15 + iVar13)[-1];
-				local_f8.rgbb.g2 = (&dung_map_g + uVar15 + iVar13)[-1];
-				local_f8.rgbb.b2 = (&dung_map_b + uVar15 + iVar13)[-1];
-				local_f8.rgbb.r3 = (&dung_map_r + uVar15 + iVar13)[1];
-				local_f8.rgbb.g3 = (&dung_map_g + uVar15 + iVar13)[1];
-				local_f8.rgbb.b3 = (&dung_map_b + uVar15 + iVar13)[1];
-				local_f8.rgbb.r4 = (&DAT_80100260)[uVar15 + iVar13];
-				local_f8.rgbb.g4 = (&DAT_80100ea0)[uVar15 + iVar13];
-				local_f8.rgbb.b4 = (&DAT_80101ae0)[uVar15 + iVar13];
+				local_f8.rgbb.r2 = (dung_map_r + uVar15 + iVar13)[-1];
+				local_f8.rgbb.g2 = (dung_map_g + uVar15 + iVar13)[-1];
+				local_f8.rgbb.b2 = (dung_map_b + uVar15 + iVar13)[-1];
+				local_f8.rgbb.r3 = (dung_map_r + uVar15 + iVar13)[1];
+				local_f8.rgbb.g3 = (dung_map_g + uVar15 + iVar13)[1];
+				local_f8.rgbb.b3 = (dung_map_b + uVar15 + iVar13)[1];
+				local_f8.rgbb.r4 = *(byte *)(iVar13 + -0x7feffda0 + uVar15);
+				local_f8.rgbb.g4 = *(byte *)(iVar13 + -0x7feff160 + uVar15);
+				local_f8.rgbb.b4 = *(byte *)(iVar13 + -0x7fefe520 + uVar15);
 				uVar10 = (uint)dungeon[local_58 * 0x30 + uVar15];
 			}
 			else {
@@ -1592,21 +1592,21 @@ void PrintMap__7CBlocksii(CBlocks *this,int x,int y)
 					local_f8.rgb_ity2.g = ((uint)local_f8.rgbb.g4 - (uint)local_f8.rgbb.g2) * 0x200;
 					local_f8.rgb_ity2.b = ((uint)local_f8.rgbb.b4 - (uint)local_f8.rgbb.b2) * 0x200;
 					local_48 = *piVar16;
-					if ((&dung_map)[iVar3 * 0xe0 + iVar14 * 2].dTransVal != '\0') {
-						psVar9 = &plr._py;
+					if (dung_map[iVar3 * 0xe0 + iVar14 * 2].dTransVal != '\0') {
+						psVar9 = &plr[0]._py;
 						puVar6 = (undefined *)0x0;
 						do {
-							if ((&plr.plractive)[(int)puVar6] != '\0') {
+							if ((&plr[0].plractive)[(int)puVar6] != '\0') {
 								x_00 = (int)*psVar9;
 								if ((x_00 + -6 < y_00) && (y_00 < x_00 + 6)) {
-									x_00 = (int)*(short *)((int)&plr._px + (int)puVar6);
+									x_00 = (int)*(short *)((int)&plr[0]._px + (int)puVar6);
 									if ((x_00 + -6 < iVar4) && (iVar4 < x_00 + 6)) {
 										bVar11 = true;
 									}
 									x_00 = (int)*psVar9;
 								}
 								if (((x_00 + -4 < y_00) && (y_00 < x_00 + 4)) &&
-									 ((x_00 = (int)*(short *)((int)&plr._px + (int)puVar6), x_00 + -4 < iVar4 &&
+									 ((x_00 = (int)*(short *)((int)&plr[0]._px + (int)puVar6), x_00 + -4 < iVar4 &&
 										((iVar4 < x_00 + 4 && (!bVar11)))))) {
 									bVar11 = true;
 								}
@@ -1628,7 +1628,7 @@ void PrintMap__7CBlocksii(CBlocks *this,int x,int y)
 					}
 					local_38 = 0;
 					psVar9 = (short *)((int)piVar16 + 6);
-					local_40 = (uint)((byte)(&dung_map)[iVar3 * 0xe0 + iVar14 * 2].dFlags >> 5) & 1;
+					local_40 = (uint)((byte)dung_map[iVar3 * 0xe0 + iVar14 * 2].dFlags >> 5) & 1;
 					uVar10 = 0xff000000;
 					while (local_38 < local_48) {
 						pLVar12 = local_c8->Gt4s + *piVar16;
@@ -1779,8 +1779,6 @@ void PrintMap__7CBlocksii(CBlocks *this,int x,int y)
 	/* end block 2 */
 	// End Line: 3047
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib
 							 (CBlocks *this,int x,int y,
 							 TDRFuncPtr_IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib3Func Func,
@@ -1792,16 +1790,15 @@ void IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib
 	int iVar3;
 	int iVar4;
 	int iVar5;
-	map_info *pmVar6;
-	uint uVar7;
-	int iVar8;
-	uint uVar9;
+	int iVar6;
+	map_info *pmVar7;
+	uint uVar8;
+	int iVar9;
 	uint uVar10;
-	int iVar11;
-	undefined2 *puVar12;
-	map_info *pmVar13;
+	uint uVar11;
+	int iVar12;
+	uint uVar13;
 	uint uVar14;
-	uint uVar15;
 	int local_80;
 	uint local_70;
 	uint local_68;
@@ -1814,7 +1811,7 @@ void IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib
 	if (InfraFlag != (void *)0x0) {
 		local_48 = (void *)0x0;
 	}
-	iVar11 = 0;
+	iVar12 = 0;
 	if (this->IsTown == (void *)0x0) {
 		local_80 = x + -0x140;
 		y = y + -0x140;
@@ -1827,16 +1824,16 @@ void IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib
 		local_80 = x;
 	}
 	local_70 = local_80 / 0x28;
-	iVar8 = local_80 % 0x28;
+	iVar9 = local_80 % 0x28;
 	local_68 = y / 0x28;
 	if (local_80 < 0) {
 		local_70 = local_70 - 1;
-		iVar8 = iVar8 + 0x28;
+		iVar9 = iVar9 + 0x28;
 	}
 	iVar3 = (int)(this->ClipRect).x;
 	sVar1 = (this->ClipRect).w;
-	local_80 = (y % 0x28 - iVar8) + -0x28 + iVar3;
-	if (iVar8 - y % 0x28 < 0) {
+	local_80 = (y % 0x28 - iVar9) + -0x28 + iVar3;
+	if (iVar9 - y % 0x28 < 0) {
 		local_70 = local_70 - 1;
 		local_80 = local_80 + -0x28;
 		bVar2 = 1;
@@ -1846,55 +1843,57 @@ void IterateVisibleMap__7CBlocksiiPFP9CacheInfoP8map_infoii_ib
 	}
 	do {
 		if (iVar3 + (int)sVar1 <= local_80) {
-			DAT_1f800000 = iVar11;
+			DAT_1f800000 = iVar12;
 			return;
 		}
 		local_38 = 0;
-		uVar14 = local_68;
-		uVar15 = local_70;
-		while ((((int)uVar14 < 0x2e && ((int)uVar15 < 0x2e)) &&
+		uVar13 = local_68;
+		uVar14 = local_70;
+		while ((((int)uVar13 < 0x2e && ((int)uVar14 < 0x2e)) &&
 					 (local_38 = local_38 + 1, local_38 < 0xb))) {
-			if ((uVar14 < 0x2e) && (uVar15 < 0x2f)) {
-				iVar8 = uVar15 + local_58;
-				uVar9 = iVar8 * 2;
-				iVar5 = uVar14 + local_50;
-				uVar10 = iVar5 * 2;
-				pmVar6 = &dung_map + iVar5 * 2 + iVar8 * 0xe0;
-				puVar12 = &DAT_800e7da8 + iVar5 * 8 + iVar8 * 0x380;
-				pmVar13 = map_info_ARRAY_800e7a30 + iVar8 * 0xe0 + iVar5 * 2;
-				iVar8 = iVar8 * 0x700 + -0x7ff18250 + iVar5 * 0x10;
+			if ((uVar13 < 0x2e) && (uVar14 < 0x2f)) {
+				iVar9 = uVar14 + local_58;
+				uVar10 = iVar9 * 2;
+				iVar5 = uVar13 + local_50;
+				uVar11 = iVar5 * 2;
+				iVar4 = iVar9 * 0x700;
+				iVar6 = iVar5 * 0x10;
+				pmVar7 = dung_map + iVar5 * 2 + iVar9 * 0xe0;
+				iVar9 = iVar4 + iVar6 + -0x7ff18258;
+				iVar5 = iVar4 + -0x7ff185d0 + iVar6;
+				iVar6 = iVar4 + -0x7ff18250 + iVar6;
 				if (local_48 == (void *)0x0) {
-					iVar5 = (*Func)(&DAT_1f800004 + iVar11 * 4,pmVar6,uVar9,uVar10);
-					uVar7 = uVar9 + 1;
-					iVar4 = (*Func)(&DAT_1f800004 + (iVar11 + iVar5) * 4,puVar12,uVar7,uVar10);
-					iVar4 = iVar11 + iVar5 + iVar4;
-					uVar10 = uVar10 + 1;
-					iVar11 = (*Func)(&DAT_1f800004 + iVar4 * 4,pmVar13,uVar9,uVar10);
-					iVar11 = iVar4 + iVar11;
+					iVar4 = (*Func)(&DAT_1f800004 + iVar12 * 4,pmVar7,uVar10,uVar11);
+					uVar8 = uVar10 + 1;
+					iVar9 = (*Func)(&DAT_1f800004 + (iVar12 + iVar4) * 4,iVar9,uVar8,uVar11);
+					iVar9 = iVar12 + iVar4 + iVar9;
+					uVar11 = uVar11 + 1;
+					iVar12 = (*Func)(&DAT_1f800004 + iVar9 * 4,iVar5,uVar10,uVar11);
+					iVar12 = iVar9 + iVar12;
 				}
 				else {
-					if ((pmVar6->dFlags & 3U) != 0) {
-						iVar5 = (*Func)(&DAT_1f800004 + iVar11 * 4,pmVar6,uVar9,uVar10);
-						iVar11 = iVar11 + iVar5;
+					if ((pmVar7->dFlags & 3U) != 0) {
+						iVar4 = (*Func)(&DAT_1f800004 + iVar12 * 4,pmVar7,uVar10,uVar11);
+						iVar12 = iVar12 + iVar4;
 					}
-					if ((*(byte *)(puVar12 + 3) & 3) != 0) {
-						iVar5 = (*Func)(&DAT_1f800004 + iVar11 * 4,puVar12,uVar9 | 1,uVar10);
-						iVar11 = iVar11 + iVar5;
+					if ((*(byte *)(iVar9 + 6) & 3) != 0) {
+						iVar9 = (*Func)(&DAT_1f800004 + iVar12 * 4,iVar9,uVar10 | 1,uVar11);
+						iVar12 = iVar12 + iVar9;
 					}
-					if ((pmVar13->dFlags & 3U) != 0) {
-						iVar5 = (*Func)(&DAT_1f800004 + iVar11 * 4,pmVar13,uVar9,uVar10 | 1);
-						iVar11 = iVar11 + iVar5;
+					if ((*(byte *)(iVar5 + 6) & 3) != 0) {
+						iVar9 = (*Func)(&DAT_1f800004 + iVar12 * 4,iVar5,uVar10,uVar11 | 1);
+						iVar12 = iVar12 + iVar9;
 					}
-					if ((*(byte *)(iVar8 + 6) & 3) == 0) goto LAB_8008f474;
-					uVar7 = uVar9 | 1;
-					uVar10 = uVar10 | 1;
+					if ((*(byte *)(iVar6 + 6) & 3) == 0) goto LAB_8008f474;
+					uVar8 = uVar10 | 1;
+					uVar11 = uVar11 | 1;
 				}
-				iVar8 = (*Func)(&DAT_1f800004 + iVar11 * 4,iVar8,uVar7,uVar10);
-				iVar11 = iVar11 + iVar8;
+				iVar9 = (*Func)(&DAT_1f800004 + iVar12 * 4,iVar6,uVar8,uVar11);
+				iVar12 = iVar12 + iVar9;
 			}
 LAB_8008f474:
-			uVar15 = uVar15 + 1;
 			uVar14 = uVar14 + 1;
+			uVar13 = uVar13 + 1;
 		}
 		if ((bool)(bVar2 & 1)) {
 			local_70 = local_70 + 1;
@@ -2405,9 +2404,9 @@ void PrintMonsters__7CBlocksii(CBlocks *this,int x,int y)
 			if (Action < iVar13) {
 				cVar2 = *(char *)(Creature + 0x3c);
 				LogicalY = (((int)(LogicalY + (uVar21 >> 0x1f)) >> 1) + -8) * 0x38;
-				uVar19 = (&dung_map_g)[iVar24 + LogicalY];
-				uVar18 = (&dung_map_r)[iVar24 + LogicalY];
-				uVar9 = (&dung_map_b)[iVar24 + LogicalY];
+				uVar19 = dung_map_g[iVar24 + LogicalY];
+				uVar18 = dung_map_r[iVar24 + LogicalY];
+				uVar9 = dung_map_b[iVar24 + LogicalY];
 				LogicalY = GetFrNum__7TextDatiiii(Fin,1,Action,(int)cVar2,Frame_00);
 				XFlip = IsDirAliased__7TextDatiii(Fin,1,Action,(int)cVar2);
 				Prim = PrintFt4__7TextDatiiiiii
@@ -2510,16 +2509,16 @@ void PrintMonsters__7CBlocksii(CBlocks *this,int x,int y)
 					Prim = PrintMonster__7TextDatiiiiiii
 													 (this_00,Creature,local_78,(int)cVar3,Frame,
 														(iVar22 + y_00 + ((int)cVar1 * 0x271) / 1000) - iVar11,LogicalY,OtPos);
-					if ((((&dung_map)[uVar20 * 0x70 + uVar21].dFlags & 3U) == 0) &&
+					if (((dung_map[uVar20 * 0x70 + uVar21].dFlags & 3U) == 0) &&
 						 (uVar19 = -0x70, XFlip != (void *)0x0)) {
 						uVar18 = '\0';
 						uVar9 = '\0';
 					}
 					else {
 						Frame = (((int)(uVar20 + (uVar20 >> 0x1f)) >> 1) + -8) * 0x38;
-						uVar19 = (&dung_map_r)[Action + Frame];
-						uVar18 = (&dung_map_g)[Action + Frame];
-						uVar9 = (&dung_map_b)[Action + Frame];
+						uVar19 = dung_map_r[Action + Frame];
+						uVar18 = dung_map_g[Action + Frame];
+						uVar9 = dung_map_b[Action + Frame];
 					}
 					Prim->r0 = uVar19;
 					Prim->g0 = uVar18;
@@ -3054,9 +3053,9 @@ void PrintObjects__7CBlocksii(CBlocks *this,int x,int y)
 					Prim->code = Prim->code | 2;
 				}
 				OtPos = (((int)(iVar17 + (uVar18 >> 0x1f)) >> 1) + -8) * 0x38;
-				uVar3 = (&dung_map_g)[iVar13 + OtPos];
-				uVar4 = (&dung_map_b)[iVar13 + OtPos];
-				Prim->r0 = (&dung_map_r)[iVar13 + OtPos];
+				uVar3 = dung_map_g[iVar13 + OtPos];
+				uVar4 = dung_map_b[iVar13 + OtPos];
+				Prim->r0 = dung_map_r[iVar13 + OtPos];
 				Prim->g0 = uVar3;
 				Prim->b0 = uVar4;
 			}
@@ -3225,8 +3224,8 @@ void PrintDead__7CBlocksii(CBlocks *this,int x,int y)
 	iVar14 = 0x1f800000;
 	sVar6 = (this->ClipRect).y;
 	while (local_30 < iVar8) {
-		iVar13 = *(int *)(s__800ceb04 + ((uint)*(byte *)(iVar14 + 4) & 0x1f) * 0xc);
-		uVar7 = (Monsters[iVar13].MData)->GraphicType;
+		iVar13 = *(int *)(tempstr + ((uint)*(byte *)(iVar14 + 4) & 0x1f) * 0xc + 0xf4);
+		uVar7 = **(ushort **)(&monster[0xc5]._mVar5 + iVar13 * 0xe);
 		if (uVar7 != 0xd) {
 			Creature = FindCreature__7CBlocksi(this,(uint)uVar7);
 			bVar1 = *(byte *)(iVar14 + 5);
@@ -3241,16 +3240,16 @@ void PrintDead__7CBlocksii(CBlocks *this,int x,int y)
 			FT4 = PrintMonster__7TextDatiiiiiii
 											(this->MonstTexDat,Creature,4,0,iVar11 + -1,((int)sVar5 + iVar12) - iVar9,y_00
 											 ,4);
-			iVar13 = (int)(Monsters[iVar13].MData)->TransFile;
+			iVar13 = (int)*(char *)((int)*(ushort **)(&monster[0xc5]._mVar5 + iVar13 * 0xe) + 7);
 			if (iVar13 != 0) {
 				Fr = GetFr__7TextDati(this->ObjTexDat,INT_ARRAY_8010a580[iVar13 * 2]);
 				SetPal__7TextDatP9FRAME_HDRP8POLY_FT4(this->ObjTexDat,Fr,FT4);
 			}
 			Creature = ((uint)bVar2 + 0x10 >> 1) - 0x10;
 			iVar13 = (((uint)bVar1 + 0x10 >> 1) - 0x10) * 0x38;
-			uVar3 = (&dung_map_g)[Creature + iVar13];
-			uVar4 = (&dung_map_b)[Creature + iVar13];
-			FT4->r0 = (&dung_map_r)[Creature + iVar13];
+			uVar3 = dung_map_g[Creature + iVar13];
+			uVar4 = dung_map_b[Creature + iVar13];
+			FT4->r0 = dung_map_r[Creature + iVar13];
 			FT4->g0 = uVar3;
 			FT4->b0 = uVar4;
 			FT4->code = FT4->code & 0xfe;
@@ -3524,8 +3523,7 @@ void PrintItems__7CBlocksii(CBlocks *this,int x,int y)
 					DrawSpinner__FiiUcUcUciiibiT8T8Uc
 										(X + (iVar18 >> 1) + (int)*(char *)&pFVar10->X,
 										 y_00 + (iVar17 >> 1) + (int)*(char *)((int)&pFVar10->X + 1) + (int)sVar14,SpinR
-										 ,'`',local_b0,x_00,(int)sVar14 * -2,uVar12 * -4,(void *)0x0,OtPos + 1,
-										 &DAT_00000001,(void *)0x0,8);
+										 ,'`',local_b0,x_00,(int)sVar14 * -2,uVar12 * -4,0,OtPos + 1,1,0,8);
 				}
 			}
 			else {
@@ -3553,9 +3551,9 @@ void PrintItems__7CBlocksii(CBlocks *this,int x,int y)
 				pPVar19->code = pPVar19->code | 2;
 			}
 			OtPos = (((int)(iVar15 + (uVar16 >> 0x1f)) >> 1) + -8) * 0x38;
-			SpinR = (&dung_map_r)[iVar9 + OtPos];
-			uVar13 = (&dung_map_g)[iVar9 + OtPos];
-			uVar11 = (&dung_map_b)[iVar9 + OtPos];
+			SpinR = dung_map_r[iVar9 + OtPos];
+			uVar13 = dung_map_g[iVar9 + OtPos];
+			uVar11 = dung_map_b[iVar9 + OtPos];
 			if (leveltype == '\0') {
 				uVar11 = -0x80;
 				uVar13 = -0x80;

@@ -89,13 +89,13 @@ long Read__6FileIOPCcUl(FileIO *this,char *Name,ulong RamId)
 	void *pvVar3;
 	undefined4 uVar4;
 	
-	puVar2 = (undefined *)FindFile__6FileIOPCcPc(this,Name,FileToLoad);
+	puVar2 = (undefined *)FindFile__6FileIOPCcPc(this,Name,_6FileIO_FileToLoad);
 	if (puVar2 != &DAT_00000001) {
 		FileNotFound__6FileIOPCc(this,Name);
 	}
 	Size = (**(code **)(*(int *)this->_vf + 0x24))
 									 ((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x20),
-										FileToLoad);
+										_6FileIO_FileToLoad);
 	if (Size == 0) {
 		DBG_Error((char *)0x0,"psxsrc/FILEIO.CPP",0x59);
 	}
@@ -109,10 +109,10 @@ long Read__6FileIOPCcUl(FileIO *this,char *Name,ulong RamId)
 	}
 	uVar4 = (**(code **)(*(int *)this->_vf + 0x24))
 										((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x20),
-										 FileToLoad);
+										 _6FileIO_FileToLoad);
 	(**(code **)(*(int *)this->_vf + 0x1c))
-						((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x18),FileToLoad,
-						 pvVar3,uVar4);
+						((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x18),
+						 _6FileIO_FileToLoad,pvVar3,uVar4);
 	uVar1 = GAL_Unlock(Handle);
 	if (uVar1 == '\0') {
 		DBG_Error((char *)0x0,"psxsrc/FILEIO.CPP",100);
@@ -144,12 +144,12 @@ int FileLen__6FileIOPCc(FileIO *this,char *Name)
 	undefined *puVar1;
 	int iVar2;
 	
-	puVar1 = (undefined *)FindFile__6FileIOPCcPc(this,Name,FileToLoad);
+	puVar1 = (undefined *)FindFile__6FileIOPCcPc(this,Name,_6FileIO_FileToLoad);
 	iVar2 = -1;
 	if (puVar1 == &DAT_00000001) {
 		iVar2 = (**(code **)(*(int *)this->_vf + 0x24))
 											((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x20),
-											 FileToLoad);
+											 _6FileIO_FileToLoad);
 	}
 	return iVar2;
 }
@@ -197,8 +197,6 @@ void FileNotFound__6FileIOPCc(FileIO *this,char *Name)
 	/* end block 2 */
 	// End Line: 288
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * StreamFile__6FileIOPCciPFPUciib_bii
 								 (FileIO *this,char *Name,int Slice,
 								 TDRFuncPtr_StreamFile__6FileIOPCciPFPUciib_bii3Func Func,int Offset,int Size)
@@ -206,19 +204,19 @@ void * StreamFile__6FileIOPCciPFPUciib_bii
 {
 	void *pvVar1;
 	
-	pvVar1 = FindFile__6FileIOPCcPc(this,Name,FileToLoad);
+	pvVar1 = FindFile__6FileIOPCcPc(this,Name,_6FileIO_FileToLoad);
 	if (pvVar1 == (void *)0x0) {
 		DBG_Error((char *)0x0,"psxsrc/FILEIO.CPP",0x91);
 	}
 	if (Size == -1) {
 		Size = (**(code **)(*(int *)this->_vf + 0x24))
 										 ((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x20),
-											FileToLoad);
+											_6FileIO_FileToLoad);
 	}
 	pvVar1 = (void *)(**(code **)(*(int *)this->_vf + 0x34))
 														 ((int)&(this->SysObj).MemHnd +
-															(int)*(short *)(*(int *)this->_vf + 0x30),FileToLoad,Slice,Func,Offset
-															,Size);
+															(int)*(short *)(*(int *)this->_vf + 0x30),_6FileIO_FileToLoad,Slice,
+															Func,Offset,Size);
 	return pvVar1;
 }
 
@@ -245,18 +243,18 @@ void * ReadAtAddr__6FileIOPCcPUci(FileIO *this,char *Name,uchar *Dest,int Len)
 {
 	void *pvVar1;
 	
-	pvVar1 = FindFile__6FileIOPCcPc(this,Name,FileToLoad);
+	pvVar1 = FindFile__6FileIOPCcPc(this,Name,_6FileIO_FileToLoad);
 	if (pvVar1 == (void *)0x0) {
 		DBG_Error((char *)0x0,"psxsrc/FILEIO.CPP",0xa4);
 	}
 	if (Len == -1) {
 		Len = (**(code **)(*(int *)this->_vf + 0x24))
 										((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x20),
-										 FileToLoad);
+										 _6FileIO_FileToLoad);
 	}
 	(**(code **)(*(int *)this->_vf + 0x1c))
-						((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x18),FileToLoad,Dest
-						 ,Len);
+						((int)&(this->SysObj).MemHnd + (int)*(short *)(*(int *)this->_vf + 0x18),
+						 _6FileIO_FileToLoad,Dest,Len);
 	return &DAT_00000001;
 }
 

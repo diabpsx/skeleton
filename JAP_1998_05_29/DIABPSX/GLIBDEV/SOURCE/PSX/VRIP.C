@@ -20,8 +20,6 @@
 	/* end block 2 */
 	// End Line: 315
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int vsprintf(char *str,char *fmt,char *ap)
 
 {
@@ -100,8 +98,6 @@ int vsprintf(char *str,char *fmt,char *ap)
 		// Start line: 353
 	/* end block 2 */
 	// End Line: 354
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int _doprnt(char *fmt0,char *argp,FILE *fp)
 

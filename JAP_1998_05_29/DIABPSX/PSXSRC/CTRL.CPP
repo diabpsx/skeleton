@@ -878,8 +878,9 @@ void PrintCtrlString__FiiUcic(int x,int y,uchar cjustflag,int str_num,int col)
 	char cVar1;
 	char *__src;
 	int iVar2;
+	int x_00;
 	int iVar3;
-	int StrId;
+	text_strs StrId;
 	uint B;
 	byte local_38;
 	byte local_30;
@@ -921,27 +922,27 @@ void PrintCtrlString__FiiUcic(int x,int y,uchar cjustflag,int str_num,int col)
 		}
 	}
 	__src = GetStr__Fi(StrId);
-	strcpy(&tempstr,__src);
-	iVar2 = GetStrWidth__5CFontPc(&MediumFont,&tempstr);
+	strcpy(tempstr,__src);
+	iVar2 = GetStrWidth__5CFontPc(&MediumFont,tempstr);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-						(&MediumFont,6,y + -4,&tempstr,JustLeft,&CtrlRect,(uint)local_38,(uint)local_30,B);
-	if (StrId == 0x2a6) {
-		StrId = 0x358;
+						(&MediumFont,6,y + -4,tempstr,JustLeft,&CtrlRect,(uint)local_38,(uint)local_30,B);
+	if (StrId == STR_MOVEMENT_678) {
+		StrId = STR_RELATIVE_856;
 		if ((&txt_actions)[str_num].pad_val != 0) {
-			StrId = 4;
+			StrId = STR_ABSOLUTE_4;
 		}
 	}
 	else {
-		if (StrId != 0xc3) {
-			tempstr = '\0';
-			if ((StrId == 0xc6) || (waitnomore != (void *)0x0)) {
+		if (StrId != STR_COMBO_BUTTON_MENU_195) {
+			tempstr[0] = '\0';
+			if ((StrId == STR_COMBO_BUTTON_198) || (waitnomore != (void *)0x0)) {
 code_r0x8009d338:
 				if ((KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val != 0) && ((&txt_actions)[str_num].combo_val != 0)
 					 ) {
-					StrId = get_key_pad__Fi(KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val);
-					cVar1 = pad_txt[StrId].font_num;
-					StrId = get_key_pad__Fi((&txt_actions)[str_num].combo_val);
-					sprintf(&tempstr,"%c + %c",(int)cVar1,(int)pad_txt[StrId].font_num);
+					x_00 = get_key_pad__Fi(KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val);
+					cVar1 = pad_txt[x_00].font_num;
+					x_00 = get_key_pad__Fi((&txt_actions)[str_num].combo_val);
+					sprintf(tempstr,"%c + %c",(int)cVar1,(int)pad_txt[x_00].font_num);
 					goto LAB_8009d468;
 				}
 			}
@@ -949,57 +950,54 @@ code_r0x8009d338:
 				if (KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val != 0) {
 					if (((ctrl_select_side == '\x01') && (str_num == (int)ctrl_select_line)) &&
 						 (ckeyheld != '\0')) {
-						StrId = get_key_pad__Fi(KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val);
-						sprintf(&tempstr,&DAT_8011b070,(int)pad_txt[StrId].font_num);
+						x_00 = get_key_pad__Fi(KEY_ASSIGNS_ARRAY_800cc41c[3].pad_val);
+						sprintf(tempstr,&DAT_8011b070,(int)pad_txt[x_00].font_num);
 						goto LAB_8009d468;
 					}
 					goto code_r0x8009d338;
 				}
 			}
 			if ((str_num == 0) || ((&txt_actions)[str_num].pad_val == 0)) {
-				if ((1 < StrId - 0x3bcU) && (StrId != 0x52c)) {
-					__src = GetStr__Fi(0x103);
-					sprintf(&tempstr,__src);
+				if ((1 < StrId + ~STR_SERPENT_S_955) && (StrId != STR___________1324)) {
+					__src = GetStr__Fi(STR_DISABLED_259);
+					sprintf(tempstr,__src);
 				}
 			}
 			else {
-				StrId = get_key_pad__Fi((&txt_actions)[str_num].pad_val);
-				if (pad_txt[StrId].font_num != '\0') {
-					StrId = get_key_pad__Fi((&txt_actions)[str_num].pad_val);
-					sprintf(&tempstr,(char *)&PTR_DAT_8011b080,(int)pad_txt[StrId].font_num);
+				x_00 = get_key_pad__Fi((&txt_actions)[str_num].pad_val);
+				if (pad_txt[x_00].font_num != '\0') {
+					x_00 = get_key_pad__Fi((&txt_actions)[str_num].pad_val);
+					sprintf(tempstr,(char *)&PTR_DAT_8011b080,(int)pad_txt[x_00].font_num);
 				}
 			}
 			goto LAB_8009d468;
 		}
-		StrId = 0xc4;
+		StrId = STR_DISABLED_196;
 		if ((&txt_actions)[str_num].pad_val != 0) {
-			StrId = 0xc5;
+			StrId = STR_ENABLED_197;
 		}
 	}
 	__src = GetStr__Fi(StrId);
-	strcpy(&tempstr,__src);
+	strcpy(tempstr,__src);
 LAB_8009d468:
 	if (str_num == (int)ctrl_select_line) {
-		StrId = GetStrWidth__5CFontPc(&MediumFont,&tempstr);
+		x_00 = GetStrWidth__5CFontPc(&MediumFont,tempstr);
 		iVar3 = 0x13;
 		if (ctrl_select_side == '\x01') {
 			iVar3 = 0x126;
-			StrId = 0x118 - StrId;
+			x_00 = 0x118 - x_00;
 		}
 		else {
-			StrId = iVar2 + 0x18;
+			x_00 = iVar2 + 0x18;
 		}
 		iVar2 = GetOverlayOtBase__7CBlocks();
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(iVar3 + -4,y + 0x2e,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,iVar2 + 4,&DAT_00000001,
-							 (void *)0x0,8);
-		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(StrId,y + 0x2e,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,iVar2 + 4,&DAT_00000001,
-							 (void *)0x0,8);
+							(iVar3 + -4,y + 0x2e,-0x60,'@',0xf0,0x20,0x40,0,1,iVar2 + 4,1,0,8);
+		DrawSpinner__FiiUcUcUciiibiT8T8Uc(x_00,y + 0x2e,-0x60,'@',0xf0,0x20,0x40,0,1,iVar2 + 4,1,0,8);
 	}
-	strcat(&tempstr,(char *)&PTR_DAT_8011b084);
+	strcat(tempstr,(char *)&PTR_DAT_8011b084);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-						(&MediumFont,0,y + -4,&tempstr,JustRight,&CtrlRect,(uint)local_38,(uint)local_30,B);
+						(&MediumFont,0,y + -4,tempstr,JustRight,&CtrlRect,(uint)local_38,(uint)local_30,B);
 	return;
 }
 
@@ -1092,7 +1090,7 @@ void DrawCtrlSetup__Fv(void)
 				CtrlRect.x = 0x10;
 				CtrlRect.h = 0x10;
 				Back__6Dialogiiii(&CtrlBack,0x10,0x20,0x119,0x10);
-				Str = GetStr__Fi(0xcb);
+				Str = GetStr__Fi(STR_CONTROLLER__SETUP_203);
 				Y = 0xb;
 				local_34 = &CtrlRect;
 				bVar1 = GOLDR;
@@ -1100,7 +1098,7 @@ void DrawCtrlSetup__Fv(void)
 				bVar1 = GOLDB;
 			}
 			else {
-				Str = GetStr__Fi(0xcb);
+				Str = GetStr__Fi(STR_CONTROLLER__SETUP_203);
 				this = &LargeFont;
 				Y = 0x2e;
 				local_34 = (RECT *)0x0;
@@ -1119,19 +1117,19 @@ void DrawCtrlSetup__Fv(void)
 				CtrlRect.w = 0x119;
 				CtrlRect.h = 0x9a;
 				if (FeFlag == '\0') {
-					Str = (&plr)[options_pad]._pName;
+					Str = plr[options_pad]._pName;
 				}
 				else {
 					if (options_pad == 0) {
-						Str = GetStr__Fi(0x312);
+						Str = GetStr__Fi(STR_PLAYER_1_786);
 					}
 					else {
-						Str = GetStr__Fi(0x313);
+						Str = GetStr__Fi(STR_PLAYER_2_787);
 					}
 				}
-				strcpy(&tempstr,Str);
+				strcpy(tempstr,Str);
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-									(&MediumFont,0,0xc,&tempstr,JustCentre,&CtrlRect,(uint)BLUER,(uint)BLUEG,
+									(&MediumFont,0,0xc,tempstr,JustCentre,&CtrlRect,(uint)BLUER,(uint)BLUEG,
 									 (uint)BLUEB);
 				if (Y == (int)ctrl_select_line) {
 					local_38 = 3;
@@ -1151,15 +1149,15 @@ void DrawCtrlSetup__Fv(void)
 				}
 			}
 			else {
-				Str = GetStr__Fi(0x32d);
-				sprintf(&tempstr,Str,&PTR_DAT_8011b088);
-				Y = GetStrWidth__5CFontPc(&MediumFont,&tempstr);
+				Str = GetStr__Fi(STR_PRESS_BUTTON_FOR__S_813);
+				sprintf(tempstr,Str,&PTR_DAT_8011b088);
+				Y = GetStrWidth__5CFontPc(&MediumFont,tempstr);
 				Str = GetStr__Fi((&txt_actions)[(int)ctrl_select_line].txt);
 				local_38 = GetStrWidth__5CFontPc(&MediumFont,Str);
 				uVar3 = 0x100 - (Y + local_38);
 				local_38 = (int)(uVar3 + (uVar3 >> 0x1f)) >> 1;
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-									(&MediumFont,local_38 + 0x20,0xe0,&tempstr,JustLeft,(RECT *)0x0,(uint)WHITER,
+									(&MediumFont,local_38 + 0x20,0xe0,tempstr,JustLeft,(RECT *)0x0,(uint)WHITER,
 									 (uint)WHITEG,(uint)WHITEB);
 				Str = GetStr__Fi((&txt_actions)[(int)ctrl_select_line].txt);
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc

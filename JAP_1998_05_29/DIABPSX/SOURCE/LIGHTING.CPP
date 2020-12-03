@@ -167,7 +167,7 @@ void SetWeirdFX__Fv(void)
 		restore_g = 0;
 		restore_r = 0;
 		dispy_b = 0xaa0;
-		ChangeLightColour__Fii((int)plr._plid,(int)&DAT_0000e070);
+		ChangeLightColour__Fii((int)plr[0]._plid,(int)&DAT_0000e070);
 		weird_cheat = 1;
 	}
 	return;
@@ -251,10 +251,10 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 		}
 		uVar9 = nRadius & 0xf;
 		if (leveltype == '\x03') {
-			if ((plr.plractive != '\0') && (Lnum == (int)plr._plid)) {
+			if ((plr[0].plractive != '\0') && (Lnum == (int)plr[0]._plid)) {
 				uVar9 = 10;
 			}
-			if ((PlayerStruct_800dbf20.plractive != '\0') && (Lnum == (int)PlayerStruct_800dbf20._plid)) {
+			if ((plr[1].plractive != '\0') && (Lnum == (int)plr[1]._plid)) {
 				uVar9 = 10;
 			}
 		}
@@ -327,38 +327,35 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 												if (uVar16 != 0) {
 													uVar11 = (uint)(&mult_tab)[uVar2 + (disp_tab_r >> 8) & disp_mask];
 												}
-												iVar4 = (uint)(&dung_map_r)[iVar17 + iVar8 * 0x38] +
-																(uVar11 * bright & 0xff);
+												iVar4 = (uint)dung_map_r[iVar17 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
 												bVar6 = (byte)iVar4;
 												if (max_bright < iVar4) {
 													bVar6 = (byte)max_bright;
 												}
-												(&dung_map_r)[iVar17 + iVar8 * 0x38] = bVar6;
+												dung_map_r[iVar17 + iVar8 * 0x38] = bVar6;
 											}
 											if ((uVar1 & 2) != 0) {
 												uVar11 = uVar2;
 												if (uVar16 != 0) {
 													uVar11 = (uint)(&mult_tab)[uVar2 + (disp_tab_g >> 8) & disp_mask];
 												}
-												iVar4 = (uint)(&dung_map_g)[iVar17 + iVar8 * 0x38] +
-																(uVar11 * bright & 0xff);
+												iVar4 = (uint)dung_map_g[iVar17 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
 												bVar6 = (byte)iVar4;
 												if (max_bright < iVar4) {
 													bVar6 = (byte)max_bright;
 												}
-												(&dung_map_g)[iVar17 + iVar8 * 0x38] = bVar6;
+												dung_map_g[iVar17 + iVar8 * 0x38] = bVar6;
 											}
 											if ((uVar1 & 4) != 0) {
 												if (uVar16 != 0) {
 													uVar2 = (uint)(&mult_tab)[uVar2 + (disp_tab_b >> 8) & disp_mask];
 												}
-												iVar4 = (uint)(&dung_map_b)[iVar17 + iVar8 * 0x38] + (uVar2 * bright & 0xff)
-												;
+												iVar4 = (uint)dung_map_b[iVar17 + iVar8 * 0x38] + (uVar2 * bright & 0xff);
 												bVar6 = (byte)iVar4;
 												if (max_bright < iVar4) {
 													bVar6 = (byte)max_bright;
 												}
-												(&dung_map_b)[iVar17 + iVar8 * 0x38] = bVar6;
+												dung_map_b[iVar17 + iVar8 * 0x38] = bVar6;
 											}
 										}
 										iVar15 = iVar15 + 1;
@@ -382,7 +379,7 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 											iVar4 = 0;
 										}
 										if ((-1 < iVar8) && (iVar8 < 0x30)) {
-											uVar11 = (uint)(&dung_map_r)[iVar17 + iVar8 * 0x38];
+											uVar11 = (uint)dung_map_r[iVar17 + iVar8 * 0x38];
 											iVar5 = iVar4 >> 1;
 											if ((uVar1 & 1) != 0) {
 												if ((uVar2 & 9) == 0) {
@@ -400,9 +397,9 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 												if (max_bright < (int)uVar11) {
 													uVar7 = (uchar)max_bright;
 												}
-												(&dung_map_r)[iVar17 + iVar8 * 0x38] = uVar7;
+												dung_map_r[iVar17 + iVar8 * 0x38] = uVar7;
 											}
-											uVar11 = (uint)(&dung_map_g)[iVar17 + iVar8 * 0x38];
+											uVar11 = (uint)dung_map_g[iVar17 + iVar8 * 0x38];
 											if ((uVar1 & 2) != 0) {
 												if ((uVar2 & 0x12) == 0) {
 													uVar11 = uVar11 + iVar4;
@@ -419,9 +416,9 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 												if (max_bright < (int)uVar11) {
 													uVar7 = (uchar)max_bright;
 												}
-												(&dung_map_g)[iVar17 + iVar8 * 0x38] = uVar7;
+												dung_map_g[iVar17 + iVar8 * 0x38] = uVar7;
 											}
-											uVar11 = (uint)(&dung_map_b)[iVar17 + iVar8 * 0x38];
+											uVar11 = (uint)dung_map_b[iVar17 + iVar8 * 0x38];
 											if ((uVar1 & 4) != 0) {
 												if ((uVar2 & 0x24) == 0) {
 													uVar11 = uVar11 + iVar4;
@@ -438,7 +435,7 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 												if (max_bright < (int)uVar11) {
 													uVar7 = (uchar)max_bright;
 												}
-												(&dung_map_b)[iVar17 + iVar8 * 0x38] = uVar7;
+												dung_map_b[iVar17 + iVar8 * 0x38] = uVar7;
 											}
 										}
 										iVar15 = iVar15 + 1;
@@ -469,35 +466,35 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 											if (uVar16 != 0) {
 												uVar11 = (uint)(&mult_tab)[uVar2 + (disp_tab_r >> 8) & disp_mask];
 											}
-											iVar4 = (uint)(&dung_map_r)[iVar12 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
+											iVar4 = (uint)dung_map_r[iVar12 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
 											bVar6 = (byte)iVar4;
 											if (max_bright < iVar4) {
 												bVar6 = (byte)max_bright;
 											}
-											(&dung_map_r)[iVar12 + iVar8 * 0x38] = bVar6;
+											dung_map_r[iVar12 + iVar8 * 0x38] = bVar6;
 										}
 										if ((uVar1 & 2) != 0) {
 											uVar11 = uVar2;
 											if (uVar16 != 0) {
 												uVar11 = (uint)(&mult_tab)[uVar2 + (disp_tab_g >> 8) & disp_mask];
 											}
-											iVar4 = (uint)(&dung_map_g)[iVar12 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
+											iVar4 = (uint)dung_map_g[iVar12 + iVar8 * 0x38] + (uVar11 * bright & 0xff);
 											bVar6 = (byte)iVar4;
 											if (max_bright < iVar4) {
 												bVar6 = (byte)max_bright;
 											}
-											(&dung_map_g)[iVar12 + iVar8 * 0x38] = bVar6;
+											dung_map_g[iVar12 + iVar8 * 0x38] = bVar6;
 										}
 										if ((uVar1 & 4) != 0) {
 											if (uVar16 != 0) {
 												uVar2 = (uint)(&mult_tab)[uVar2 + (disp_tab_b >> 8) & disp_mask];
 											}
-											iVar4 = (uint)(&dung_map_b)[iVar12 + iVar8 * 0x38] + (uVar2 * bright & 0xff);
+											iVar4 = (uint)dung_map_b[iVar12 + iVar8 * 0x38] + (uVar2 * bright & 0xff);
 											bVar6 = (byte)iVar4;
 											if (max_bright < iVar4) {
 												bVar6 = (byte)max_bright;
 											}
-											(&dung_map_b)[iVar12 + iVar8 * 0x38] = bVar6;
+											dung_map_b[iVar12 + iVar8 * 0x38] = bVar6;
 										}
 										iVar15 = iVar15 + 1;
 										iVar8 = iVar8 + 1;
@@ -521,7 +518,7 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 										if (iVar4 < 0) {
 											iVar4 = 0;
 										}
-										uVar11 = (uint)(&dung_map_r)[iVar12 + iVar8 * 0x38];
+										uVar11 = (uint)dung_map_r[iVar12 + iVar8 * 0x38];
 										iVar5 = iVar4 >> 1;
 										if ((uVar1 & 1) != 0) {
 											if ((uVar2 & 9) == 0) {
@@ -539,9 +536,9 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 											if (max_bright < (int)uVar11) {
 												uVar7 = (uchar)max_bright;
 											}
-											(&dung_map_r)[iVar12 + iVar8 * 0x38] = uVar7;
+											dung_map_r[iVar12 + iVar8 * 0x38] = uVar7;
 										}
-										uVar11 = (uint)(&dung_map_g)[iVar12 + iVar8 * 0x38];
+										uVar11 = (uint)dung_map_g[iVar12 + iVar8 * 0x38];
 										if ((uVar1 & 2) != 0) {
 											if ((uVar2 & 0x12) == 0) {
 												uVar11 = uVar11 + iVar4;
@@ -558,9 +555,9 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 											if (max_bright < (int)uVar11) {
 												uVar7 = (uchar)max_bright;
 											}
-											(&dung_map_g)[iVar12 + iVar8 * 0x38] = uVar7;
+											dung_map_g[iVar12 + iVar8 * 0x38] = uVar7;
 										}
-										uVar11 = (uint)(&dung_map_b)[iVar12 + iVar8 * 0x38];
+										uVar11 = (uint)dung_map_b[iVar12 + iVar8 * 0x38];
 										if ((uVar1 & 4) != 0) {
 											if ((uVar2 & 0x24) == 0) {
 												uVar11 = uVar11 + iVar4;
@@ -577,7 +574,7 @@ void DoLighting__Fiiii(int nXPos,int nYPos,int nRadius,int Lnum)
 											if (max_bright < (int)uVar11) {
 												uVar7 = (uchar)max_bright;
 											}
-											(&dung_map_b)[iVar12 + iVar8 * 0x38] = uVar7;
+											dung_map_b[iVar12 + iVar8 * 0x38] = uVar7;
 										}
 										iVar15 = iVar15 + 1;
 										iVar8 = iVar8 + 1;
@@ -658,9 +655,9 @@ void DoUnLight__Fv(void)
 			}
 			iVar4 = iVar10 * 0x38;
 			do {
-				puVar7 = &dung_map_r + iVar4 + iVar11;
-				puVar8 = &dung_map_g + iVar4 + iVar11;
-				puVar9 = &dung_map_b + iVar4 + iVar11;
+				puVar7 = dung_map_r + iVar4 + iVar11;
+				puVar8 = dung_map_g + iVar4 + iVar11;
+				puVar9 = dung_map_b + iVar4 + iVar11;
 				iVar2 = iVar11;
 				while (iVar2 <= iVar11 + 0xe) {
 					iVar2 = iVar2 + 1;
@@ -679,9 +676,9 @@ void DoUnLight__Fv(void)
 	}
 	if (iVar10 <= iVar10 + 0xd) {
 		iVar1 = iVar10 * 0x38;
-		puVar9 = &dung_map_b + iVar1;
-		puVar8 = &dung_map_g + iVar1;
-		puVar7 = &dung_map_r + iVar1;
+		puVar9 = dung_map_b + iVar1;
+		puVar8 = dung_map_g + iVar1;
+		puVar7 = dung_map_r + iVar1;
 		iVar1 = iVar10;
 		do {
 			if (iVar11 <= iVar11 + 0xe) {
@@ -781,11 +778,11 @@ void DoUnVision__Fiiii(int nXPos,int nYPos,int nRadius,int num)
 			if (iVar7 < nYPos) {
 				iVar5 = iVar7 * 8 + iVar6;
 				do {
-					bVar1 = (&dung_map.dFlags)[iVar5];
+					bVar1 = (&dung_map[0].dFlags)[iVar5];
 					if (((bVar1 & 1) == 0) || (bVar2 = bVar1 & ~bVar4, (bVar1 & 2) == 0)) {
-						bVar2 = (&dung_map.dFlags)[iVar5] & ~(bVar4 | 4);
+						bVar2 = (&dung_map[0].dFlags)[iVar5] & ~(bVar4 | 4);
 					}
-					(&dung_map.dFlags)[iVar5] = bVar2;
+					(&dung_map[0].dFlags)[iVar5] = bVar2;
 					iVar5 = iVar5 + 8;
 				} while (iVar5 < nYPos * 8 + iVar6);
 			}
@@ -855,12 +852,12 @@ void DoVision__FiiiUcUc(int nXPos,int nYPos,int nRadius,uchar doautomap,int visi
 		iVar11 = 0;
 		if (0x60 < (uint)nYPos) goto LAB_8004cf54;
 		if (doautomap != '\0') {
-			if (-1 < (&dung_map)[nXPos * 0x70 + nYPos].dFlags) {
+			if (-1 < dung_map[nXPos * 0x70 + nYPos].dFlags) {
 				SetAutomapView__Fii(nXPos,nXPos);
 			}
-			(&dung_map)[nXPos * 0x70 + nYPos].dFlags = (&dung_map)[nXPos * 0x70 + nYPos].dFlags | 0x80;
+			dung_map[nXPos * 0x70 + nYPos].dFlags = dung_map[nXPos * 0x70 + nYPos].dFlags | 0x80;
 		}
-		(&dung_map)[nXPos * 0x70 + nYPos].dFlags = (&dung_map)[nXPos * 0x70 + nYPos].dFlags | bVar2 | 4;
+		dung_map[nXPos * 0x70 + nYPos].dFlags = dung_map[nXPos * 0x70 + nYPos].dFlags | bVar2 | 4;
 	}
 	iVar11 = 0;
 LAB_8004cf54:
@@ -941,15 +938,15 @@ LAB_8004d0a4:
 						}
 						if (bVar1) {
 							if (doautomap != '\0') {
-								if (-1 < (&dung_map)[x * 0x70 + y].dFlags) {
+								if (-1 < dung_map[x * 0x70 + y].dFlags) {
 									SetAutomapView__Fii(x,y);
 									SetAutomapView__Fii(x + 1,y);
 								}
-								(&dung_map)[x * 0x70 + y].dFlags = (&dung_map)[x * 0x70 + y].dFlags | 0x80;
+								dung_map[x * 0x70 + y].dFlags = dung_map[x * 0x70 + y].dFlags | 0x80;
 							}
-							(&dung_map)[x * 0x70 + y].dFlags = (&dung_map)[x * 0x70 + y].dFlags | bVar2 | 4;
-							if ((pvVar5 == (void *)0x0) && ((int)(&dung_map)[x * 0x70 + y].dTransVal != 0)) {
-								(&TransList)[(int)(&dung_map)[x * 0x70 + y].dTransVal] = '\x01';
+							dung_map[x * 0x70 + y].dFlags = dung_map[x * 0x70 + y].dFlags | bVar2 | 4;
+							if ((pvVar5 == (void *)0x0) && ((int)dung_map[x * 0x70 + y].dTransVal != 0)) {
+								(&TransList)[(int)dung_map[x * 0x70 + y].dTransVal] = '\x01';
 							}
 						}
 					}

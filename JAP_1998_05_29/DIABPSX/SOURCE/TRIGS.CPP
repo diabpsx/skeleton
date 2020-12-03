@@ -525,7 +525,7 @@ uchar ForceTownTrig__Fv(void)
 						uVar1 = '\0';
 					}
 					else {
-						__src = GetStr__Fi(0x114);
+						__src = GetStr__Fi(STR_DOWN_TO_HELL_276);
 						strcpy(_infostr + sel_data * 0x100,__src);
 						cursmx = 0x29;
 						cursmy = 0x50;
@@ -534,7 +534,7 @@ uchar ForceTownTrig__Fv(void)
 				}
 			}
 			else {
-				__src = GetStr__Fi(0x111);
+				__src = GetStr__Fi(STR_DOWN_TO_CAVES_273);
 				strcpy(_infostr + sel_data * 0x100,__src);
 				cursmx = 0x11;
 				cursmy = 0x45;
@@ -542,7 +542,7 @@ uchar ForceTownTrig__Fv(void)
 			}
 		}
 		else {
-			__src = GetStr__Fi(0x110);
+			__src = GetStr__Fi(STR_DOWN_TO_CATACOMBS_272);
 			strcpy(_infostr + sel_data * 0x100,__src);
 			cursmx = 0x31;
 			cursmy = 0x15;
@@ -550,7 +550,7 @@ uchar ForceTownTrig__Fv(void)
 		}
 	}
 	else {
-		__src = GetStr__Fi(0x113);
+		__src = GetStr__Fi(STR_DOWN_TO_DUNGEON_275);
 		strcpy(_infostr + sel_data * 0x100,__src);
 		cursmx = 0x19;
 		cursmy = 0x1d;
@@ -592,11 +592,11 @@ uchar ForceL1Trig__Fv(void)
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,0);
 	if (pvVar1 != (void *)0x0) {
 		if (currlevel < 2) {
-			__src = GetStr__Fi(0x4a8);
+			__src = GetStr__Fi(STR_UP_TO_TOWN_1192);
 			strcpy(_infostr + sel_data * 0x100,__src);
 		}
 		else {
-			__src = GetStr__Fi(0x4a7);
+			__src = GetStr__Fi(STR_UP_TO_LEVEL__I_1191);
 			sprintf(_infostr + sel_data * 0x100,__src,(uint)currlevel - 1);
 		}
 		iVar2 = 0;
@@ -611,7 +611,7 @@ uchar ForceL1Trig__Fv(void)
 	}
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,1);
 	if (pvVar1 != (void *)0x0) {
-		__src = GetStr__Fi(0x115);
+		__src = GetStr__Fi(STR_DOWN_TO_LEVEL__I_277);
 		sprintf(_infostr + sel_data * 0x100,__src,(uint)currlevel + 1);
 		if (0 < numtrigs) {
 			iVar3 = 0;
@@ -675,7 +675,7 @@ uchar ForceL2Trig__Fv(void)
 				iVar2 = abs(pTVar6->_tx - cursmx);
 				iVar3 = abs(*piVar5 - cursmy);
 				if ((iVar2 < 4) && (iVar3 < 4)) {
-					__format = GetStr__Fi(0x4a7);
+					__format = GetStr__Fi(STR_UP_TO_LEVEL__I_1191);
 					sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel - 1);
 					goto LAB_80075ce4;
 				}
@@ -688,7 +688,7 @@ uchar ForceL2Trig__Fv(void)
 	}
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,1);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x115);
+		__format = GetStr__Fi(STR_DOWN_TO_LEVEL__I_277);
 		sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel + 1);
 		iVar4 = 0;
 		if (0 < numtrigs) {
@@ -714,7 +714,7 @@ uchar ForceL2Trig__Fv(void)
 				iVar2 = abs(pTVar6->_tx - cursmx);
 				iVar3 = abs(*piVar5 - cursmy);
 				if ((iVar2 < 4) && (iVar3 < 4)) {
-					__format = GetStr__Fi(0x4a8);
+					__format = GetStr__Fi(STR_UP_TO_TOWN_1192);
 					strcpy(_infostr + sel_data * 0x100,__format);
 LAB_80075ce4:
 					cursmx = pTVar6->_tx;
@@ -770,7 +770,7 @@ uchar ForceL3Trig__Fv(void)
 	
 	pvVar2 = FindLevTrig__Fiii(cursmx,cursmy,0);
 	if (pvVar2 != (void *)0x0) {
-		__format = GetStr__Fi(0x4a7);
+		__format = GetStr__Fi(STR_UP_TO_LEVEL__I_1191);
 		sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel - 1);
 		iVar6 = 0;
 		if (0 < numtrigs) {
@@ -794,7 +794,7 @@ uchar ForceL3Trig__Fv(void)
 		bVar1 = true;
 	}
 	if (bVar1) {
-		__format = GetStr__Fi(0x115);
+		__format = GetStr__Fi(STR_DOWN_TO_LEVEL__I_277);
 		sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel + 1);
 		iVar6 = 0;
 		if (0 < numtrigs) {
@@ -820,7 +820,7 @@ uchar ForceL3Trig__Fv(void)
 				iVar3 = abs(pTVar8->_tx - cursmx);
 				iVar4 = abs(*piVar7 - cursmy);
 				if ((iVar3 < 4) && (iVar4 < 4)) {
-					__format = GetStr__Fi(0x4a8);
+					__format = GetStr__Fi(STR_UP_TO_TOWN_1192);
 					strcpy(_infostr + sel_data * 0x100,__format);
 					cursmx = pTVar8->_tx;
 					cursmy = *piVar7;
@@ -874,7 +874,7 @@ uchar ForceL4Trig__Fv(void)
 	
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,0);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x4a7);
+		__format = GetStr__Fi(STR_UP_TO_LEVEL__I_1191);
 		sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel - 1);
 		iVar5 = 0;
 		if (0 < numtrigs) {
@@ -888,7 +888,7 @@ uchar ForceL4Trig__Fv(void)
 	}
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,1);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x115);
+		__format = GetStr__Fi(STR_DOWN_TO_LEVEL__I_277);
 		sprintf(_infostr + sel_data * 0x100,__format,(uint)currlevel + 1);
 		iVar5 = 0;
 		if (0 < numtrigs) {
@@ -910,7 +910,7 @@ uchar ForceL4Trig__Fv(void)
 				iVar2 = abs(pTVar7->_tx - cursmx);
 				iVar3 = abs(*piVar6 - cursmy);
 				if ((iVar2 < 4) && (iVar3 < 4)) {
-					__format = GetStr__Fi(0x4a8);
+					__format = GetStr__Fi(STR_UP_TO_TOWN_1192);
 					strcpy(_infostr + sel_data * 0x100,__format);
 					cursmx = pTVar7->_tx;
 					cursmy = *piVar6;
@@ -925,7 +925,7 @@ uchar ForceL4Trig__Fv(void)
 	}
 	if ((currlevel == '\x0f') && (pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,3), pvVar1 != (void *)0x0))
 	{
-		__format = GetStr__Fi(0x112);
+		__format = GetStr__Fi(STR_DOWN_TO_DIABLO_274);
 		strcpy(_infostr + sel_data * 0x100,__format);
 		if (0 < numtrigs) {
 			iVar4 = 0;
@@ -994,7 +994,7 @@ void Freeupstairs__Fv(void)
 				do {
 					iVar2 = iVar7 + iVar3;
 					iVar3 = iVar3 + 1;
-					(&dung_map)[iVar2 * 0x70 + iVar1].dFlags = (&dung_map)[iVar2 * 0x70 + iVar1].dFlags | 8;
+					dung_map[iVar2 * 0x70 + iVar1].dFlags = dung_map[iVar2 * 0x70 + iVar1].dFlags | 8;
 				} while (iVar3 < 3);
 				iVar4 = iVar4 + 1;
 			} while (iVar4 < 3);
@@ -1033,8 +1033,8 @@ uchar ForceSKingTrig__Fv(void)
 	
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,0);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x3b);
-		sprintf(_infostr + sel_data * 0x100,__format,(uint)QuestStruct_800ddb30._qlevel);
+		__format = GetStr__Fi(STR_BACK_TO_LEVEL__I_59);
+		sprintf(_infostr + sel_data * 0x100,__format,(uint)quests[12]._qlevel);
 		cursmx = trigs._tx;
 		cursmy = trigs._ty;
 	}
@@ -1069,8 +1069,8 @@ uchar ForceSChambTrig__Fv(void)
 	
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,1);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x3b);
-		sprintf(_infostr + sel_data * 0x100,__format,(uint)QuestStruct_800ddb58._qlevel);
+		__format = GetStr__Fi(STR_BACK_TO_LEVEL__I_59);
+		sprintf(_infostr + sel_data * 0x100,__format,(uint)quests[14]._qlevel);
 		cursmx = trigs._tx;
 		cursmy = trigs._ty;
 	}
@@ -1105,8 +1105,8 @@ uchar ForcePWaterTrig__Fv(void)
 	
 	pvVar1 = FindLevTrig__Fiii(cursmx,cursmy,1);
 	if (pvVar1 != (void *)0x0) {
-		__format = GetStr__Fi(0x3b);
-		sprintf(_infostr + sel_data * 0x100,__format,(uint)QuestStruct_800ddb44._qlevel);
+		__format = GetStr__Fi(STR_BACK_TO_LEVEL__I_59);
+		sprintf(_infostr + sel_data * 0x100,__format,(uint)quests[13]._qlevel);
 		cursmx = trigs._tx;
 		cursmy = trigs._ty;
 	}
@@ -1191,8 +1191,8 @@ void CheckTrigForce__Fv(void)
 		uVar3 = _trigflag[sel_data];
 		iVar4 = 0;
 		while (uVar3 == '\0') {
-			cursmx = iVar1 + (int)(&offset_x)[iVar4];
-			cursmy = iVar2 + (int)(&offset_y)[iVar4];
+			cursmx = iVar1 + (int)offset_x[iVar4];
+			cursmy = iVar2 + (int)offset_y[iVar4];
 			switch(leveltype) {
 			case '\0':
 				uVar3 = ForceTownTrig__Fv();
@@ -1227,8 +1227,8 @@ switchD_800766b8_caseD_5:
 		iVar4 = 0;
 		if (_trigflag[sel_data] == '\0') {
 			do {
-				cursmx = iVar1 + (int)(&offset_x)[iVar4];
-				cursmy = iVar2 + (int)(&offset_y)[iVar4];
+				cursmx = iVar1 + (int)offset_x[iVar4];
+				cursmy = iVar2 + (int)offset_y[iVar4];
 				if (setlvlnum == '\x02') {
 					uVar3 = ForceSChambTrig__Fv();
 LAB_80076864:
@@ -1344,10 +1344,10 @@ void * IsTrigger__Fii(int x,int y)
 	}
 	iVar2 = 0;
 	iVar1 = 0;
-	while ((((currlevel != (&quests._qlevel)[iVar1] || ((&quests._qslvl)[iVar1] == '\0')) ||
-					((&quests._qactive)[iVar1] == '\0')) ||
-				 ((x != *(int *)((int)&quests._qtx + iVar1) || (y != *(int *)((int)&quests._qty + iVar1)))))
-				) {
+	while ((((currlevel != (&quests[0]._qlevel)[iVar1] || ((&quests[0]._qslvl)[iVar1] == '\0')) ||
+					((&quests[0]._qactive)[iVar1] == '\0')) ||
+				 ((x != *(int *)((int)&quests[0]._qtx + iVar1) ||
+					(y != *(int *)((int)&quests[0]._qty + iVar1)))))) {
 		iVar2 = iVar2 + 1;
 		iVar1 = iVar1 + 0x14;
 		if (0xf < iVar2) {
@@ -1383,8 +1383,7 @@ void * CheckTrigLevel__Fi(int level)
 	undefined *puVar1;
 	
 	puVar1 = &DAT_00000001;
-	if (((int)plr._pLevel < level) &&
-		 (puVar1 = (undefined *)0x0, level <= (int)PlayerStruct_800dbf20._pLevel)) {
+	if (((int)plr[0]._pLevel < level) && (puVar1 = (undefined *)0x0, level <= (int)plr[1]._pLevel)) {
 		puVar1 = &DAT_00000001;
 	}
 	return puVar1;
@@ -1479,7 +1478,7 @@ void CheckTriggers__Fi(int pnum)
 	uint *puVar5;
 	int iVar6;
 	
-	if (plr.plractive == '\0') {
+	if (plr[0].plractive == '\0') {
 		myplr = 1;
 	}
 	iVar6 = 0;
@@ -1489,14 +1488,14 @@ void CheckTriggers__Fi(int pnum)
 		if (numtrigs <= iVar6) {
 			return;
 		}
-		if ((((((int)(&plr)[pnum]._px == *(int *)((int)&trigs._tx + iVar4)) &&
-					((int)(&plr)[pnum]._py == *(int *)((int)&trigs._ty + iVar4))) && (qtextflag == '\0')) &&
+		if ((((((int)plr[pnum]._px == *(int *)((int)&trigs._tx + iVar4)) &&
+					((int)plr[pnum]._py == *(int *)((int)&trigs._ty + iVar4))) && (qtextflag == '\0')) &&
 				(PauseMode == '\0')) &&
-			 (((gbMaxPlayers != '\x02' || ((&plr)[pnum ^ 1U].plractive == '\0')) ||
-				((&plr)[pnum ^ 1U].destAction != '\r')))) {
+			 (((gbMaxPlayers != '\x02' || (plr[pnum ^ 1U].plractive == '\0')) ||
+				(plr[pnum ^ 1U].destAction != '\r')))) {
 			switch(*puVar5) {
 			case 0x42:
-				if ((0xb < (&_pcurs)[myplr]) && (fom = FUN_80160c9c(), (fom & 0xff) != 0)) {
+				if ((0xb < (&_pcurs)[myplr]) && (x = DropItemBeforeTrig__Fv(), x != '\0')) {
 					return;
 				}
 				FadeGameOut__Fv();
@@ -1504,7 +1503,7 @@ void CheckTriggers__Fi(int pnum)
 				lvl = (uint)currlevel + 1;
 				break;
 			case 0x43:
-				if ((0xb < (&_pcurs)[myplr]) && (fom = FUN_80160c9c(), (fom & 0xff) != 0)) {
+				if ((0xb < (&_pcurs)[myplr]) && (x = DropItemBeforeTrig__Fv(), x != '\0')) {
 					return;
 				}
 				FadeGameOut__Fv();
@@ -1532,8 +1531,8 @@ void CheckTriggers__Fi(int pnum)
 						y_00 = '\0';
 						if (bVar1) {
 							e = '(';
-							x = (uchar)(&plr)[pnum]._px;
-							y_00 = (char)(&plr)[pnum]._py + '\x01';
+							x = (uchar)plr[pnum]._px;
+							y_00 = (char)plr[pnum]._py + '\x01';
 						}
 						lvl = *(int *)((int)&trigs._tlvl + iVar4);
 					}
@@ -1542,20 +1541,20 @@ void CheckTriggers__Fi(int pnum)
 						if (puVar3 != &DAT_00000001) {
 							bVar1 = true;
 							e = ')';
-							y_00 = (uchar)(&plr)[pnum]._py;
-							x = (char)(&plr)[pnum]._px + '\x01';
+							y_00 = (uchar)plr[pnum]._py;
+							x = (char)plr[pnum]._px + '\x01';
 						}
 						lvl = *(int *)((int)&trigs._tlvl + iVar4);
 					}
 					if ((lvl == 0xd) &&
 						 (puVar3 = (undefined *)CheckTrigLevel__Fi(0x11), puVar3 != &DAT_00000001)) {
 						e = '*';
-						x = (uchar)(&plr)[pnum]._px;
-						y_00 = (char)(&plr)[pnum]._py + '\x01';
+						x = (uchar)plr[pnum]._px;
+						y_00 = (char)plr[pnum]._py + '\x01';
 						bVar1 = true;
 					}
 					if (bVar1) {
-						cVar2 = (&plr)[pnum]._pClass;
+						cVar2 = plr[pnum]._pClass;
 						if (cVar2 == '\0') {
 							psfx = PS_WARR43;
 						}
@@ -1589,22 +1588,21 @@ LAB_80076e80:
 switchD_80076c58_caseD_45:
 			lvl = ViewX;
 			y = ViewY;
-			if (plr.plractive != '\0') {
+			if (plr[0].plractive != '\0') {
 				PlacePlayer__FiiiUc(0,ViewX,ViewY,'\x01');
-				lvl = (int)plr._px;
-				y = (int)plr._py;
+				lvl = (int)plr[0]._px;
+				y = (int)plr[0]._py;
 			}
-			if ((FePlayerNo == 0) || (plr.plractive == '\0')) {
-				if (PlayerStruct_800dbf20.plractive != '\0') {
+			if ((FePlayerNo == 0) || (plr[0].plractive == '\0')) {
+				if (plr[1].plractive != '\0') {
 					PlacePlayer__FiiiUc(1,lvl,y,'\0');
 				}
 			}
 			else {
-				if (PlayerStruct_800dbf20.plractive != '\0') {
-					PlacePlayer__FiiiUc(1,(int)plr._px,(int)plr._py,'\0');
-					ChangeLight__Fiiii((int)PlayerStruct_800dbf20._plid,(int)PlayerStruct_800dbf20._px,
-														 (int)PlayerStruct_800dbf20._py,
-														 (int)(&DAT_000023f0 + (int)PlayerStruct_800dbf20._pLightRad));
+				if (plr[1].plractive != '\0') {
+					PlacePlayer__FiiiUc(1,(int)plr[0]._px,(int)plr[0]._py,'\0');
+					ChangeLight__Fiiii((int)plr[1]._plid,(int)plr[1]._px,(int)plr[1]._py,
+														 (int)(&DAT_000023f0 + (int)plr[1]._pLightRad));
 				}
 			}
 		}

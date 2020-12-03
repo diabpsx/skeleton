@@ -32,7 +32,7 @@ int GetManaAmount__Fii(int id,int sn)
 	int iVar2;
 	int iVar3;
 	
-	iVar3 = (int)*(char *)(id * 0x19e8 + -0x7ff25a57 + sn) + (int)(&plr)[id]._pISplLvlAdd + -1;
+	iVar3 = (int)*(char *)(id * 0x19e8 + -0x7ff25a57 + sn) + (int)plr[id]._pISplLvlAdd + -1;
 	iVar2 = 0;
 	if (iVar3 < 0) {
 		iVar3 = 0;
@@ -56,30 +56,30 @@ int GetManaAmount__Fii(int id,int sn)
 		} while (0 < iVar1);
 	}
 	if ((&spelldata)[sn].sManaCost == 0xff) {
-		iVar1 = (uint)*(byte *)&(&plr)[id]._pMaxManaBase - iVar2;
+		iVar1 = (uint)*(byte *)&plr[id]._pMaxManaBase - iVar2;
 	}
 	else {
 		iVar1 = (uint)(&spelldata)[sn].sManaCost - iVar2;
 	}
 	iVar1 = iVar1 << 6;
 	if (sn == 2) {
-		iVar1 = (((int)(&plr)[id]._pLevel * 2 + (uint)SpellData_800ddbe8.sManaCost) - iVar2) * 0x40;
+		iVar1 = (((int)plr[id]._pLevel * 2 + (uint)SpellData_800ddbe8.sManaCost) - iVar2) * 0x40;
 	}
 	if (sn == 0x22) {
-		iVar1 = (((int)(&plr)[id]._pLevel * 2 + (uint)SpellData_800ddbe8.sManaCost) - iVar2) * 0x40;
+		iVar1 = (((int)plr[id]._pLevel * 2 + (uint)SpellData_800ddbe8.sManaCost) - iVar2) * 0x40;
 	}
 	if (sn == 0x20) {
 		while (0 < iVar3) {
 			iVar3 = iVar3 + -1;
 		}
 	}
-	if ((&plr)[id]._pClass == '\x01') {
+	if (plr[id]._pClass == '\x01') {
 		iVar1 = iVar1 - (iVar1 >> 2);
 	}
 	if (iVar1 >> 6 < (int)(uint)(&spelldata)[sn].sMinMana) {
 		iVar1 = (uint)(&spelldata)[sn].sMinMana << 6;
 	}
-	return (iVar1 * (100 - (int)(&plr)[id]._pISplCost)) / 100;
+	return (iVar1 * (100 - (int)plr[id]._pISplCost)) / 100;
 }
 
 
@@ -111,22 +111,22 @@ void UseMana__Fii(int id,int sn)
 	int iVar2;
 	
 	if ((id == myplr) && ((gbMaxPlayers != '\x02' || ((sn != 0x17 && (sn != 10)))))) {
-		switch((&plr)[id]._pSplType) {
+		switch(plr[id]._pSplType) {
 		case '\x01':
 			iVar1 = GetManaAmount__Fii(id,sn);
 			drawmanaflag = '\x01';
-			iVar2 = (&plr)[id]._pManaBase;
-			(&plr)[id]._pMana = (&plr)[id]._pMana - iVar1;
-			(&plr)[id]._pManaBase = iVar2 - iVar1;
+			iVar2 = plr[id]._pManaBase;
+			plr[id]._pMana = plr[id]._pMana - iVar1;
+			plr[id]._pManaBase = iVar2 - iVar1;
 			break;
 		case '\x02':
 			if ((&ScrollFlag)[id] == 0) {
-				FUN_8015fdfc(id);
+				RemoveScroll__Fi(id);
 			}
 			(&ScrollFlag)[id] = 0;
 			break;
 		case '\x03':
-			FUN_80160248(&plr + id);
+			UseStaffCharge__FP12PlayerStruct(plr + id);
 		}
 	}
 	return;
@@ -162,13 +162,13 @@ uchar CheckSpell__FiicUc(int id,int sn,char st,uchar manaonly)
 		bVar1 = true;
 	}
 	else {
-		iVar2 = FUN_8013a43c(id,sn);
+		iVar2 = GetSpellLevel__Fii(id,sn);
 		if (iVar2 < 1) {
 			bVar1 = false;
 		}
 		else {
 			iVar2 = GetManaAmount__Fii(id,sn);
-			bVar1 = iVar2 <= (&plr)[id]._pMana;
+			bVar1 = iVar2 <= plr[id]._pMana;
 		}
 	}
 	return (uchar)bVar1;
@@ -205,9 +205,9 @@ void CastSpell__Fiiiiiiii(int id,int spl,int sx,int sy,int dx,int dy,int caster,
 	byte *pbVar3;
 	int iVar4;
 	int iVar5;
-	int iVar6;
+	int midir;
 	
-	iVar6 = 0;
+	midir = 0;
 	if (caster == 0) {
 		if (gbMaxPlayers == '\x02') {
 			if (spl == 0x17) {
@@ -217,17 +217,17 @@ void CastSpell__Fiiiiiiii(int id,int spl,int sx,int sy,int dx,int dy,int caster,
 				return;
 			}
 		}
-		iVar6 = GetDirection__Fiiii(sx,sy,dx,dy);
+		midir = GetDirection__Fiiii(sx,sy,dx,dy);
 		iVar5 = id * 2;
 		if (spl == 6) {
-			iVar6 = (int)(&plr)[id]._pVar3;
+			midir = (int)plr[id]._pVar3;
 			iVar5 = id << 1;
 		}
-		ChangeLightColour__Fii((int)(&plr._plid)[iVar5 * 0x800 + id * 0x9e8],(int)&DAT_000023f0);
+		ChangeLightColour__Fii((int)(&plr[0]._plid)[iVar5 * 0x800 + id * 0x9e8],(int)&DAT_000023f0);
 	}
 	else {
 		if (caster == 1) {
-			iVar6 = (int)monster[id]._mdir;
+			midir = (int)monster[id]._mdir;
 		}
 	}
 	if ((spl == 0x1c) && ((int)(&_pcursobj)[sel_data] != 0xffffffff)) {
@@ -243,7 +243,7 @@ void CastSpell__Fiiiiiiii(int id,int spl,int sx,int sy,int dx,int dy,int caster,
 				iVar4 = spl * 0x34 + -0x7ff22463;
 				pbVar3 = (byte *)(iVar4 + iVar5);
 				iVar5 = iVar5 + 1;
-				FUN_80142a04(sx,sy,dx,dy,iVar6,(uint)*pbVar3,(int)(char)caster,id,0,spllvl);
+				AddMissile__Fiiiiiiciii(sx,sy,dx,dy,midir,(uint)*pbVar3,(int)(char)caster,id,0,spllvl);
 				bVar2 = iVar5 < 3;
 			} while (*(char *)(iVar4 + iVar5) != '\0');
 		}
@@ -257,7 +257,7 @@ void CastSpell__Fiiiiiiii(int id,int spl,int sx,int sy,int dx,int dy,int caster,
 			iVar5 = (spllvl >> 1) + 3;
 			if (0 < iVar5) {
 				do {
-					FUN_80142a04(sx,sy,dx,dy,iVar6,0x34,(int)(char)caster,id,0,spllvl);
+					AddMissile__Fiiiiiiciii(sx,sy,dx,dy,midir,0x34,(int)(char)caster,id,0,spllvl);
 					iVar5 = iVar5 + -1;
 				} while (0 < iVar5);
 			}
@@ -306,44 +306,45 @@ void DoResurrect__Fii(int pnum,int rid)
 			drawhpflag = '\x01';
 			drawmanaflag = '\x01';
 		}
-		light_rad = (&plr)[rid]._pLightRad;
+		light_rad = plr[rid]._pLightRad;
 		ClrPlrPath__Fi(rid);
-		(&plr)[rid].plractive = '\x01';
+		plr[rid].plractive = '\x01';
 		gbActivePlayers = '\x02';
 		PostGamePad__Fiiii(rid + 6,0,0,0);
-		(&plr)[rid].destAction = -1;
-		(&plr)[rid]._pInvincible = '\0';
+		plr[rid].destAction = -1;
+		plr[rid]._pInvincible = '\0';
 		SetPlayerHitPoints__Fii(rid,0x280);
-		iVar5 = (&plr)[rid]._pMaxHP;
-		iVar2 = (&plr)[rid]._pMaxHPBase;
-		iVar6 = (&plr)[rid]._pMaxMana;
-		iVar4 = (&plr)[rid]._pMaxManaBase;
-		(&plr)[rid]._pMana = 0;
-		iVar3 = (&plr)[rid]._pHitPoints;
-		(&plr)[rid]._pManaBase = iVar4 - iVar6;
-		(&plr)[rid]._pHPBase = iVar3 - (iVar5 - iVar2);
+		iVar5 = plr[rid]._pMaxHP;
+		iVar2 = plr[rid]._pMaxHPBase;
+		iVar6 = plr[rid]._pMaxMana;
+		iVar4 = plr[rid]._pMaxManaBase;
+		plr[rid]._pMana = 0;
+		iVar3 = plr[rid]._pHitPoints;
+		plr[rid]._pManaBase = iVar4 - iVar6;
+		plr[rid]._pHPBase = iVar3 - (iVar5 - iVar2);
 		CalcPlrInv__FiUc(rid,'\x01');
-		cVar1 = (&plr)[rid]._pdir;
-		(&plr)[rid].plrlevel = (uint)currlevel;
+		cVar1 = plr[rid]._pdir;
+		plr[rid].plrlevel = (uint)currlevel;
 		StartStand__Fii(rid,(int)cVar1);
-		PlacePlayer__FiiiUc(rid,(int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,'\0');
-		if ((int)(&plr)[rid]._plid == -1) {
-			iVar2 = AddLight__Fiii((int)(&plr)[rid]._px,(int)(&plr)[rid]._py,
+		PlacePlayer__FiiiUc(rid,(int)plr[pnum]._px,(int)plr[pnum]._py,'\0');
+		if ((int)plr[rid]._plid == -1) {
+			iVar2 = AddLight__Fiii((int)plr[rid]._px,(int)plr[rid]._py,
 														 (int)(&DAT_000023f0 + (int)light_rad));
-			(&plr)[rid]._plid = (char)iVar2;
+			plr[rid]._plid = (char)iVar2;
 		}
 		else {
-			ChangeLightXY__Fiii((int)(&plr)[rid]._plid,(int)(&plr)[rid]._px,(int)(&plr)[rid]._py);
+			ChangeLightXY__Fiii((int)plr[rid]._plid,(int)plr[rid]._px,(int)plr[rid]._py);
 		}
-		if ((int)(&plr)[rid]._pvid == -1) {
-			iVar2 = AddVision__FiiiUc((int)(&plr)[rid]._px,(int)(&plr)[rid]._py,10,(uchar)rid);
-			(&plr)[rid]._pvid = (char)iVar2;
+		if ((int)plr[rid]._pvid == -1) {
+			iVar2 = AddVision__FiiiUc((int)plr[rid]._px,(int)plr[rid]._py,10,(uchar)rid);
+			plr[rid]._pvid = (char)iVar2;
 		}
 		else {
-			ChangeVisionXY__Fiii((int)(&plr)[rid]._pvid,(int)(&plr)[rid]._px,(int)(&plr)[rid]._py);
+			ChangeVisionXY__Fiii((int)plr[rid]._pvid,(int)plr[rid]._px,(int)plr[rid]._py);
 		}
-		FUN_80142a04((int)(&plr)[rid]._px,(int)(&plr)[rid]._py,(int)(&plr)[rid]._px,(int)(&plr)[rid]._py
-								 ,0,0x3e,0,pnum,0,0);
+		AddMissile__Fiiiiiiciii
+							((int)plr[rid]._px,(int)plr[rid]._py,(int)plr[rid]._px,(int)plr[rid]._py,0,0x3e,0,pnum
+							 ,0,0);
 		(&_pcursplr)[pnum] = -1;
 	}
 	return;
@@ -383,40 +384,40 @@ void DoHealOther__Fii(int pnum,int rid)
 	if (pnum == myplr) {
 		NewCursor__Fi(1);
 	}
-	if (((char)rid != -1) && (0 < (&plr)[rid]._pHitPoints >> 6)) {
+	if (((char)rid != -1) && (0 < plr[rid]._pHitPoints >> 6)) {
 		lVar1 = ENG_random__Fl(10);
 		iVar4 = (lVar1 + 1) * 0x40;
 		iVar3 = 0;
-		if ('\0' < (&plr)[pnum]._pLevel) {
+		if ('\0' < plr[pnum]._pLevel) {
 			do {
 				lVar1 = ENG_random__Fl(4);
 				iVar4 = iVar4 + (lVar1 + 1) * 0x40;
 				iVar3 = iVar3 + 1;
-			} while (iVar3 < (int)(&plr)[pnum]._pLevel);
+			} while (iVar3 < (int)plr[pnum]._pLevel);
 		}
 		iVar3 = 0;
-		while (iVar2 = FUN_8013a43c(pnum,0x22), iVar3 < iVar2) {
+		while (iVar2 = GetSpellLevel__Fii(pnum,0x22), iVar3 < iVar2) {
 			lVar1 = ENG_random__Fl(6);
 			iVar4 = iVar4 + (lVar1 + 1) * 0x40;
 			iVar3 = iVar3 + 1;
 		}
-		if ((&plr)[pnum]._pClass == '\0') {
+		if (plr[pnum]._pClass == '\0') {
 			iVar4 = iVar4 << 1;
 		}
-		if ((&plr)[pnum]._pClass == '\x01') {
+		if (plr[pnum]._pClass == '\x01') {
 			iVar4 = iVar4 + (iVar4 >> 1);
 		}
-		iVar2 = (&plr)[rid]._pMaxHP;
-		iVar3 = (&plr)[rid]._pHitPoints + iVar4;
-		(&plr)[rid]._pHitPoints = iVar3;
+		iVar2 = plr[rid]._pMaxHP;
+		iVar3 = plr[rid]._pHitPoints + iVar4;
+		plr[rid]._pHitPoints = iVar3;
 		if (iVar2 < iVar3) {
-			(&plr)[rid]._pHitPoints = iVar2;
+			plr[rid]._pHitPoints = iVar2;
 		}
-		iVar3 = (&plr)[rid]._pMaxHPBase;
-		iVar4 = (&plr)[rid]._pHPBase + iVar4;
-		(&plr)[rid]._pHPBase = iVar4;
+		iVar3 = plr[rid]._pMaxHPBase;
+		iVar4 = plr[rid]._pHPBase + iVar4;
+		plr[rid]._pHPBase = iVar4;
 		if (iVar3 < iVar4) {
-			(&plr)[rid]._pHPBase = iVar3;
+			plr[rid]._pHPBase = iVar3;
 		}
 		drawhpflag = '\x01';
 	}

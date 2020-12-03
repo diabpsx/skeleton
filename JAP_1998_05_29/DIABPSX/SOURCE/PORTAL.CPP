@@ -20,20 +20,18 @@
 	/* end block 2 */
 	// End Line: 303
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void AddWarpMissile__Fiii(int i,int x,int y)
 
 {
-	int iVar1;
+	int mi;
 	
 	missiledata[10].mlSFX = -1;
-	(&dung_map)[x * 0x70 + y].dMissile = '\0';
-	iVar1 = FUN_80142a04(0,0,x,y,0,10,0,i,0,0);
-	if (iVar1 != -1) {
-		FUN_8013d424(iVar1,1);
-		iVar1 = AddLight__Fiii((int)missile[i]._mix,(int)missile[i]._miy,0x14a);
-		missile[i]._mlid = (char)iVar1;
+	dung_map[x * 0x70 + y].dMissile = '\0';
+	mi = AddMissile__Fiiiiiiciii(0,0,x,y,0,10,0,i,0,0);
+	if (mi != -1) {
+		SetMissDir__Fii(mi,1);
+		mi = AddLight__Fiii((int)missile[i]._mix,(int)missile[i]._miy,0x14a);
+		missile[i]._mlid = (char)mi;
 		missiledata[10].mlSFX = 0x6e;
 	}
 	return;
@@ -151,8 +149,8 @@ void SyncPortals__Fv(void)
 				while (iVar2 = 0, iVar1 = y, x < 0x70) {
 					do {
 						iVar2 = iVar2 + 1;
-						(&dung_map.dMissile)[iVar1] = '\0';
-						(&dung_map.dFlags)[iVar1] = (&dung_map.dFlags)[iVar1] & 0xbf;
+						(&dung_map[0].dMissile)[iVar1] = '\0';
+						(&dung_map[0].dFlags)[iVar1] = (&dung_map[0].dFlags)[iVar1] & 0xbf;
 						iVar1 = iVar1 + 8;
 					} while (iVar2 < 0x70);
 					y = y + 0x380;
@@ -193,8 +191,6 @@ LAB_80081114:
 	/* end block 2 */
 	// End Line: 519
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ActivatePortal__FiiiiiUc(int i,int x,int y,int lvl,int lvltype,int sp)
 
 {
@@ -232,8 +228,6 @@ void ActivatePortal__FiiiiiUc(int i,int x,int y,int lvl,int lvltype,int sp)
 	/* end block 2 */
 	// End Line: 559
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DeactivatePortal__Fi(int i)
 
 {
@@ -259,8 +253,6 @@ void DeactivatePortal__Fi(int i)
 	/* end block 2 */
 	// End Line: 577
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar PortalOnLevel__Fi(int i)
 
 {
@@ -284,8 +276,6 @@ uchar PortalOnLevel__Fi(int i)
 		// Start line: 596
 	/* end block 2 */
 	// End Line: 597
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DelMis__Fii(int mi,int i)
 
@@ -320,8 +310,6 @@ void DelMis__Fii(int mi,int i)
 	/* end block 2 */
 	// End Line: 626
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void RemovePortalMissile__Fi(int id)
 
 {
@@ -334,9 +322,9 @@ void RemovePortalMissile__Fi(int id)
 		do {
 			mi = (int)*(short *)((int)&missileactive + mi);
 			if ((missile[mi]._mitype == '\n') && ((int)missile[mi]._misource == id)) {
-				(&dung_map)[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dFlags =
-						 (&dung_map)[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dFlags & 0xbf;
-				(&dung_map)[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dMissile = '\0';
+				dung_map[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dFlags =
+						 dung_map[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dFlags & 0xbf;
+				dung_map[(int)missile[mi]._mix * 0x70 + (int)missile[mi]._miy].dMissile = '\0';
 				if (portal[id].level != '\0') {
 					AddUnLight__Fi((int)missile[mi]._mlid);
 				}
@@ -367,8 +355,6 @@ void RemovePortalMissile__Fi(int id)
 		// Start line: 673
 	/* end block 2 */
 	// End Line: 674
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetCurrentPortal__Fi(int p)
 
@@ -414,7 +400,7 @@ void GetPortalLevel__Fv(void)
 		}
 		setlevel = !bVar1;
 		currlevel = portal[portalindex].level;
-		(&plr)[myplr].plrlevel = (uint)currlevel;
+		plr[myplr].plrlevel = (uint)currlevel;
 		leveltype = (uchar)portal[iVar2].ltype;
 		NetSendCmd__FUcUc('\x01','9');
 		DeactivatePortal__Fi(portalindex);
@@ -424,7 +410,7 @@ void GetPortalLevel__Fv(void)
 		setlvlnum = '\0';
 		currlevel = '\0';
 		leveltype = '\0';
-		(&plr)[myplr].plrlevel = 0;
+		plr[myplr].plrlevel = 0;
 	}
 	return;
 }

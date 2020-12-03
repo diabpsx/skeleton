@@ -98,8 +98,8 @@ void AlterBirdPos__FP10BIRDSTRUCTUc(BIRDSTRUCT *b,uchar rnd)
 	long v;
 	int iVar6;
 	
-	cVar1 = (&offset_x)[(int)b->dir];
-	cVar2 = (&offset_y)[(int)b->dir];
+	cVar1 = offset_x[(int)b->dir];
+	cVar2 = offset_y[(int)b->dir];
 	if (rnd == '\0') {
 		cVar4 = b->flyvar + -1;
 	}
@@ -227,9 +227,7 @@ void BirdWorld__FP10BIRDSTRUCTii(BIRDSTRUCT *b,int wx,int wy)
 	/* end block 2 */
 	// End Line: 366
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
-void * CheckDist__Fii(int x,int y)
+int CheckDist__Fii(int x,int y)
 
 {
 	bool bVar1;
@@ -241,23 +239,23 @@ void * CheckDist__Fii(int x,int y)
 	iVar3 = 0;
 	puVar2 = (undefined *)0x0;
 	do {
-		if ((&plr.plractive)[(int)puVar2] != '\0') {
-			__x = abs(x - (int)*(short *)((int)&plr._px + (int)puVar2));
+		if ((&plr[0].plractive)[(int)puVar2] != '\0') {
+			__x = abs(x - (int)*(short *)((int)&plr[0]._px + (int)puVar2));
 			bVar1 = false;
-			__x_00 = abs(y - (int)*(short *)((int)&plr._py + (int)puVar2));
+			__x_00 = abs(y - (int)*(short *)((int)&plr[0]._py + (int)puVar2));
 			__x = abs(__x);
 			if (__x < 5) {
 				__x = abs(__x_00);
 				bVar1 = __x < 5;
 			}
 			if (bVar1) {
-				return (void *)(uint)(iVar3 != -1);
+				return (uint)(iVar3 != -1);
 			}
 		}
 		iVar3 = iVar3 + 1;
 		puVar2 = &DAT_000019e8 + (int)puVar2;
 		if (1 < iVar3) {
-			return (void *)0x0;
+			return 0;
 		}
 	} while( true );
 }
@@ -308,12 +306,12 @@ int BirdScared__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	char cVar1;
 	char cVar2;
 	int iVar3;
-	void *pvVar4;
-	void *pvVar5;
+	int iVar4;
+	int iVar5;
 	
-	pvVar5 = (void *)0x0;
+	iVar5 = 0;
 	iVar3 = GetPerch__FP10BIRDSTRUCT(b);
-	if ((b->mode == '\x01') && (b->leader == (BIRDSTRUCT *)0x0)) {
+	if ((b->mode == BIRD_FLY) && (b->leader == (BIRDSTRUCT *)0x0)) {
 		cVar1 = perches[iVar3].x;
 		cVar2 = perches[iVar3].y;
 	}
@@ -321,17 +319,16 @@ int BirdScared__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 		cVar1 = b->_bx;
 		cVar2 = b->_by;
 	}
-	pvVar4 = CheckDist__Fii((int)cVar1,(int)cVar2);
-	iVar3 = (int)pvVar4 + -1;
-	if (pvVar4 != (void *)0x0) {
-		if (((&last_seenx)[iVar3] != (&plr)[iVar3].WorldX) ||
-			 ((&last_seeny)[iVar3] != (&plr)[iVar3].WorldY)) {
-			pvVar5 = pvVar4;
+	iVar3 = CheckDist__Fii((int)cVar1,(int)cVar2);
+	iVar4 = iVar3 + -1;
+	if (iVar3 != 0) {
+		if ((last_seenx[iVar4] != plr[iVar4].WorldX) || (last_seeny[iVar4] != plr[iVar4].WorldY)) {
+			iVar5 = iVar3;
 		}
-		(&last_seenx)[iVar3] = (&plr)[iVar3].WorldX;
-		(&last_seeny)[iVar3] = (&plr)[iVar3].WorldY;
+		last_seenx[iVar4] = plr[iVar4].WorldX;
+		last_seeny[iVar4] = plr[iVar4].WorldY;
 	}
-	return (int)pvVar5;
+	return iVar5;
 }
 
 
@@ -442,8 +439,8 @@ void BIRD_StartHop__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	int iVar10;
 	
 	lVar6 = ENG_random__Fl(8);
-	iVar9 = (int)(&offset_x)[lVar6] * (int)hop_height;
-	iVar10 = (int)(&offset_y)[lVar6] * (int)hop_height;
+	iVar9 = (int)offset_x[lVar6] * (int)hop_height;
+	iVar10 = (int)offset_y[lVar6] * (int)hop_height;
 	if (b->leadflag == '\0') {
 		uVar5 = BirdDistanceOK__Fiiii
 											((int)b->leader->WorldX,(int)b->leader->WorldY,(int)b->WorldX + iVar9,
@@ -470,11 +467,11 @@ LAB_800abc90:
 	lVar8 = ENG_random__Fl(3);
 	b->flyvar = (char)(lVar8 + 1);
 	iVar9 = (int)hop_height + ((lVar8 + 1) * 0x1000000 >> 0x18);
-	uVar5 = SolidLoc__Fii((int)b->WorldX + (int)(&offset_x)[lVar6] * iVar9 >> 3,
-												(int)b->WorldY + (int)(&offset_y)[lVar6] * iVar9 >> 3);
+	uVar5 = SolidLoc__Fii((int)b->WorldX + (int)offset_x[lVar6] * iVar9 >> 3,
+												(int)b->WorldY + (int)offset_y[lVar6] * iVar9 >> 3);
 	if (uVar5 == '\0') {
 		b->dir = (char)lVar6;
-		b->mode = '\x04';
+		b->mode = BIRD_HOP;
 		b->flytime = hop_height;
 	}
 	else {
@@ -519,8 +516,8 @@ void BIRD_DoHop__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 		cVar1 = b->height + -1;
 	}
 	b->height = cVar1;
-	b->WorldX = b->WorldX + (short)(&offset_x)[(int)b->dir];
-	iVar3 = (uint)(ushort)b->WorldY + (int)(&offset_y)[(int)b->dir];
+	b->WorldX = b->WorldX + (short)offset_x[(int)b->dir];
+	iVar3 = (uint)(ushort)b->WorldY + (int)offset_y[(int)b->dir];
 	b->WorldY = (short)iVar3;
 	BirdWorld__FP10BIRDSTRUCTii(b,(int)b->WorldX,iVar3 * 0x10000 >> 0x10);
 	b->animcount = '\0';
@@ -562,13 +559,13 @@ void BIRD_StartPerch__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 {
 	long lVar1;
 	
-	b->mode = '\0';
+	b->mode = BIRD_PERCH;
 	lVar1 = ENG_random__Fl(0x32);
 	b->flytime = (char)lVar1 + '2';
-	last_seenx = plr.WorldX;
-	INT_8011c724 = PlayerStruct_800dbf20.WorldX;
-	last_seeny = plr.WorldY;
-	INT_8011c72c = PlayerStruct_800dbf20.WorldY;
+	last_seenx[0] = plr[0].WorldX;
+	last_seenx[1] = plr[1].WorldX;
+	last_seeny[0] = plr[0].WorldY;
+	last_seeny[1] = plr[1].WorldY;
 	return;
 }
 
@@ -646,7 +643,7 @@ void BIRD_DoScatter__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	bVar1 = b->flytime - 1;
 	b->flytime = bVar1;
 	if ((int)((uint)bVar1 << 0x18) < 1) {
-		b->mode = '\x01';
+		b->mode = BIRD_FLY;
 		lVar2 = ENG_random__Fl(0x32);
 		b->flytime = (char)lVar2 + '2';
 		lVar2 = ENG_random__Fl(10);
@@ -733,8 +730,8 @@ void CheckDirOk__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 		iVar7 = 0;
 		iVar6 = (int)b->WorldX;
 		iVar5 = (int)b->WorldY;
-		cVar4 = (&offset_x)[(int)b->dir];
-		cVar1 = (&offset_y)[(int)b->dir];
+		cVar4 = offset_x[(int)b->dir];
+		cVar1 = offset_y[(int)b->dir];
 		do {
 			uVar3 = SolidLoc__Fii(iVar6 >> 3,iVar5 >> 3);
 			if (uVar3 == '\0') {
@@ -785,7 +782,7 @@ void BIRD_StartScatter__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	long lVar1;
 	int iVar2;
 	
-	b->mode = '\x02';
+	b->mode = BIRD_SCATTER;
 	lVar1 = ENG_random__Fl(100);
 	b->flytime = (char)lVar1 + '2';
 	lVar1 = ENG_random__Fl(0x32);
@@ -857,7 +854,7 @@ void BIRD_StartFly__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	int iVar1;
 	
 	b_00 = b->leader;
-	if (1 < (uint)(byte)b->mode - 1) {
+	if (1 < (uint)b->mode - 1) {
 		BIRD_StartScatter__FP10BIRDSTRUCT(b);
 		if (b->visible != '\0') {
 			PlaySFX__Fi(TSFX_BIRDCHR1);
@@ -948,62 +945,63 @@ void BIRD_DoFly__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	char cVar1;
 	char cVar2;
 	char cVar3;
-	bool bVar4;
-	uchar uVar5;
-	int iVar6;
-	long lVar7;
-	int iVar8;
-	char cVar9;
-	int iVar10;
+	_224fake _Var4;
+	bool bVar5;
+	uchar uVar6;
+	int iVar7;
+	long lVar8;
+	int iVar9;
+	char cVar10;
+	int iVar11;
 	
-	iVar6 = GetPerch__FP10BIRDSTRUCT(b);
-	cVar9 = b->flytime;
-	b->flytime = cVar9 + -1;
-	if (cVar9 == '\x01') {
+	iVar7 = GetPerch__FP10BIRDSTRUCT(b);
+	cVar10 = b->flytime;
+	b->flytime = cVar10 + -1;
+	if (cVar10 == '\x01') {
 		if (BirdFrig == (void *)0x0) {
-			lVar7 = ENG_random__Fl(0x14);
-			b->flytime = (char)lVar7 + '\n';
+			lVar8 = ENG_random__Fl(0x14);
+			b->flytime = (char)lVar8 + '\n';
 			if (b->leadflag == '\0') {
-				cVar9 = b->_bx;
+				cVar10 = b->_bx;
 				cVar1 = b->_by;
 				cVar2 = b->leader->_bx;
 				cVar3 = b->leader->_by;
 			}
 			else {
-				iVar8 = BirdScared__FP10BIRDSTRUCT(b);
-				if (iVar8 != 0) {
-					lVar7 = ENG_random__Fl(8);
-					b->newdir = (char)lVar7;
+				iVar9 = BirdScared__FP10BIRDSTRUCT(b);
+				if (iVar9 != 0) {
+					lVar8 = ENG_random__Fl(8);
+					b->newdir = (char)lVar8;
 					goto LAB_800ac324;
 				}
-				cVar9 = b->_bx;
+				cVar10 = b->_bx;
 				cVar1 = b->_by;
-				cVar2 = perches[iVar6].x;
-				cVar3 = perches[iVar6].y;
+				cVar2 = perches[iVar7].x;
+				cVar3 = perches[iVar7].y;
 			}
-			iVar8 = GetDirection__Fiiii((int)cVar9,(int)cVar1,(int)cVar2,(int)cVar3);
-			b->newdir = (char)iVar8;
+			iVar9 = GetDirection__Fiiii((int)cVar10,(int)cVar1,(int)cVar2,(int)cVar3);
+			b->newdir = (char)iVar9;
 		}
 		else {
-			iVar8 = GetDirection__Fiiii((int)b->_bx,(int)b->_by,(int)plr._px,(int)plr._py);
-			b->newdir = (char)iVar8;
-			lVar7 = ENG_random__Fl(5);
-			b->flytime = (char)lVar7 + '\x05';
+			iVar9 = GetDirection__Fiiii((int)b->_bx,(int)b->_by,(int)plr[0]._px,(int)plr[0]._py);
+			b->newdir = (char)iVar9;
+			lVar8 = ENG_random__Fl(5);
+			b->flytime = (char)lVar8 + '\x05';
 		}
 LAB_800ac324:
 		if (b->leadflag != '\0') {
-			iVar8 = BirdScared__FP10BIRDSTRUCT(b);
-			if ((iVar8 == 0) && (bVar4 = false, BirdFrig == (void *)0x0)) {
-				iVar8 = (int)(&offset_x)[(int)b->dir] * (int)b->height;
-				iVar10 = (int)(&offset_y)[(int)b->dir] * (int)b->height;
-				uVar5 = BirdDistanceOK__Fiiii
-													((int)perches[iVar6].x << 3,(int)perches[iVar6].y << 3,
-													 (int)b->WorldX + iVar8,(int)b->WorldY + iVar10);
-				if (uVar5 != '\0') {
-					uVar5 = SolidLoc__Fii((int)b->WorldX + iVar8 >> 3,(int)b->WorldY + iVar10 >> 3);
-					bVar4 = uVar5 == '\0';
+			iVar9 = BirdScared__FP10BIRDSTRUCT(b);
+			if ((iVar9 == 0) && (bVar5 = false, BirdFrig == (void *)0x0)) {
+				iVar9 = (int)offset_x[(int)b->dir] * (int)b->height;
+				iVar11 = (int)offset_y[(int)b->dir] * (int)b->height;
+				uVar6 = BirdDistanceOK__Fiiii
+													((int)perches[iVar7].x << 3,(int)perches[iVar7].y << 3,
+													 (int)b->WorldX + iVar9,(int)b->WorldY + iVar11);
+				if (uVar6 != '\0') {
+					uVar6 = SolidLoc__Fii((int)b->WorldX + iVar9 >> 3,(int)b->WorldY + iVar11 >> 3);
+					bVar5 = uVar6 == '\0';
 				}
-				if (bVar4) {
+				if (bVar5) {
 					BIRD_StartLanding__FP10BIRDSTRUCT(b);
 				}
 			}
@@ -1015,25 +1013,25 @@ LAB_800ac404:
 		if (b->leadflag != '\0') {
 			if (b->height < '2') {
 				b->animcount = b->animcount + '\b';
-				lVar7 = ENG_random__Fl(2);
-				b->height = b->height + (char)lVar7;
+				lVar8 = ENG_random__Fl(2);
+				b->height = b->height + (char)lVar8;
 			}
 			goto LAB_800ac4e8;
 		}
 	}
-	cVar9 = b->leader->mode;
-	if ((cVar9 == '\x03') || (cVar9 == '\0')) goto LAB_800ac4e8;
-	cVar9 = b->leader->height;
-	if (b->height < cVar9) {
-		lVar7 = ENG_random__Fl(2);
-		cVar9 = b->height + (char)lVar7;
+	_Var4 = b->leader->mode;
+	if ((_Var4 == BIRD_LANDING) || (_Var4 == BIRD_PERCH)) goto LAB_800ac4e8;
+	cVar10 = b->leader->height;
+	if (b->height < cVar10) {
+		lVar8 = ENG_random__Fl(2);
+		cVar10 = b->height + (char)lVar8;
 LAB_800ac4b8:
-		b->height = cVar9;
+		b->height = cVar10;
 	}
 	else {
-		if (cVar9 < b->height) {
-			lVar7 = ENG_random__Fl(2);
-			cVar9 = b->height - (char)lVar7;
+		if (cVar10 < b->height) {
+			lVar8 = ENG_random__Fl(2);
+			cVar10 = b->height - (char)lVar8;
 			goto LAB_800ac4b8;
 		}
 	}
@@ -1068,7 +1066,7 @@ LAB_800ac4e8:
 void BIRD_StartLanding__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 
 {
-	b->mode = '\x03';
+	b->mode = BIRD_LANDING;
 	return;
 }
 
@@ -1226,9 +1224,9 @@ void ProcessFlock__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 	int iVar4;
 	
 	pBVar2 = b->leader;
-	if ((b->mode == '\x01') && ((pBVar2->mode == '\0' || (pBVar2->mode == '\x04')))) {
-		iVar3 = (int)(&offset_x)[(int)b->dir] * (int)b->height;
-		iVar4 = (int)(&offset_y)[(int)b->dir] * (int)b->height;
+	if ((b->mode == BIRD_FLY) && ((pBVar2->mode == BIRD_PERCH || (pBVar2->mode == BIRD_HOP)))) {
+		iVar3 = (int)offset_x[(int)b->dir] * (int)b->height;
+		iVar4 = (int)offset_y[(int)b->dir] * (int)b->height;
 		uVar1 = BirdDistanceOK__Fiiii
 											((int)pBVar2->WorldX,(int)pBVar2->WorldY,(int)b->WorldX + iVar3,
 											 (int)b->WorldY + iVar4);
@@ -1410,12 +1408,12 @@ void ProcessBird__Fv(void)
 int GetBirdFrame__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 
 {
-	char cVar1;
+	_224fake _Var1;
 	int iVar2;
 	
-	cVar1 = b->mode;
+	_Var1 = b->mode;
 	iVar2 = (int)b->dir;
-	if ((cVar1 == '\0') || (cVar1 == '\x04')) {
+	if ((_Var1 == BIRD_PERCH) || (_Var1 == BIRD_HOP)) {
 		switch(b->dir) {
 		case '\0':
 		case '\x05':
@@ -1432,7 +1430,7 @@ int GetBirdFrame__FP10BIRDSTRUCT(BIRDSTRUCT *b)
 		iVar2 = iVar2 * 2 + ((int)((uint)(byte)b->animcount << 0x18) >> 0x1b) + 0x10;
 	}
 	else {
-		if (cVar1 == '\x03') {
+		if (_Var1 == BIRD_LANDING) {
 			iVar2 = iVar2 * 2 + 1;
 		}
 		else {

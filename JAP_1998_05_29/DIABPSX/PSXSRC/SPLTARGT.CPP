@@ -274,10 +274,9 @@ void Init__11SpellTargeti(SpellTarget *this,int plrn)
 	int y;
 	
 	this->pnum = plrn;
-	this->player = &plr + plrn;
-	if (((&plr)[plrn]._pSplType == '\x01') &&
-		 (uVar2 = CheckSpell__FiicUc(this->pnum,(int)(&plr)[plrn]._pSpell,'\x01','\0'), uVar2 == '\0'))
-	{
+	this->player = plr + plrn;
+	if ((plr[plrn]._pSplType == '\x01') &&
+		 (uVar2 = CheckSpell__FiicUc(this->pnum,(int)plr[plrn]._pSpell,'\x01','\0'), uVar2 == '\0')) {
 		pPVar4 = this->player;
 		if (pPVar4->_pSplType == '\x01') {
 			if ((int)pPVar4->_pSplLvl[(int)pPVar4->_pSpell] + (int)pPVar4->_pISplLvlAdd == 0) {
@@ -318,10 +317,10 @@ void Init__11SpellTargeti(SpellTarget *this,int plrn)
 		*(undefined **)&this->active = &DAT_00000001;
 		*(undefined **)&this->changed = &DAT_00000001;
 		if (this->forcespell == '\0') {
-			sVar3 = (this->player->_px + (short)(&offset_x)[(int)this->player->_pdir]) * 8;
+			sVar3 = (this->player->_px + (short)offset_x[(int)this->player->_pdir]) * 8;
 			this->_nsx = sVar3;
 			this->_sx = sVar3;
-			sVar3 = (this->player->_py + (short)(&offset_y)[(int)this->player->_pdir]) * 8;
+			sVar3 = (this->player->_py + (short)offset_y[(int)this->player->_pdir]) * 8;
 			this->_nsy = sVar3;
 			this->_sy = sVar3;
 			ClearTrails__11SpellTarget(this);
@@ -463,10 +462,10 @@ void DrawArrow__11SpellTargetii(SpellTarget *this,int x1,int y1)
 	this->lasty[0] = (short)(y1 + 4);
 	DrawSpinner__FiiUcUcUciiibiT8T8Uc
 						((int)this->lastx[0],(y1 + 4) * 0x10000 >> 0x10,SpinR,'\x7f',uVar7 & 0xff,0x2e,0x28,
-						 this->angle,(void *)0x0,OtPos,&DAT_00000001,&DAT_00000001,8);
+						 this->angle,0,OtPos,1,1,8);
 	DrawSpinner__FiiUcUcUciiibiT8T8Uc
 						((int)this->lastx[0],(int)this->lasty[0],SpinR,'\x7f',uVar7 & 0xff,0x26,0x28,
-						 -(this->angle + 0x2d),(void *)0x0,OtPos,&DAT_00000001,&DAT_00000001,8);
+						 -(this->angle + 0x2d),0,OtPos,1,1,8);
 	SpinR = -1;
 	if (this->pnum == 0) {
 		lVar1 = ENG_random__Fl(0xff);
@@ -488,8 +487,7 @@ void DrawArrow__11SpellTargetii(SpellTarget *this,int x1,int y1)
 		}
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
 							((int)*(short *)(iVar4 + 0x28),(int)*(short *)(iVar4 + 0x38),SpinR,'\x7f',uVar7 & 0xff
-							 ,-iVar6 + 0x2a,-iVar6 + 0x23,iVar2 << 1,(void *)0x0,OtPos,&DAT_00000001,&DAT_00000001
-							 ,8);
+							 ,-iVar6 + 0x2a,-iVar6 + 0x23,iVar2 << 1,0,OtPos,1,1,8);
 		iVar4 = iVar4 + 2;
 		uVar5 = uVar5 + 1;
 		iVar6 = iVar6 + 3;
@@ -626,8 +624,8 @@ void Show__11SpellTarget(SpellTarget *this)
 	other = GetPadStyle__Fi(this->pnum);
 	other = pad_UpIsUpRight__Fic((uint)uVar2 & 0xf,other);
 	y = (int)other;
-	local_28 = SEXT14((&offset_x)[y]);
-	local_24 = SEXT14((&offset_y)[y]);
+	local_28 = SEXT14(offset_x[y]);
+	local_24 = SEXT14(offset_y[y]);
 	x_00 = uVar5;
 	if (y == -1) {
 LAB_800af960:
@@ -647,8 +645,7 @@ LAB_800af960:
 		}
 		if (0x51 < ((int)y_00 >> 3) - 0x10U) goto LAB_800af960;
 	}
-	if (((int)(&dung_map)[((int)x_00 >> 3) * 0x70 + ((int)y_00 >> 3)].dFlags & this->pnum + 1U) != 0)
-	{
+	if (((int)dung_map[((int)x_00 >> 3) * 0x70 + ((int)y_00 >> 3)].dFlags & this->pnum + 1U) != 0) {
 		CheckRangeObject__Fiii((int)x_00 >> 3,(int)y_00 >> 3,1);
 	}
 LAB_800afa6c:
@@ -671,8 +668,8 @@ LAB_800afa6c:
 		while ((0x140 < local_28 || (0xf0 < local_24))) {
 			y = GetDirection__Fiiii((int)this->_nsx,(int)this->_nsy,this->player->WorldX,
 															this->player->WorldY);
-			this->_sx = this->_sx + (short)(&offset_x)[y];
-			this->_sy = this->_sy + (short)(&offset_y)[y];
+			this->_sx = this->_sx + (short)offset_x[y];
+			this->_sy = this->_sy + (short)offset_y[y];
 			local_28 = SEXT24(this->_sx);
 			local_24 = SEXT24(this->_sy);
 			GetScrXY__FPiT0((int *)&local_28,(int *)&local_24);
@@ -744,31 +741,31 @@ LAB_800afa6c:
 void ForceTarget__11SpellTargetiii(SpellTarget *this,int monst,int x,int y)
 
 {
-	short sVar1;
-	uint uVar2;
+	uchar uVar1;
+	short sVar2;
 	undefined *puVar3;
 	int iVar4;
 	
 	iVar4 = myplr;
 	if (myplr != -1) {
 		this->pnum = myplr;
-		this->player = &plr + iVar4;
-		if ((((monst < 1) || (uVar2 = FUN_8015694c(monst), (uVar2 & 0xff) == 0)) &&
+		this->player = plr + iVar4;
+		if ((((monst < 1) || (uVar1 = CanTalkToMonst__Fi(monst), uVar1 == '\0')) &&
 				(puVar3 = (undefined *)IsAutoTarget__Fi(this->player->_pRSpell), puVar3 == &DAT_00000001))
 			 && ((this->player->_pRSplType != '\x04' && (this->active == (void *)0x0)))) {
 			if (monst + 1U != (uint)this->forcespell) {
 				*(undefined **)&this->changed = &DAT_00000001;
 				ClearTrails__11SpellTarget(this);
 			}
-			sVar1 = (short)(x << 3);
+			sVar2 = (short)(x << 3);
 			if (this->forcespell == '\0') {
 				this->_sx = (short)this->player->WorldX;
 				iVar4 = this->player->WorldY;
 				*(undefined **)&this->changed = &DAT_00000001;
 				this->_sy = (short)iVar4;
-				sVar1 = (short)(x << 3);
+				sVar2 = (short)(x << 3);
 			}
-			this->_nsx = sVar1;
+			this->_nsx = sVar2;
 			this->_nsy = (short)(y << 3);
 			this->forcespell = (uchar)(monst + 1U);
 		}
@@ -990,8 +987,8 @@ void ArrowTask__FP4TASK(TASK *T)
 						if ((uVar5 & 1) != 0) {
 							SpinB = 0x7f;
 						}
-						local_60 = *(int *)((int)&plr.WorldX + local_38);
-						local_5c = *(int *)((int)&plr.WorldY + local_38);
+						local_60 = *(int *)((int)&plr[0].WorldX + local_38);
+						local_5c = *(int *)((int)&plr[0].WorldY + local_38);
 						GetScrXY__FPiT0(&local_60,&local_5c);
 						local_60 = local_60 + -3;
 						local_5c = local_5c + 5;
@@ -1012,11 +1009,11 @@ void ArrowTask__FP4TASK(TASK *T)
 			}
 			iVar4 = GetOverlayOtBase__7CBlocks();
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
-								(local_60,local_5c,(uchar)local_48,(uchar)local_40,SpinB,local_50 << 3,0x46,angle,
-								 (void *)0x0,iVar4 + -1,&DAT_00000001,(void *)0x0,8);
+								(local_60,local_5c,(uchar)local_48,(uchar)local_40,SpinB,local_50 << 3,0x46,angle,0,
+								 iVar4 + -1,1,0,8);
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
 								(local_60,local_5c,(uchar)local_48,(uchar)local_40,SpinB,local_50 << 2,0x46,
-								 -(angle + 0x2d),(void *)0x0,iVar4 + -1,&DAT_00000001,(void *)0x0,4);
+								 -(angle + 0x2d),0,iVar4 + -1,1,0,4);
 			if (PauseMode == '\0') {
 				local_58 = local_58 - 1;
 				angle = angle + 1;

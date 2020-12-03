@@ -36,7 +36,7 @@ void InitDead__Fv(void)
 	byte *pbVar6;
 	int iVar7;
 	int iVar8;
-	short *psVar9;
+	MonsterStruct *pMVar9;
 	int aiStack776 [189];
 	undefined4 local_14 [5];
 	
@@ -50,16 +50,16 @@ void InitDead__Fv(void)
 	iVar7 = 0;
 	iVar8 = 0;
 	if (0 < nummtypes) {
-		pbVar6 = &Monsters[0].mtype;
+		pbVar6 = (byte *)&monster[0xc5]._mMTidx;
 		iVar5 = 0;
 		do {
 			if (aiStack776[(uint)*pbVar6] == 0) {
 				dead[iVar7]._deadtype = iVar8;
-				cVar1 = (&Monsters[0].Anims[4].Frames)[iVar5];
+				cVar1 = *(char *)((int)&monster[0xc5]._mFlags + iVar5);
 				dead[iVar7]._deadtrans = '\0';
 				dead[iVar7]._deadFrame = (int)cVar1;
 				iVar7 = iVar7 + 1;
-				(&Monsters[0].mdeadval)[iVar5] = (char)iVar7;
+				(&monster[0xc5]._moldx)[iVar5] = (char)iVar7;
 				aiStack776[(uint)*pbVar6] = iVar7;
 			}
 			pbVar6 = pbVar6 + 0x1c;
@@ -77,10 +77,10 @@ void InitDead__Fv(void)
 	dead[iVar8]._deadFrame = 0xc;
 	iVar7 = 0;
 	if (0 < lVar2) {
-		psVar9 = &monstactive;
+		pMVar9 = monster + 0xbe;
 		iVar8 = stonendx;
 		do {
-			iVar4 = (int)*psVar9;
+			iVar4 = (int)*(short *)&pMVar9->mtalkmsg;
 			iVar5 = iVar8;
 			if (monster[iVar4]._uniqtype != '\0') {
 				iVar5 = iVar8 + 1;
@@ -89,7 +89,7 @@ void InitDead__Fv(void)
 				monster[iVar4]._udeadval = (char)iVar5;
 			}
 			iVar7 = iVar7 + 1;
-			psVar9 = psVar9 + 1;
+			pMVar9 = (MonsterStruct *)((int)&pMVar9->mtalkmsg + 2);
 			iVar8 = iVar5;
 		} while (iVar7 < nummonsters);
 	}

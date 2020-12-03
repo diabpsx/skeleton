@@ -155,30 +155,28 @@ LAB_8007b474:
 	/* end block 2 */
 	// End Line: 347
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
-char * GetStr__Fi(int StrId)
+char * GetStr__Fi(text_strs StrId)
 
 {
 	LANG_DB_NO NewLangDbNo;
 	
-	if ((StrId & 0x4000U) == 0) {
+	if ((StrId & 0x4000) == 0) {
 		NewLangDbNo = LANG_DB_BACK;
-		if ((StrId & 0x2000U) == 0) {
+		if ((StrId & 0x2000) == 0) {
 			NewLangDbNo = LANG_DB_QUEST;
-			if ((StrId & 0x1000U) == 0) {
+			if ((StrId & 0x1000) == 0) {
 				NewLangDbNo = LANG_DB_MAIN;
 			}
 			else {
-				StrId = StrId + -0x1000;
+				StrId = StrId + 0xfffff000;
 			}
 		}
 		else {
-			StrId = StrId + -0x2000;
+			StrId = StrId + 0xffffe000;
 		}
 	}
 	else {
-		StrId = StrId + -0x4000;
+		StrId = StrId + 0xffffc000;
 		NewLangDbNo = LANG_DB_CREDITS;
 	}
 	LANG_SetDb__F10LANG_DB_NO(NewLangDbNo);
@@ -211,7 +209,7 @@ void LANG_ReloadMainTXT__Fv(void)
 	void *pvVar1;
 	
 	CDWAIT = &DAT_00000001;
-	GetStr__Fi(0x302);
+	GetStr__Fi(STR_PAUSED_770);
 	pvVar1 = IsKanjiLoaded__Fv();
 	if (pvVar1 != (void *)0x0) {
 		CDWAIT = (void *)0x0;

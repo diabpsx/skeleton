@@ -18,8 +18,6 @@
 	/* end block 2 */
 	// End Line: 247
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void M_CheckEFlag__Fi(int i)
 
 {
@@ -74,8 +72,6 @@ void M_CheckEFlag__Fi(int i)
 	/* end block 2 */
 	// End Line: 283
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void M_ClearSquares__Fi(int i)
 
 {
@@ -94,9 +90,9 @@ void M_ClearSquares__Fi(int i)
 			iVar2 = iVar3 * 0x380 + iVar4 * 8;
 			do {
 				if (((iVar3 < 0x60) && (iVar4 < 0x60)) &&
-					 ((uVar1 = SEXT24(*(short *)((int)&dung_map.dMonster + iVar2)), uVar1 == ~i ||
+					 ((uVar1 = SEXT24(*(short *)((int)&dung_map[0].dMonster + iVar2)), uVar1 == ~i ||
 						(uVar1 == i + 1U)))) {
-					*(undefined2 *)((int)&dung_map.dMonster + iVar2) = 0;
+					*(undefined2 *)((int)&dung_map[0].dMonster + iVar2) = 0;
 				}
 				iVar3 = iVar3 + 1;
 				iVar2 = iVar2 + 0x380;
@@ -104,10 +100,8 @@ void M_ClearSquares__Fi(int i)
 		}
 		iVar4 = iVar4 + 1;
 	}
-	(&dung_map)[(iVar5 + 1) * 0x70 + iVar6].dFlags =
-			 (&dung_map)[(iVar5 + 1) * 0x70 + iVar6].dFlags & 0xef;
-	(&dung_map)[iVar5 * 0x70 + iVar6 + 1].dFlags = (&dung_map)[iVar5 * 0x70 + iVar6 + 1].dFlags & 0xef
-	;
+	dung_map[(iVar5 + 1) * 0x70 + iVar6].dFlags = dung_map[(iVar5 + 1) * 0x70 + iVar6].dFlags & 0xef;
+	dung_map[iVar5 * 0x70 + iVar6 + 1].dFlags = dung_map[iVar5 * 0x70 + iVar6 + 1].dFlags & 0xef;
 	return;
 }
 
@@ -128,8 +122,6 @@ void M_ClearSquares__Fi(int i)
 		// Start line: 344
 	/* end block 2 */
 	// End Line: 345
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar IsSkel__Fi(int mt)
 
@@ -162,8 +154,6 @@ uchar IsSkel__Fi(int mt)
 		// Start line: 366
 	/* end block 2 */
 	// End Line: 367
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void NewMonsterAnim__FiR10AnimStructii(int i,AnimStruct *anim,int md,int AnimType)
 
@@ -203,8 +193,6 @@ void NewMonsterAnim__FiR10AnimStructii(int i,AnimStruct *anim,int md,int AnimTyp
 		// Start line: 435
 	/* end block 2 */
 	// End Line: 436
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar M_Talker__Fi(int i)
 
@@ -296,8 +284,6 @@ uchar M_Talker__Fi(int i)
 	/* end block 2 */
 	// End Line: 467
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void M_Enemy__Fi(int i)
 
 {
@@ -312,28 +298,28 @@ void M_Enemy__Fi(int i)
 	iVar6 = (int)monster[i]._mx;
 	iVar7 = (int)monster[i]._my;
 	uVar5 = (uint)monster[i]._menemy;
-	if (plr.plractive == '\0') {
+	if (plr[0].plractive == '\0') {
 		uVar5 = 0xffffffff;
-		if (PlayerStruct_800dbf20.plractive != '\0') {
+		if (plr[1].plractive != '\0') {
 			uVar5 = 1;
 		}
 	}
 	else {
 		bVar2 = false;
-		if (PlayerStruct_800dbf20.plractive == '\0') {
+		if (plr[1].plractive == '\0') {
 			uVar5 = 0;
 		}
 		else {
-			sVar1 = (&plr)[uVar5]._py;
-			iVar3 = abs((int)(&plr)[uVar5]._px - iVar6);
+			sVar1 = plr[uVar5]._py;
+			iVar3 = abs((int)plr[uVar5]._px - iVar6);
 			if ((1 < iVar3) || (iVar3 = abs((int)sVar1 - iVar7), 1 < iVar3)) {
 				bVar2 = true;
 			}
 			if (bVar2) {
-				iVar3 = abs((int)plr._px - iVar6);
-				iVar4 = abs((int)plr._py - iVar7);
-				iVar6 = abs((int)PlayerStruct_800dbf20._px - iVar6);
-				iVar7 = abs((int)PlayerStruct_800dbf20._py - iVar7);
+				iVar3 = abs((int)plr[0]._px - iVar6);
+				iVar4 = abs((int)plr[0]._py - iVar7);
+				iVar6 = abs((int)plr[1]._px - iVar6);
+				iVar7 = abs((int)plr[1]._py - iVar7);
 				if (iVar3 < iVar4) {
 					iVar3 = iVar4;
 				}
@@ -349,8 +335,8 @@ void M_Enemy__Fi(int i)
 	}
 	else {
 		monster[i]._menemy = (uchar)uVar5;
-		monster[i]._menemyx = (uchar)(&plr)[uVar5]._px;
-		sVar1 = (&plr)[uVar5]._py;
+		monster[i]._menemyx = (uchar)plr[uVar5]._px;
+		sVar1 = plr[uVar5]._py;
 		monster[i]._mFlags = monster[i]._mFlags & 0xfbff;
 		monster[i]._menemyy = (uchar)sVar1;
 	}
@@ -374,8 +360,6 @@ void M_Enemy__Fi(int i)
 		// Start line: 775
 	/* end block 2 */
 	// End Line: 776
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ClearMVars__Fi(int i)
 
@@ -428,8 +412,6 @@ void ClearMVars__Fi(int i)
 	/* end block 2 */
 	// End Line: 800
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void InitMonster__Fiiiii(int i,int rd,int mtype,int x,int y)
 
 {
@@ -438,13 +420,14 @@ void InitMonster__Fiiiii(int i,int rd,int mtype,int x,int y)
 	ushort uVar3;
 	char cVar4;
 	int iVar5;
-	MonsterData *pMVar6;
-	long lVar7;
-	int iVar8;
+	int iVar6;
+	MonsterData *pMVar7;
+	long lVar8;
 	char cVar9;
 	CMonster *pCVar10;
 	
-	pCVar10 = Monsters + mtype;
+	iVar5 = mtype * 0x1c;
+	pCVar10 = (CMonster *)(&monster[0xc5]._mVar5 + mtype * 0xe);
 	monster[i]._mdir = (char)rd;
 	cVar9 = (char)x;
 	monster[i]._mx = cVar9;
@@ -456,27 +439,28 @@ void InitMonster__Fiiiii(int i,int rd,int mtype,int x,int y)
 	monster[i]._my = cVar9;
 	monster[i]._mfuty = cVar9;
 	monster[i]._moldy = cVar9;
-	iVar5 = pCVar10->MData->mName;
+	iVar6 = pCVar10->MData->mName;
 	monster[i].MType = pCVar10;
-	monster[i].mName = iVar5;
-	pMVar6 = pCVar10->MData;
+	monster[i].mName = iVar6;
+	pMVar7 = pCVar10->MData;
 	monster[i].Action = '\0';
-	monster[i].MData = pMVar6;
-	cVar9 = Monsters[mtype].Anims[0].Rate;
+	monster[i].MData = pMVar7;
+	cVar9 = *(char *)((int)&monster[0xc5]._mVar7 + iVar5 + 1);
 	monster[i]._mAnimDelay = cVar9;
-	lVar7 = ENG_random__Fl((int)cVar9 + -1);
-	monster[i]._mAnimCnt = (char)lVar7;
-	cVar9 = Monsters[mtype].Anims[0].Frames;
+	lVar8 = ENG_random__Fl((int)cVar9 + -1);
+	monster[i]._mAnimCnt = (char)lVar8;
+	cVar9 = *(char *)(&monster[0xc5]._mVar7 + mtype * 0xe);
 	monster[i]._mAnimLen = cVar9;
-	lVar7 = ENG_random__Fl((int)cVar9 + -1);
-	monster[i]._mAnimFrame = (char)lVar7 + '\x01';
-	if (Monsters[mtype].mtype == 'n') {
-		lVar7 = ENG_random__Fl(1);
-		iVar5 = lVar7 + 0x682;
+	lVar8 = ENG_random__Fl((int)cVar9 + -1);
+	monster[i]._mAnimFrame = (char)lVar8 + '\x01';
+	if ((&monster[0xc5]._mMTidx)[iVar5] == 'n') {
+		lVar8 = ENG_random__Fl(1);
+		iVar5 = lVar8 + 0x682;
 	}
 	else {
-		lVar7 = ENG_random__Fl(((uint)Monsters[mtype].mMaxHP - (uint)Monsters[mtype].mMinHP) + 1);
-		iVar5 = lVar7 + (uint)Monsters[mtype].mMinHP;
+		lVar8 = ENG_random__Fl(((uint)(byte)(&monster[0xc5]._my)[iVar5] -
+													 (uint)(byte)(&monster[0xc5]._mx)[iVar5]) + 1);
+		iVar5 = lVar8 + (uint)(byte)(&monster[0xc5]._mx)[iVar5];
 	}
 	monster[i]._mmaxhp = iVar5 << 6;
 	if ((gbMaxPlayers == '\x01') &&
@@ -498,18 +482,18 @@ void InitMonster__Fiiiii(int i,int rd,int mtype,int x,int y)
 	monster[i].mLevel = pCVar10->MData->mLevel;
 	monster[i].mExp = pCVar10->MData->mExp;
 	if (i < 2) {
-		iVar5 = (int)(&plr)[i]._pSplLvl[0x15] + (int)(&plr)[i]._pISplLvlAdd;
+		iVar5 = (int)plr[i]._pSplLvl[0x15] + (int)plr[i]._pISplLvlAdd;
 		if (iVar5 < 0) {
 			iVar5 = 0;
 		}
 		monster[i].mHit = pCVar10->MData->mHit;
 		monster[i].mMinDamage = pCVar10->MData->mMinDamage;
 		monster[i].mMaxDamage = pCVar10->MData->mMaxDamage;
-		iVar8 = (&plr)[i]._pMaxMana;
+		iVar6 = plr[i]._pMaxMana;
 		monster[i].mArmorClass = '\x19';
 		cVar4 = (char)iVar5 * '\x02';
-		monster[i]._mmaxhp = (iVar8 / 3) * 2 + iVar5 * 0x280;
-		cVar9 = (&plr)[i]._pLevel;
+		monster[i]._mmaxhp = (iVar6 / 3) * 2 + iVar5 * 0x280;
+		cVar9 = plr[i]._pLevel;
 		monster[i].mMaxDamage = cVar4 + '\x10';
 		monster[i].mMinDamage = cVar4 + '\b';
 		monster[i].mHit = cVar9 * '\x02' + '(' + (char)iVar5 * '\x05';
@@ -606,23 +590,21 @@ void InitMonster__Fiiiii(int i,int rd,int mtype,int x,int y)
 	/* end block 2 */
 	// End Line: 1157
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int AddMonster__FiiiiUc(int x,int y,int dir,int mtype,int InMap)
 
 {
-	short *psVar1;
+	short sVar1;
 	int iVar2;
 	int i;
 	
 	if (nummonsters < 0xbe) {
 		iVar2 = nummonsters + 1;
-		psVar1 = &monstactive + nummonsters;
-		i = (int)*psVar1;
+		sVar1 = *(short *)((int)&monster[0xbe].mtalkmsg + nummonsters * 2);
+		i = (int)sVar1;
 		nummonsters = iVar2;
 		if ((char)InMap != '\0') {
 			nummonsters = iVar2;
-			(&dung_map)[x * 0x70 + y].dMonster = *psVar1 + 1;
+			dung_map[x * 0x70 + y].dMonster = sVar1 + 1;
 		}
 		InitMonster__Fiiiii(i,dir,mtype,x,y);
 	}
@@ -653,8 +635,6 @@ int AddMonster__FiiiiUc(int x,int y,int dir,int mtype,int InMap)
 		// Start line: 1185
 	/* end block 2 */
 	// End Line: 1186
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void M_StartStand__Fii(int i,int md)
 
@@ -716,25 +696,23 @@ void M_StartStand__Fii(int i,int md)
 	/* end block 2 */
 	// End Line: 1265
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void M_UpdateLeader__Fi(int i)
 
 {
 	int iVar1;
 	int iVar2;
-	short *psVar3;
+	MonsterStruct *pMVar3;
 	
 	iVar2 = 0;
 	if (0 < nummonsters) {
-		psVar3 = &monstactive;
+		pMVar3 = monster + 0xbe;
 		do {
-			iVar1 = (int)*psVar3;
+			iVar1 = (int)*(short *)&pMVar3->mtalkmsg;
 			if ((monster[iVar1].leaderflag == '\x01') && ((uint)monster[iVar1].leader == i)) {
 				monster[iVar1].leaderflag = '\0';
 			}
 			iVar2 = iVar2 + 1;
-			psVar3 = psVar3 + 1;
+			pMVar3 = (MonsterStruct *)((int)&pMVar3->mtalkmsg + 2);
 		} while (iVar2 < nummonsters);
 	}
 	if (monster[i].leaderflag == '\x01') {
@@ -761,14 +739,12 @@ void M_UpdateLeader__Fi(int i)
 	/* end block 2 */
 	// End Line: 1311
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ActivateSpawn__Fiiii(int i,int x,int y,int dir)
 
 {
 	char cVar1;
 	
-	(&dung_map)[x * 0x70 + y].dMonster = (short)i + 1;
+	dung_map[x * 0x70 + y].dMonster = (short)i + 1;
 	cVar1 = (char)x;
 	monster[i]._mx = cVar1;
 	monster[i]._mfutx = cVar1;
@@ -806,8 +782,6 @@ void ActivateSpawn__Fiiii(int i,int x,int y,int dir)
 		// Start line: 1338
 	/* end block 2 */
 	// End Line: 1339
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar SpawnSkeleton__Fiii(int ii,int x,int y)
 
@@ -916,8 +890,6 @@ LAB_8008028c:
 	/* end block 2 */
 	// End Line: 1444
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void M_StartSpStand__Fii(int i,int md)
 
 {
@@ -962,8 +934,6 @@ void M_StartSpStand__Fii(int i,int md)
 	/* end block 2 */
 	// End Line: 1493
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar PosOkMonst__Fiii(int i,int x,int y)
 
 {
@@ -979,10 +949,10 @@ uchar PosOkMonst__Fiii(int i,int x,int y)
 	bVar7 = false;
 	uVar2 = SolidLoc__Fii(x,y);
 	if ((uVar2 == '\0') && (uVar2 = IsDplayer__Fii(x,y), uVar2 == '\0')) {
-		bVar7 = (&dung_map)[x * 0x70 + y].dMonster == 0;
+		bVar7 = dung_map[x * 0x70 + y].dMonster == 0;
 	}
 	if (bVar7) {
-		uVar3 = SEXT14((&dung_map)[x * 0x70 + y].dObject);
+		uVar3 = SEXT14(dung_map[x * 0x70 + y].dObject);
 		if (uVar3 != 0) {
 			uVar5 = uVar3 - 1;
 			if ((int)uVar3 < 1) {
@@ -992,8 +962,8 @@ uchar PosOkMonst__Fiii(int i,int x,int y)
 				bVar7 = false;
 			}
 		}
-		if (((bVar7 != false) && (iVar4 = (int)(&dung_map)[x * 0x70 + y].dMissile, iVar4 != 0)) &&
-			 (-1 < i)) {
+		if (((bVar7 != false) && (iVar4 = (int)dung_map[x * 0x70 + y].dMissile, iVar4 != 0)) && (-1 < i)
+			 ) {
 			if (0 < iVar4) {
 				if (missile[iVar4]._mitype == '\x05') {
 					bVar1 = true;
@@ -1040,8 +1010,6 @@ uchar PosOkMonst__Fiii(int i,int x,int y)
 	/* end block 2 */
 	// End Line: 1571
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar CanPut__Fii(int i,int j)
 
 {
@@ -1051,11 +1019,11 @@ uchar CanPut__Fii(int i,int j)
 	uint uVar4;
 	
 	uVar1 = '\0';
-	if ((&dung_map)[i * 0x70 + j].dItem == '\0') {
+	if (dung_map[i * 0x70 + j].dItem == '\0') {
 		pvVar2 = GetSOLID__Fii(i,j);
 		uVar1 = '\0';
 		if (pvVar2 == (void *)0x0) {
-			uVar3 = SEXT14((&dung_map)[i * 0x70 + j].dObject);
+			uVar3 = SEXT14(dung_map[i * 0x70 + j].dObject);
 			if (uVar3 != 0) {
 				uVar4 = uVar3 - 1;
 				if ((int)uVar3 < 1) {
@@ -1065,22 +1033,22 @@ uchar CanPut__Fii(int i,int j)
 					return '\0';
 				}
 			}
-			if ((((int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject < 1) ||
+			if ((((int)dung_map[(i + 1) * 0x70 + j + 1].dObject < 1) ||
 					(uVar1 = '\0',
-					object[(int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject + -1]._oSelFlag == '\0')) &&
-				 ((-1 < (int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject ||
-					(uVar1 = '\0', object[~(int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject]._oSelFlag == '\0'
-					)))) {
-				if (0 < (int)(&dung_map)[(i + 1) * 0x70 + j].dObject) {
-					if (((0 < (int)(&dung_map)[i * 0x70 + j + 1].dObject) &&
-							(object[(int)(&dung_map)[(i + 1) * 0x70 + j].dObject + -1]._oSelFlag != '\0')) &&
-						 (object[(int)(&dung_map)[i * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0')) {
+					object[(int)dung_map[(i + 1) * 0x70 + j + 1].dObject + -1]._oSelFlag == '\0')) &&
+				 ((-1 < (int)dung_map[(i + 1) * 0x70 + j + 1].dObject ||
+					(uVar1 = '\0', object[~(int)dung_map[(i + 1) * 0x70 + j + 1].dObject]._oSelFlag == '\0')))
+				 ) {
+				if (0 < (int)dung_map[(i + 1) * 0x70 + j].dObject) {
+					if (((0 < (int)dung_map[i * 0x70 + j + 1].dObject) &&
+							(object[(int)dung_map[(i + 1) * 0x70 + j].dObject + -1]._oSelFlag != '\0')) &&
+						 (object[(int)dung_map[i * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0')) {
 						return '\0';
 					}
 				}
 				uVar1 = '\x01';
-				if (((currlevel == '\0') && (uVar1 = '\0', (&dung_map)[i * 0x70 + j].dMonster == 0)) &&
-					 (uVar1 = '\0', (&dung_map)[(i + 1) * 0x70 + j + 1].dMonster == 0)) {
+				if (((currlevel == '\0') && (uVar1 = '\0', dung_map[i * 0x70 + j].dMonster == 0)) &&
+					 (uVar1 = '\0', dung_map[(i + 1) * 0x70 + j + 1].dMonster == 0)) {
 					uVar1 = '\x01';
 				}
 			}
@@ -1106,8 +1074,6 @@ uchar CanPut__Fii(int i,int j)
 		// Start line: 1657
 	/* end block 2 */
 	// End Line: 1658
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int encode_enemy__Fi(int m)
 

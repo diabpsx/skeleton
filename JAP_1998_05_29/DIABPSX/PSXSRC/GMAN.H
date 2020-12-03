@@ -437,8 +437,6 @@ FRAME_HDR * GetFr__7TextDati(TextDat *this,int FrNum)
 	/* end block 2 */
 	// End Line: 459
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 FRAME_HDR * GetFr__7TextDati(TextDat *this,int FrNum)
 
 {
@@ -462,8 +460,6 @@ FRAME_HDR * GetFr__7TextDati(TextDat *this,int FrNum)
 		// Start line: 458
 	/* end block 2 */
 	// End Line: 459
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 FRAME_HDR * GetFr__7TextDati(TextDat *this,int FrNum)
 
@@ -658,8 +654,6 @@ int GetNumOfFrames__7TextDat(TextDat *this)
 		// Start line: 466
 	/* end block 2 */
 	// End Line: 467
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int GetNumOfFrames__7TextDat(TextDat *this)
 
@@ -964,8 +958,6 @@ int GetNumOfFrames__7TextDatii(TextDat *this,int Creature,int Action)
 	/* end block 2 */
 	// End Line: 507
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int GetNumOfFrames__7TextDatii(TextDat *this,int Creature,int Action)
 
 {
@@ -1228,8 +1220,6 @@ CCreatureHdr * GetCreature__7TextDati(TextDat *this,int Creature)
 		// Start line: 570
 	/* end block 2 */
 	// End Line: 571
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 CCreatureHdr * GetCreature__7TextDati(TextDat *this,int Creature)
 

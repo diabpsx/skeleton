@@ -53,10 +53,10 @@ uchar ItemPlace__Fii(int xp,int yp)
 	void *pvVar2;
 	
 	bVar1 = false;
-	if (((((&dung_map)[xp * 0x70 + yp].dMonster == 0) &&
-			 (bVar1 = false, (&dung_map)[xp * 0x70 + yp].dItem == '\0')) &&
-			(bVar1 = false, (&dung_map)[xp * 0x70 + yp].dObject == '\0')) &&
-		 (bVar1 = false, ((&dung_map)[xp * 0x70 + yp].dFlags & 8U) == 0)) {
+	if ((((dung_map[xp * 0x70 + yp].dMonster == 0) &&
+			 (bVar1 = false, dung_map[xp * 0x70 + yp].dItem == '\0')) &&
+			(bVar1 = false, dung_map[xp * 0x70 + yp].dObject == '\0')) &&
+		 (bVar1 = false, (dung_map[xp * 0x70 + yp].dFlags & 8U) == 0)) {
 		pvVar2 = GetSOLID__Fii(xp,yp);
 		bVar1 = pvVar2 == (void *)0x0;
 	}
@@ -134,7 +134,7 @@ void AddInitItems__Fv(void)
 		} while (uVar3 == '\0');
 		item[i]._ix = (char)xp;
 		item[i]._iy = (char)yp;
-		(&dung_map)[xp * 0x70 + yp].dItem = cVar1 + '\x01';
+		dung_map[xp * 0x70 + yp].dItem = cVar1 + '\x01';
 		s = GetRndSeed__Fv();
 		item[i]._iSeed = s;
 		SetRndSeed__Fl(s);
@@ -401,7 +401,7 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 	local_30 = 0;
 	while( true ) {
 		cVar17 = (char)iVar18;
-		iVar5 = (int)&(&plr)[p]._pmode + iVar8;
+		iVar5 = (int)&plr[p]._pmode + iVar8;
 		if (6 < local_30) break;
 		if ((*(short *)(iVar5 + 0x2c) != -1) && (*(char *)(iVar5 + 0x66) != '\0')) {
 			iVar7 = iVar7 + (int)*(char *)(iVar5 + 0x3b);
@@ -460,73 +460,73 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 	if ((iVar7 == 0) && (r == 0)) {
 		iVar7 = 1;
 		r = 1;
-		if (((&plr)[p].InvBody[4]._itype == 5) && ((&plr)[p].InvBody[4]._iStatFlag != '\0')) {
+		if ((plr[p].InvBody[4]._itype == 5) && (plr[p].InvBody[4]._iStatFlag != '\0')) {
 			r = 3;
 		}
-		if (((&plr)[p].InvBody[5]._itype == 5) && ((&plr)[p].InvBody[5]._iStatFlag != '\0')) {
+		if ((plr[p].InvBody[5]._itype == 5) && (plr[p].InvBody[5]._iStatFlag != '\0')) {
 			r = 3;
 		}
 	}
-	(&plr)[p]._pIMinDam = iVar7;
-	(&plr)[p]._pIMaxDam = r;
-	(&plr)[p]._pIAC = iVar11;
-	(&plr)[p]._pIBonusDam = iVar21;
-	(&plr)[p]._pIBonusToHit = iVar22;
-	(&plr)[p]._pIBonusAC = local_a0;
-	(&plr)[p]._pIBonusDamMod = iVar9;
-	(&plr)[p]._pIGetHit = iVar10;
-	(&plr)[p]._pIFlags = local_48;
+	plr[p]._pIMinDam = iVar7;
+	plr[p]._pIMaxDam = r;
+	plr[p]._pIAC = iVar11;
+	plr[p]._pIBonusDam = iVar21;
+	plr[p]._pIBonusToHit = iVar22;
+	plr[p]._pIBonusAC = local_a0;
+	plr[p]._pIBonusDamMod = iVar9;
+	plr[p]._pIGetHit = iVar10;
+	plr[p]._pIFlags = local_48;
 	if (iVar12 < 2) {
 		iVar12 = 2;
 	}
 	if (0xf < iVar12) {
 		iVar12 = 0xf;
 	}
-	if ((int)(&plr)[p]._pLightRad != iVar12) {
-		ChangeLightRadius__Fii((int)(&plr)[p]._plid,(int)(&DAT_000023f0 + iVar12));
+	if ((int)plr[p]._pLightRad != iVar12) {
+		ChangeLightRadius__Fii((int)plr[p]._plid,(int)(&DAT_000023f0 + iVar12));
 		if (iVar12 < 10) {
-			cVar23 = (&plr)[p]._pvid;
+			cVar23 = plr[p]._pvid;
 			r = 10;
 		}
 		else {
-			cVar23 = (&plr)[p]._pvid;
+			cVar23 = plr[p]._pvid;
 			r = iVar12;
 		}
 		ChangeVisionRadius__Fii((int)cVar23,r);
-		(&plr)[p]._pLightRad = (char)iVar12;
+		plr[p]._pLightRad = (char)iVar12;
 	}
 	r = myplr;
-	(&plr)[p]._pStrength = (&plr)[p]._pBaseStr + (short)local_98;
-	if ((&plr)[r]._pStrength < 1) {
-		(&plr)[r]._pStrength = 0;
+	plr[p]._pStrength = plr[p]._pBaseStr + (short)local_98;
+	if (plr[r]._pStrength < 1) {
+		plr[r]._pStrength = 0;
 	}
 	r = myplr;
-	(&plr)[p]._pMagic = (&plr)[p]._pBaseMag + (short)iVar14;
-	if ((&plr)[r]._pMagic < 1) {
-		(&plr)[r]._pMagic = 0;
+	plr[p]._pMagic = plr[p]._pBaseMag + (short)iVar14;
+	if (plr[r]._pMagic < 1) {
+		plr[r]._pMagic = 0;
 	}
 	r = myplr;
-	(&plr)[p]._pDexterity = (&plr)[p]._pBaseDex + (short)local_90;
-	if ((&plr)[r]._pDexterity < 1) {
-		(&plr)[r]._pDexterity = 0;
+	plr[p]._pDexterity = plr[p]._pBaseDex + (short)local_90;
+	if (plr[r]._pDexterity < 1) {
+		plr[r]._pDexterity = 0;
 	}
 	r = myplr;
-	(&plr)[p]._pVitality = (&plr)[p]._pBaseVit + (short)iVar13;
-	if ((&plr)[r]._pVitality < 1) {
-		(&plr)[r]._pVitality = 0;
+	plr[p]._pVitality = plr[p]._pBaseVit + (short)iVar13;
+	if (plr[r]._pVitality < 1) {
+		plr[r]._pVitality = 0;
 	}
-	if ((&plr)[p]._pClass == '\x01') {
-		(&plr)[p]._pDamageMod =
-				 (((int)(&plr)[p]._pStrength + (int)(&plr)[p]._pDexterity) * (int)(&plr)[p]._pLevel) / 200;
+	if (plr[p]._pClass == '\x01') {
+		plr[p]._pDamageMod =
+				 (((int)plr[p]._pStrength + (int)plr[p]._pDexterity) * (int)plr[p]._pLevel) / 200;
 	}
 	else {
-		(&plr)[p]._pDamageMod = ((int)(&plr)[p]._pStrength * (int)(&plr)[p]._pLevel) / 100;
+		plr[p]._pDamageMod = ((int)plr[p]._pStrength * (int)plr[p]._pLevel) / 100;
 	}
-	cVar23 = (&plr)[p]._pRSplType;
-	*(uint *)&(&plr)[p]._pISpells = uVar15;
-	*(uint *)((int)&(&plr)[p]._pISpells + 4) = uVar16;
+	cVar23 = plr[p]._pRSplType;
+	*(uint *)&plr[p]._pISpells = uVar15;
+	*(uint *)((int)&plr[p]._pISpells + 4) = uVar16;
 	if (cVar23 == '\x03') {
-		uVar1 = (&plr)[p]._pRSpell - 1;
+		uVar1 = plr[p]._pRSpell - 1;
 		if ((int)(uVar1 * 0x4000000) < 0) {
 			uVar15 = uVar16 >> (uVar1 & 0x1f);
 		}
@@ -537,13 +537,13 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 			}
 		}
 		if ((uVar15 & 1) == 0) {
-			(&plr)[p]._pRSpell = -1;
-			(&plr)[p]._pRSplType = '\x04';
+			plr[p]._pRSpell = -1;
+			plr[p]._pRSplType = '\x04';
 			force_redraw = 0xff;
 		}
 	}
-	(&plr)[p]._pISplLvlAdd = cVar19;
-	(&plr)[p]._pIEnAc = local_70;
+	plr[p]._pISplLvlAdd = cVar19;
+	plr[p]._pIEnAc = local_70;
 	if ((int)local_48 < 0) {
 		cVar17 = '\0';
 		iVar20 = 0;
@@ -554,16 +554,16 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 	if ((int)local_48 >= 0 && 0x4b < iVar18) {
 		cVar17 = 'K';
 	}
-	(&plr)[p]._pMagResist = cVar17;
+	plr[p]._pMagResist = cVar17;
 	if (0x4b < iVar20) {
 		cVar19 = 'K';
 	}
-	(&plr)[p]._pFireResist = cVar19;
+	plr[p]._pFireResist = cVar19;
 	if (0x4b < iVar24) {
 		cVar23 = 'K';
 	}
-	cVar19 = (&plr)[p]._pClass;
-	(&plr)[p]._pLghtResist = cVar23;
+	cVar19 = plr[p]._pClass;
+	plr[p]._pLghtResist = cVar23;
 	if (cVar19 == '\0') {
 		iVar13 = iVar13 << 1;
 	}
@@ -578,37 +578,37 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 	if (cVar19 == '\x01') {
 		r = (iVar14 + (iVar14 >> 1)) * 0x40;
 	}
-	(&plr)[p]._pHitPoints = (&plr)[p]._pHPBase + local_88;
-	iVar7 = (&plr)[p]._pHitPoints;
-	(&plr)[p]._pMaxHP = (&plr)[p]._pMaxHPBase + local_88;
+	plr[p]._pHitPoints = plr[p]._pHPBase + local_88;
+	iVar7 = plr[p]._pHitPoints;
+	plr[p]._pMaxHP = plr[p]._pMaxHPBase + local_88;
 	if (iVar7 >> 6 < 1) {
 		SetPlayerHitPoints__Fii(p,0);
 	}
-	iVar7 = (&plr)[p]._pManaBase;
-	(&plr)[p]._pIFMinDam = local_68;
-	(&plr)[p]._pIFMaxDam = local_60;
-	(&plr)[p]._pILMinDam = local_58;
-	(&plr)[p]._pILMaxDam = local_50;
-	iVar8 = (&plr)[p]._pMaxManaBase;
-	(&plr)[p]._pMana = iVar7 + local_80 + r;
-	(&plr)[p]._pMaxMana = iVar8 + local_80 + r;
+	iVar7 = plr[p]._pManaBase;
+	plr[p]._pIFMinDam = local_68;
+	plr[p]._pIFMaxDam = local_60;
+	plr[p]._pILMinDam = local_58;
+	plr[p]._pILMaxDam = local_50;
+	iVar8 = plr[p]._pMaxManaBase;
+	plr[p]._pMana = iVar7 + local_80 + r;
+	plr[p]._pMaxMana = iVar8 + local_80 + r;
 	if ((local_48 & 1) == 0) {
-		(&plr)[p]._pInfraFlag = '\0';
+		plr[p]._pInfraFlag = '\0';
 	}
 	else {
-		(&plr)[p]._pInfraFlag = '\x01';
+		plr[p]._pInfraFlag = '\x01';
 	}
 	uVar15 = 0;
-	uVar16 = SEXT24((&plr)[p].InvBody[4]._itype);
-	(&plr)[p]._pBlockFlag = '\0';
-	(&plr)[p]._pwtype = '\0';
-	if ((uVar16 != 0xffffffff) && ((&plr)[p].InvBody[4]._iClass == '\x01')) {
-		uVar15 = uVar16 & -(uint)((&plr)[p].InvBody[4]._iStatFlag != '\0');
+	uVar16 = SEXT24(plr[p].InvBody[4]._itype);
+	plr[p]._pBlockFlag = '\0';
+	plr[p]._pwtype = '\0';
+	if ((uVar16 != 0xffffffff) && (plr[p].InvBody[4]._iClass == '\x01')) {
+		uVar15 = uVar16 & -(uint)(plr[p].InvBody[4]._iStatFlag != '\0');
 	}
-	uVar1 = SEXT24((&plr)[p].InvBody[5]._itype);
+	uVar1 = SEXT24(plr[p].InvBody[5]._itype);
 	uVar16 = uVar15;
-	if (((uVar1 == 0xffffffff) || (uVar16 = uVar15, (&plr)[p].InvBody[5]._iClass != '\x01')) ||
-		 (uVar16 = uVar1, (&plr)[p].InvBody[5]._iStatFlag != '\0')) {
+	if (((uVar1 == 0xffffffff) || (uVar16 = uVar15, plr[p].InvBody[5]._iClass != '\x01')) ||
+		 (uVar16 = uVar1, plr[p].InvBody[5]._iStatFlag != '\0')) {
 		uVar15 = uVar16;
 	}
 	switch(uVar15) {
@@ -619,7 +619,7 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 		uVar15 = 5;
 		break;
 	case 3:
-		(&plr)[p]._pwtype = '\x01';
+		plr[p]._pwtype = '\x01';
 		uVar15 = 4;
 		break;
 	case 4:
@@ -628,35 +628,35 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 	case 10:
 		uVar15 = 8;
 	}
-	if (((&plr)[p].InvBody[4]._itype == 5) && ((&plr)[p].InvBody[4]._iStatFlag != '\0')) {
-		(&plr)[p]._pBlockFlag = '\x01';
+	if ((plr[p].InvBody[4]._itype == 5) && (plr[p].InvBody[4]._iStatFlag != '\0')) {
+		plr[p]._pBlockFlag = '\x01';
 		uVar15 = uVar15 + 1;
 	}
-	if (((&plr)[p].InvBody[5]._itype == 5) && ((&plr)[p].InvBody[5]._iStatFlag != '\0')) {
-		(&plr)[p]._pBlockFlag = '\x01';
+	if ((plr[p].InvBody[5]._itype == 5) && (plr[p].InvBody[5]._iStatFlag != '\0')) {
+		plr[p]._pBlockFlag = '\x01';
 		uVar15 = uVar15 + 1;
 	}
-	sVar2 = (&plr)[p].InvBody[6]._itype;
-	if ((sVar2 == 8) && ((&plr)[p].InvBody[6]._iStatFlag != '\0')) {
+	sVar2 = plr[p].InvBody[6]._itype;
+	if ((sVar2 == 8) && (plr[p].InvBody[6]._iStatFlag != '\0')) {
 		uVar15 = uVar15 + 0x10;
-		sVar2 = (&plr)[p].InvBody[6]._itype;
+		sVar2 = plr[p].InvBody[6]._itype;
 	}
-	if ((sVar2 == 9) && ((&plr)[p].InvBody[6]._iStatFlag != '\0')) {
+	if ((sVar2 == 9) && (plr[p].InvBody[6]._iStatFlag != '\0')) {
 		uVar15 = uVar15 + 0x20;
 	}
-	if (((int)(&plr)[p]._pgfxnum == uVar15) || (Loadgfx == '\0')) {
-		(&plr)[p]._pgfxnum = (char)uVar15;
+	if (((int)plr[p]._pgfxnum == uVar15) || (Loadgfx == '\0')) {
+		plr[p]._pgfxnum = (char)uVar15;
 	}
 	else {
-		(&plr)[p]._pgfxnum = (char)uVar15;
-		(&plr)[p]._pGFXLoad = 0;
+		plr[p]._pgfxnum = (char)uVar15;
+		plr[p]._pGFXLoad = 0;
 		SetPlrAnims__Fi(p);
-		r = (&plr)[p]._pNFrames;
-		(&plr)[p]._pAnimFrame = 1;
-		(&plr)[p].peq = '\0';
-		(&plr)[p]._pAnimCnt = 0;
-		(&plr)[p]._pAnimDelay = 3;
-		(&plr)[p]._pAnimLen = r;
+		r = plr[p]._pNFrames;
+		plr[p]._pAnimFrame = 1;
+		plr[p].peq = '\0';
+		plr[p]._pAnimCnt = 0;
+		plr[p]._pAnimDelay = 3;
+		plr[p]._pAnimLen = r;
 	}
 	r = nummissiles;
 	local_30 = 0;
@@ -665,8 +665,8 @@ void CalcPlrItemVals__FiUc(int p,uchar Loadgfx)
 		do {
 			iVar7 = (int)*psVar4;
 			if ((missile[iVar7]._mitype == '\r') && ((int)missile[iVar7]._misource == p)) {
-				missile[iVar7]._miVar1 = (short)(&plr)[p]._pHitPoints;
-				missile[iVar7]._miVar2 = (short)(&plr)[p]._pHPBase;
+				missile[iVar7]._miVar1 = (short)plr[p]._pHitPoints;
+				missile[iVar7]._miVar2 = (short)plr[p]._pHPBase;
 			}
 			psVar4 = psVar4 + 1;
 			local_30 = local_30 + 1;
@@ -709,17 +709,17 @@ void CalcPlrScrolls__Fi(int p)
 	int iVar4;
 	uint uVar5;
 	
-	*(undefined4 *)&(&plr)[p]._pScrlSpells = 0;
-	*(undefined4 *)((int)&(&plr)[p]._pScrlSpells + 4) = 0;
+	*(undefined4 *)&plr[p]._pScrlSpells = 0;
+	*(undefined4 *)((int)&plr[p]._pScrlSpells + 4) = 0;
 	iVar3 = 0;
-	if (0 < (&plr)[p]._pNumInv) {
+	if (0 < plr[p]._pNumInv) {
 		iVar4 = 0;
 		do {
-			if (((*(short *)((int)&(&plr)[p].InvList[0]._itype + iVar4) != -1) &&
-					((uint)(&(&plr)[p].InvList[0]._iMiscId)[iVar4] - 0x15 < 2)) &&
-				 ((&(&plr)[p].InvList[0]._iStatFlag)[iVar4] != '\0')) {
-				uVar1 = *(uint *)((int)&(&plr)[p]._pScrlSpells + 4);
-				uVar2 = (int)(&(&plr)[p].InvList[0]._iSpell)[iVar4] - 1;
+			if (((*(short *)((int)&plr[p].InvList[0]._itype + iVar4) != -1) &&
+					((uint)(&plr[p].InvList[0]._iMiscId)[iVar4] - 0x15 < 2)) &&
+				 ((&plr[p].InvList[0]._iStatFlag)[iVar4] != '\0')) {
+				uVar1 = *(uint *)((int)&plr[p]._pScrlSpells + 4);
+				uVar2 = (int)(&plr[p].InvList[0]._iSpell)[iVar4] - 1;
 				if ((int)(uVar2 * 0x4000000) < 0) {
 					uVar5 = 1 << (uVar2 & 0x1f);
 					uVar2 = 0;
@@ -731,21 +731,21 @@ void CalcPlrScrolls__Fi(int p)
 					}
 					uVar2 = 1 << (uVar2 & 0x1f);
 				}
-				*(uint *)&(&plr)[p]._pScrlSpells = *(uint *)&(&plr)[p]._pScrlSpells | uVar2;
-				*(uint *)((int)&(&plr)[p]._pScrlSpells + 4) = uVar1 | uVar5;
+				*(uint *)&plr[p]._pScrlSpells = *(uint *)&plr[p]._pScrlSpells | uVar2;
+				*(uint *)((int)&plr[p]._pScrlSpells + 4) = uVar1 | uVar5;
 			}
 			iVar3 = iVar3 + 1;
 			iVar4 = iVar4 + 0x6c;
-		} while (iVar3 < (&plr)[p]._pNumInv);
+		} while (iVar3 < plr[p]._pNumInv);
 	}
 	iVar4 = 0;
 	iVar3 = p * 0x19e8;
 	do {
-		if (((*(short *)((int)&plr.SpdList[0]._itype + iVar3) != -1) &&
-				((uint)(&plr.SpdList[0]._iMiscId)[iVar3] - 0x15 < 2)) &&
-			 ((&plr.SpdList[0]._iStatFlag)[iVar3] != '\0')) {
-			uVar1 = *(uint *)((int)&(&plr)[p]._pScrlSpells + 4);
-			uVar2 = (int)(&plr.SpdList[0]._iSpell)[iVar3] - 1;
+		if (((*(short *)((int)&plr[0].SpdList[0]._itype + iVar3) != -1) &&
+				((uint)(&plr[0].SpdList[0]._iMiscId)[iVar3] - 0x15 < 2)) &&
+			 ((&plr[0].SpdList[0]._iStatFlag)[iVar3] != '\0')) {
+			uVar1 = *(uint *)((int)&plr[p]._pScrlSpells + 4);
+			uVar2 = (int)(&plr[0].SpdList[0]._iSpell)[iVar3] - 1;
 			if ((int)(uVar2 * 0x4000000) < 0) {
 				uVar5 = 1 << (uVar2 & 0x1f);
 				uVar2 = 0;
@@ -757,18 +757,17 @@ void CalcPlrScrolls__Fi(int p)
 				}
 				uVar2 = 1 << (uVar2 & 0x1f);
 			}
-			*(uint *)&(&plr)[p]._pScrlSpells = *(uint *)&(&plr)[p]._pScrlSpells | uVar2;
-			*(uint *)((int)&(&plr)[p]._pScrlSpells + 4) = uVar1 | uVar5;
+			*(uint *)&plr[p]._pScrlSpells = *(uint *)&plr[p]._pScrlSpells | uVar2;
+			*(uint *)((int)&plr[p]._pScrlSpells + 4) = uVar1 | uVar5;
 		}
 		iVar4 = iVar4 + 1;
 		iVar3 = iVar3 + 0x6c;
 	} while (iVar4 < 8);
-	if ((((&plr)[p]._pRSplType == '\x02') &&
-			(uVar1 = 1 << ((&plr)[p]._pRSpell - 1U & 0x1f),
-			(*(uint *)&(&plr)[p]._pScrlSpells & uVar1) == 0)) &&
-		 ((*(uint *)((int)&(&plr)[p]._pScrlSpells + 4) & (int)uVar1 >> 0x1f) == 0)) {
-		(&plr)[p]._pRSpell = -1;
-		(&plr)[p]._pRSplType = '\x04';
+	if (((plr[p]._pRSplType == '\x02') &&
+			(uVar1 = 1 << (plr[p]._pRSpell - 1U & 0x1f), (*(uint *)&plr[p]._pScrlSpells & uVar1) == 0)) &&
+		 ((*(uint *)((int)&plr[p]._pScrlSpells + 4) & (int)uVar1 >> 0x1f) == 0)) {
+		plr[p]._pRSpell = -1;
+		plr[p]._pRSplType = '\x04';
 		force_redraw = 0xff;
 	}
 	return;
@@ -890,7 +889,7 @@ void CalcSelfItems__Fi(int pnum)
 	iVar5 = 0;
 	iVar4 = 0;
 	iVar3 = 6;
-	pcVar2 = &(&plr)[pnum].InvBody[0]._iPLDex;
+	pcVar2 = &plr[pnum].InvBody[0]._iPLDex;
 	do {
 		if ((*(short *)(pcVar2 + -0x2c) != -1) && (pcVar2[0xe] = '\x01', pcVar2[0x11] != '\0')) {
 			iVar6 = iVar6 + (int)pcVar2[-2];
@@ -903,12 +902,12 @@ void CalcSelfItems__Fi(int pnum)
 	do {
 		bVar1 = false;
 		iVar3 = 6;
-		pcVar2 = &(&plr)[pnum].InvBody[0]._iPLDex;
+		pcVar2 = &plr[pnum].InvBody[0]._iPLDex;
 		do {
 			if (((*(short *)(pcVar2 + -0x2c) != -1) && (pcVar2[0xe] != '\0')) &&
-				 ((int)(&plr)[pnum]._pBaseDex + iVar4 < (int)(uint)(byte)pcVar2[10] ||
-					((int)(&plr)[pnum]._pBaseMag + iVar5 < (int)(uint)(byte)pcVar2[0xc] ||
-					(int)(&plr)[pnum]._pBaseStr + iVar6 < (int)(uint)(byte)pcVar2[9]))) {
+				 ((int)plr[pnum]._pBaseDex + iVar4 < (int)(uint)(byte)pcVar2[10] ||
+					((int)plr[pnum]._pBaseMag + iVar5 < (int)(uint)(byte)pcVar2[0xc] ||
+					(int)plr[pnum]._pBaseStr + iVar6 < (int)(uint)(byte)pcVar2[9]))) {
 				bVar1 = true;
 				pcVar2[0xe] = '\0';
 				if (pcVar2[0x11] != '\0') {
@@ -1019,19 +1018,19 @@ void CalcPlrItemMin__Fi(int pnum)
 	ItemStruct *x;
 	uchar *puVar3;
 	
-	iVar2 = (&plr)[pnum]._pNumInv;
-	x = (&plr)[pnum].InvList;
+	iVar2 = plr[pnum]._pNumInv;
+	x = plr[pnum].InvList;
 	while (iVar2 = iVar2 + -1, iVar2 != -1) {
-		uVar1 = ItemMinStats__FPC12PlayerStructPC10ItemStruct(&plr + pnum,x);
+		uVar1 = ItemMinStats__FPC12PlayerStructPC10ItemStruct(plr + pnum,x);
 		x->_iStatFlag = uVar1;
 		x = x + 1;
 	}
-	x = (&plr)[pnum].SpdList;
+	x = plr[pnum].SpdList;
 	iVar2 = 7;
-	puVar3 = (uchar *)&(&plr)[pnum].SpdList[0]._iStatFlag;
+	puVar3 = (uchar *)&plr[pnum].SpdList[0]._iStatFlag;
 	do {
 		if (*(short *)(puVar3 + -0x3a) != -1) {
-			uVar1 = ItemMinStats__FPC12PlayerStructPC10ItemStruct(&plr + pnum,x);
+			uVar1 = ItemMinStats__FPC12PlayerStructPC10ItemStruct(plr + pnum,x);
 			*puVar3 = uVar1;
 		}
 		puVar3 = puVar3 + 0x6c;
@@ -1087,33 +1086,33 @@ void CalcPlrBookVals__Fi(int p)
 		} while (*psVar1 != -1);
 	}
 	ii = 0;
-	if (0 < (&plr)[p]._pNumInv) {
+	if (0 < plr[p]._pNumInv) {
 		iVar7 = 0;
 		do {
-			if ((*(short *)((int)&(&plr)[p].InvList[0]._itype + iVar7) == 0) &&
-				 ((&(&plr)[p].InvList[0]._iMiscId)[iVar7] == '\x18')) {
-				cVar2 = (&(&plr)[p].InvList[0]._iSpell)[iVar7];
-				(&(&plr)[p].InvList[0]._iMinMag)[iVar7] =
-						 (uchar)(&spelldata)[(int)(&(&plr)[p].InvList[0]._iSpell)[iVar7]].sMinInt;
+			if ((*(short *)((int)&plr[p].InvList[0]._itype + iVar7) == 0) &&
+				 ((&plr[p].InvList[0]._iMiscId)[iVar7] == '\x18')) {
+				cVar2 = (&plr[p].InvList[0]._iSpell)[iVar7];
+				(&plr[p].InvList[0]._iMinMag)[iVar7] =
+						 (uchar)(&spelldata)[(int)(&plr[p].InvList[0]._iSpell)[iVar7]].sMinInt;
 				iVar6 = (int)*(char *)(p * 0x19e8 + -0x7ff25a57 + (int)cVar2);
 				while (iVar6 != 0) {
-					uVar5 = (uint)(&(&plr)[p].InvList[0]._iMinMag)[iVar7];
+					uVar5 = (uint)(&plr[p].InvList[0]._iMinMag)[iVar7];
 					uVar5 = uVar5 + (int)uVar5 / 5;
 					uVar4 = uVar5 & 0xff;
-					(&(&plr)[p].InvList[0]._iMinMag)[iVar7] = (uchar)uVar5;
+					(&plr[p].InvList[0]._iMinMag)[iVar7] = (uchar)uVar5;
 					iVar6 = iVar6 + -1;
 					if (0xff < (int)(uVar4 + (int)uVar4 / 5)) {
-						(&(&plr)[p].InvList[0]._iMinMag)[iVar7] = -1;
+						(&plr[p].InvList[0]._iMinMag)[iVar7] = -1;
 						iVar6 = 0;
 					}
 				}
 				uVar3 = ItemMinStats__FPC12PlayerStructPC10ItemStruct
-													(&plr + p,(ItemStruct *)(p * 0x19e8 + -0x7ff25624 + iVar7));
-				(&(&plr)[p].InvList[0]._iStatFlag)[iVar7] = uVar3;
+													(plr + p,(ItemStruct *)(p * 0x19e8 + -0x7ff25624 + iVar7));
+				(&plr[p].InvList[0]._iStatFlag)[iVar7] = uVar3;
 			}
 			ii = ii + 1;
 			iVar7 = iVar7 + 0x6c;
-		} while (ii < (&plr)[p]._pNumInv);
+		} while (ii < plr[p]._pNumInv);
 	}
 	return;
 }
@@ -1147,7 +1146,7 @@ void CalcPlrInv__FiUc(int p,uchar Loadgfx)
 	CalcPlrItemMin__Fi(p);
 	CalcPlrBookVals__Fi(p);
 	CalcPlrScrolls__Fi(p);
-	CalcPlrStaff__FP12PlayerStruct(&plr + p);
+	CalcPlrStaff__FP12PlayerStruct(plr + p);
 	if (currlevel == '\0') {
 		RecalcStoreStats__Fv();
 	}
@@ -1313,15 +1312,15 @@ void GetGoldSeed__FiP10ItemStruct(int pnum,ItemStruct *h)
 			} while (iVar3 < numitems);
 		}
 		iVar3 = 0;
-		if (0 < (&plr)[pnum]._pNumInv) {
+		if (0 < plr[pnum]._pNumInv) {
 			iVar4 = 0;
 			do {
-				if (*(int *)((int)&(&plr)[pnum].InvList[0]._iSeed + iVar4) == lVar2) {
+				if (*(int *)((int)&plr[pnum].InvList[0]._iSeed + iVar4) == lVar2) {
 					bVar1 = false;
 				}
 				iVar3 = iVar3 + 1;
 				iVar4 = iVar4 + 0x6c;
-			} while (iVar3 < (&plr)[pnum]._pNumInv);
+			} while (iVar3 < plr[pnum]._pNumInv);
 		}
 	} while (!bVar1);
 	h->_iSeed = lVar2;
@@ -1437,7 +1436,7 @@ void CreatePlrItems__Fi(int p)
 		iVar3 = iVar3 + -1;
 		idata = idata + 0x6c;
 	} while (iVar3 != -1);
-	memset((&plr)[p].InvGrid,0,0x28);
+	memset(plr[p].InvGrid,0,0x28);
 	idata = p * 0x19e8 + -0x7ff25624;
 	iVar3 = 0x27;
 	do {
@@ -1445,7 +1444,7 @@ void CreatePlrItems__Fi(int p)
 		iVar3 = iVar3 + -1;
 		idata = idata + 0x6c;
 	} while (iVar3 != -1);
-	(&plr)[p]._pNumInv = 0;
+	plr[p]._pNumInv = 0;
 	idata = p * 0x19e8 + -0x7ff24518;
 	iVar3 = 7;
 	do {
@@ -1453,44 +1452,44 @@ void CreatePlrItems__Fi(int p)
 		iVar3 = iVar3 + -1;
 		idata = idata + 0x6c;
 	} while (iVar3 != -1);
-	cVar1 = (&plr)[p]._pClass;
+	cVar1 = plr[p]._pClass;
 	if (cVar1 == '\x01') {
-		SetPlrHandItem__FP10ItemStructi((&plr)[p].InvBody + 4,4);
-		GetPlrHandSeed__FP10ItemStruct((&plr)[p].InvBody + 4);
-		SetPlrHandItem__FP10ItemStructi((&plr)[p].SpdList,0x18);
-		GetPlrHandSeed__FP10ItemStruct((&plr)[p].SpdList);
+		SetPlrHandItem__FP10ItemStructi(plr[p].InvBody + 4,4);
+		GetPlrHandSeed__FP10ItemStruct(plr[p].InvBody + 4);
+		SetPlrHandItem__FP10ItemStructi(plr[p].SpdList,0x18);
+		GetPlrHandSeed__FP10ItemStruct(plr[p].SpdList);
 		idata = 0x18;
 	}
 	else {
 		if (cVar1 < '\x02') {
 			if (cVar1 != '\0') goto LAB_80040178;
-			SetPlrHandItem__FP10ItemStructi((&plr)[p].InvBody + 4,1);
-			GetPlrHandSeed__FP10ItemStruct((&plr)[p].InvBody + 4);
-			SetPlrHandItem__FP10ItemStructi((&plr)[p].InvBody + 5,2);
-			GetPlrHandSeed__FP10ItemStruct((&plr)[p].InvBody + 5);
-			SetPlrHandItem__FP10ItemStructi(&(&plr)[p].HoldItem,3);
-			GetPlrHandSeed__FP10ItemStruct(&(&plr)[p].HoldItem);
-			FUN_80159f24(p,0,1,3,1);
-			SetPlrHandItem__FP10ItemStructi((&plr)[p].SpdList,0x18);
-			GetPlrHandSeed__FP10ItemStruct((&plr)[p].SpdList);
+			SetPlrHandItem__FP10ItemStructi(plr[p].InvBody + 4,1);
+			GetPlrHandSeed__FP10ItemStruct(plr[p].InvBody + 4);
+			SetPlrHandItem__FP10ItemStructi(plr[p].InvBody + 5,2);
+			GetPlrHandSeed__FP10ItemStruct(plr[p].InvBody + 5);
+			SetPlrHandItem__FP10ItemStructi(&plr[p].HoldItem,3);
+			GetPlrHandSeed__FP10ItemStruct(&plr[p].HoldItem);
+			AutoPlace__FiiiiUc(p,0,1,3,1);
+			SetPlrHandItem__FP10ItemStructi(plr[p].SpdList,0x18);
+			GetPlrHandSeed__FP10ItemStruct(plr[p].SpdList);
 			idata = 0x18;
 		}
 		else {
 			if (cVar1 != '\x02') goto LAB_80040178;
-			SetPlrHandItem__FP10ItemStructi((&plr)[p].InvBody + 4,5);
-			GetPlrHandSeed__FP10ItemStruct((&plr)[p].InvBody + 4);
-			SetPlrHandItem__FP10ItemStructi((&plr)[p].SpdList,0x19);
-			GetPlrHandSeed__FP10ItemStruct((&plr)[p].SpdList);
+			SetPlrHandItem__FP10ItemStructi(plr[p].InvBody + 4,5);
+			GetPlrHandSeed__FP10ItemStruct(plr[p].InvBody + 4);
+			SetPlrHandItem__FP10ItemStructi(plr[p].SpdList,0x19);
+			GetPlrHandSeed__FP10ItemStruct(plr[p].SpdList);
 			idata = 0x19;
 		}
 	}
-	SetPlrHandItem__FP10ItemStructi((&plr)[p].SpdList + 1,idata);
-	GetPlrHandSeed__FP10ItemStruct((&plr)[p].SpdList + 1);
+	SetPlrHandItem__FP10ItemStructi(plr[p].SpdList + 1,idata);
+	GetPlrHandSeed__FP10ItemStruct(plr[p].SpdList + 1);
 LAB_80040178:
 	if (FePlayerNo != 0) {
 		GetItemAttrs__Fiii(0,0x22,1);
 		h = item;
-		pIVar8 = (&plr)[p].SpdList + 2;
+		pIVar8 = plr[p].SpdList + 2;
 		do {
 			pIVar7 = pIVar8;
 			pIVar5 = h;
@@ -1509,20 +1508,20 @@ LAB_80040178:
 		((ItemStruct *)&pIVar7->_iSeed)->_iVAdd1 = item[0]._96_4_;
 		pIVar7->_ivalue = idata;
 		pIVar7->_iIvalue = iVar3;
-		(&plr)[p].SpdList[2]._iStatFlag = '\x01';
+		plr[p].SpdList[2]._iStatFlag = '\x01';
 		idata = FePlayerNo;
-		(&plr)[p].SpdList[2]._iCreateInfo = 1;
-		(&plr)[p].SpdList[2]._PlrCreate = (char)idata;
-		SetPlrHandItem__FP10ItemStructi((&plr)[p].SpdList + 2,0x22);
-		GetPlrHandSeed__FP10ItemStruct((&plr)[p].SpdList + 2);
+		plr[p].SpdList[2]._iCreateInfo = 1;
+		plr[p].SpdList[2]._PlrCreate = (char)idata;
+		SetPlrHandItem__FP10ItemStructi(plr[p].SpdList + 2,0x22);
+		GetPlrHandSeed__FP10ItemStruct(plr[p].SpdList + 2);
 	}
-	h = &(&plr)[p].HoldItem;
+	h = &plr[p].HoldItem;
 	SetPlrHandItem__FP10ItemStructi(h,0);
 	GetPlrHandSeed__FP10ItemStruct(h);
-	(&plr)[p].HoldItem._ivalue = 100;
-	idata = (&plr)[p]._pNumInv;
-	(&plr)[p].HoldItem._iCurs = '\x04';
-	(&plr)[p]._pGold = (&plr)[p].HoldItem._ivalue;
+	plr[p].HoldItem._ivalue = 100;
+	idata = plr[p]._pNumInv;
+	plr[p].HoldItem._iCurs = '\x04';
+	plr[p]._pGold = plr[p].HoldItem._ivalue;
 	piVar2 = (int *)(idata * 0x6c + p * 0x19e8 + -0x7ff25624);
 	do {
 		pIVar8 = h;
@@ -1536,14 +1535,14 @@ LAB_80040178:
 		piVar6[3] = iVar4;
 		h = (ItemStruct *)&pIVar8->_iSeed;
 		piVar2 = piVar6 + 4;
-	} while (h != (ItemStruct *)&(&plr)[p].HoldItem._iSufPower);
+	} while (h != (ItemStruct *)&plr[p].HoldItem._iSufPower);
 	idata = pIVar8->_ivalue;
 	iVar3 = pIVar8->_iIvalue;
 	piVar6[4] = h->_iVAdd1;
 	piVar6[5] = idata;
 	piVar6[6] = iVar3;
-	(&plr)[p]._pNumInv = (&plr)[p]._pNumInv + 1;
-	(&plr)[p].InvGrid[0x1e] = (char)(&plr)[p]._pNumInv;
+	plr[p]._pNumInv = plr[p]._pNumInv + 1;
+	plr[p].InvGrid[0x1e] = (char)plr[p]._pNumInv;
 	CalcPlrInv__FiUc(p,'\0');
 	return;
 }
@@ -1580,17 +1579,17 @@ uchar ItemSpaceOk__Fii(int i,int j)
 	uint uVar5;
 	
 	if (((uint)i < 0x60) && ((uint)j < 0x60)) {
-		if ((&dung_map)[i * 0x70 + j].dMonster != 0) {
+		if (dung_map[i * 0x70 + j].dMonster != 0) {
 			return '\0';
 		}
 		uVar1 = IsDplayer__Fii(i,j);
 		if (uVar1 != '\0') {
 			return '\0';
 		}
-		if ((&dung_map)[i * 0x70 + j].dItem != '\0') {
+		if (dung_map[i * 0x70 + j].dItem != '\0') {
 			return '\0';
 		}
-		uVar3 = SEXT14((&dung_map)[i * 0x70 + j].dObject);
+		uVar3 = SEXT14(dung_map[i * 0x70 + j].dObject);
 		if (uVar3 != 0) {
 			uVar5 = uVar3 - 1;
 			if ((int)uVar3 < 1) {
@@ -1600,18 +1599,18 @@ uchar ItemSpaceOk__Fii(int i,int j)
 				return '\0';
 			}
 		}
-		if ((0 < (int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject) &&
-			 (object[(int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0')) {
+		if ((0 < (int)dung_map[(i + 1) * 0x70 + j + 1].dObject) &&
+			 (object[(int)dung_map[(i + 1) * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0')) {
 			return '\0';
 		}
-		if (((int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject < 0) &&
-			 (object[~(int)(&dung_map)[(i + 1) * 0x70 + j + 1].dObject]._oSelFlag != '\0')) {
+		if (((int)dung_map[(i + 1) * 0x70 + j + 1].dObject < 0) &&
+			 (object[~(int)dung_map[(i + 1) * 0x70 + j + 1].dObject]._oSelFlag != '\0')) {
 			return '\0';
 		}
-		if (0 < (int)(&dung_map)[(i + 1) * 0x70 + j].dObject) {
-			if (((0 < (int)(&dung_map)[i * 0x70 + j + 1].dObject) &&
-					(object[(int)(&dung_map)[(i + 1) * 0x70 + j].dObject + -1]._oSelFlag != '\0')) &&
-				 (object[(int)(&dung_map)[i * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0'))
+		if (0 < (int)dung_map[(i + 1) * 0x70 + j].dObject) {
+			if (((0 < (int)dung_map[i * 0x70 + j + 1].dObject) &&
+					(object[(int)dung_map[(i + 1) * 0x70 + j].dObject + -1]._oSelFlag != '\0')) &&
+				 (object[(int)dung_map[i * 0x70 + j + 1].dObject + -1]._oSelFlag != '\0'))
 			goto LAB_80040658;
 		}
 		pvVar4 = GetSOLID__Fii(i,j);
@@ -1725,7 +1724,7 @@ uchar GetItemSpace__Fiic(int x,int y,char inum)
 		uVar2 = '\x01';
 		item[(int)inum]._ix = (char)iVar6;
 		item[(int)inum]._iy = (char)j;
-		(&dung_map)[iVar6 * 0x70 + j].dItem = inum + '\x01';
+		dung_map[iVar6 * 0x70 + j].dItem = inum + '\x01';
 	}
 	else {
 		uVar2 = '\0';
@@ -1820,7 +1819,7 @@ void GetSuperItemSpace__Fiic(int x,int y,char inum)
 					if (uVar1 != '\0') {
 						item[(int)inum]._ix = (char)i;
 						item[(int)inum]._iy = (char)j;
-						(&dung_map)[i * 0x70 + j].dItem = inum + '\x01';
+						dung_map[i * 0x70 + j].dItem = inum + '\x01';
 						return;
 					}
 				}
@@ -2965,21 +2964,21 @@ LAB_80042bf4:
 		iVar5 = i << 3;
 		break;
 	case 0x4c:
-		sVar10 = (short)(&plr)[myplr]._pIBonusAC + (short)(&plr)[myplr]._pIAC;
+		sVar10 = (short)plr[myplr]._pIBonusAC + (short)plr[myplr]._pIAC;
 		item[i]._iPLHP = sVar10;
-		sVar2 = (&plr)[iVar5]._pDexterity;
+		sVar2 = plr[iVar5]._pDexterity;
 		item[i]._iPLHP = (sVar10 + ((sVar2 / 5 + ((sVar2 >> 0x10) >> 0xf)) - (sVar2 >> 0xf))) * 0x40;
 		iVar5 = i << 3;
 		break;
 	case 0x4d:
-		cVar9 = (char)((uint)(&plr)[myplr]._pMaxManaBase >> 0x18);
+		cVar9 = (char)((uint)plr[myplr]._pMaxManaBase >> 0x18);
 		item[i]._iAC = item[i]._iAC +
-									 (((char)(((&plr)[myplr]._pMaxManaBase >> 6) / 10) + ((cVar9 >> 6) >> 7)) -
+									 (((char)((plr[myplr]._pMaxManaBase >> 6) / 10) + ((cVar9 >> 6) >> 7)) -
 									 (cVar9 >> 7));
 		iVar5 = i << 3;
 		break;
 	case 0x4e:
-		iVar4 = 0x1e - (uint)(byte)(&plr)[myplr]._pLevel;
+		iVar4 = 0x1e - (uint)(byte)plr[myplr]._pLevel;
 		item[i]._iPLFR = (char)iVar4;
 		iVar5 = i << 3;
 		if (iVar4 * 0x1000000 < 0) {
@@ -3254,7 +3253,7 @@ void SetupItem__Fi(int i)
 	item[i]._iPostDraw = '\0';
 	iVar3 = myplr;
 	item[i].ItemFrame = Item2Frm[(uint)bVar1];
-	if ((&plr)[iVar3].pLvlLoad == '\0') {
+	if (plr[iVar3].pLvlLoad == '\0') {
 		item[i]._iAnimFrame = '\x01';
 		item[i]._iAnimFlag = '\x01';
 		item[i]._iSelFlag = '\0';
@@ -4020,9 +4019,8 @@ void SpawnItem__FiiiUc(int m,int x,int y,uchar sendmsg)
 	onlygood = 0;
 	if ((monster[m]._uniqtype == '\0') &&
 		 ((((monster[m].MData)->mTreasure & 0x8000) == 0 || (gbMaxPlayers == '\x01')))) {
-		if ((QuestStruct_ARRAY_800dda54[0]._qactive == '\x02') &&
-			 (QuestStruct_ARRAY_800dda54[0]._qvar1 == '\x05')) {
-			QuestStruct_ARRAY_800dda54[0]._qvar1 = '\x06';
+		if ((quests[1]._qactive == '\x02') && (quests[1]._qvar1 == '\x05')) {
+			quests[1]._qvar1 = '\x06';
 			idx = 0x12;
 		}
 		else {
@@ -4379,23 +4377,23 @@ void RecreateEar__FiUsiUciiiiii
 	int iVar1;
 	
 	SetPlrHandItem__FP10ItemStructi(item + ii,0x17);
-	tempstr = (byte)((uint)ic >> 8) & 0x7f;
-	CHAR_00h_800cea11 = (byte)ic & 0x7f;
-	CHAR_00h_800cea16 = Id & 0x7f;
-	s__800cea20[0] = '\0';
-	CHAR_00h_800cea12 = (byte)((uint)iseed >> 0x18) & 0x7f;
-	CHAR_00h_800cea13 = (byte)((uint)iseed >> 0x10) & 0x7f;
-	CHAR_00h_800cea14 = (byte)((uint)iseed >> 8) & 0x7f;
-	CHAR_00h_800cea15 = (byte)iseed & 0x7f;
-	CHAR_00h_800cea17 = (byte)dur & 0x7f;
-	CHAR_00h_800cea18 = (byte)mdur & 0x7f;
-	CHAR_00h_800cea19 = (byte)ch & 0x7f;
-	CHAR_00h_800cea1a = (byte)mch & 0x7f;
-	CHAR_00h_800cea1b = (byte)((uint)ivalue >> 8) & 0x7f;
-	CHAR_00h_800cea1c = (byte)((uint)ibuff >> 0x18) & 0x7f;
-	CHAR_00h_800cea1d = (byte)((uint)ibuff >> 0x10) & 0x7f;
-	CHAR_00h_800cea1e = (byte)((uint)ibuff >> 8) & 0x7f;
-	CHAR_00h_800cea1f = (byte)ibuff & 0x7f;
+	tempstr[0] = (byte)((uint)ic >> 8) & 0x7f;
+	tempstr[1] = (byte)ic & 0x7f;
+	tempstr[6] = Id & 0x7f;
+	tempstr[16] = '\0';
+	tempstr[2] = (byte)((uint)iseed >> 0x18) & 0x7f;
+	tempstr[3] = (byte)((uint)iseed >> 0x10) & 0x7f;
+	tempstr[4] = (byte)((uint)iseed >> 8) & 0x7f;
+	tempstr[5] = (byte)iseed & 0x7f;
+	tempstr[7] = (byte)dur & 0x7f;
+	tempstr[8] = (byte)mdur & 0x7f;
+	tempstr[9] = (byte)ch & 0x7f;
+	tempstr[10] = (byte)mch & 0x7f;
+	tempstr[11] = (byte)((uint)ivalue >> 8) & 0x7f;
+	tempstr[12] = (byte)((uint)ibuff >> 0x18) & 0x7f;
+	tempstr[13] = (byte)((uint)ibuff >> 0x10) & 0x7f;
+	tempstr[14] = (byte)((uint)ibuff >> 8) & 0x7f;
+	tempstr[15] = (byte)ibuff & 0x7f;
 	item[ii]._iName = 0x122;
 	item[ii]._iCurs = ((byte)(ivalue >> 6) & 3) + 0x13;
 	iVar1 = FePlayerNo;
@@ -4492,7 +4490,7 @@ void SpawnQuestItem__Fiiiii(int itemid,int x,int y,int randarea,int selflag)
 		itemavail = cVar1;
 		item[i]._ix = (char)x;
 		item[i]._iy = (char)y;
-		(&dung_map)[x * 0x70 + y].dItem = cVar4;
+		dung_map[x * 0x70 + y].dItem = cVar4;
 		GetItemAttrs__Fiii(i,itemid,(uint)currlevel);
 		SetupItem__Fi(i);
 		item[i]._iPostDraw = '\x01';
@@ -4567,7 +4565,7 @@ void SpawnRock__Fv(void)
 		item[i]._ix = cVar1;
 		bVar2 = object[iVar5]._oy;
 		item[i]._iy = bVar2;
-		(&(&dung_map)[(int)cVar1 * 0x70].dItem)[(int)((uint)bVar2 << 0x18) >> 0x15] = cVar4 + '\x01';
+		(&dung_map[(int)cVar1 * 0x70].dItem)[(int)((uint)bVar2 << 0x18) >> 0x15] = cVar4 + '\x01';
 		GetItemAttrs__Fiii(i,9,(uint)currlevel);
 		SetupItem__Fi(i);
 		item[i]._iSelFlag = '\x02';
@@ -4711,11 +4709,11 @@ void ItemDoppel__Fv(void)
 		iVar2 = 0x10;
 		iVar3 = 0x3800;
 		do {
-			if (((int)(&(&dung_map)[idoppely].dItem)[iVar3] != 0) &&
-				 ((iVar1 = (int)(&(&dung_map)[idoppely].dItem)[iVar3] * 0x6c,
+			if (((int)(&dung_map[idoppely].dItem)[iVar3] != 0) &&
+				 ((iVar1 = (int)(&dung_map[idoppely].dItem)[iVar3] * 0x6c,
 					(int)*(char *)((int)ItemInvSnds + iVar1 + 0x8a) != iVar2 ||
 					((int)*(char *)((int)ItemInvSnds + iVar1 + 0x8b) != idoppely)))) {
-				(&(&dung_map)[idoppely].dItem)[iVar3] = '\0';
+				(&dung_map[idoppely].dItem)[iVar3] = '\0';
 			}
 			iVar2 = iVar2 + 1;
 			iVar3 = iVar3 + 0x380;
@@ -4885,7 +4883,7 @@ void ProcessItems__Fv(void)
 			cVar1 = item[iVar3]._iy;
 			cVar2 = item[iVar3]._ix;
 			item[iVar3]._iAnimFrame = bVar4;
-			if (((&dung_map)[(int)cVar2 * 0x70 + (int)cVar1].dFlags & 3U) != 0) {
+			if ((dung_map[(int)cVar2 * 0x70 + (int)cVar1].dFlags & 3U) != 0) {
 				if (bVar4 == 4) {
 					PlaySfxLoc__Fiii(0x15,(int)cVar2,(int)cVar1);
 				}
@@ -4983,7 +4981,7 @@ void GetItemStr__Fi(int i)
 	
 	if (item[i]._itype == 0xb) {
 		nGold = item[i]._ivalue;
-		__src = GetStr__Fi(0x4ff);
+		__src = GetStr__Fi(STR__I_GOLD__S_1279);
 		pcVar1 = get_pieces_str__Fi(nGold);
 		sprintf(_infostr + sel_data * 0x100,__src,nGold,pcVar1);
 	}
@@ -5037,7 +5035,7 @@ void CheckIdentify__Fii(int pnum,int cii)
 {
 	int iVar1;
 	
-	PlaySfxLoc__Fiii(0x3d,(int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py);
+	PlaySfxLoc__Fiii(0x3d,(int)plr[pnum]._px,(int)plr[pnum]._py);
 	iVar1 = -0x7ff25918;
 	if (cii < 7) {
 		cii = cii * 0x6c;
@@ -5139,9 +5137,9 @@ LAB_80045e58:
 void DoRepair__Fii(int pnum,int cii)
 
 {
-	PlaySfxLoc__Fiii(0x42,(int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py);
+	PlaySfxLoc__Fiii(0x42,(int)plr[pnum]._px,(int)plr[pnum]._py);
 	RepairItem__FP10ItemStructi
-						((ItemStruct *)(pnum * 0x19e8 + cii * 0x6c + -0x7ff25918),(int)(&plr)[pnum]._pLevel);
+						((ItemStruct *)(pnum * 0x19e8 + cii * 0x6c + -0x7ff25918),(int)plr[pnum]._pLevel);
 	CalcPlrInv__FiUc(pnum,'\x01');
 	if (pnum == myplr) {
 		NewCursor__Fi(1);
@@ -5241,10 +5239,10 @@ void DoRecharge__Fii(int pnum,int cii)
 	long lVar1;
 	ItemStruct *i;
 	
-	PlaySfxLoc__Fiii(0x42,(int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py);
+	PlaySfxLoc__Fiii(0x42,(int)plr[pnum]._px,(int)plr[pnum]._py);
 	i = (ItemStruct *)(pnum * 0x19e8 + cii * 0x6c + -0x7ff25918);
 	if ((i->_itype == 10) && ((int)i->_iSpell != 0)) {
-		lVar1 = ENG_random__Fl((int)(&plr)[pnum]._pLevel / (&spelldata)[(int)i->_iSpell].sBookLvl);
+		lVar1 = ENG_random__Fl((int)plr[pnum]._pLevel / (&spelldata)[(int)i->_iSpell].sBookLvl);
 		RechargeItem__FP10ItemStructi(i,lVar1 + 1);
 		CalcPlrInv__FiUc(pnum,'\x01');
 		PlaySFX__Fi(IS_TITLEMOV);
@@ -5281,60 +5279,60 @@ void PrintItemOil__Fc(char IDidx)
 
 {
 	char *__src;
-	int StrId;
+	text_strs StrId;
 	
-	StrId = -1;
+	StrId = ~STR_10__OF_MANA_ADDED_TO_ARMOR_0;
 	switch((int)(((uint)(byte)IDidx - 2) * 0x1000000) >> 0x18) {
 	case 0:
-		StrId = 0x170;
+		StrId = STR_FULLY_RECOVER_LIFE_368;
 		break;
 	case 1:
-		StrId = 0x352;
+		StrId = STR_RECOVER_PARTIAL_LIFE_850;
 		break;
 	case 2:
-		StrId = 0x34f;
+		StrId = STR_RECOVER_LIFE_847;
 		break;
 	case 3:
-		StrId = 0xea;
+		StrId = STR_DEADLY_HEAL_234;
 		break;
 	case 4:
-		StrId = 0x351;
+		StrId = STR_RECOVER_MANA_849;
 		break;
 	case 5:
-		StrId = 0x172;
+		StrId = STR_FULLY_RECOVER_MANA_370;
 		break;
 	case 8:
-		StrId = 0x215;
+		StrId = STR_INCREASE_STRENGTH_533;
 		break;
 	case 9:
-		StrId = 0x214;
+		StrId = STR_INCREASE_MAGIC_532;
 		break;
 	case 10:
-		StrId = 0x213;
+		StrId = STR_INCREASE_DEXTERITY_531;
 		break;
 	case 0xb:
-		StrId = 0x216;
+		StrId = STR_INCREASE_VITALITY_534;
 		break;
 	case 0xc:
 	case 0xd:
-		StrId = 0xf2;
+		StrId = STR_DECREASE_STRENGTH_242;
 		break;
 	case 0xe:
-		StrId = 0xf1;
+		StrId = STR_DECREASE_DEXTERITY_241;
 		break;
 	case 0xf:
-		StrId = 0xf3;
+		StrId = STR_DECREASE_VITALITY_243;
 		break;
 	case 0x10:
-		StrId = 0x350;
+		StrId = STR_RECOVER_LIFE_AND_MANA_848;
 		break;
 	case 0x11:
-		StrId = 0x171;
+		StrId = STR_FULLY_RECOVER_LIFE_AND_MANA_369;
 	}
-	if (StrId != -1) {
+	if (StrId != ~STR_10__OF_MANA_ADDED_TO_ARMOR_0) {
 		__src = GetStr__Fi(StrId);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	return;
 }
@@ -5370,9 +5368,10 @@ void PrintItemPower__FcPC10ItemStruct(char plidx,ItemStruct *x)
 	char *__format;
 	char *pcVar3;
 	size_t sVar4;
-	int StrId;
-	uint uVar5;
+	text_strs StrId;
+	int iVar5;
 	int iVar6;
+	uint uVar7;
 	
 	if (x->_iIdentified == '\0') {
 		return;
@@ -5380,326 +5379,326 @@ void PrintItemPower__FcPC10ItemStruct(char plidx,ItemStruct *x)
 	switch(plidx) {
 	case '\0':
 	case '\x01':
-		__format = GetStr__Fi(0xab);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
-		sprintf(&tempstr + sVar4,(char *)PTR_ARRAY_8011b898,(int)x->_iPLToHit);
+		__format = GetStr__Fi(STR_CHANCE_TO_HIT_____I___171);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
+		sprintf(tempstr + sVar4,(char *)PTR_ARRAY_8011b898,(int)x->_iPLToHit);
 		return;
 	case '\x02':
 	case '\x03':
-		sprintf(&tempstr,(char *)PTR_ARRAY_8011b898,(int)x->_iPLDam);
-		__format = GetStr__Fi(0xe1);
-		strcat(&tempstr,__format);
+		sprintf(tempstr,(char *)PTR_ARRAY_8011b898,(int)x->_iPLDam);
+		__format = GetStr__Fi(STR_DAMAGE_225);
+		strcat(tempstr,__format);
 		return;
 	case '\x04':
 	case '\x05':
-		__format = GetStr__Fi(0x495);
-		pcVar3 = GetStr__Fi(0xe1);
-		sprintf(&tempstr,"%s:%+i%%, %+i%%%s",__format,(int)x->_iPLToHit,(int)x->_iPLDam,pcVar3);
+		__format = GetStr__Fi(STR_TO_HIT_1173);
+		pcVar3 = GetStr__Fi(STR_DAMAGE_225);
+		sprintf(tempstr,"%s:%+i%%, %+i%%%s",__format,(int)x->_iPLToHit,(int)x->_iPLDam,pcVar3);
 		return;
 	case '\x06':
 	case '\a':
-		__format = GetStr__Fi(0x525);
-		StrId = x->_iPLAC;
+		__format = GetStr__Fi(STR___I___ARMOR_1317);
+		iVar5 = x->_iPLAC;
 		goto LAB_800465d8;
 	case '\b':
-		iVar6 = (int)x->_iPLFR;
-		StrId = 0x364;
-		if (0x4a < iVar6) {
-			StrId = 0x363;
+		iVar5 = (int)x->_iPLFR;
+		StrId = STR_RESIST_FIRE_____I___868;
+		if (0x4a < iVar5) {
+			StrId = STR_RESIST_FIRE___75___MAX_867;
 LAB_80046428:
 			__format = GetStr__Fi(StrId);
-			sprintf(&tempstr,__format);
+			sprintf(tempstr,__format);
 			return;
 		}
 		goto LAB_800469d4;
 	case '\t':
-		iVar6 = (int)x->_iPLLR;
-		StrId = 0x366;
-		if (0x4a < iVar6) {
-			StrId = 0x365;
+		iVar5 = (int)x->_iPLLR;
+		StrId = STR_RESIST_LIGHTNING_____I___870;
+		if (0x4a < iVar5) {
+			StrId = STR_RESIST_LIGHTNING___75___MAX_869;
 			goto LAB_80046428;
 		}
 		goto LAB_800469d4;
 	case '\n':
-		iVar6 = (int)x->_iPLMR;
-		StrId = 0x368;
-		if (0x4a < iVar6) {
-			StrId = 0x367;
+		iVar5 = (int)x->_iPLMR;
+		StrId = STR_RESIST_MAGIC_____I___872;
+		if (0x4a < iVar5) {
+			StrId = STR_RESIST_MAGIC___75___MAX_871;
 			goto LAB_80046428;
 		}
 		goto LAB_800469d4;
 	case '\v':
-		iVar6 = (int)x->_iPLFR;
-		StrId = 0x362;
-		if (0x4a < iVar6) {
-			StrId = 0x361;
+		iVar5 = (int)x->_iPLFR;
+		StrId = STR_RESIST_ALL_____I___866;
+		if (0x4a < iVar5) {
+			StrId = STR_RESIST_ALL___75___MAX_865;
 			goto LAB_80046428;
 		}
 		goto LAB_800469d4;
 	default:
-		tempstr = '\0';
+		tempstr[0] = '\0';
 		return;
 	case '\x0e':
 		cVar1 = x->_iSplLvlAdd;
 		if (cVar1 == '\x01') {
-			__format = GetStr__Fi(0x3f5);
-			strcpy(&tempstr,__format);
+			__format = GetStr__Fi(STR_SPELLS_ARE_INCREASED_1_LEVEL_1013);
+			strcpy(tempstr,__format);
 		}
 		if (cVar1 == '\x02') {
-			__format = GetStr__Fi(0x3f6);
-			strcpy(&tempstr,__format);
+			__format = GetStr__Fi(STR_SPELLS_ARE_INCREASED_2_LEVELS_1014);
+			strcpy(tempstr,__format);
 		}
-		StrId = 0x3f4;
+		StrId = STR_SPELLS_ARE_DECREASED_1_LEVEL_1012;
 		if ('\0' < cVar1) {
 			return;
 		}
 		break;
 	case '\x0f':
-		StrId = 0x137;
+		StrId = STR_EXTRA_CHARGES_311;
 		break;
 	case '\x10':
-		__format = GetStr__Fi(0x155);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
-		StrId = (int)x->_iFMinDam;
+		__format = GetStr__Fi(STR_FIRE_HIT_DAMAGE___I__I_341);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
+		iVar5 = (int)x->_iFMinDam;
 		iVar6 = (int)x->_iFMaxDam;
-		__format = &tempstr + sVar4;
+		__format = tempstr + sVar4;
 		goto LAB_80046724;
 	case '\x11':
-		__format = GetStr__Fi(0x253);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
-		__format = &tempstr + sVar4;
+		__format = GetStr__Fi(STR_LIGHTNING_HIT_DAMAGE___I__I_595);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
+		__format = tempstr + sVar4;
 		goto LAB_8004671c;
 	case '\x13':
 	case '\x14':
-		StrId = 0x523;
+		StrId = STR___I_TO_STRENGTH_1315;
 		goto LAB_800465c4;
 	case '\x15':
 	case '\x16':
-		__format = GetStr__Fi(0x522);
-		StrId = (int)x->_iPLMag;
+		__format = GetStr__Fi(STR___I_TO_MAGIC_1314);
+		iVar5 = (int)x->_iPLMag;
 		goto LAB_800465d8;
 	case '\x17':
 	case '\x18':
-		__format = GetStr__Fi(0x521);
-		StrId = (int)x->_iPLDex;
+		__format = GetStr__Fi(STR___I_TO_DEXTERITY_1313);
+		iVar5 = (int)x->_iPLDex;
 		goto LAB_800465d8;
 	case '\x19':
 	case '\x1a':
-		__format = GetStr__Fi(0x524);
-		StrId = (int)x->_iPLVit;
+		__format = GetStr__Fi(STR___I_TO_VITALITY_1316);
+		iVar5 = (int)x->_iPLVit;
 		goto LAB_800465d8;
 	case '\x1b':
 	case '\x1c':
-		StrId = 0x520;
+		StrId = STR___I_TO_ALL_ATTRIBUTES_1312;
 LAB_800465c4:
 		__format = GetStr__Fi(StrId);
-		StrId = (int)x->_iPLStr;
+		iVar5 = (int)x->_iPLStr;
 		goto LAB_800465d8;
 	case '\x1d':
 	case '\x1e':
-		__format = GetStr__Fi(0x51f);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
+		__format = GetStr__Fi(STR___I_DAMAGE_FROM_ENEMIES_1311);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
 		sprintf((char *)(sVar4 + 0x800cea0d),(char *)&PTR_DAT_8011b8a8,(int)x->_iPLGetHit);
 		return;
 	case '\x1f':
 	case ' ':
-		__format = GetStr__Fi(500);
+		__format = GetStr__Fi(STR_HIT_POINTS_____I_500);
 		uVar2 = x->_iPLHP;
 		goto LAB_80046660;
 	case '!':
 	case '\"':
-		__format = GetStr__Fi(0x27f);
+		__format = GetStr__Fi(STR_MANA_____I_639);
 		uVar2 = x->_iPLMana;
 LAB_80046660:
-		sprintf(&tempstr,__format,(int)((uint)uVar2 << 0x10) >> 0x16);
+		sprintf(tempstr,__format,(int)((uint)uVar2 << 0x10) >> 0x16);
 		return;
 	case '#':
-		StrId = 0x1ef;
+		StrId = STR_HIGH_DURABILITY_495;
 		break;
 	case '$':
-		StrId = 0xf0;
+		StrId = STR_DECREASED_DURABILITY_240;
 		break;
 	case '&':
-		StrId = 0x338;
-		iVar6 = (int)x->_iPLLight * 10;
+		StrId = STR___I___LIGHT_RADIUS_824;
+		iVar5 = (int)x->_iPLLight * 10;
 		goto LAB_800469d4;
 	case '\'':
-		StrId = 0x2dd;
-		iVar6 = (int)x->_iPLLight * -10;
+		StrId = STR___I___LIGHT_RADIUS_733;
+		iVar5 = (int)x->_iPLLight * -10;
 		goto LAB_800469d4;
 	case '*':
-		__format = GetStr__Fi(0x151);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
-		StrId = (int)x->_iFMinDam;
+		__format = GetStr__Fi(STR_FIRE_ARROWS_DAMAGE___I__I_337);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
+		iVar5 = (int)x->_iFMinDam;
 		iVar6 = (int)x->_iFMaxDam;
 		__format = (char *)(sVar4 + 0x800cea0b);
 		goto LAB_80046724;
 	case '+':
-		__format = GetStr__Fi(0x251);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
+		__format = GetStr__Fi(STR_LIGHTNING_ARROWS_DAMAGE__I__I_593);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
 		__format = (char *)(sVar4 + 0x800cea0b);
 LAB_8004671c:
-		StrId = (int)x->_iLMinDam;
+		iVar5 = (int)x->_iLMinDam;
 		iVar6 = (int)x->_iLMaxDam;
 LAB_80046724:
-		sprintf(__format,(char *)PTR_ARRAY_8011b8a0,StrId,iVar6);
+		sprintf(__format,(char *)PTR_ARRAY_8011b8a0,iVar5,iVar6);
 		return;
 	case '-':
-		StrId = 0x31;
+		StrId = STR_ATTACKER_TAKES_1_3_DAMAGE_49;
 		break;
 	case '.':
-		StrId = 0x4aa;
+		StrId = STR_USER_LOSES_ALL_MANA_1194;
 		break;
 	case '/':
-		StrId = 0x4e8;
+		StrId = STR_YOU_CAN_T_HEAL_1256;
 		break;
 	case '4':
-		StrId = 5;
+		StrId = STR_ABSORBS_HALF_OF_TRAP_DAMAGE_5;
 		break;
 	case '5':
-		StrId = 0x233;
+		StrId = STR_KNOCKS_TARGET_BACK_563;
 		break;
 	case '6':
-		StrId = 0x1f0;
+		StrId = STR_HIT_MONSTER_DOESN_T_HEAL_496;
 		break;
 	case '7':
-		uVar5 = x->_iFlags;
-		if ((uVar5 & 0x2000) != 0) {
-			__format = GetStr__Fi(0x1f6);
-			strcpy(&tempstr,__format);
+		uVar7 = x->_iFlags;
+		if ((uVar7 & 0x2000) != 0) {
+			__format = GetStr__Fi(STR_HIT_STEALS_3__MANA_502);
+			strcpy(tempstr,__format);
 		}
-		uVar5 = uVar5 & 0x4000;
-		StrId = 0x1f8;
+		uVar7 = uVar7 & 0x4000;
+		StrId = STR_HIT_STEALS_5__MANA_504;
 		goto joined_r0x800468f8;
 	case '8':
-		uVar5 = x->_iFlags;
-		if ((uVar5 & 0x8000) != 0) {
-			__format = GetStr__Fi(0x1f5);
-			strcpy(&tempstr,__format);
+		uVar7 = x->_iFlags;
+		if ((uVar7 & 0x8000) != 0) {
+			__format = GetStr__Fi(STR_HIT_STEALS_3__LIFE_501);
+			strcpy(tempstr,__format);
 		}
-		uVar5 = uVar5 & 0x10000;
-		StrId = 0x1f7;
+		uVar7 = uVar7 & 0x10000;
+		StrId = STR_HIT_STEALS_5__LIFE_503;
 		goto joined_r0x800468f8;
 	case '9':
-		StrId = 0xdf;
+		StrId = STR_DAMAGES_TARGET_S_ARMOR_223;
 		break;
 	case ':':
-		uVar5 = x->_iFlags;
-		if ((uVar5 & 0x20000) != 0) {
-			__format = GetStr__Fi(0x33c);
-			strcpy(&tempstr,__format);
+		uVar7 = x->_iFlags;
+		if ((uVar7 & 0x20000) != 0) {
+			__format = GetStr__Fi(STR_QUICK_ATTACK_828);
+			strcpy(tempstr,__format);
 		}
-		if ((uVar5 & 0x40000) != 0) {
-			__format = GetStr__Fi(0x145);
-			strcpy(&tempstr,__format);
+		if ((uVar7 & 0x40000) != 0) {
+			__format = GetStr__Fi(STR_FAST_ATTACK_325);
+			strcpy(tempstr,__format);
 		}
-		if ((uVar5 & 0x80000) != 0) {
-			__format = GetStr__Fi(0x140);
-			strcpy(&tempstr,__format);
+		if ((uVar7 & 0x80000) != 0) {
+			__format = GetStr__Fi(STR_FASTER_ATTACK_320);
+			strcpy(tempstr,__format);
 		}
-		uVar5 = uVar5 & 0x100000;
-		StrId = 0x143;
+		uVar7 = uVar7 & 0x100000;
+		StrId = STR_FASTEST_ATTACK_323;
 		goto joined_r0x800468f8;
 	case ';':
-		uVar5 = x->_iFlags;
-		if ((uVar5 & 0x200000) != 0) {
-			__format = GetStr__Fi(0x147);
-			strcpy(&tempstr,__format);
+		uVar7 = x->_iFlags;
+		if ((uVar7 & 0x200000) != 0) {
+			__format = GetStr__Fi(STR_FAST_HIT_RECOVERY_327);
+			strcpy(tempstr,__format);
 		}
-		if ((uVar5 & 0x400000) != 0) {
-			__format = GetStr__Fi(0x142);
-			strcpy(&tempstr,__format);
+		if ((uVar7 & 0x400000) != 0) {
+			__format = GetStr__Fi(STR_FASTER_HIT_RECOVERY_322);
+			strcpy(tempstr,__format);
 		}
-		uVar5 = uVar5 & 0x800000;
-		StrId = 0x144;
+		uVar7 = uVar7 & 0x800000;
+		StrId = STR_FASTEST_HIT_RECOVERY_324;
 joined_r0x800468f8:
-		if (uVar5 == 0) {
+		if (uVar7 == 0) {
 			return;
 		}
 		break;
 	case '<':
-		StrId = 0x146;
+		StrId = STR_FAST_BLOCK_326;
 		break;
 	case '=':
-		__format = GetStr__Fi(0xb);
-		strcpy(&tempstr,__format);
-		sVar4 = strlen(&tempstr);
-		sprintf(&tempstr + sVar4,(char *)&PTR_DAT_8011b8ac,(int)x->_iPLDamMod);
+		__format = GetStr__Fi(STR_ADDS__I_POINTS_TO_DAMAGE_11);
+		strcpy(tempstr,__format);
+		sVar4 = strlen(tempstr);
+		sprintf(tempstr + sVar4,(char *)&PTR_DAT_8011b8ac,(int)x->_iPLDamMod);
 		return;
 	case '>':
-		StrId = 0x14e;
+		StrId = STR_FIRES_RANDOM_SPEED_ARROWS_334;
 		break;
 	case '?':
-		StrId = 0x4a6;
+		StrId = STR_UNUSUAL_ITEM_DAMAGE_1190;
 		break;
 	case '@':
-		StrId = 0x13;
+		StrId = STR_ALTERED_DURABILITY_19;
 		break;
 	case 'A':
-		StrId = 0x2db;
+		StrId = STR_NO_STRENGTH_REQUIREMENT_731;
 		break;
 	case 'B':
-		__format = GetStr__Fi(0x502);
+		__format = GetStr__Fi(STR__I__S_CHARGES_1282);
 		pcVar3 = GetStr__Fi((&spelldata)[(int)x->_iSpell].sNameText);
-		sprintf(&tempstr,__format,(uint)x->_iMaxCharges,pcVar3);
+		sprintf(tempstr,__format,(uint)x->_iMaxCharges,pcVar3);
 		return;
 	case 'C':
-		StrId = 0x141;
+		StrId = STR_FASTER_ATTACK_SWING_321;
 		break;
 	case 'D':
-		StrId = 0x2f1;
+		StrId = STR_ONE_HANDED_SWORD_753;
 		break;
 	case 'E':
-		StrId = 0x4fb;
+		StrId = STR__200__DAMAGE_VS__DEMONS_1275;
 		break;
 	case 'F':
-		StrId = 0x11;
+		StrId = STR_ALL_RESISTANCE_EQUALS_0_17;
 		break;
 	case 'H':
-		StrId = 0xc9;
+		StrId = STR_CONSTANTLY_LOSE_HIT_POINTS_201;
 		break;
 	case 'I':
-		StrId = 0x24e;
+		StrId = STR_LIFE_STEALING_590;
 		break;
 	case 'J':
-		StrId = 0x3b1;
+		StrId = STR_SEE_WITH_INFRAVISION_945;
 		break;
 	case 'K':
-		__format = GetStr__Fi(0x2c);
-		StrId = (int)x->_iAC;
+		__format = GetStr__Fi(STR_ARMOR_CLASS___I_44);
+		iVar5 = (int)x->_iAC;
 		goto LAB_800465d8;
 	case 'L':
-		StrId = 0x2b;
+		StrId = STR_ARMOR_CLASS_ADDED_TO_LIFE_43;
 		break;
 	case 'M':
-		StrId = 0;
+		StrId = STR_10__OF_MANA_ADDED_TO_ARMOR_0;
 		break;
 	case 'N':
-		iVar6 = (int)x->_iPLFR;
-		StrId = 0x364;
-		if (iVar6 < 1) {
-			tempstr = '\0';
+		iVar5 = (int)x->_iPLFR;
+		StrId = STR_RESIST_FIRE_____I___868;
+		if (iVar5 < 1) {
+			tempstr[0] = '\0';
 			return;
 		}
 LAB_800469d4:
 		__format = GetStr__Fi(StrId);
-		sprintf(&tempstr,__format,iVar6);
+		sprintf(tempstr,__format,iVar5);
 		return;
 	case 'O':
-		__format = GetStr__Fi(0x2c);
-		StrId = (int)x->_iAC;
+		__format = GetStr__Fi(STR_ARMOR_CLASS___I_44);
+		iVar5 = (int)x->_iAC;
 LAB_800465d8:
-		sprintf(&tempstr,__format,StrId);
+		sprintf(tempstr,__format,iVar5);
 		return;
 	}
 	__format = GetStr__Fi(StrId);
-	strcpy(&tempstr,__format);
+	strcpy(tempstr,__format);
 	return;
 }
 
@@ -5731,50 +5730,50 @@ void PrintItemMisc__FPC10ItemStruct(ItemStruct *x)
 	
 	uVar1 = x->_iMiscId;
 	if (uVar1 == '\x15') {
-		__src = GetStr__Fi(0x32a);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_PRESS___TO_READ_810);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 		if ((invflag != '\0') && (x->_iStatFlag == '\0')) {
-			__src = GetStr__Fi(0x35e);
+			__src = GetStr__Fi(STR_REQUIREMENTS_NOT_MET_862);
 			AddPanelString__FPCci(__src,1);
 		}
 		uVar1 = x->_iMiscId;
 	}
 	if (uVar1 == '\x16') {
-		__src = GetStr__Fi(0x32a);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_PRESS___TO_READ_810);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 		if ((invflag != '\0') && (x->_iStatFlag == '\0')) {
-			__src = GetStr__Fi(0x35e);
+			__src = GetStr__Fi(STR_REQUIREMENTS_NOT_MET_862);
 			AddPanelString__FPCci(__src,1);
 		}
 	}
 	if (((x->_iMiscId != 0) && (x->_iMiscId < 0x15)) ||
 		 ((x->IDidx == 0x14 && (s__800d1b54[0] != '\0')))) {
 		PrintItemOil__Fc(x->_iMiscId);
-		__src = GetStr__Fi(0x32b);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_PRESS___TO_USE_811);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if (x->_iMiscId == '\x18') {
-		__src = GetStr__Fi(0x32a);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_PRESS___TO_READ_810);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 		if ((invflag != '\0') && (x->_iStatFlag == '\0')) {
-			__src = GetStr__Fi(0x35e);
+			__src = GetStr__Fi(STR_REQUIREMENTS_NOT_MET_862);
 			AddPanelString__FPCci(__src,1);
 		}
 	}
 	uVar1 = x->_iMiscId;
 	if (uVar1 == '*') {
-		__src = GetStr__Fi(0x32c);
-		strcpy(&tempstr,__src);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_PRESS___TO_VIEW_812);
+		strcpy(tempstr,__src);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if (uVar1 == '+') {
-		__src = GetStr__Fi(0x247);
-		sprintf(&tempstr,__src,x->_ivalue);
-		AddPanelString__FPCci(&tempstr,1);
+		__src = GetStr__Fi(STR_LEVEL____I_583);
+		sprintf(tempstr,__src,x->_ivalue);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	return;
 }
@@ -5897,33 +5896,33 @@ void PrintItemDetails__FPC10ItemStruct(ItemStruct *x)
 	if (cVar8 == '\x01') {
 		sVar4 = x->_iMaxDur;
 		if ((int)sVar4 == 0xff) {
-			__format = GetStr__Fi(0xe1);
-			pcVar6 = GetStr__Fi(0x217);
-			sprintf(&tempstr,"%s:%i-%i  %s",__format,(int)x->_iMinDam,(int)x->_iMaxDam,pcVar6);
+			__format = GetStr__Fi(STR_DAMAGE_225);
+			pcVar6 = GetStr__Fi(STR_INDESTRUCTIBLE_535);
+			sprintf(tempstr,"%s:%i-%i  %s",__format,(int)x->_iMinDam,(int)x->_iMaxDam,pcVar6);
 		}
 		else {
-			__format = GetStr__Fi(0xe1);
-			sprintf(&tempstr,"%s:%i-%i  ",__format,(int)x->_iMinDam,(int)x->_iMaxDam);
-			__format = GetStr__Fi(0x11f);
+			__format = GetStr__Fi(STR_DAMAGE_225);
+			sprintf(tempstr,"%s:%i-%i  ",__format,(int)x->_iMinDam,(int)x->_iMaxDam);
+			__format = GetStr__Fi(STR_DUR___I__I____287);
 			sprintf(acStack64,__format,(int)x->_iDurability,(int)sVar4);
 			sVar7 = strlen(acStack64);
 			(&stack0xffffffbf)[sVar7] = 0;
-			strcat(&tempstr,acStack64);
+			strcat(tempstr,acStack64);
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 		cVar8 = x->_iClass;
 	}
 	if (cVar8 == '\x02') {
 		if (((x->_iMagical == '\x02') && (x->_iIdentified != '\0')) && (x->_iIName != 0x2af)) {
 			sVar4 = x->_iMaxDur;
 			if ((int)sVar4 == 0xff) {
-				__format = GetStr__Fi(0x217);
-				strcpy(&tempstr,__format);
+				__format = GetStr__Fi(STR_INDESTRUCTIBLE_535);
+				strcpy(tempstr,__format);
 			}
 			else {
-				__format = GetStr__Fi(0x11f);
-				strcpy(&tempstr,__format);
-				sVar7 = strlen(&tempstr);
+				__format = GetStr__Fi(STR_DUR___I__I____287);
+				strcpy(tempstr,__format);
+				sVar7 = strlen(tempstr);
 				sprintf((char *)(sVar7 + 0x800cea0a),(char *)&PTR_DAT_8011b8b0,(int)x->_iDurability,
 								(int)sVar4);
 			}
@@ -5931,34 +5930,34 @@ void PrintItemDetails__FPC10ItemStruct(ItemStruct *x)
 		else {
 			sVar4 = x->_iMaxDur;
 			if ((int)sVar4 == 0xff) {
-				__format = GetStr__Fi(0x2e);
-				sprintf(&tempstr,__format,(int)x->_iAC);
+				__format = GetStr__Fi(STR_ARMOR___I__INDESTRUCTIBLE_46);
+				sprintf(tempstr,__format,(int)x->_iAC);
 			}
 			else {
-				__format = GetStr__Fi(0x2d);
-				sprintf(&tempstr,__format,(int)x->_iAC,(int)x->_iDurability,(int)sVar4);
+				__format = GetStr__Fi(STR_ARMOR___I__DUR___I__I_45);
+				sprintf(tempstr,__format,(int)x->_iAC,(int)x->_iDurability,(int)sVar4);
 			}
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ((x->_iMiscId == '\x17') && (bVar1 = x->_iMaxCharges, bVar1 != 0)) {
-		__format = GetStr__Fi(0xe6);
-		sprintf(&tempstr,__format,(int)x->_iMinDam,(int)x->_iMaxDam,(int)x->_iDurability,
-						(int)x->_iMaxDur);
-		__format = GetStr__Fi(0xb2);
-		sprintf(&tempstr,__format,(uint)x->_iCharges,(uint)bVar1);
-		AddPanelString__FPCci(&tempstr,1);
+		__format = GetStr__Fi(STR_DAM___I__I__DUR___I__I_230);
+		sprintf(tempstr,__format,(int)x->_iMinDam,(int)x->_iMaxDam,(int)x->_iDurability,(int)x->_iMaxDur
+					 );
+		__format = GetStr__Fi(STR_CHARGES___I__I_178);
+		sprintf(tempstr,__format,(uint)x->_iCharges,(uint)bVar1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ((int)x->_iPrePower != -1) {
 		PrintItemPower__FcPC10ItemStruct(*(char *)&PL_Prefix[(int)x->_iPrePower].PLPower,x);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ((int)x->_iSufPower != -1) {
 		PrintItemPower__FcPC10ItemStruct(*(char *)&PL_Suffix[(int)x->_iSufPower].PLPower,x);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if (x->_iMagical == '\x02') {
-		__format = GetStr__Fi(0x4a3);
+		__format = GetStr__Fi(STR_UNIQUE_ITEM_1187);
 		AddPanelString__FPCci(__format,1);
 		uitemflag = '\x01';
 		pIVar13 = x;
@@ -5987,21 +5986,21 @@ void PrintItemDetails__FPC10ItemStruct(ItemStruct *x)
 	bVar2 = x->_iMinMag;
 	bVar3 = x->_iMinDex;
 	if ((uint)bVar1 + (uint)bVar2 + (uint)bVar3 != 0) {
-		__format = GetStr__Fi(0x35d);
-		strcpy(&tempstr,__format);
+		__format = GetStr__Fi(STR_REQUIRED__861);
+		strcpy(tempstr,__format);
 		if (bVar1 != 0) {
-			__format = GetStr__Fi(0x51c);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar1);
+			__format = GetStr__Fi(STR__S__I_STR_1308);
+			sprintf(tempstr,__format,tempstr,(uint)bVar1);
 		}
 		if (bVar2 != 0) {
-			__format = GetStr__Fi(0x51b);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar2);
+			__format = GetStr__Fi(STR__S__I_MAG_1307);
+			sprintf(tempstr,__format,tempstr,(uint)bVar2);
 		}
 		if (bVar3 != 0) {
-			__format = GetStr__Fi(0x51a);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar3);
+			__format = GetStr__Fi(STR__S__I_DEX_1306);
+			sprintf(tempstr,__format,tempstr,(uint)bVar3);
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	_pinfoflag[sel_data] = '\x01';
 	return;
@@ -6075,29 +6074,29 @@ void PrintItemDur__FPC10ItemStruct(ItemStruct *x)
 	if (cVar7 == '\x01') {
 		sVar4 = x->_iMaxDur;
 		if ((int)sVar4 == 0xff) {
-			__format = GetStr__Fi(0xe1);
-			pcVar5 = GetStr__Fi(0x217);
+			__format = GetStr__Fi(STR_DAMAGE_225);
+			pcVar5 = GetStr__Fi(STR_INDESTRUCTIBLE_535);
 			local_48 = (int)x->_iMaxDam;
-			sprintf(&tempstr,"%s:%i-%i  %s",__format,(int)x->_iMinDam,local_48,pcVar5);
+			sprintf(tempstr,"%s:%i-%i  %s",__format,(int)x->_iMinDam,local_48,pcVar5);
 		}
 		else {
-			__format = GetStr__Fi(0xe1);
+			__format = GetStr__Fi(STR_DAMAGE_225);
 			local_48 = (int)x->_iMaxDam;
-			sprintf(&tempstr,"%s:%i-%i  ",__format,(int)x->_iMinDam,local_48);
-			__format = GetStr__Fi(0x11f);
+			sprintf(tempstr,"%s:%i-%i  ",__format,(int)x->_iMinDam,local_48);
+			__format = GetStr__Fi(STR_DUR___I__I____287);
 			sprintf(acStack64,__format,(int)x->_iDurability,(int)sVar4);
 			sVar6 = strlen(acStack64);
 			(&stack0xffffffbf)[sVar6] = 0;
-			strcat(&tempstr,acStack64);
+			strcat(tempstr,acStack64);
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 		if ((x->_iMiscId == '\x17') && (bVar1 = x->_iMaxCharges, bVar1 != 0)) {
-			__format = GetStr__Fi(0xb2);
-			sprintf(&tempstr,__format,(uint)x->_iCharges,(uint)bVar1,local_48);
-			AddPanelString__FPCci(&tempstr,1);
+			__format = GetStr__Fi(STR_CHARGES___I__I_178);
+			sprintf(tempstr,__format,(uint)x->_iCharges,(uint)bVar1,local_48);
+			AddPanelString__FPCci(tempstr,1);
 		}
 		if (x->_iMagical != '\0') {
-			__format = GetStr__Fi(0x2bf);
+			__format = GetStr__Fi(STR_NOT_IDENTIFIED_703);
 			AddPanelString__FPCci(__format,1);
 		}
 		cVar7 = x->_iClass;
@@ -6105,26 +6104,26 @@ void PrintItemDur__FPC10ItemStruct(ItemStruct *x)
 	if (cVar7 == '\x02') {
 		sVar4 = x->_iMaxDur;
 		if ((int)sVar4 == 0xff) {
-			__format = GetStr__Fi(0x2e);
-			sprintf(&tempstr,__format,(int)x->_iAC);
+			__format = GetStr__Fi(STR_ARMOR___I__INDESTRUCTIBLE_46);
+			sprintf(tempstr,__format,(int)x->_iAC);
 		}
 		else {
-			__format = GetStr__Fi(0x2d);
-			sprintf(&tempstr,__format,(int)x->_iAC,(int)x->_iDurability,(int)sVar4);
+			__format = GetStr__Fi(STR_ARMOR___I__DUR___I__I_45);
+			sprintf(tempstr,__format,(int)x->_iAC,(int)x->_iDurability,(int)sVar4);
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 		if (x->_iMagical != '\0') {
-			__format = GetStr__Fi(0x2bf);
+			__format = GetStr__Fi(STR_NOT_IDENTIFIED_703);
 			AddPanelString__FPCci(__format,1);
 		}
 		if ((x->_iMiscId == '\x17') && (bVar1 = x->_iMaxCharges, bVar1 != 0)) {
-			__format = GetStr__Fi(0xb2);
-			sprintf(&tempstr,__format,(uint)x->_iCharges,(uint)bVar1);
-			AddPanelString__FPCci(&tempstr,1);
+			__format = GetStr__Fi(STR_CHARGES___I__I_178);
+			sprintf(tempstr,__format,(uint)x->_iCharges,(uint)bVar1);
+			AddPanelString__FPCci(tempstr,1);
 		}
 	}
 	if ((uint)(ushort)x->_itype - 0xc < 2) {
-		__format = GetStr__Fi(0x2bf);
+		__format = GetStr__Fi(STR_NOT_IDENTIFIED_703);
 		AddPanelString__FPCci(__format,1);
 	}
 	PrintItemMisc__FPC10ItemStruct(x);
@@ -6132,21 +6131,21 @@ void PrintItemDur__FPC10ItemStruct(ItemStruct *x)
 	bVar2 = x->_iMinMag;
 	bVar3 = x->_iMinDex;
 	if ((uint)bVar1 + (uint)bVar2 + (uint)bVar3 != 0) {
-		__format = GetStr__Fi(0x35d);
-		strcpy(&tempstr,__format);
+		__format = GetStr__Fi(STR_REQUIRED__861);
+		strcpy(tempstr,__format);
 		if (bVar1 != 0) {
-			__format = GetStr__Fi(0x51c);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar1);
+			__format = GetStr__Fi(STR__S__I_STR_1308);
+			sprintf(tempstr,__format,tempstr,(uint)bVar1);
 		}
 		if (bVar2 != 0) {
-			__format = GetStr__Fi(0x51b);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar2);
+			__format = GetStr__Fi(STR__S__I_MAG_1307);
+			sprintf(tempstr,__format,tempstr,(uint)bVar2);
 		}
 		if (bVar3 != 0) {
-			__format = GetStr__Fi(0x51a);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar3);
+			__format = GetStr__Fi(STR__S__I_DEX_1306);
+			sprintf(tempstr,__format,tempstr,(uint)bVar3);
 		}
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	_pinfoflag[sel_data] = '\x01';
 	return;
@@ -6211,7 +6210,7 @@ LAB_800474fc:
 	}
 	else {
 		if ((Spell == 0x17) || (Spell == 10)) goto LAB_800474fc;
-		if (((Spell == 0x20) || (Spell == 0x22)) && ((&plr)[pnum ^ 1].plractive != '\0')) {
+		if (((Spell == 0x20) || (Spell == 0x22)) && (plr[pnum ^ 1].plractive != '\0')) {
 			return;
 		}
 	}
@@ -6223,25 +6222,25 @@ LAB_800474fc:
 	else {
 		invflag = '\0';
 	}
-	(&plr)[pnum]._pSplType = '\x02';
-	(&plr)[pnum]._pSpell = (char)Spell;
+	plr[pnum]._pSplType = '\x02';
+	plr[pnum]._pSpell = (char)Spell;
 	pvVar1 = TargetingSpell__Fi(Spell);
 	if (pvVar1 == (void *)0x0) {
-		cx = (int)(&plr)[pnum]._px + (int)(&offset_x)[(int)(&plr)[pnum]._pdir];
-		cy = (int)(&plr)[pnum]._py + (int)(&offset_y)[(int)(&plr)[pnum]._pdir];
+		cx = (int)plr[pnum]._px + (int)offset_x[(int)plr[pnum]._pdir];
+		cy = (int)plr[pnum]._py + (int)offset_y[(int)plr[pnum]._pdir];
 		if ((FePlayerNo != 0) || ((Spell != 0x22 && (Spell != 0x20)))) {
 			if ((Spell == 0x22) || (Spell == 0x20)) {
 				uVar2 = pnum ^ 1;
-				cx = (int)(&plr)[uVar2]._px;
-				cy = (int)(&plr)[uVar2]._py;
+				cx = (int)plr[uVar2]._px;
+				cy = (int)plr[uVar2]._py;
 				(&_pcursplr)[sel_data] = (char)uVar2;
 			}
-			StartSpell__FP12PlayerStructiii(&plr + pnum,0,cx,cy);
+			StartSpell__FP12PlayerStructiii(plr + pnum,0,cx,cy);
 		}
 	}
 	else {
-		(&plr)[pnum]._pTSplType = '\x02';
-		(&plr)[pnum]._pTSpell = (char)Spell;
+		plr[pnum]._pTSplType = '\x02';
+		plr[pnum]._pTSpell = (char)Spell;
 		InitTargetCursor__Fi(pnum);
 	}
 	return;
@@ -6285,76 +6284,76 @@ void UseItem__Fiii(int p,int Mid,int spl)
 	
 	switch(Mid) {
 	case 2:
-		lVar2 = (&plr)[p]._pMaxHPBase;
+		lVar2 = plr[p]._pMaxHPBase;
 		drawhpflag = '\x01';
-		(&plr)[p]._pHitPoints = (&plr)[p]._pMaxHP;
-		(&plr)[p]._pHPBase = lVar2;
+		plr[p]._pHitPoints = plr[p]._pMaxHP;
+		plr[p]._pHPBase = lVar2;
 		break;
 	case 3:
 	case 0x1c:
-		l = (&plr)[p]._pMaxHP;
+		l = plr[p]._pMaxHP;
 		lVar2 = ENG_random__Fl(l >> 8);
 		l = lVar2 + (l >> 9);
 		iVar7 = l * 0x40;
-		if ((&plr)[p]._pClass == '\0') {
+		if (plr[p]._pClass == '\0') {
 			iVar7 = l * 0x80;
 		}
-		if ((&plr)[p]._pClass == '\x01') {
+		if (plr[p]._pClass == '\x01') {
 			iVar7 = iVar7 + (iVar7 >> 1);
 		}
-		iVar3 = (&plr)[p]._pMaxHP;
-		l = (&plr)[p]._pHitPoints + iVar7;
-		(&plr)[p]._pHitPoints = l;
+		iVar3 = plr[p]._pMaxHP;
+		l = plr[p]._pHitPoints + iVar7;
+		plr[p]._pHitPoints = l;
 		if (iVar3 < l) {
-			(&plr)[p]._pHitPoints = iVar3;
+			plr[p]._pHitPoints = iVar3;
 		}
-		l = (&plr)[p]._pMaxHPBase;
-		iVar7 = (&plr)[p]._pHPBase + iVar7;
-		(&plr)[p]._pHPBase = iVar7;
+		l = plr[p]._pMaxHPBase;
+		iVar7 = plr[p]._pHPBase + iVar7;
+		plr[p]._pHPBase = iVar7;
 		if (l < iVar7) {
-			(&plr)[p]._pHPBase = l;
+			plr[p]._pHPBase = l;
 		}
 		drawhpflag = '\x01';
 		break;
 	case 6:
-		l = (&plr)[p]._pMaxMana >> 8;
+		l = plr[p]._pMaxMana >> 8;
 		if (l < 0) {
 			l = -l;
 		}
 		lVar2 = ENG_random__Fl(l);
 		iVar7 = lVar2 + (l >> 1);
 		l = iVar7 * 0x40;
-		if ((&plr)[p]._pClass == '\x02') {
+		if (plr[p]._pClass == '\x02') {
 			l = iVar7 * 0x80;
 		}
-		if ((&plr)[p]._pClass == '\x01') {
+		if (plr[p]._pClass == '\x01') {
 			l = l + (l >> 1);
 		}
 		if (l < 1) {
 			l = 1;
 		}
-		if (((&plr)[p]._pIFlags & 0x8000000U) != 0) {
+		if ((plr[p]._pIFlags & 0x8000000U) != 0) {
 			return;
 		}
-		iVar3 = (&plr)[p]._pMaxMana;
-		iVar7 = (&plr)[p]._pMana + l;
-		(&plr)[p]._pMana = iVar7;
+		iVar3 = plr[p]._pMaxMana;
+		iVar7 = plr[p]._pMana + l;
+		plr[p]._pMana = iVar7;
 		if (iVar3 < iVar7) {
-			(&plr)[p]._pMana = iVar3;
+			plr[p]._pMana = iVar3;
 		}
-		iVar7 = (&plr)[p]._pMaxManaBase;
-		l = (&plr)[p]._pManaBase + l;
-		(&plr)[p]._pManaBase = l;
+		iVar7 = plr[p]._pMaxManaBase;
+		l = plr[p]._pManaBase + l;
+		plr[p]._pManaBase = l;
 		if (iVar7 < l) {
-			(&plr)[p]._pManaBase = iVar7;
+			plr[p]._pManaBase = iVar7;
 		}
 		goto LAB_80047a48;
 	case 7:
-		if (((&plr)[p]._pIFlags & 0x8000000U) == 0) {
-			lVar2 = (&plr)[p]._pMaxManaBase;
+		if ((plr[p]._pIFlags & 0x8000000U) == 0) {
+			lVar2 = plr[p]._pMaxManaBase;
 			drawmanaflag = '\x01';
-			(&plr)[p]._pMana = (&plr)[p]._pMaxMana;
-			(&plr)[p]._pManaBase = lVar2;
+			plr[p]._pMana = plr[p]._pMaxMana;
+			plr[p]._pManaBase = lVar2;
 		}
 		break;
 	case 10:
@@ -6370,87 +6369,87 @@ void UseItem__Fiii(int p,int Mid,int spl)
 		l = 1;
 		goto LAB_80047cdc;
 	case 0x12:
-		l = (&plr)[p]._pMaxHP;
+		l = plr[p]._pMaxHP;
 		lVar2 = ENG_random__Fl(l >> 8);
 		l = lVar2 + (l >> 9);
 		iVar7 = l * 0x40;
-		if ((&plr)[p]._pClass == '\0') {
+		if (plr[p]._pClass == '\0') {
 			iVar7 = l * 0x80;
 		}
-		if ((&plr)[p]._pClass == '\x01') {
+		if (plr[p]._pClass == '\x01') {
 			iVar7 = iVar7 + (iVar7 >> 1);
 		}
-		iVar3 = (&plr)[p]._pMaxHP;
-		l = (&plr)[p]._pHitPoints + iVar7;
-		(&plr)[p]._pHitPoints = l;
+		iVar3 = plr[p]._pMaxHP;
+		l = plr[p]._pHitPoints + iVar7;
+		plr[p]._pHitPoints = l;
 		if (iVar3 < l) {
-			(&plr)[p]._pHitPoints = iVar3;
+			plr[p]._pHitPoints = iVar3;
 		}
-		l = (&plr)[p]._pMaxHPBase;
-		iVar7 = (&plr)[p]._pHPBase + iVar7;
-		(&plr)[p]._pHPBase = iVar7;
+		l = plr[p]._pMaxHPBase;
+		iVar7 = plr[p]._pHPBase + iVar7;
+		plr[p]._pHPBase = iVar7;
 		if (l < iVar7) {
-			(&plr)[p]._pHPBase = l;
+			plr[p]._pHPBase = l;
 		}
-		l = (&plr)[p]._pMaxMana;
+		l = plr[p]._pMaxMana;
 		drawhpflag = '\x01';
 		lVar2 = ENG_random__Fl(l >> 8);
 		iVar7 = lVar2 + (l >> 9);
 		l = iVar7 * 0x40;
-		if ((&plr)[p]._pClass == '\x02') {
+		if (plr[p]._pClass == '\x02') {
 			l = iVar7 * 0x80;
 		}
-		if ((&plr)[p]._pClass == '\x01') {
+		if (plr[p]._pClass == '\x01') {
 			l = l + (l >> 1);
 		}
-		if (((&plr)[p]._pIFlags & 0x8000000U) == 0) {
-			iVar3 = (&plr)[p]._pMaxMana;
-			iVar7 = (&plr)[p]._pMana + l;
-			(&plr)[p]._pMana = iVar7;
+		if ((plr[p]._pIFlags & 0x8000000U) == 0) {
+			iVar3 = plr[p]._pMaxMana;
+			iVar7 = plr[p]._pMana + l;
+			plr[p]._pMana = iVar7;
 			if (iVar3 < iVar7) {
-				(&plr)[p]._pMana = iVar3;
+				plr[p]._pMana = iVar3;
 			}
-			iVar7 = (&plr)[p]._pMaxManaBase;
-			l = (&plr)[p]._pManaBase + l;
-			(&plr)[p]._pManaBase = l;
+			iVar7 = plr[p]._pMaxManaBase;
+			l = plr[p]._pManaBase + l;
+			plr[p]._pManaBase = l;
 			if (iVar7 < l) {
-				(&plr)[p]._pManaBase = iVar7;
+				plr[p]._pManaBase = iVar7;
 			}
 			drawmanaflag = '\x01';
 		}
 		break;
 	case 0x13:
-		lVar2 = (&plr)[p]._pMaxHPBase;
-		(&plr)[p]._pHitPoints = (&plr)[p]._pMaxHP;
-		uVar5 = (&plr)[p]._pIFlags;
+		lVar2 = plr[p]._pMaxHPBase;
+		plr[p]._pHitPoints = plr[p]._pMaxHP;
+		uVar5 = plr[p]._pIFlags;
 		drawhpflag = '\x01';
-		(&plr)[p]._pHPBase = lVar2;
+		plr[p]._pHPBase = lVar2;
 		if ((uVar5 & 0x8000000) == 0) {
-			lVar2 = (&plr)[p]._pMaxManaBase;
+			lVar2 = plr[p]._pMaxManaBase;
 			drawmanaflag = '\x01';
-			(&plr)[p]._pMana = (&plr)[p]._pMaxMana;
-			(&plr)[p]._pManaBase = lVar2;
+			plr[p]._pMana = plr[p]._pMaxMana;
+			plr[p]._pManaBase = lVar2;
 		}
 		break;
 	case 0x15:
 		if ((&spelldata)[spl].sTargeted != '\0') goto LAB_80047c2c;
 		ClrPlrPath__Fi(p);
-		(&plr)[p]._pTSplType = '\x04';
+		plr[p]._pTSplType = '\x04';
 LAB_80047c48:
-		(&plr)[p]._pSpell = (char)spl;
-		(&plr)[p]._pSplFrom = '\x03';
-		(&plr)[p].destParam1 = (char)cursmx;
-		(&plr)[p].destParam2 = (char)cursmy;
+		plr[p]._pSpell = (char)spl;
+		plr[p]._pSplFrom = '\x03';
+		plr[p].destParam1 = (char)cursmx;
+		plr[p].destParam2 = (char)cursmy;
 		goto LAB_80047c74;
 	case 0x16:
 		if ((&spelldata)[spl].sTargeted == '\0') {
 			ClrPlrPath__Fi(p);
-			(&plr)[p]._pSplType = '\x04';
+			plr[p]._pSplType = '\x04';
 			goto LAB_80047c48;
 		}
 LAB_80047c2c:
-		(&plr)[p]._pTSpell = (char)spl;
-		(&plr)[p]._pTSplType = '\x04';
+		plr[p]._pTSpell = (char)spl;
+		plr[p]._pTSplType = '\x04';
 LAB_80047c74:
 		CastScroll__Fii(p,spl);
 		break;
@@ -6467,25 +6466,25 @@ LAB_80047c74:
 			}
 			uVar5 = 1 << (uVar5 & 0x1f);
 		}
-		uVar4 = *(uint *)((int)&(&plr)[p]._pMemSpells + 4);
-		l = (int)&(&plr)[p]._pmode + spl;
-		*(uint *)&(&plr)[p]._pMemSpells = *(uint *)&(&plr)[p]._pMemSpells | uVar5;
-		*(uint *)((int)&(&plr)[p]._pMemSpells + 4) = uVar4 | uVar6;
+		uVar4 = *(uint *)((int)&plr[p]._pMemSpells + 4);
+		l = (int)&plr[p]._pmode + spl;
+		*(uint *)&plr[p]._pMemSpells = *(uint *)&plr[p]._pMemSpells | uVar5;
+		*(uint *)((int)&plr[p]._pMemSpells + 4) = uVar4 | uVar6;
 		cVar1 = *(char *)(l + 0x71);
 		if (cVar1 < '\x0f') {
 			*(char *)(l + 0x71) = cVar1 + '\x01';
 		}
-		iVar7 = (&plr)[p]._pMaxMana;
-		l = (&plr)[p]._pMana + (uint)(&spelldata)[spl].sManaCost * 0x40;
-		(&plr)[p]._pMana = l;
+		iVar7 = plr[p]._pMaxMana;
+		l = plr[p]._pMana + (uint)(&spelldata)[spl].sManaCost * 0x40;
+		plr[p]._pMana = l;
 		if (iVar7 < l) {
-			(&plr)[p]._pMana = iVar7;
+			plr[p]._pMana = iVar7;
 		}
-		iVar7 = (&plr)[p]._pMaxManaBase;
-		l = (&plr)[p]._pManaBase + (uint)(&spelldata)[spl].sManaCost * 0x40;
-		(&plr)[p]._pManaBase = l;
+		iVar7 = plr[p]._pMaxManaBase;
+		l = plr[p]._pManaBase + (uint)(&spelldata)[spl].sManaCost * 0x40;
+		plr[p]._pManaBase = l;
 		if (iVar7 < l) {
-			(&plr)[p]._pManaBase = iVar7;
+			plr[p]._pManaBase = iVar7;
 		}
 		if (p == myplr) {
 			CalcPlrBookVals__Fi(p);
@@ -6532,9 +6531,9 @@ LAB_80047cdc:
 uchar StoreStatOk__FP10ItemStruct(ItemStruct *h)
 
 {
-	return (uchar)((int)(uint)h->_iMinDex <= (int)(&plr)[myplr]._pDexterity &&
-								((int)(uint)h->_iMinMag <= (int)(&plr)[myplr]._pMagic &&
-								(int)(uint)h->_iMinStr <= (int)(&plr)[myplr]._pStrength));
+	return (uchar)((int)(uint)h->_iMinDex <= (int)plr[myplr]._pDexterity &&
+								((int)(uint)h->_iMinMag <= (int)plr[myplr]._pMagic &&
+								(int)(uint)h->_iMinStr <= (int)plr[myplr]._pStrength));
 }
 
 
@@ -7333,27 +7332,27 @@ void DrawUniqueInfo__Fv(void)
 	
 	iVar2 = (int)curruitem._iUid;
 	PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower1,&curruitem);
-	AddPanelString__FPCci(&tempstr,1);
+	AddPanelString__FPCci(tempstr,1);
 	cVar1 = UniqueItemList[iVar2].UINumPL;
 	if ('\x01' < cVar1) {
 		PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower2,&curruitem);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ('\x02' < cVar1) {
 		PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower3,&curruitem);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ('\x03' < cVar1) {
 		PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower4,&curruitem);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ('\x04' < cVar1) {
 		PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower5,&curruitem);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	if ('\x05' < cVar1) {
 		PrintItemPower__FcPC10ItemStruct(UniqueItemList[iVar2].UIPower6,&curruitem);
-		AddPanelString__FPCci(&tempstr,1);
+		AddPanelString__FPCci(tempstr,1);
 	}
 	return;
 }
@@ -7428,12 +7427,12 @@ LAB_80049384:
 		break;
 	case '\x17':
 		if (ItemNo == 0x3ca) {
-			__src = GetStr__Fi(0x3ca);
+			__src = GetStr__Fi(STR_SHORT_STAFF_OF_CHARGED_BOLT_970);
 			__dest = local_d8;
 		}
 		else {
 			if (ItemPtr->_iSpell == '\0') goto LAB_80049384;
-			__src = GetStr__Fi(0x402);
+			__src = GetStr__Fi(STR_STAFF_1026);
 			strcat(local_d8,__src);
 			__src = GetStr__Fi((&spelldata)[(int)ItemPtr->_iSpell].sNameText);
 			__dest = local_98;
@@ -7441,7 +7440,7 @@ LAB_80049384:
 		strcpy(__dest,__src);
 		goto LAB_80049398;
 	case '\x18':
-		__src = GetStr__Fi(0x7c);
+		__src = GetStr__Fi(STR_BOOK_OF__124);
 		strcat(local_d8,__src);
 		LVar1 = LANG_GetLang__Fv();
 		if (LVar1 != LANG_ENGLISH) {
@@ -7461,7 +7460,7 @@ LAB_80049398:
 		}
 		strcat(OutStr,local_d8);
 		if (local_98[0] == '\0') break;
-		__format = (int **)GetStr__Fi(0x516);
+		__format = (int **)GetStr__Fi(STR__S_OF__S_1302);
 		goto LAB_8004953c;
 	case LANG_FRENCH:
 		strcat(OutStr,local_d8);
@@ -7492,13 +7491,13 @@ LAB_8004953c:
 	case LANG_JAP:
 		if (local_118[0] != '\0') {
 			strcat(OutStr,local_118);
-			__src = GetStr__Fi(0x2b1);
+			__src = GetStr__Fi(STR__689);
 			strcat(OutStr,__src);
 		}
 		strcat(OutStr,local_d8);
 		strcpy(acStack88,OutStr);
 		if (local_98[0] != '\0') {
-			__src = GetStr__Fi(0x2e0);
+			__src = GetStr__Fi(STR_OF_736);
 			sprintf(OutStr,"%s %s %s",acStack88,__src,local_98);
 		}
 	}

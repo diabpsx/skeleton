@@ -147,21 +147,21 @@ LAB_800780ac:
 	WorldY = y1 + iVar4;
 	WorldToOffset__Fiii((int)this->pnum,WorldX,WorldY);
 	pnum = (int)(char)(this->pnum ^ 1);
-	WorldToOffset__Fiii(pnum,(&plr)[pnum].WorldX + iVar3,(&plr)[pnum].WorldY + iVar4);
+	WorldToOffset__Fiii(pnum,plr[pnum].WorldX + iVar3,plr[pnum].WorldY + iVar4);
 	iVar3 = (int)(char)(this->pnum ^ 1);
-	if ((&plr)[iVar3].plractive == '\0') {
-		(&plr)[iVar3]._pdir = (&plr)[iVar3]._pdir + '\x01';
+	if (plr[iVar3].plractive == '\0') {
+		plr[iVar3]._pdir = plr[iVar3]._pdir + '\x01';
 		iVar3 = (int)(char)(this->pnum ^ 1);
-		(&plr)[iVar3]._pdir = (&plr)[iVar3]._pdir & 7;
+		plr[iVar3]._pdir = plr[iVar3]._pdir & 7;
 	}
 	pPVar2 = this->player;
 	ChangeLightXY__Fiii((int)pPVar2->_plid,(int)pPVar2->_px,(int)pPVar2->_py);
 	pPVar2 = this->player;
 	ChangeVisionXY__Fiii((int)pPVar2->_pvid,(int)pPVar2->_px,(int)pPVar2->_py);
 	iVar3 = (int)this->pnum;
-	ChangeLightXY__Fiii((int)(&plr)[iVar3]._plid,(int)(&plr)[iVar3]._px,(int)(&plr)[iVar3]._py);
+	ChangeLightXY__Fiii((int)plr[iVar3]._plid,(int)plr[iVar3]._px,(int)plr[iVar3]._py);
 	iVar3 = (int)this->pnum;
-	ChangeVisionXY__Fiii((int)(&plr)[iVar3]._pvid,(int)(&plr)[iVar3]._px,(int)(&plr)[iVar3]._py);
+	ChangeVisionXY__Fiii((int)plr[iVar3]._pvid,(int)plr[iVar3]._px,(int)plr[iVar3]._py);
 	PM_ChangeLightOff__Fi((int)this->pnum);
 	if (((x1 != WorldX) || (y1 != WorldY)) && ((int)this->player->_pmode < 3)) {
 		iVar3 = GetDirection__Fiiii(x1,y1,WorldX,WorldY);
@@ -169,7 +169,7 @@ LAB_800780ac:
 		StartStand__Fii((int)this->pnum,(int)(char)iVar3);
 	}
 	if ((gplayer != (CPlayer *)0x0) && (Bg != (CBlocks *)0x0)) {
-		SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(gplayer,&plr + (int)this->pnum,Bg);
+		SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(gplayer,plr + (int)this->pnum,Bg);
 		MoveToScrollTarget__7CBlocks(Bg);
 	}
 	return;
@@ -243,12 +243,12 @@ void WorldToOffset__Fiii(int pnum,int WorldX,int WorldY)
 	if (WorldY < 0) {
 		WorldY = 0;
 	}
-	(&plr)[pnum]._px = (short)(WorldX >> 3);
-	(&plr)[pnum]._py = (short)(WorldY >> 3);
-	(&plr)[pnum]._pxoff = (bVar1 - bVar2) * '\x04';
-	(&plr)[pnum].WorldX = WorldX;
-	(&plr)[pnum].WorldY = WorldY;
-	(&plr)[pnum]._pyoff = (bVar1 + bVar2 + -8) * '\x02';
+	plr[pnum]._px = (short)(WorldX >> 3);
+	plr[pnum]._py = (short)(WorldY >> 3);
+	plr[pnum]._pxoff = (bVar1 - bVar2) * '\x04';
+	plr[pnum].WorldX = WorldX;
+	plr[pnum].WorldY = WorldY;
+	plr[pnum]._pyoff = (bVar1 + bVar2 + -8) * '\x02';
 	return;
 }
 
@@ -344,7 +344,7 @@ char pad_UpIsUpRight__Fic(int pval,char other)
 GamePad * __7GamePadi(GamePad *this,int player_num)
 
 {
-	this->player = &plr + player_num;
+	this->player = plr + player_num;
 	this->pad_up_button = 0;
 	this->pad_up_action = (_func_16 *)0x0;
 	this->pnum = (char)player_num;
@@ -403,8 +403,6 @@ void SetMoveStyle__7GamePadc(GamePad *this,char style_num)
 	/* end block 2 */
 	// End Line: 927
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetDownButton__7GamePadiPFi_v
 							 (GamePad *this,int pad_val,TDRFuncPtr_SetDownButton__7GamePadiPFi_v2func func)
 
@@ -433,8 +431,6 @@ void SetDownButton__7GamePadiPFi_v
 		// Start line: 950
 	/* end block 2 */
 	// End Line: 951
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetComboDownButton__7GamePadiPFi_v
 							 (GamePad *this,int pad_val,TDRFuncPtr_SetComboDownButton__7GamePadiPFi_v2func func)
@@ -701,8 +697,6 @@ LAB_80078aa8:
 	/* end block 2 */
 	// End Line: 1320
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int GetActionButton__7GamePadPFi_v
 							(GamePad *this,TDRFuncPtr_GetActionButton__7GamePadPFi_v1func func)
 
@@ -747,8 +741,6 @@ int GetActionButton__7GamePadPFi_v
 		// Start line: 1371
 	/* end block 2 */
 	// End Line: 1372
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetUpAction__7GamePadPFi_vT1
 							 (GamePad *this,TDRFuncPtr_SetUpAction__7GamePadPFi_vT11func func,
@@ -1349,8 +1341,8 @@ void * newDirOk__7GamePadi(GamePad *this,int dir)
 	int iVar4;
 	undefined *puVar5;
 	
-	cVar1 = (&offset_x)[dir];
-	cVar2 = (&offset_y)[dir];
+	cVar1 = offset_x[dir];
+	cVar2 = offset_y[dir];
 	uVar3 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)cVar1,
 														(int)this->player->_py + (int)cVar2);
 	puVar5 = &DAT_00000001;
@@ -1459,21 +1451,19 @@ int CheckDiagBodge__7GamePadi(GamePad *this,int dir)
 	pvVar9 = newDirOk__7GamePadi(this,dir_00);
 	pvVar10 = newDirOk__7GamePadi(this,dir);
 	uVar12 = dir_01 - 1 & 7;
-	uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)sVar1 + (int)(&offset_x)[uVar12],
-														(int)sVar2 + (int)(&offset_y)[uVar12]);
+	uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)sVar1 + (int)offset_x[uVar12],
+														(int)sVar2 + (int)offset_y[uVar12]);
 	if (uVar5 == '\0') {
 		uVar12 = CheckDirs__7GamePadiii
-											 (this,uVar12 - 1 & 7,iVar11 + (int)(&offset_x)[dir],
-												iVar7 + (int)(&offset_y)[dir]);
+											 (this,uVar12 - 1 & 7,iVar11 + (int)offset_x[dir],iVar7 + (int)offset_y[dir]);
 		bVar3 = ~uVar12 != 0;
 	}
 	uVar12 = dir_00 + 1 & 7;
-	uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)sVar1 + (int)(&offset_x)[uVar12],
-														(int)sVar2 + (int)(&offset_y)[uVar12]);
+	uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)sVar1 + (int)offset_x[uVar12],
+														(int)sVar2 + (int)offset_y[uVar12]);
 	if (uVar5 == '\0') {
 		uVar12 = CheckDirs__7GamePadiii
-											 (this,uVar12 + 1 & 7,iVar11 + (int)(&offset_x)[dir],
-												iVar7 + (int)(&offset_y)[dir]);
+											 (this,uVar12 + 1 & 7,iVar11 + (int)offset_x[dir],iVar7 + (int)offset_y[dir]);
 		bVar4 = ~uVar12 != 0;
 	}
 	if (pvVar10 == (void *)0x0) {
@@ -1595,8 +1585,8 @@ int CheckIsoBodge__7GamePadi(GamePad *this,int dir)
 	
 	uVar9 = dir - 1U & 7;
 	pPVar8 = this->player;
-	cVar1 = (&offset_x)[dir];
-	cVar2 = (&offset_y)[dir];
+	cVar1 = offset_x[dir];
+	cVar2 = offset_y[dir];
 	dir_00 = uVar9 - 1 & 7;
 	uVar10 = dir + 1U & 7;
 	dir_01 = uVar10 + 1 & 7;
@@ -1612,20 +1602,20 @@ int CheckIsoBodge__7GamePadi(GamePad *this,int dir)
 			return dir;
 		}
 		bVar3 = false;
-		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[uVar9],
-															(int)this->player->_py + (int)(&offset_y)[uVar9]);
+		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[uVar9],
+															(int)this->player->_py + (int)offset_y[uVar9]);
 		if (uVar5 != '\0') {
-			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[dir_00],
-																(int)this->player->_py + (int)(&offset_y)[dir_00]);
+			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[dir_00],
+																(int)this->player->_py + (int)offset_y[dir_00]);
 			bVar3 = uVar5 != '\0';
 		}
 		bVar4 = false;
 		if (!bVar3) {
-			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[uVar10],
-																(int)this->player->_py + (int)(&offset_y)[uVar10]);
+			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[uVar10],
+																(int)this->player->_py + (int)offset_y[uVar10]);
 			if (uVar5 != '\0') {
-				uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[dir_01],
-																	(int)this->player->_py + (int)(&offset_y)[dir_01]);
+				uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[dir_01],
+																	(int)this->player->_py + (int)offset_y[dir_01]);
 				bVar4 = uVar5 != '\0';
 			}
 			dir_00 = dir_01;
@@ -1634,8 +1624,8 @@ int CheckIsoBodge__7GamePadi(GamePad *this,int dir)
 				return wx;
 			}
 		}
-		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[dir_00],
-															(int)this->player->_py + (int)(&offset_y)[dir_00]);
+		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[dir_00],
+															(int)this->player->_py + (int)offset_y[dir_00]);
 		if (uVar5 != '\0') {
 			return dir_00;
 		}
@@ -1651,8 +1641,8 @@ int CheckIsoBodge__7GamePadi(GamePad *this,int dir)
 			if (wx != 2) {
 				return dir;
 			}
-			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[uVar10],
-																(int)this->player->_py + (int)(&offset_y)[uVar10]);
+			uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[uVar10],
+																(int)this->player->_py + (int)offset_y[uVar10]);
 			if (uVar5 == '\0') {
 				wx = CheckDirs__7GamePadi(this,dir_01);
 				if (wx == -1) {
@@ -1662,8 +1652,8 @@ int CheckIsoBodge__7GamePadi(GamePad *this,int dir)
 			}
 			return dir;
 		}
-		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)(&offset_x)[uVar9],
-															(int)this->player->_py + (int)(&offset_y)[uVar9]);
+		uVar5 = PosOkPlayer__Fiii((int)this->pnum,(int)this->player->_px + (int)offset_x[uVar9],
+															(int)this->player->_py + (int)offset_y[uVar9]);
 		if (uVar5 != '\0') {
 			return dir;
 		}
@@ -1726,10 +1716,10 @@ int CheckBodge__7GamePadi(GamePad *this,int dir)
 	int x;
 	int y;
 	
-	x = (int)this->player->_px + (int)(&offset_x)[dir];
-	y = (int)this->player->_py + (int)(&offset_y)[dir];
+	x = (int)this->player->_px + (int)offset_x[dir];
+	y = (int)this->player->_py + (int)offset_y[dir];
 	if ((leveltype == '\0') ||
-		 (((&dung_map)[y + x * 0x70].dMonster < 1 && (uVar3 = IsDplayer__Fii(x,y), uVar3 == '\0')))) {
+		 ((dung_map[y + x * 0x70].dMonster < 1 && (uVar3 = IsDplayer__Fii(x,y), uVar3 == '\0')))) {
 		switch(dir) {
 		case 0:
 		case 2:
@@ -1746,8 +1736,8 @@ int CheckBodge__7GamePadi(GamePad *this,int dir)
 	}
 	else {
 		pPVar4 = this->player;
-		cVar1 = (&offset_x)[dir];
-		cVar2 = (&offset_y)[dir];
+		cVar1 = offset_x[dir];
+		cVar2 = offset_y[dir];
 		pPVar4->_pdir = (char)dir;
 		uVar3 = PosOkPlayer__Fiii((int)this->pnum,pPVar4->WorldX + (int)cVar1 >> 3,
 															pPVar4->WorldY + (int)cVar2 >> 3);
@@ -1820,17 +1810,17 @@ void walk__7GamePadi(GamePad *this,int cmd)
 			iVar7 = (int)(char)(this->pnum ^ 1);
 			if (iVar6 != -1) {
 				pPVar8 = this->player;
-				if (((pPVar8->plractive != '\0') && ((&plr)[iVar7].plractive != '\0')) &&
+				if (((pPVar8->plractive != '\0') && (plr[iVar7].plractive != '\0')) &&
 					 (uVar4 = ChkPlrOffsets__Fiiii
-															(pPVar8->WorldX + (int)(&offset_x)[iVar6],
-															 pPVar8->WorldY + (int)(&offset_y)[iVar6],(&plr)[iVar7].WorldX,
-															 (&plr)[iVar7].WorldY), uVar4 == '\0')) {
+															(pPVar8->WorldX + (int)offset_x[iVar6],
+															 pPVar8->WorldY + (int)offset_y[iVar6],plr[iVar7].WorldX,
+															 plr[iVar7].WorldY), uVar4 == '\0')) {
 					iVar6 = -1;
 				}
 				if (iVar6 != -1) {
 					pPVar8 = this->player;
-					cVar1 = (&offset_x)[iVar6];
-					cVar2 = (&offset_y)[iVar6];
+					cVar1 = offset_x[iVar6];
+					cVar2 = offset_y[iVar6];
 					if ((iVar6 != (int)pPVar8->_pdir) || (pPVar8->_pmode == PM_STAND)) {
 						NewPlrAnim__Fiiii((int)this->pnum,8,pPVar8->_pWFrames,0);
 						this->player->_pVar8 = 0;
@@ -1965,8 +1955,8 @@ void check_around_player__7GamePad(GamePad *this)
 					ClearPanel__Fv();
 					ItemPtr = this->player->SpdList + _pcurr_inv[sel_data];
 					__src = MakeItemStr__FP10ItemStructUsUs(ItemPtr,ItemPtr->_iIName,0x100);
-					strcpy(&tempstr,__src);
-					strcpy(_infostr + sel_data * 0x100,&tempstr);
+					strcpy(tempstr,__src);
+					strcpy(_infostr + sel_data * 0x100,tempstr);
 					_infoclr[sel_data] = '\0';
 					if (ItemPtr->_iMagical == '\x01') {
 						_infoclr[sel_data] = '\x01';
@@ -2100,10 +2090,10 @@ void show_combos__7GamePad(GamePad *this)
 					__format = "%s - %c + %c";
 					pcVar4 = (char *)(int)pad_txt[n].font_num;
 				}
-				sprintf(&tempstr,__format,pcVar3,(int)cVar2,pcVar4);
+				sprintf(tempstr,__format,pcVar3,(int)cVar2,pcVar4);
 				n = Y + 0x10;
 				Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-									(&MediumFont,0,Y,&tempstr,(uint)(cVar1 != '\0') << 1,&local_28,(uint)WHITER,
+									(&MediumFont,0,Y,tempstr,(uint)(cVar1 != '\0') << 1,&local_28,(uint)WHITER,
 									 (uint)WHITEG,(uint)WHITEG);
 			}
 			iVar6 = iVar6 + 1;
@@ -2328,18 +2318,18 @@ void Handle__7GamePad(GamePad *this)
 									 (this->player->_pmode == PM_STAND)) {
 									automapmoved = '\x01';
 									if ((uVar5 & 1) != 0) {
-										FUN_80161f68();
+										AutomapUp__Fv();
 									}
 									if ((uVar5 & 2) != 0) {
-										FUN_80161f88();
+										AutomapDown__Fv();
 									}
 									if ((uVar5 & 4) != 0) {
-										FUN_80161fa8();
+										AutomapLeft__Fv();
 									}
 									if ((uVar5 & 8) == 0) {
 										return;
 									}
-									FUN_80161fc8();
+									AutomapRight__Fv();
 									return;
 								}
 								automapmoved = '\0';
@@ -2657,14 +2647,14 @@ void InitGamePadVars__Fv(void)
 	CHAR_00h_8011b76d = -1;
 	gbActivePlayers = '\0';
 	if (FePlayerNo == 0) {
-		PlayerStruct_800dbf20.plractive = '\0';
+		plr[1].plractive = '\0';
 		uVar1 = '\x01';
-		if (plr.plractive == '\0') goto LAB_8007afec;
+		if (plr[0].plractive == '\0') goto LAB_8007afec;
 	}
 	else {
-		gbActivePlayers = plr.plractive != '\0';
-		if (PlayerStruct_800dbf20.plractive == '\0') goto LAB_8007afec;
-		uVar1 = (plr.plractive != '\0') + '\x01';
+		gbActivePlayers = plr[0].plractive != '\0';
+		if (plr[1].plractive == '\0') goto LAB_8007afec;
+		uVar1 = (plr[0].plractive != '\0') + '\x01';
 	}
 	gbActivePlayers = uVar1;
 LAB_8007afec:

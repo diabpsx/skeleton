@@ -196,11 +196,11 @@ void DrawCutScreen__Fi(int lev)
 	
 	__6Dialog(&DStack88);
 	iVar1 = GetOverlayOtBase__7CBlocks();
-	Str = GetStr__Fi(0x25a);
+	Str = GetStr__Fi(STR_LOADING____602);
 	iVar2 = GetStrWidth__5CFontPc(&MediumFont,Str);
 	local_40 = SetOTpos__6Dialogi(&DStack88,100);
 	local_38 = SetOTpos__5CFonti(&MediumFont,100);
-	Str = GetStr__Fi(0x25a);
+	Str = GetStr__Fi(STR_LOADING____602);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 						(&MediumFont,((int)((0x100U - iVar2) + (0x100U - iVar2 >> 0x1f)) >> 1) + 0x20,0xbc,Str,
 						 JustLeft,(RECT *)0x0,(uint)WHITER,(uint)WHITEG,(uint)WHITEG);

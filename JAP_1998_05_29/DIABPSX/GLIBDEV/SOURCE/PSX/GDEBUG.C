@@ -70,8 +70,6 @@ void DBG_Halt(void)
 	/* end block 1 */
 	// End Line: 217
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DBG_SendMessage(char *e)
 
 {
@@ -88,8 +86,6 @@ void DBG_SendMessage(char *e)
 		// Start line: 271
 	/* end block 1 */
 	// End Line: 272
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DBG_SetMessageHandler(TDRFuncPtr_DBG_SetMessageHandler0Func Func)
 
@@ -108,8 +104,6 @@ void DBG_SetMessageHandler(TDRFuncPtr_DBG_SetMessageHandler0Func Func)
 		// Start line: 303
 	/* end block 1 */
 	// End Line: 304
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DBG_Error(char *Text,char *File,int Line)
 
@@ -132,8 +126,6 @@ void DBG_Error(char *Text,char *File,int Line)
 	/* end block 1 */
 	// End Line: 345
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DBG_SetErrorFunc(TDRFuncPtr_DBG_SetErrorFunc0EFunc EFunc)
 
 {
@@ -152,8 +144,6 @@ void DBG_SetErrorFunc(TDRFuncPtr_DBG_SetErrorFunc0EFunc EFunc)
 	/* end block 1 */
 	// End Line: 370
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SendPsyqString(char *e)
 
 {
@@ -170,8 +160,6 @@ void SendPsyqString(char *e)
 		// Start line: 392
 	/* end block 1 */
 	// End Line: 393
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DBG_SetPollRoutine(TDRFuncPtr_DBG_SetPollRoutine0Func Func)
 

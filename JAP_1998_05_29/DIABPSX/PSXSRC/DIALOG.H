@@ -556,8 +556,6 @@ Dialog * __6Dialog(Dialog *this)
 	/* end block 2 */
 	// End Line: 125
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 Dialog * __6Dialog(Dialog *this)
 
 {
@@ -910,8 +908,6 @@ void ___6Dialog(Dialog *this,int __in_chrg)
 	/* end block 2 */
 	// End Line: 159
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ___6Dialog(Dialog *this,int __in_chrg)
 
 {
@@ -1232,8 +1228,6 @@ void SetBorder__6Dialogi(Dialog *this,int Type)
 	/* end block 2 */
 	// End Line: 183
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void SetBorder__6Dialogi(Dialog *this,int Type)
 
 {
@@ -1445,8 +1439,6 @@ void SetBack__6Dialogi(Dialog *this,int Type)
 		// Start line: 188
 	/* end block 2 */
 	// End Line: 189
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetBack__6Dialogi(Dialog *this,int Type)
 
@@ -1787,8 +1779,6 @@ void SetRGB__6DialogUcUcUc(Dialog *this,uchar R,uchar G,uchar B)
 		// Start line: 199
 	/* end block 2 */
 	// End Line: 200
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetRGB__6DialogUcUcUc(Dialog *this,uchar R,uchar G,uchar B)
 

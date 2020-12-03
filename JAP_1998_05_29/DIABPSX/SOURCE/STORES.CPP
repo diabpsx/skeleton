@@ -259,11 +259,10 @@ LAB_80069960:
 	;
 	if (stextsel + -1 == y) {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(MediumFont.MinX + -8,y_00,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0xffff,
-							 &DAT_00000001,(void *)0x0,8);
+							(MediumFont.MinX + -8,y_00,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8);
 	}
 	if (0 < val) {
-		__format = GetStr__Fi(0x4fd);
+		__format = GetStr__Fi(STR__I_1277);
 		sprintf(acStack88,__format,val);
 		StoreBackRect.w = StoreBackRect.w + -0x1c;
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,0,Y,acStack88,JustRight,&StoreBackRect,R,G,B)
@@ -272,8 +271,7 @@ LAB_80069960:
 	}
 	if (stextsel + -1 == y) {
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(MediumFont.MaxX + 4,y_00,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0xffff,
-							 &DAT_00000001,(void *)0x0,8);
+							(MediumFont.MaxX + 4,y_00,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8);
 	}
 	SStringY[0] = SStringYNorm;
 	StoreBackRect.x = StoreBackRect.x - sVar1;
@@ -527,30 +525,30 @@ void PrintStoreItem__FPC10ItemStructic(ItemStruct *x,int l,char iclr)
 	if (x->_iIdentified != '\0') {
 		if (((x->_iMagical != '\x02') && ((int)x->_iPrePower != -1)) &&
 			 (PrintItemPower__FcPC10ItemStruct(*(char *)&PL_Prefix[(int)x->_iPrePower].PLPower,x),
-			 tempstr != '\0')) {
-			strcat(local_a8,&tempstr);
+			 tempstr[0] != '\0')) {
+			strcat(local_a8,tempstr);
 		}
 		if ((int)x->_iSufPower != -1) {
 			PrintItemPower__FcPC10ItemStruct(*(char *)&PL_Suffix[(int)x->_iSufPower].PLPower,x);
 			if (local_a8[0] != '\0') {
-				if (tempstr == '\0') goto LAB_80069ff0;
+				if (tempstr[0] == '\0') goto LAB_80069ff0;
 				strcat(local_a8,(char *)&PTR_DAT_8011baac);
 				y = 1;
 			}
-			if (tempstr != '\0') {
-				strcat(local_a8,&tempstr);
+			if (tempstr[0] != '\0') {
+				strcat(local_a8,tempstr);
 			}
 		}
 	}
 LAB_80069ff0:
 	if ((x->_iMiscId == '\x17') && (bVar2 = x->_iMaxCharges, bVar2 != 0)) {
-		__format = GetStr__Fi(0xb2);
-		sprintf(&tempstr,__format,(uint)x->_iCharges,(uint)bVar2);
+		__format = GetStr__Fi(STR_CHARGES___I__I_178);
+		sprintf(tempstr,__format,(uint)x->_iCharges,(uint)bVar2);
 		if (local_a8[0] != '\0') {
 			strcat(local_a8,(char *)&PTR_DAT_8011baac);
 			y = y + 1;
 		}
-		strcat(local_a8,&tempstr);
+		strcat(local_a8,tempstr);
 	}
 	if (local_a8[0] != '\0') {
 		AddSText__FiiUcPccUc(0xc,l,'\0',local_a8,(int)iclr,0);
@@ -560,11 +558,11 @@ LAB_80069ff0:
 	cVar1 = x->_iClass;
 	local_a8[0] = '\0';
 	if (cVar1 == '\x01') {
-		__format = GetStr__Fi(0xe1);
+		__format = GetStr__Fi(STR_DAMAGE_225);
 		sprintf(local_a8,"%s:%i-%i",__format,(int)x->_iMinDam,(int)x->_iMaxDam);
 	}
 	if (cVar1 == '\x02') {
-		__format = GetStr__Fi(0x2f);
+		__format = GetStr__Fi(STR_ARMOR___I___47);
 		sprintf(local_a8,__format,(int)x->_iAC);
 	}
 	iVar7 = (int)x->_iMaxDur;
@@ -572,17 +570,17 @@ LAB_80069ff0:
 		if (local_a8[0] != '\0') {
 			strcat(local_a8,(char *)&PTR_DAT_8011baac);
 		}
-		__format = GetStr__Fi(0x218);
+		__format = GetStr__Fi(STR_INDESTRUCTIBLE__536);
 	}
 	else {
-		__format = GetStr__Fi(0x11f);
-		sprintf(&tempstr,__format,(int)x->_iDurability,iVar7);
-		iVar7 = GetStrWidth__5CFontPc(&MediumFont,&tempstr);
+		__format = GetStr__Fi(STR_DUR___I__I____287);
+		sprintf(tempstr,__format,(int)x->_iDurability,iVar7);
+		iVar7 = GetStrWidth__5CFontPc(&MediumFont,tempstr);
 		iVar5 = GetStrWidth__5CFontPc(&MediumFont,local_a8);
 		if (iVar7 + iVar5 <= (int)StoreBackRect.w * 2 + -0x44) {
 			strcat(local_a8,&DAT_8011bab0);
 		}
-		__format = &tempstr;
+		__format = tempstr;
 	}
 	strcat(local_a8,__format);
 	if (x->_itype == 0) {
@@ -599,35 +597,35 @@ LAB_80069ff0:
 	bVar3 = x->_iMinMag;
 	bVar4 = x->_iMinDex;
 	if ((uint)bVar2 + (uint)bVar3 + (uint)bVar4 == 0) {
-		__format = GetStr__Fi(0x2d1);
+		__format = GetStr__Fi(STR_NO_REQUIRED_ATTRIBUTES_721);
 	}
 	else {
-		__format = GetStr__Fi(0x35d);
-		strcpy(&tempstr,__format);
+		__format = GetStr__Fi(STR_REQUIRED__861);
+		strcpy(tempstr,__format);
 		if (bVar2 != 0) {
-			__format = GetStr__Fi(0x51c);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar2);
+			__format = GetStr__Fi(STR__S__I_STR_1308);
+			sprintf(tempstr,__format,tempstr,(uint)bVar2);
 		}
 		if (bVar3 != 0) {
-			__format = GetStr__Fi(0x51b);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar3);
+			__format = GetStr__Fi(STR__S__I_MAG_1307);
+			sprintf(tempstr,__format,tempstr,(uint)bVar3);
 		}
 		if (bVar4 != 0) {
-			__format = GetStr__Fi(0x51a);
-			sprintf(&tempstr,__format,&tempstr,(uint)bVar4);
+			__format = GetStr__Fi(STR__S__I_DEX_1306);
+			sprintf(tempstr,__format,tempstr,(uint)bVar4);
 		}
-		__format = &tempstr;
+		__format = tempstr;
 	}
 	strcat(local_a8,__format);
 	AddSText__FiiUcPccUc(0xc,l,'\0',local_a8,(int)iclr,0);
 	y = l + 2 + y;
 	if ((x->_iMagical == '\x02') && (x->_iIdentified != '\0')) {
 		if ((x->_iMaxDur == 0xff) || (x->_iMaxDur == 0)) {
-			__format = GetStr__Fi(0x4a3);
+			__format = GetStr__Fi(STR_UNIQUE_ITEM_1187);
 			y = y + 1;
 		}
 		else {
-			__format = GetStr__Fi(0x4a3);
+			__format = GetStr__Fi(STR_UNIQUE_ITEM_1187);
 		}
 		AddSText__FiiUcPccUc(0xc,y,'\0',__format,(int)iclr,0);
 	}
@@ -665,201 +663,172 @@ uchar StoreAutoPlace__Fv(void)
 {
 	PlayerStruct *pPVar1;
 	uchar uVar2;
-	uchar uVar3;
-	uint uVar4;
+	int iVar3;
+	int iVar4;
 	int iVar5;
-	uint uVar6;
-	int iVar7;
-	int iVar8;
-	ItemStruct *pIVar9;
-	ItemStruct *pIVar10;
+	ItemStruct *pIVar6;
+	ItemStruct *pIVar7;
+	int *piVar8;
+	int ii;
+	int iVar9;
+	int ii_00;
+	int iVar10;
 	int *piVar11;
-	int iVar12;
-	int iVar13;
-	int iVar14;
-	int iVar15;
-	int *piVar16;
 	
-	SetICursor__Fi((uint)(&plr)[myplr].HoldItem._iCurs + 0xc);
-	iVar15 = icursH28;
-	iVar14 = icursW28;
-	uVar6 = 0;
+	SetICursor__Fi((uint)plr[myplr].HoldItem._iCurs + 0xc);
+	iVar10 = icursH28;
+	ii_00 = icursW28;
+	uVar2 = '\0';
 	if (icursW28 == 1) {
 		if (icursH28 == 1) {
-			if ((((&plr)[myplr].HoldItem._iStatFlag != '\0') &&
-					((&AllItemsUseable)[(int)(&plr)[myplr].HoldItem.IDidx] != '\0')) &&
-				 ((&plr)[myplr].HoldItem._itype != 0xb)) {
-				iVar13 = 0;
-				iVar12 = 0;
+			if (((plr[myplr].HoldItem._iStatFlag != '\0') &&
+					((&AllItemsUseable)[(int)plr[myplr].HoldItem.IDidx] != '\0')) &&
+				 (plr[myplr].HoldItem._itype != 0xb)) {
+				iVar9 = 0;
+				ii = 0;
 				do {
-					if (*(short *)((int)&(&plr)[myplr].SpdList[0]._itype + iVar12) == -1) {
-						pPVar1 = &plr + myplr;
-						pIVar10 = &(&plr)[myplr].HoldItem;
-						piVar16 = (int *)(iVar12 + myplr * 0x19e8 + -0x7ff24518);
+					if (*(short *)((int)&plr[myplr].SpdList[0]._itype + ii) == -1) {
+						pPVar1 = plr + myplr;
+						pIVar7 = &plr[myplr].HoldItem;
+						piVar11 = (int *)(ii + myplr * 0x19e8 + -0x7ff24518);
 						do {
-							piVar11 = piVar16;
-							pIVar9 = pIVar10;
-							iVar5 = pIVar9->_iVMult1;
-							iVar7 = pIVar9->_iVAdd2;
-							iVar8 = pIVar9->_iVMult2;
-							*piVar11 = pIVar9->_iVAdd1;
-							piVar11[1] = iVar5;
-							piVar11[2] = iVar7;
-							piVar11[3] = iVar8;
-							pIVar10 = (ItemStruct *)&pIVar9->_iSeed;
-							piVar16 = piVar11 + 4;
-						} while (pIVar10 != (ItemStruct *)&(pPVar1->HoldItem)._iSufPower);
-						iVar5 = pIVar9->_ivalue;
-						iVar7 = pIVar9->_iIvalue;
-						piVar11[4] = pIVar10->_iVAdd1;
-						piVar11[5] = iVar5;
-						piVar11[6] = iVar7;
-						uVar6 = 1;
+							piVar8 = piVar11;
+							pIVar6 = pIVar7;
+							iVar3 = pIVar6->_iVMult1;
+							iVar4 = pIVar6->_iVAdd2;
+							iVar5 = pIVar6->_iVMult2;
+							*piVar8 = pIVar6->_iVAdd1;
+							piVar8[1] = iVar3;
+							piVar8[2] = iVar4;
+							piVar8[3] = iVar5;
+							pIVar7 = (ItemStruct *)&pIVar6->_iSeed;
+							piVar11 = piVar8 + 4;
+						} while (pIVar7 != (ItemStruct *)&(pPVar1->HoldItem)._iSufPower);
+						iVar3 = pIVar6->_ivalue;
+						iVar4 = pIVar6->_iIvalue;
+						piVar8[4] = pIVar7->_iVAdd1;
+						piVar8[5] = iVar3;
+						piVar8[6] = iVar4;
+						uVar2 = '\x01';
 					}
-					iVar13 = iVar13 + 1;
-					iVar12 = iVar12 + 0x6c;
-				} while ((iVar13 < 8) && (uVar6 == 0));
+					iVar9 = iVar9 + 1;
+					ii = ii + 0x6c;
+				} while ((iVar9 < 8) && (uVar2 == '\0'));
 			}
-			iVar12 = 0x1e;
-			uVar4 = uVar6;
+			ii = 0x1e;
 			do {
-				if (uVar4 != 0) break;
-				iVar13 = iVar12 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar12,1,1,1);
-				uVar4 = uVar6 & 0xff;
-				iVar12 = iVar13;
-			} while (iVar13 < 0x28);
-			uVar4 = uVar6 & 0xff;
-			iVar12 = 0x14;
-			if (uVar4 == 0) {
-				do {
-					uVar6 = FUN_80159f24(myplr,iVar12,1,1,1);
-					if (0x1d < iVar12 + 1) break;
-					iVar12 = iVar12 + 1;
-				} while ((uVar6 & 0xff) == 0);
-				uVar4 = uVar6 & 0xff;
-			}
-			iVar12 = 10;
+				if (uVar2 != '\0') break;
+				iVar9 = ii + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,1,1);
+				ii = iVar9;
+			} while (iVar9 < 0x28);
+			ii = 0x14;
 			do {
-				if (uVar4 != 0) break;
-				iVar13 = iVar12 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar12,1,1,1);
-				uVar4 = uVar6 & 0xff;
-				iVar12 = iVar13;
-			} while (iVar13 < 0x14);
-			iVar12 = 0;
+				if (uVar2 != '\0') break;
+				iVar9 = ii + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,1,1);
+				ii = iVar9;
+			} while (iVar9 < 0x1e);
+			ii = 10;
 			do {
-				if ((uVar6 & 0xff) != 0) break;
-				iVar13 = iVar12 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar12,1,1,1);
-				iVar12 = iVar13;
-			} while (iVar13 < 10);
+				if (uVar2 != '\0') break;
+				iVar9 = ii + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,1,1);
+				ii = iVar9;
+			} while (iVar9 < 0x14);
+			ii = 0;
+			do {
+				if (uVar2 != '\0') break;
+				iVar9 = ii + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,1,1);
+				ii = iVar9;
+			} while (iVar9 < 10);
 		}
-		if (iVar15 == 2) {
-			uVar4 = uVar6 & 0xff;
-			iVar12 = 0x1d;
-			if (uVar4 == 0) {
-				do {
-					uVar6 = FUN_80159f24(myplr,iVar12,1,2,1);
-					if (iVar12 + -1 < 0x14) break;
-					iVar12 = iVar12 + -1;
-				} while ((uVar6 & 0xff) == 0);
-				uVar4 = uVar6 & 0xff;
-			}
-			iVar12 = 9;
-			while (uVar4 == 0) {
-				uVar6 = FUN_80159f24(myplr,iVar12,1,2,1);
-				if (iVar12 + -1 < 0) break;
-				uVar4 = uVar6 & 0xff;
-				iVar12 = iVar12 + -1;
-			}
-			iVar12 = 0x13;
+		if (iVar10 == 2) {
+			ii = 0x1d;
 			do {
-				if ((uVar6 & 0xff) != 0) break;
-				iVar13 = iVar12 + -1;
-				uVar6 = FUN_80159f24(myplr,iVar12,1,2,1);
-				iVar12 = iVar13;
-			} while (9 < iVar13);
+				if (uVar2 != '\0') break;
+				iVar9 = ii + -1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,2,1);
+				ii = iVar9;
+			} while (0x13 < iVar9);
+			ii = 9;
+			do {
+				if (uVar2 != '\0') break;
+				iVar9 = ii + -1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,2,1);
+				ii = iVar9;
+			} while (-1 < iVar9);
+			ii = 0x13;
+			do {
+				if (uVar2 != '\0') break;
+				iVar9 = ii + -1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,2,1);
+				ii = iVar9;
+			} while (9 < iVar9);
 		}
-		if (iVar15 == 3) {
-			iVar12 = 0;
+		if (iVar10 == 3) {
+			ii = 0;
 			do {
-				if ((uVar6 & 0xff) != 0) break;
-				iVar13 = iVar12 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar12,1,3,1);
-				iVar12 = iVar13;
-			} while (iVar13 < 0x14);
+				if (uVar2 != '\0') break;
+				iVar9 = ii + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,1,3,1);
+				ii = iVar9;
+			} while (iVar9 < 0x14);
 		}
 	}
-	uVar2 = (uchar)uVar6;
-	if (iVar14 == 2) {
-		if (iVar15 == 2) {
-			uVar4 = uVar6 & 0xff;
-			iVar14 = 0;
-			if (uVar4 == 0) {
-				piVar16 = &AP2x2Tbl;
+	if (ii_00 == 2) {
+		if (iVar10 == 2) {
+			ii_00 = 0;
+			if (uVar2 == '\0') {
+				piVar11 = &AP2x2Tbl;
 				do {
-					iVar12 = *piVar16;
-					piVar16 = piVar16 + 1;
-					iVar14 = iVar14 + 1;
-					uVar6 = FUN_80159f24(myplr,iVar12,2,2,1);
-					if (9 < iVar14) break;
-				} while ((uVar6 & 0xff) == 0);
-				uVar4 = uVar6 & 0xff;
+					ii = *piVar11;
+					piVar11 = piVar11 + 1;
+					ii_00 = ii_00 + 1;
+					uVar2 = AutoPlace__FiiiiUc(myplr,ii,2,2,1);
+					if (9 < ii_00) break;
+				} while (uVar2 == '\0');
 			}
-			iVar14 = 0x15;
+			ii_00 = 0x15;
 			do {
-				if (uVar4 != 0) break;
-				iVar12 = iVar14 + 2;
-				uVar6 = FUN_80159f24(myplr,iVar14,2,2,1);
-				uVar4 = uVar6 & 0xff;
-				iVar14 = iVar12;
-			} while (iVar12 < 0x1d);
-			uVar4 = uVar6 & 0xff;
-			iVar14 = 1;
-			if (uVar4 == 0) {
-				do {
-					uVar6 = FUN_80159f24(myplr,iVar14,2,2,1);
-					if (8 < iVar14 + 2) break;
-					iVar14 = iVar14 + 2;
-				} while ((uVar6 & 0xff) == 0);
-				uVar4 = uVar6 & 0xff;
-			}
-			iVar14 = 10;
+				if (uVar2 != '\0') break;
+				ii = ii_00 + 2;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii_00,2,2,1);
+				ii_00 = ii;
+			} while (ii < 0x1d);
+			ii_00 = 1;
 			do {
-				if (uVar4 != 0) break;
-				iVar12 = iVar14 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar14,2,2,1);
-				uVar4 = uVar6 & 0xff;
-				iVar14 = iVar12;
-			} while (iVar12 < 0x13);
+				if (uVar2 != '\0') break;
+				ii = ii_00 + 2;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii_00,2,2,1);
+				ii_00 = ii;
+			} while (ii < 9);
+			ii_00 = 10;
+			do {
+				if (uVar2 != '\0') break;
+				ii = ii_00 + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii_00,2,2,1);
+				ii_00 = ii;
+			} while (ii < 0x13);
 		}
-		uVar3 = (uchar)uVar6;
-		uVar6 = uVar6 & 0xff;
-		uVar2 = (uchar)uVar6;
-		if (iVar15 == 3) {
-			iVar14 = 0;
-			if (uVar6 == 0) {
-				do {
-					uVar6 = FUN_80159f24(myplr,iVar14,2,3,1);
-					uVar3 = (uchar)uVar6;
-					if (8 < iVar14 + 1) break;
-					iVar14 = iVar14 + 1;
-				} while ((uVar6 & 0xff) == 0);
-				uVar6 = uVar6 & 0xff;
-			}
-			iVar14 = 10;
-			uVar2 = uVar3;
+		if (iVar10 == 3) {
+			ii_00 = 0;
 			do {
-				if (uVar6 != 0) {
+				if (uVar2 != '\0') break;
+				iVar10 = ii_00 + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii_00,2,3,1);
+				ii_00 = iVar10;
+			} while (iVar10 < 9);
+			ii_00 = 10;
+			do {
+				if (uVar2 != '\0') {
 					return uVar2;
 				}
-				iVar15 = iVar14 + 1;
-				uVar6 = FUN_80159f24(myplr,iVar14,2,3,1);
-				uVar2 = (uchar)uVar6;
-				uVar6 = uVar6 & 0xff;
-				iVar14 = iVar15;
-			} while (iVar15 < 0x13);
+				iVar10 = ii_00 + 1;
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii_00,2,3,1);
+				ii_00 = iVar10;
+			} while (iVar10 < 0x13);
 		}
 	}
 	return uVar2;
@@ -893,23 +862,23 @@ void S_StartSmith__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x4ca);
+	str = GetStr__Fi(STR_WELCOME_TO_THE_1226);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x4e);
+	str = GetStr__Fi(STR_BLACKSMITH_S_SHOP_78);
 	AddSText__FiiUcPccUc(0,2,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,6,'\x01',str,3,0);
-	str = GetStr__Fi(0x42a);
+	str = GetStr__Fi(STR_TALK_TO_GRISWOLD_1066);
 	AddSText__FiiUcPccUc(0,8,'\x01',str,1,1);
-	str = GetStr__Fi(0x95);
+	str = GetStr__Fi(STR_BUY_BASIC_ITEMS_149);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,0,1);
-	str = GetStr__Fi(0x97);
+	str = GetStr__Fi(STR_BUY_PREMIUM_ITEMS_151);
 	AddSText__FiiUcPccUc(0,10,'\x01',str,0,1);
-	str = GetStr__Fi(0x3b9);
+	str = GetStr__Fi(STR_SELL_ITEMS_953);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
-	str = GetStr__Fi(0x35b);
+	str = GetStr__Fi(STR_REPAIR_ITEMS_859);
 	AddSText__FiiUcPccUc(0,0xc,'\x01',str,0,1);
-	str = GetStr__Fi(0x241);
+	str = GetStr__Fi(STR_LEAVE_THE_SHOP_577);
 	AddSText__FiiUcPccUc(0,0xd,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -1018,7 +987,7 @@ void S_StartSBuy__Fv(void)
 		iVar2 = 0;
 		do {
 			SetItemMinStats__FPC12PlayerStructP10ItemStruct
-								(&plr + options_pad,
+								(plr + options_pad,
 								 (ItemStruct *)((int)&(&_smithitem)[StorePlrNo * 0x14]._iVAdd1 + iVar2));
 			storenumh = storenumh + 1;
 			psVar1 = (short *)((int)&(&_smithitem)[StorePlrNo * 0x14 + 1]._itype + iVar2);
@@ -1034,9 +1003,9 @@ void S_StartSBuy__Fv(void)
 		stextsize = '\x01';
 		stextscrl = '\x01';
 		stextsval = 0;
-		__format = GetStr__Fi(0x228);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_I_HAVE_THESE_ITEMS_FOR_SALE_NYOUR_GOLD____I_552);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		stextsmax = storenumh + -3;
 		if (stextsmax < 0) {
@@ -1194,7 +1163,7 @@ uchar S_StartSPBuy__Fv(void)
 	do {
 		if (*(short *)((int)&(&_premiumitem)[StorePlrNo * 6]._itype + iVar2) != -1) {
 			SetItemMinStats__FPC12PlayerStructP10ItemStruct
-								(&plr + options_pad,
+								(plr + options_pad,
 								 (ItemStruct *)((int)&(&_premiumitem)[StorePlrNo * 6]._iVAdd1 + iVar2));
 			storenumh = storenumh + 1;
 		}
@@ -1210,9 +1179,9 @@ uchar S_StartSPBuy__Fv(void)
 		stextsize = '\x01';
 		stextscrl = '\x01';
 		stextsval = 0;
-		__format = GetStr__Fi(0x229);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_I_HAVE_THESE_PREMIUM_ITEMS_FOR_SALE_NYOUR_GOLD____I_553);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		stextsmax = storenumh + -2;
 		if (stextsmax < 0) {
@@ -1250,16 +1219,15 @@ uchar SmithSellOk__Fi(int i)
 	short sVar1;
 	bool bVar2;
 	
-	sVar1 = (&plr)[myplr].InvList[i]._itype;
+	sVar1 = plr[myplr].InvList[i]._itype;
 	if (((((sVar1 == -1) || (sVar1 == 0)) || (sVar1 == 0xb)) || ((sVar1 == 0xe || (sVar1 == 10)))) ||
-		 ((&plr)[myplr].InvList[i].IDidx == 0x21)) {
+		 (plr[myplr].InvList[i].IDidx == 0x21)) {
 		bVar2 = false;
 	}
 	else {
 		bVar2 = true;
-		if (((&plr)[myplr].InvList[i]._iMagical != '\0') &&
-			 ((&plr)[myplr].InvList[i]._iIdentified != '\0')) {
-			bVar2 = (&plr)[myplr].InvList[i]._iIvalue != 0;
+		if ((plr[myplr].InvList[i]._iMagical != '\0') && (plr[myplr].InvList[i]._iIdentified != '\0')) {
+			bVar2 = plr[myplr].InvList[i]._iIvalue != 0;
 		}
 	}
 	return (uchar)bVar2;
@@ -1434,7 +1402,7 @@ void S_StartSSell__Fv(void)
 		i = i + -0x6c;
 	} while (-1 < i);
 	i = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar11 = 0;
 		do {
 			uVar3 = SmithSellOk__Fi(i);
@@ -1478,23 +1446,23 @@ void S_StartSSell__Fv(void)
 			}
 			i = i + 1;
 			iVar11 = iVar11 + 0x6c;
-		} while (i < (&plr)[myplr]._pNumInv);
+		} while (i < plr[myplr]._pNumInv);
 	}
 	if (bVar1) {
 		stextsval = 0;
-		stextsmax = (&plr)[myplr]._pNumInv;
+		stextsmax = plr[myplr]._pNumInv;
 		stextscrl = '\x01';
-		__format = GetStr__Fi(0x4cf);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_WHICH_ITEM_IS_FOR_SALE__NYOUR_GOLD____I_1231);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollSSell__Fi(stextsval);
 	}
 	else {
 		stextscrl = '\0';
-		__format = GetStr__Fi(0x4eb);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_YOU_HAVE_NOTHING_I_WANT__NYOUR_GOLD____I_1259);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 	}
 	return;
@@ -1526,12 +1494,12 @@ uchar SmithRepairOk__Fi(int i)
 	short sVar1;
 	bool bVar2;
 	
-	sVar1 = (&plr)[myplr].InvList[i]._itype;
+	sVar1 = plr[myplr].InvList[i]._itype;
 	if ((((sVar1 == -1) || (sVar1 == 0)) || (sVar1 == 0xb)) || (sVar1 == 0xe)) {
 		bVar2 = false;
 	}
 	else {
-		bVar2 = (&plr)[myplr].InvList[i]._iDurability != (&plr)[myplr].InvList[i]._iMaxDur;
+		bVar2 = plr[myplr].InvList[i]._iDurability != plr[myplr].InvList[i]._iMaxDur;
 	}
 	return (uchar)bVar2;
 }
@@ -1661,28 +1629,28 @@ void S_StartSRepair__Fv(void)
 		*(undefined2 *)((int)&storehold._itype + i) = 0xffff;
 		i = i + -0x6c;
 	} while (-1 < i);
-	if (((&plr)[myplr].InvBody[0]._itype != -1) &&
-		 ((&plr)[myplr].InvBody[0]._iDurability != (&plr)[myplr].InvBody[0]._iMaxDur)) {
+	if ((plr[myplr].InvBody[0]._itype != -1) &&
+		 (plr[myplr].InvBody[0]._iDurability != plr[myplr].InvBody[0]._iMaxDur)) {
 		bVar1 = true;
-		AddStoreHoldRepair__FP10ItemStructi((&plr)[myplr].InvBody,-1);
+		AddStoreHoldRepair__FP10ItemStructi(plr[myplr].InvBody,-1);
 	}
-	if (((&plr)[myplr].InvBody[6]._itype != -1) &&
-		 ((&plr)[myplr].InvBody[6]._iDurability != (&plr)[myplr].InvBody[6]._iMaxDur)) {
+	if ((plr[myplr].InvBody[6]._itype != -1) &&
+		 (plr[myplr].InvBody[6]._iDurability != plr[myplr].InvBody[6]._iMaxDur)) {
 		bVar1 = true;
-		AddStoreHoldRepair__FP10ItemStructi((&plr)[myplr].InvBody + 6,-2);
+		AddStoreHoldRepair__FP10ItemStructi(plr[myplr].InvBody + 6,-2);
 	}
-	if (((&plr)[myplr].InvBody[4]._itype != -1) &&
-		 ((&plr)[myplr].InvBody[4]._iDurability != (&plr)[myplr].InvBody[4]._iMaxDur)) {
+	if ((plr[myplr].InvBody[4]._itype != -1) &&
+		 (plr[myplr].InvBody[4]._iDurability != plr[myplr].InvBody[4]._iMaxDur)) {
 		bVar1 = true;
-		AddStoreHoldRepair__FP10ItemStructi((&plr)[myplr].InvBody + 4,-3);
+		AddStoreHoldRepair__FP10ItemStructi(plr[myplr].InvBody + 4,-3);
 	}
-	if (((&plr)[myplr].InvBody[5]._itype != -1) &&
-		 ((&plr)[myplr].InvBody[5]._iDurability != (&plr)[myplr].InvBody[5]._iMaxDur)) {
+	if ((plr[myplr].InvBody[5]._itype != -1) &&
+		 (plr[myplr].InvBody[5]._iDurability != plr[myplr].InvBody[5]._iMaxDur)) {
 		bVar1 = true;
-		AddStoreHoldRepair__FP10ItemStructi((&plr)[myplr].InvBody + 5,-4);
+		AddStoreHoldRepair__FP10ItemStructi(plr[myplr].InvBody + 5,-4);
 	}
 	i = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar3 = 0;
 		do {
 			uVar2 = SmithRepairOk__Fi(i);
@@ -1692,23 +1660,23 @@ void S_StartSRepair__Fv(void)
 			}
 			i = i + 1;
 			iVar3 = iVar3 + 0x6c;
-		} while (i < (&plr)[myplr]._pNumInv);
+		} while (i < plr[myplr]._pNumInv);
 	}
 	if (bVar1) {
 		stextsval = 0;
-		stextsmax = (&plr)[myplr]._pNumInv;
+		stextsmax = plr[myplr]._pNumInv;
 		stextscrl = '\x01';
-		__format = GetStr__Fi(0x35c);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_REPAIR_WHICH_ITEM__NYOUR_GOLD____I_860);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollSSell__Fi(stextsval);
 	}
 	else {
 		stextscrl = '\0';
-		__format = GetStr__Fi(0x4ee);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_YOU_HAVE_NOTHING_TO_REPAIR__NYOUR_GOLD____I_1262);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 	}
 	return;
@@ -1742,23 +1710,23 @@ void S_StartWitch__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x4dc);
+	str = GetStr__Fi(STR_WITCH_S_SHACK_1244);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,6,'\x01',str,3,0);
-	str = GetStr__Fi(0x426);
+	str = GetStr__Fi(STR_TALK_TO_ADRIA_1062);
 	AddSText__FiiUcPccUc(0,8,'\x01',str,1,1);
-	str = GetStr__Fi(0x96);
+	str = GetStr__Fi(STR_BUY_ITEMS_150);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,0,1);
-	str = GetStr__Fi(0x98);
+	str = GetStr__Fi(STR_BUY_STAVES_152);
 	AddSText__FiiUcPccUc(0,10,'\x01',str,0,1);
-	str = GetStr__Fi(0x3b9);
+	str = GetStr__Fi(STR_SELL_ITEMS_953);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
-	str = GetStr__Fi(0x3ba);
+	str = GetStr__Fi(STR_SELL_STAVES_954);
 	AddSText__FiiUcPccUc(0,0xc,'\x01',str,0,1);
-	str = GetStr__Fi(0x34d);
+	str = GetStr__Fi(STR_RECHARGE_STAVES_845);
 	AddSText__FiiUcPccUc(0,0xd,'\x01',str,0,1);
-	str = GetStr__Fi(0x240);
+	str = GetStr__Fi(STR_LEAVE_THE_SHACK_576);
 	AddSText__FiiUcPccUc(0,0xe,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -1957,7 +1925,7 @@ void S_StartWBuy__Fv(void)
 			iVar3 = CheckWitchItem__Fi(idx);
 			if (iVar3 != 0) {
 				SetItemMinStats__FPC12PlayerStructP10ItemStruct
-									(&plr + options_pad,
+									(plr + options_pad,
 									 (ItemStruct *)((int)&(&_witchitem)[StorePlrNo * 0x14]._iVAdd1 + iVar5));
 				_NoWitchItems[StorePlrNo] = _NoWitchItems[StorePlrNo] + 1;
 			}
@@ -1985,9 +1953,9 @@ void S_StartWBuy__Fv(void)
 		stextscrl = '\x01';
 		stextsval = 0;
 		stextsmax = 0x14;
-		__format = GetStr__Fi(0x228);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_I_HAVE_THESE_ITEMS_FOR_SALE_NYOUR_GOLD____I_552);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollWBuy__Fi(stextsval + _WitchIdxOfs[StorePlrNo]);
 		storenumh = _NoWitchItems[StorePlrNo];
@@ -2115,7 +2083,7 @@ void S_StartWSell__Fv(void)
 		i = i + -0x6c;
 	} while (-1 < i);
 	i = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar11 = 0;
 		do {
 			uVar3 = WitchSellOk__Fi(i);
@@ -2159,13 +2127,13 @@ void S_StartWSell__Fv(void)
 			}
 			i = i + 1;
 			iVar11 = iVar11 + 0x6c;
-		} while (i < (&plr)[myplr]._pNumInv);
+		} while (i < plr[myplr]._pNumInv);
 	}
 	i = 0;
 	i_00 = -1;
 	iVar11 = 0;
 	do {
-		if ((*(short *)((int)&(&plr)[myplr].SpdList[0]._itype + iVar11) != -1) &&
+		if ((*(short *)((int)&plr[myplr].SpdList[0]._itype + iVar11) != -1) &&
 			 (uVar3 = WitchSellOk__Fi(i_00), uVar3 != '\0')) {
 			bVar1 = true;
 			piVar7 = (int *)(iVar11 + myplr * 0x19e8 + -0x7ff24518);
@@ -2210,19 +2178,19 @@ void S_StartWSell__Fv(void)
 	} while (i < 8);
 	if (bVar1) {
 		stextsval = 0;
-		stextsmax = (&plr)[myplr]._pNumInv;
+		stextsmax = plr[myplr]._pNumInv;
 		stextscrl = '\x01';
-		__format = GetStr__Fi(0x4cf);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_WHICH_ITEM_IS_FOR_SALE__NYOUR_GOLD____I_1231);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollSSell__Fi(stextsval);
 	}
 	else {
 		stextscrl = '\0';
-		__format = GetStr__Fi(0x4eb);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_YOU_HAVE_NOTHING_I_WANT__NYOUR_GOLD____I_1259);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 	}
 	return;
@@ -2256,8 +2224,8 @@ uchar WitchRechargeOk__Fi(int i)
 	bool bVar1;
 	
 	bVar1 = false;
-	if ((&plr)[myplr].InvList[i]._itype == 10) {
-		bVar1 = (&plr)[myplr].InvList[i]._iCharges != (&plr)[myplr].InvList[i]._iMaxCharges;
+	if (plr[myplr].InvList[i]._itype == 10) {
+		bVar1 = plr[myplr].InvList[i]._iCharges != plr[myplr].InvList[i]._iMaxCharges;
 	}
 	return (uchar)bVar1;
 }
@@ -2385,11 +2353,11 @@ void S_StartWRecharge__Fv(void)
 		iVar12 = myplr;
 		i = i + -0x6c;
 	} while (-1 < i);
-	if (((&plr)[myplr].InvBody[4]._itype == 10) &&
-		 ((&plr)[myplr].InvBody[4]._iCharges != (&plr)[myplr].InvBody[4]._iMaxCharges)) {
+	if ((plr[myplr].InvBody[4]._itype == 10) &&
+		 (plr[myplr].InvBody[4]._iCharges != plr[myplr].InvBody[4]._iMaxCharges)) {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar9 = &(&plr)[myplr].InvBody[4]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar9 = &plr[myplr].InvBody[4]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar10 = piVar3;
@@ -2415,10 +2383,10 @@ void S_StartWRecharge__Fv(void)
 																						 CONCAT492(0xffffffff,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar12].InvBody[4]._iVAdd1);
+							 plr[iVar12].InvBody[4]._iVAdd1);
 	}
 	i = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar12 = 0;
 		do {
 			uVar4 = WitchRechargeOk__Fi(i);
@@ -2454,23 +2422,23 @@ void S_StartWRecharge__Fv(void)
 			}
 			i = i + 1;
 			iVar12 = iVar12 + 0x6c;
-		} while (i < (&plr)[myplr]._pNumInv);
+		} while (i < plr[myplr]._pNumInv);
 	}
 	if (bVar1) {
 		stextsval = 0;
-		stextsmax = (&plr)[myplr]._pNumInv;
+		stextsmax = plr[myplr]._pNumInv;
 		stextscrl = '\x01';
-		__format = GetStr__Fi(0x34e);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_RECHARGE_WHICH_ITEM__NYOUR_GOLD____I_846);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollSSell__Fi(stextsval);
 	}
 	else {
 		stextscrl = '\0';
-		__format = GetStr__Fi(0x4ed);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_YOU_HAVE_NOTHING_TO_RECHARGE__NYOUR_GOLD____I_1261);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 	}
 	return;
@@ -2506,7 +2474,7 @@ void S_StartNoMoney__Fv(void)
 	stextsize = '\x01';
 	stextscrl = '\0';
 	ClearSText__Fii(5,0x17);
-	str = GetStr__Fi(0x4e9);
+	str = GetStr__Fi(STR_YOU_DO_NOT_HAVE_ENOUGH_GOLD_1257);
 	AddSText__FiiUcPccUc(0,10,'\x01',str,0,1);
 	return;
 }
@@ -2540,7 +2508,7 @@ void S_StartNoRoom__Fv(void)
 	StartStore__Fc((char)stextshold);
 	stextscrl = '\0';
 	ClearSText__Fii(5,0x17);
-	str = GetStr__Fi(0x4ea);
+	str = GetStr__Fi(STR_YOU_DO_NOT_HAVE_ENOUGH_ROOM_IN_INVENTORY_1258);
 	AddSText__FiiUcPccUc(0,10,'\x01',str,0,1);
 	return;
 }
@@ -2576,12 +2544,12 @@ void S_StartNoItems__Fv(void)
 		StartStore__Fc('\x01');
 		stextshold = 1;
 		ClearSText__Fii(5,0x17);
-		str = GetStr__Fi(0x2bd);
+		str = GetStr__Fi(STR_NOTHING_FOR_SALE_701);
 	}
 	else {
 		StartStore__Fc('\x05');
 		ClearSText__Fii(5,0x17);
-		str = GetStr__Fi(0x2da);
+		str = GetStr__Fi(STR_NO_STAVES_AVAILABLE_730);
 	}
 	AddSText__FiiUcPccUc(0,10,'\x01',str,0,1);
 	return;
@@ -2617,7 +2585,8 @@ void S_StartConfirm__Fv(void)
 	char cVar1;
 	uint uVar2;
 	char *str;
-	int StrId;
+	int iVar3;
+	text_strs StrId;
 	ushort ItemNo;
 	uint clr;
 	
@@ -2625,10 +2594,10 @@ void S_StartConfirm__Fv(void)
 	SItemListFlag = '\x02';
 	stextscrl = '\0';
 	ClearSText__Fii(5,0x17);
-	cVar1 = (&plr)[myplr].HoldItem._iMagical;
+	cVar1 = plr[myplr].HoldItem._iMagical;
 	uVar2 = (uint)(cVar1 != '\0');
 	clr = uVar2;
-	if ((&plr)[myplr].HoldItem._iStatFlag == '\0') {
+	if (plr[myplr].HoldItem._iStatFlag == '\0') {
 		clr = 2;
 	}
 	if (cVar1 == '\x02') {
@@ -2637,7 +2606,7 @@ void S_StartConfirm__Fv(void)
 	if (stextshold == 0x11) {
 		uVar2 = 0;
 	}
-	if ((cVar1 != '\0') && ((&plr)[myplr].HoldItem._iIdentified == '\0')) {
+	if ((cVar1 != '\0') && (plr[myplr].HoldItem._iIdentified == '\0')) {
 		if (stextshold == 3) {
 			uVar2 = 0;
 		}
@@ -2652,48 +2621,48 @@ void S_StartConfirm__Fv(void)
 		}
 	}
 	if (uVar2 == 0) {
-		ItemNo = (&plr)[myplr].HoldItem._iName;
+		ItemNo = plr[myplr].HoldItem._iName;
 	}
 	else {
-		ItemNo = (&plr)[myplr].HoldItem._iIName;
+		ItemNo = plr[myplr].HoldItem._iIName;
 	}
-	str = MakeItemStr__FP10ItemStructUsUs(&(&plr)[myplr].HoldItem,ItemNo,0x100);
+	str = MakeItemStr__FP10ItemStructUsUs(&plr[myplr].HoldItem,ItemNo,0x100);
 	AddSText__FiiUcPccUc(0xc,5,'\0',str,clr,0);
-	AddSTextVal__Fii(5,(&plr)[myplr].HoldItem._iIvalue);
-	StrId = GetWrap__5CFontPcP4RECT(&MediumFont,str,&StoreBackRectClipper);
-	PrintStoreItem__FPC10ItemStructic(&(&plr)[myplr].HoldItem,StrId + 5,(char)clr);
+	AddSTextVal__Fii(5,plr[myplr].HoldItem._iIvalue);
+	iVar3 = GetWrap__5CFontPcP4RECT(&MediumFont,str,&StoreBackRectClipper);
+	PrintStoreItem__FPC10ItemStructic(&plr[myplr].HoldItem,iVar3 + 5,(char)clr);
 	switch(stextshold) {
 	case 2:
 	case 6:
 	case 0x10:
 	case 0x12:
-		StrId = 0x21;
+		StrId = STR_ARE_YOU_SURE_YOU_WANT_TO_BUY_THIS_ITEM__33;
 		break;
 	case 3:
 	case 7:
-		StrId = 0x25;
+		StrId = STR_ARE_YOU_SURE_YOU_WANT_TO_SELL_THIS_ITEM__37;
 		break;
 	case 4:
-		StrId = 0x24;
+		StrId = STR_ARE_YOU_SURE_YOU_WANT_TO_REPAIR_THIS_ITEM__36;
 		break;
 	default:
 		goto switchD_8006dc84_caseD_5;
 	case 8:
-		StrId = 0x23;
+		StrId = STR_ARE_YOU_SURE_YOU_WANT_TO_RECHARGE_THIS_ITEM__35;
 		break;
 	case 0xd:
-		StrId = 0x116;
+		StrId = STR_DO_WE_HAVE_A_DEAL__278;
 		break;
 	case 0x11:
-		StrId = 0x22;
+		StrId = STR_ARE_YOU_SURE_YOU_WANT_TO_IDENTIFY_THIS_ITEM__34;
 	}
 	str = GetStr__Fi(StrId);
-	strcpy(&tempstr,str);
+	strcpy(tempstr,str);
 switchD_8006dc84_caseD_5:
-	AddSText__FiiUcPccUc(0,0xe,'\x01',&tempstr,0,0);
-	str = GetStr__Fi(0x4e7);
+	AddSText__FiiUcPccUc(0,0xe,'\x01',tempstr,0,0);
+	str = GetStr__Fi(STR_YES_1255);
 	AddSText__FiiUcPccUc(0,0x11,'\x01',str,0,1);
-	str = GetStr__Fi(0x2c9);
+	str = GetStr__Fi(STR_NO_713);
 	AddSText__FiiUcPccUc(0,0x12,'\x01',str,0,1);
 	return;
 }
@@ -2727,27 +2696,27 @@ void S_StartBoy__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x4d8);
+	str = GetStr__Fi(STR_WIRT_THE_PEG_LEGGED_BOY_1240);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
 	AddSLine__Fi(3);
 	if (_boyitem[StorePlrNo]._itype == -1) {
-		str = GetStr__Fi(0x42d);
+		str = GetStr__Fi(STR_TALK_TO_WIRT_1069);
 		AddSText__FiiUcPccUc(0,8,'\x01',str,1,1);
-		str = GetStr__Fi(0x38c);
+		str = GetStr__Fi(STR_SAY_GOODBYE_908);
 		y = 0xc;
 	}
 	else {
-		str = GetStr__Fi(0x42d);
+		str = GetStr__Fi(STR_TALK_TO_WIRT_1069);
 		AddSText__FiiUcPccUc(0,6,'\x01',str,1,1);
-		str = GetStr__Fi(0x227);
+		str = GetStr__Fi(STR_I_HAVE_SOMETHING_FOR_SALE__551);
 		AddSText__FiiUcPccUc(0,8,'\x01',str,0,0);
-		str = GetStr__Fi(0x94);
+		str = GetStr__Fi(STR_BUT_IT_WILL_COST_50_GOLD_148);
 		AddSText__FiiUcPccUc(0,9,'\x01',str,0,0);
-		str = GetStr__Fi(0x22e);
+		str = GetStr__Fi(STR_JUST_TO_TAKE_A_LOOK___558);
 		AddSText__FiiUcPccUc(0,10,'\x01',str,0,0);
-		str = GetStr__Fi(0x4cb);
+		str = GetStr__Fi(STR_WHAT_HAVE_YOU_GOT__1227);
 		AddSText__FiiUcPccUc(0,0xc,'\x01',str,0,1);
-		str = GetStr__Fi(0x38c);
+		str = GetStr__Fi(STR_SAY_GOODBYE_908);
 		y = 0xd;
 	}
 	AddSText__FiiUcPccUc(0,y,'\x01',str,0,1);
@@ -2788,11 +2757,11 @@ void S_StartBBoy__Fv(void)
 	SItemListFlag = '\x02';
 	stextsize = '\x01';
 	stextscrl = '\0';
-	__format = GetStr__Fi(0x22a);
-	sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-	AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+	__format = GetStr__Fi(STR_I_HAVE_THIS_ITEM_FOR_SALE_NYOUR_GOLD____I_554);
+	sprintf(tempstr,__format,plr[myplr]._pGold);
+	AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 	AddSLine__Fi(2);
-	SetItemMinStats__FPC12PlayerStructP10ItemStruct(&plr + options_pad,_boyitem + StorePlrNo);
+	SetItemMinStats__FPC12PlayerStructP10ItemStruct(plr + options_pad,_boyitem + StorePlrNo);
 	clr = (uint)(_boyitem[StorePlrNo]._iMagical != '\0');
 	if (_boyitem[StorePlrNo]._iStatFlag == '\0') {
 		clr = 2;
@@ -2838,27 +2807,27 @@ void S_StartHealer__Fv(void)
 	char *str;
 	long lVar2;
 	
-	if ((&plr)[myplr]._pHitPoints != (&plr)[myplr]._pMaxHP) {
+	if (plr[myplr]._pHitPoints != plr[myplr]._pMaxHP) {
 		PlaySFX__Fi(IS_CAST8);
 		iVar1 = myplr;
-		lVar2 = (&plr)[myplr]._pMaxHPBase;
-		(&plr)[myplr]._pHitPoints = (&plr)[myplr]._pMaxHP;
-		(&plr)[iVar1]._pHPBase = lVar2;
+		lVar2 = plr[myplr]._pMaxHPBase;
+		plr[myplr]._pHitPoints = plr[myplr]._pMaxHP;
+		plr[iVar1]._pHPBase = lVar2;
 	}
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x4ca);
+	str = GetStr__Fi(STR_WELCOME_TO_THE_1226);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x1b4);
+	str = GetStr__Fi(STR_HEALER_S_HOME_436);
 	AddSText__FiiUcPccUc(0,2,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,7,'\x01',str,3,0);
-	str = GetStr__Fi(0x42c);
+	str = GetStr__Fi(STR_TALK_TO_PEPIN_1068);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,1,1);
-	str = GetStr__Fi(0x96);
+	str = GetStr__Fi(STR_BUY_ITEMS_150);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
-	str = GetStr__Fi(0x23f);
+	str = GetStr__Fi(STR_LEAVE_HEALER_S_HOME_575);
 	AddSText__FiiUcPccUc(0,0xd,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -2989,9 +2958,9 @@ void S_StartHBuy__Fv(void)
 	stextsize = '\x01';
 	stextscrl = '\x01';
 	stextsval = 0;
-	__format = GetStr__Fi(0x228);
-	sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-	AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+	__format = GetStr__Fi(STR_I_HAVE_THESE_ITEMS_FOR_SALE_NYOUR_GOLD____I_552);
+	sprintf(tempstr,__format,plr[myplr]._pGold);
+	AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 	AddSLine__Fi(2);
 	S_ScrollHBuy__Fi(stextsval);
 	storenumh = 0;
@@ -3037,15 +3006,15 @@ void S_StartStory__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x477);
+	str = GetStr__Fi(STR_THE_TOWN_ELDER_1143);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,5,'\x01',str,3,0);
-	str = GetStr__Fi(0x427);
+	str = GetStr__Fi(STR_TALK_TO_CAIN_1063);
 	AddSText__FiiUcPccUc(0,7,'\x01',str,1,1);
-	str = GetStr__Fi(0x207);
+	str = GetStr__Fi(STR_IDENTIFY_AN_ITEM_519);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,0,1);
-	str = GetStr__Fi(0x38c);
+	str = GetStr__Fi(STR_SAY_GOODBYE_908);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	return;
@@ -3198,12 +3167,12 @@ void S_StartSIdentify__Fv(void)
 		*(undefined2 *)((int)&storehold._itype + iVar5) = 0xffff;
 		iVar5 = iVar5 + -0x6c;
 	} while (-1 < iVar5);
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[0]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[0]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3229,14 +3198,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xffffffff,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[0]._iVAdd1);
+							 plr[iVar5].InvBody[0]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 6);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 6);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[6]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[6]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3262,14 +3231,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffffe,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[6]._iVAdd1);
+							 plr[iVar5].InvBody[6]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 4);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 4);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[4]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[4]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3295,14 +3264,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffffd,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[4]._iVAdd1);
+							 plr[iVar5].InvBody[4]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 5);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 5);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[5]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[5]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3328,14 +3297,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffffc,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[5]._iVAdd1);
+							 plr[iVar5].InvBody[5]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 1);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 1);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[1]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[1]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3361,14 +3330,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffffb,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[1]._iVAdd1);
+							 plr[iVar5].InvBody[1]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 2);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 2);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[2]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[2]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3394,14 +3363,14 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffffa,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[2]._iVAdd1);
+							 plr[iVar5].InvBody[2]._iVAdd1);
 	}
-	uVar4 = IdItemOk__FP10ItemStruct((&plr)[myplr].InvBody + 3);
+	uVar4 = IdItemOk__FP10ItemStruct(plr[myplr].InvBody + 3);
 	iVar5 = myplr;
 	if (uVar4 != '\0') {
 		bVar1 = true;
-		pPVar2 = &plr + myplr;
-		piVar10 = &(&plr)[myplr].InvBody[3]._iSeed;
+		pPVar2 = plr + myplr;
+		piVar10 = &plr[myplr].InvBody[3]._iSeed;
 		piVar3 = (int *)&stack0xffffff80;
 		do {
 			piVar12 = piVar3;
@@ -3427,10 +3396,10 @@ void S_StartSIdentify__Fv(void)
 																						 CONCAT492(0xfffffff9,
 																											 CONCAT848(in_stack_ffffff88,
 																																 CONCAT44(local_7c,local_80))))),
-							 (&plr)[iVar5].InvBody[3]._iVAdd1);
+							 plr[iVar5].InvBody[3]._iVAdd1);
 	}
 	iVar5 = 0;
-	if (0 < (&plr)[myplr]._pNumInv) {
+	if (0 < plr[myplr]._pNumInv) {
 		iVar6 = 0;
 		do {
 			uVar4 = IdItemOk__FP10ItemStruct((ItemStruct *)(myplr * 0x19e8 + -0x7ff25624 + iVar6));
@@ -3466,23 +3435,23 @@ void S_StartSIdentify__Fv(void)
 			}
 			iVar5 = iVar5 + 1;
 			iVar6 = iVar6 + 0x6c;
-		} while (iVar5 < (&plr)[myplr]._pNumInv);
+		} while (iVar5 < plr[myplr]._pNumInv);
 	}
 	if (bVar1) {
 		stextsval = 0;
-		stextsmax = (&plr)[myplr]._pNumInv;
+		stextsmax = plr[myplr]._pNumInv;
 		stextscrl = '\x01';
-		__format = GetStr__Fi(0x209);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_IDENTIFY_WHICH_ITEM__NYOUR_GOLD____I_521);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 		S_ScrollSSell__Fi(stextsval);
 	}
 	else {
 		stextscrl = '\0';
-		__format = GetStr__Fi(0x4ec);
-		sprintf(&tempstr,__format,(&plr)[myplr]._pGold);
-		AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+		__format = GetStr__Fi(STR_YOU_HAVE_NOTHING_TO_IDENTIFY_NYOUR_GOLD____I_1260);
+		sprintf(tempstr,__format,plr[myplr]._pGold);
+		AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 		AddSLine__Fi(2);
 	}
 	return;
@@ -3523,23 +3492,22 @@ void S_StartIdShow__Fv(void)
 	SItemListFlag = '\0';
 	stextscrl = '\0';
 	ClearSText__Fii(5,0x17);
-	cVar1 = (&plr)[myplr].HoldItem._iMagical;
+	cVar1 = plr[myplr].HoldItem._iMagical;
 	clr = (uint)(cVar1 != '\0');
-	if ((&plr)[myplr].HoldItem._iStatFlag == '\0') {
+	if (plr[myplr].HoldItem._iStatFlag == '\0') {
 		clr = 2;
 	}
 	if (cVar1 == '\x02') {
 		clr = 3;
 	}
-	str = GetStr__Fi(0x483);
+	str = GetStr__Fi(STR_THIS_ITEM_IS__1155);
 	AddSText__FiiUcPccUc(0,5,'\x01',str,0,0);
-	str = MakeItemStr__FP10ItemStructUsUs
-									(&(&plr)[myplr].HoldItem,(&plr)[myplr].HoldItem._iIName,0x100);
+	str = MakeItemStr__FP10ItemStructUsUs(&plr[myplr].HoldItem,plr[myplr].HoldItem._iIName,0x100);
 	AddSText__FiiUcPccUc(0xc,8,'\0',str,clr,0);
 	AddSTextVal__Fii(8,0);
 	iVar2 = GetWrap__5CFontPcP4RECT(&MediumFont,str,&StoreBackRectClipper);
-	PrintStoreItem__FPC10ItemStructic(&(&plr)[myplr].HoldItem,iVar2 + 8,(char)clr);
-	str = GetStr__Fi(0x108);
+	PrintStoreItem__FPC10ItemStructic(&plr[myplr].HoldItem,iVar2 + 8,(char)clr);
+	str = GetStr__Fi(STR_DONE_264);
 	AddSText__FiiUcPccUc(0,0xf,'\x01',str,0,1);
 	OffsetSTextY__Fii(1,-4);
 	return;
@@ -3586,18 +3554,18 @@ void S_StartTalk__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	__format = GetStr__Fi(0x42e);
+	__format = GetStr__Fi(STR_TALK_TO__S_1070);
 	y = 0;
 	pcVar1 = GetStr__Fi(talkname[talker]);
-	sprintf(&tempstr,__format,pcVar1);
-	AddSText__FiiUcPccUc(0,1,'\x01',&tempstr,3,0);
+	sprintf(tempstr,__format,pcVar1);
+	AddSText__FiiUcPccUc(0,1,'\x01',tempstr,3,0);
 	AddSLine__Fi(3);
 	iVar4 = 0;
 	iVar3 = 0;
 	piVar2 = &Qtalklist + talker * 0x10;
 	do {
-		if ((((&quests._qactive)[iVar3] == '\x02') && (*piVar2 != -1)) &&
-			 ((&quests._qlog)[iVar3] != '\0')) {
+		if ((((&quests[0]._qactive)[iVar3] == '\x02') && (*piVar2 != -1)) &&
+			 ((&quests[0]._qlog)[iVar3] != '\0')) {
 			iVar4 = iVar4 + 1;
 		}
 		piVar2 = piVar2 + 1;
@@ -3609,9 +3577,9 @@ void S_StartTalk__Fv(void)
 	iVar6 = 0;
 	iVar3 = 0;
 	do {
-		if ((((&quests._qactive)[iVar3] == '\x02') && ((&Qtalklist)[talker * 0x10 + iVar5] != -1)) &&
-			 ((&quests._qlog)[iVar3] != '\0')) {
-			__format = GetStr__Fi(*(int *)((int)&questlist[0]._qlstr + iVar6));
+		if ((((&quests[0]._qactive)[iVar3] == '\x02') && ((&Qtalklist)[talker * 0x10 + iVar5] != -1)) &&
+			 ((&quests[0]._qlog)[iVar3] != '\0')) {
+			__format = GetStr__Fi(*(text_strs *)((int)&questlist[0]._qlstr + iVar6));
 			AddSText__FiiUcPccUc(0,y,'\x01',__format,0,1);
 			y = y + 1;
 		}
@@ -3619,7 +3587,7 @@ void S_StartTalk__Fv(void)
 		iVar5 = iVar5 + 1;
 		iVar3 = iVar3 + 0x14;
 	} while (iVar5 < 0x10);
-	__format = GetStr__Fi(0x199);
+	__format = GetStr__Fi(STR_GOSSIP_409);
 	AddSText__FiiUcPccUc(0,-(iVar4 >> 1) + 8,'\x01',__format,1,1);
 	return;
 }
@@ -3652,15 +3620,15 @@ void S_StartTavern__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x4ca);
+	str = GetStr__Fi(STR_WELCOME_TO_THE_1226);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x371);
+	str = GetStr__Fi(STR_RISING_SUN_881);
 	AddSText__FiiUcPccUc(0,2,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,7,'\x01',str,3,0);
-	str = GetStr__Fi(0x42b);
+	str = GetStr__Fi(STR_TALK_TO_OGDEN_1067);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,1,1);
-	str = GetStr__Fi(0x242);
+	str = GetStr__Fi(STR_LEAVE_THE_TAVERN_578);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -3695,13 +3663,13 @@ void S_StartBarMaid__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x183);
+	str = GetStr__Fi(STR_GILLIAN_387);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,7,'\x01',str,3,0);
-	str = GetStr__Fi(0x429);
+	str = GetStr__Fi(STR_TALK_TO_GILLIAN_1065);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,1,1);
-	str = GetStr__Fi(0x38c);
+	str = GetStr__Fi(STR_SAY_GOODBYE_908);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -3736,13 +3704,13 @@ void S_StartDrunk__Fv(void)
 	SItemListFlag = '\0';
 	stextsize = '\0';
 	stextscrl = '\0';
-	str = GetStr__Fi(0x13e);
+	str = GetStr__Fi(STR_FARNHAM_THE_DRUNK_318);
 	AddSText__FiiUcPccUc(0,1,'\x01',str,3,0);
-	str = GetStr__Fi(0x4df);
+	str = GetStr__Fi(STR_WOULD_YOU_LIKE_TO__1247);
 	AddSText__FiiUcPccUc(0,7,'\x01',str,3,0);
-	str = GetStr__Fi(0x428);
+	str = GetStr__Fi(STR_TALK_TO_FARNHAM_1064);
 	AddSText__FiiUcPccUc(0,9,'\x01',str,1,1);
-	str = GetStr__Fi(0x38c);
+	str = GetStr__Fi(STR_SAY_GOODBYE_908);
 	AddSText__FiiUcPccUc(0,0xb,'\x01',str,0,1);
 	AddSLine__Fi(3);
 	storenumh = 0x14;
@@ -3934,7 +3902,7 @@ void DrawStoreHelpText__Fv(void)
 	case 0x14:
 	case 0x15:
 	case 0x16:
-		Str = GetStr__Fi(0x4e6);
+		Str = GetStr__Fi(STR___SELECT_____BACK_1254);
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 							(&MediumFont,0,0xde,Str,JustCentre,(RECT *)0x0,(uint)WHITER,(uint)WHITEG,(uint)WHITEB)
 		;
@@ -4431,7 +4399,7 @@ void SetGoldCurs__Fii(int pnum,int i)
 	uchar uVar1;
 	int iVar2;
 	
-	iVar2 = (&plr)[pnum].InvList[i]._ivalue;
+	iVar2 = plr[pnum].InvList[i]._ivalue;
 	if (iVar2 < 0x9c4) {
 		uVar1 = '\x04';
 		if (1000 < iVar2) {
@@ -4441,7 +4409,7 @@ void SetGoldCurs__Fii(int pnum,int i)
 	else {
 		uVar1 = '\x06';
 	}
-	(&plr)[pnum].InvList[i]._iCurs = uVar1;
+	plr[pnum].InvList[i]._iCurs = uVar1;
 	return;
 }
 
@@ -4471,7 +4439,7 @@ void SetSpdbarGoldCurs__Fii(int pnum,int i)
 	uchar uVar1;
 	int iVar2;
 	
-	iVar2 = (&plr)[pnum].SpdList[i]._ivalue;
+	iVar2 = plr[pnum].SpdList[i]._ivalue;
 	if (iVar2 < 0x9c4) {
 		uVar1 = '\x04';
 		if (1000 < iVar2) {
@@ -4481,7 +4449,7 @@ void SetSpdbarGoldCurs__Fii(int pnum,int i)
 	else {
 		uVar1 = '\x06';
 	}
-	(&plr)[pnum].SpdList[i]._iCurs = uVar1;
+	plr[pnum].SpdList[i]._iCurs = uVar1;
 	return;
 }
 
@@ -4511,121 +4479,122 @@ void TakePlrsMoney__Fl(long cost)
 
 {
 	int pnum;
-	undefined *puVar1;
-	int iVar2;
-	int i;
-	int pnum_00;
+	long lVar1;
+	undefined *puVar2;
+	int iVar3;
+	int iv;
+	int iVar4;
 	
-	i = 0;
-	pnum = FUN_80160b64(myplr);
-	pnum_00 = 0;
-	(&plr)[myplr]._pGold = pnum - cost;
+	iv = 0;
+	lVar1 = CalculateGold__Fi(myplr);
+	iVar4 = 0;
+	plr[myplr]._pGold = lVar1 - cost;
 	do {
 		pnum = myplr;
 		if (cost < 1) {
 			return;
 		}
-		if (*(short *)((int)&(&plr)[myplr].SpdList[0]._itype + pnum_00) == 0xb) {
-			puVar1 = *(undefined **)((int)&(&plr)[myplr].SpdList[0]._ivalue + pnum_00);
-			if (puVar1 != &DAT_00001388) {
-				if (cost < (int)puVar1) {
-					*(undefined **)((int)&(&plr)[myplr].SpdList[0]._ivalue + pnum_00) = puVar1 + -cost;
-					SetSpdbarGoldCurs__Fii(pnum,i);
+		if (*(short *)((int)&plr[myplr].SpdList[0]._itype + iVar4) == 0xb) {
+			puVar2 = *(undefined **)((int)&plr[myplr].SpdList[0]._ivalue + iVar4);
+			if (puVar2 != &DAT_00001388) {
+				if (cost < (int)puVar2) {
+					*(undefined **)((int)&plr[myplr].SpdList[0]._ivalue + iVar4) = puVar2 + -cost;
+					SetSpdbarGoldCurs__Fii(pnum,iv);
 					cost = 0;
 				}
 				else {
-					cost = cost - (int)puVar1;
-					FUN_8015d9ac(myplr,i);
-					pnum_00 = -0x6c;
-					i = -1;
+					cost = cost - (int)puVar2;
+					RemoveSpdBarItem__Fii(myplr,iv);
+					iVar4 = -0x6c;
+					iv = -1;
 				}
 			}
 		}
-		i = i + 1;
-		pnum_00 = pnum_00 + 0x6c;
-	} while (i < 8);
-	pnum = 0;
+		iv = iv + 1;
+		iVar4 = iVar4 + 0x6c;
+	} while (iv < 8);
+	iv = 0;
 	if (0 < cost) {
-		i = 0;
+		iVar4 = 0;
 		do {
-			pnum_00 = myplr;
+			pnum = myplr;
 			if (cost < 1) {
 				return;
 			}
-			if (*(short *)((int)&(&plr)[myplr].SpdList[0]._itype + i) == 0xb) {
-				iVar2 = *(int *)((int)&(&plr)[myplr].SpdList[0]._ivalue + i);
-				if (cost < iVar2) {
-					*(int *)((int)&(&plr)[myplr].SpdList[0]._ivalue + i) = iVar2 - cost;
-					SetSpdbarGoldCurs__Fii(pnum_00,pnum);
+			if (*(short *)((int)&plr[myplr].SpdList[0]._itype + iVar4) == 0xb) {
+				iVar3 = *(int *)((int)&plr[myplr].SpdList[0]._ivalue + iVar4);
+				if (cost < iVar3) {
+					*(int *)((int)&plr[myplr].SpdList[0]._ivalue + iVar4) = iVar3 - cost;
+					SetSpdbarGoldCurs__Fii(pnum,iv);
 					cost = 0;
 				}
 				else {
-					cost = cost - iVar2;
-					FUN_8015d9ac(myplr,pnum);
-					i = -0x6c;
-					pnum = -1;
+					cost = cost - iVar3;
+					RemoveSpdBarItem__Fii(myplr,iv);
+					iVar4 = -0x6c;
+					iv = -1;
 				}
 			}
-			pnum = pnum + 1;
-			i = i + 0x6c;
-		} while (pnum < 8);
+			iv = iv + 1;
+			iVar4 = iVar4 + 0x6c;
+		} while (iv < 8);
 		if (0 < cost) {
-			pnum = 0;
-			if (0 < (&plr)[myplr]._pNumInv) {
-				i = 0;
+			iv = 0;
+			if (0 < plr[myplr]._pNumInv) {
+				iVar4 = 0;
 				do {
-					pnum_00 = myplr;
+					pnum = myplr;
 					if (cost < 1) {
 						return;
 					}
-					if (*(short *)((int)&(&plr)[myplr].InvList[0]._itype + i) == 0xb) {
-						puVar1 = *(undefined **)((int)&(&plr)[myplr].InvList[0]._ivalue + i);
-						if (puVar1 != &DAT_00001388) {
-							if (cost < (int)puVar1) {
-								*(undefined **)((int)&(&plr)[myplr].InvList[0]._ivalue + i) = puVar1 + -cost;
-								SetGoldCurs__Fii(pnum_00,pnum);
+					if (*(short *)((int)&plr[myplr].InvList[0]._itype + iVar4) == 0xb) {
+						puVar2 = *(undefined **)((int)&plr[myplr].InvList[0]._ivalue + iVar4);
+						if (puVar2 != &DAT_00001388) {
+							if (cost < (int)puVar2) {
+								*(undefined **)((int)&plr[myplr].InvList[0]._ivalue + iVar4) = puVar2 + -cost;
+								SetGoldCurs__Fii(pnum,iv);
 								cost = 0;
 							}
 							else {
-								cost = cost - (int)puVar1;
-								FUN_8015d6fc(myplr,pnum);
-								i = -0x6c;
-								pnum = -1;
+								cost = cost - (int)puVar2;
+								RemoveInvItem__Fii(myplr,iv);
+								iVar4 = -0x6c;
+								iv = -1;
 							}
 						}
 					}
-					pnum = pnum + 1;
-					i = i + 0x6c;
-				} while (pnum < (&plr)[myplr]._pNumInv);
+					iv = iv + 1;
+					iVar4 = iVar4 + 0x6c;
+				} while (iv < plr[myplr]._pNumInv);
 				if (cost < 1) {
 					return;
 				}
 			}
-			pnum = 0;
-			if (0 < (&plr)[myplr]._pNumInv) {
-				i = 0;
+			iv = 0;
+			if (0 < plr[myplr]._pNumInv) {
+				iVar4 = 0;
 				do {
-					pnum_00 = myplr;
+					pnum = myplr;
 					if (cost < 1) {
 						return;
 					}
-					if (*(short *)((int)&(&plr)[myplr].InvList[0]._itype + i) == 0xb) {
-						iVar2 = *(int *)((int)&(&plr)[myplr].InvList[0]._ivalue + i);
-						if (cost < iVar2) {
-							*(int *)((int)&(&plr)[myplr].InvList[0]._ivalue + i) = iVar2 - cost;
-							SetGoldCurs__Fii(pnum_00,pnum);
+					if (*(short *)((int)&plr[myplr].InvList[0]._itype + iVar4) == 0xb) {
+						iVar3 = *(int *)((int)&plr[myplr].InvList[0]._ivalue + iVar4);
+						if (cost < iVar3) {
+							*(int *)((int)&plr[myplr].InvList[0]._ivalue + iVar4) = iVar3 - cost;
+							SetGoldCurs__Fii(pnum,iv);
 							cost = 0;
 						}
 						else {
-							cost = cost - iVar2;
-							FUN_8015d6fc(myplr,pnum);
-							i = -0x6c;
-							pnum = -1;
+							cost = cost - iVar3;
+							RemoveInvItem__Fii(myplr,iv);
+							iVar4 = -0x6c;
+							iv = -1;
 						}
 					}
-					pnum = pnum + 1;
-					i = i + 0x6c;
-				} while (pnum < (&plr)[myplr]._pNumInv);
+					iv = iv + 1;
+					iVar4 = iVar4 + 0x6c;
+				} while (iv < plr[myplr]._pNumInv);
 			}
 		}
 	}
@@ -4669,9 +4638,9 @@ void SmithBuyItem__Fv(void)
 	undefined4 *puVar10;
 	int iVar11;
 	
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
-	if ((&plr)[myplr].HoldItem._iMagical == '\0') {
-		(&plr)[myplr].HoldItem._iIdentified = '\0';
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
+	if (plr[myplr].HoldItem._iMagical == '\0') {
+		plr[myplr].HoldItem._iIdentified = '\0';
 	}
 	StoreAutoPlace__Fv();
 	iVar4 = stextlhold - stextup;
@@ -4747,16 +4716,16 @@ void S_SBuyEnter__Fv(void)
 
 {
 	ItemStruct *pIVar1;
-	int iVar2;
-	uint uVar3;
+	uchar uVar2;
+	int ii;
+	int iVar3;
 	int iVar4;
-	int iVar5;
 	char s;
+	int iVar5;
 	int iVar6;
-	int iVar7;
+	ItemStruct *pIVar7;
 	ItemStruct *pIVar8;
 	ItemStruct *pIVar9;
-	ItemStruct *pIVar10;
 	
 	if (SmithItemCount == 0) {
 		StartStore__Fc('\x01');
@@ -4766,61 +4735,61 @@ void S_SBuyEnter__Fv(void)
 		stextlhold = stextsel;
 		stextvhold = stextsval;
 		if (SItemListFlag == '\x01') {
-			iVar2 = stextsel - stextup;
-			if (iVar2 < 0) {
-				iVar2 = iVar2 + 3;
+			ii = stextsel - stextup;
+			if (ii < 0) {
+				ii = ii + 3;
 			}
-			iVar2 = iVar2 >> 2;
+			ii = ii >> 2;
 		}
 		else {
-			iVar2 = stextsel - stextup;
-			if (iVar2 < 0) {
-				iVar2 = iVar2 + 7;
+			ii = stextsel - stextup;
+			if (ii < 0) {
+				ii = ii + 7;
 			}
-			iVar2 = iVar2 >> 3;
+			ii = ii >> 3;
 		}
-		iVar2 = iVar2 + stextsval;
-		if ((&plr)[myplr]._pGold < (&_smithitem)[StorePlrNo * 0x14 + iVar2]._iIvalue) {
+		ii = ii + stextsval;
+		if (plr[myplr]._pGold < (&_smithitem)[StorePlrNo * 0x14 + ii]._iIvalue) {
 			StartStore__Fc('\t');
 		}
 		else {
-			iVar5 = StorePlrNo * 0x14;
-			pIVar9 = &_smithitem + iVar5 + iVar2;
-			pIVar1 = &(&plr)[myplr].HoldItem;
+			iVar4 = StorePlrNo * 0x14;
+			pIVar8 = &_smithitem + iVar4 + ii;
+			pIVar1 = &plr[myplr].HoldItem;
 			do {
-				pIVar10 = pIVar1;
-				pIVar8 = pIVar9;
-				iVar4 = pIVar8->_iVMult1;
-				iVar6 = pIVar8->_iVAdd2;
-				iVar7 = pIVar8->_iVMult2;
-				pIVar10->_iVAdd1 = pIVar8->_iVAdd1;
-				pIVar10->_iVMult1 = iVar4;
-				pIVar10->_iVAdd2 = iVar6;
-				pIVar10->_iVMult2 = iVar7;
-				pIVar9 = (ItemStruct *)&pIVar8->_iSeed;
-				pIVar1 = (ItemStruct *)&pIVar10->_iSeed;
-			} while (pIVar9 != (ItemStruct *)&(&_smithitem)[iVar5 + iVar2]._iSufPower);
-			iVar5 = pIVar8->_ivalue;
-			iVar4 = pIVar8->_iIvalue;
-			((ItemStruct *)&pIVar10->_iSeed)->_iVAdd1 = pIVar9->_iVAdd1;
-			pIVar10->_ivalue = iVar5;
-			pIVar10->_iIvalue = iVar4;
-			SellIdx = iVar2;
-			SetCursor__Fi((uint)(&plr)[myplr].HoldItem._iCurs + 0xc);
-			iVar2 = 0;
+				pIVar9 = pIVar1;
+				pIVar7 = pIVar8;
+				iVar3 = pIVar7->_iVMult1;
+				iVar5 = pIVar7->_iVAdd2;
+				iVar6 = pIVar7->_iVMult2;
+				pIVar9->_iVAdd1 = pIVar7->_iVAdd1;
+				pIVar9->_iVMult1 = iVar3;
+				pIVar9->_iVAdd2 = iVar5;
+				pIVar9->_iVMult2 = iVar6;
+				pIVar8 = (ItemStruct *)&pIVar7->_iSeed;
+				pIVar1 = (ItemStruct *)&pIVar9->_iSeed;
+			} while (pIVar8 != (ItemStruct *)&(&_smithitem)[iVar4 + ii]._iSufPower);
+			iVar4 = pIVar7->_ivalue;
+			iVar3 = pIVar7->_iIvalue;
+			((ItemStruct *)&pIVar9->_iSeed)->_iVAdd1 = pIVar8->_iVAdd1;
+			pIVar9->_ivalue = iVar4;
+			pIVar9->_iIvalue = iVar3;
+			SellIdx = ii;
+			SetCursor__Fi((uint)plr[myplr].HoldItem._iCurs + 0xc);
+			ii = 0;
 			do {
-				iVar5 = cursW;
+				iVar4 = cursW;
 				if (cursW < 0) {
-					iVar5 = cursW + 0xf;
+					iVar4 = cursW + 0xf;
 				}
-				iVar4 = cursH;
+				iVar3 = cursH;
 				if (cursH < 0) {
-					iVar4 = cursH + 0xf;
+					iVar3 = cursH + 0xf;
 				}
-				uVar3 = FUN_80159f24(myplr,iVar2,iVar5 >> 4,iVar4 >> 4,0);
-			} while ((iVar2 + 1 < 0x28) && (iVar2 = iVar2 + 1, (uVar3 & 0xff) == 0));
+				uVar2 = AutoPlace__FiiiiUc(myplr,ii,iVar4 >> 4,iVar3 >> 4,0);
+			} while ((ii + 1 < 0x28) && (ii = ii + 1, uVar2 == '\0'));
 			s = '\n';
-			if ((uVar3 & 0xff) != 0) {
+			if (uVar2 != '\0') {
 				s = '\v';
 			}
 			StartStore__Fc(s);
@@ -4863,9 +4832,9 @@ void SmithBuyPItem__Fv(void)
 	int iVar4;
 	int iVar5;
 	
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
-	if ((&plr)[myplr].HoldItem._iMagical == '\0') {
-		(&plr)[myplr].HoldItem._iIdentified = '\0';
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
+	if (plr[myplr].HoldItem._iMagical == '\0') {
+		plr[myplr].HoldItem._iIdentified = '\0';
 	}
 	StoreAutoPlace__Fv();
 	iVar1 = StorePlrNo;
@@ -4890,7 +4859,7 @@ void SmithBuyPItem__Fv(void)
 	(&_premiumitem)[StorePlrNo * 6 + iVar5]._itype = -1;
 	iVar5 = myplr;
 	_numpremium[iVar1] = _numpremium[iVar1] + -1;
-	SpawnPremium__Fi((int)(&plr)[iVar5]._pLevel);
+	SpawnPremium__Fi((int)plr[iVar5]._pLevel);
 	return;
 }
 
@@ -4931,79 +4900,79 @@ void S_SPBuyEnter__Fv(void)
 
 {
 	ItemStruct *pIVar1;
-	int iVar2;
-	uint uVar3;
-	int iVar4;
+	uchar uVar2;
+	int ii;
+	int iVar3;
 	char s;
+	int iVar4;
 	int iVar5;
-	int iVar6;
+	ItemStruct *pIVar6;
 	ItemStruct *pIVar7;
 	ItemStruct *pIVar8;
-	ItemStruct *pIVar9;
-	int iVar10;
+	int iVar9;
 	
 	stextshold = 0x12;
-	iVar2 = stextsel - stextup;
+	ii = stextsel - stextup;
 	stextlhold = stextsel;
 	stextvhold = stextsval;
-	if (iVar2 < 0) {
-		iVar2 = iVar2 + 7;
+	if (ii < 0) {
+		ii = ii + 7;
 	}
-	iVar5 = (iVar2 >> 3) + stextsval;
-	iVar2 = 0;
-	iVar10 = 0;
-	if (-1 < iVar5) {
-		iVar4 = StorePlrNo * 0x288;
+	iVar4 = (ii >> 3) + stextsval;
+	ii = 0;
+	iVar9 = 0;
+	if (-1 < iVar4) {
+		iVar3 = StorePlrNo * 0x288;
 		do {
-			if (*(short *)((int)&_premiumitem._itype + iVar4) != -1) {
-				iVar5 = iVar5 + -1;
-				iVar2 = iVar10;
+			if (*(short *)((int)&_premiumitem._itype + iVar3) != -1) {
+				iVar4 = iVar4 + -1;
+				ii = iVar9;
 			}
-			iVar4 = iVar4 + 0x6c;
-			iVar10 = iVar10 + 1;
-		} while (-1 < iVar5);
+			iVar3 = iVar3 + 0x6c;
+			iVar9 = iVar9 + 1;
+		} while (-1 < iVar4);
 	}
-	if ((&plr)[myplr]._pGold < (&_premiumitem)[StorePlrNo * 6 + iVar2]._iIvalue) {
+	if (plr[myplr]._pGold < (&_premiumitem)[StorePlrNo * 6 + ii]._iIvalue) {
 		StartStore__Fc('\t');
 	}
 	else {
-		iVar5 = StorePlrNo * 6;
-		pIVar8 = &_premiumitem + iVar5 + iVar2;
-		pIVar1 = &(&plr)[myplr].HoldItem;
+		iVar4 = StorePlrNo * 6;
+		pIVar7 = &_premiumitem + iVar4 + ii;
+		pIVar1 = &plr[myplr].HoldItem;
 		do {
-			pIVar9 = pIVar1;
-			pIVar7 = pIVar8;
-			iVar10 = pIVar7->_iVMult1;
-			iVar4 = pIVar7->_iVAdd2;
-			iVar6 = pIVar7->_iVMult2;
-			pIVar9->_iVAdd1 = pIVar7->_iVAdd1;
-			pIVar9->_iVMult1 = iVar10;
-			pIVar9->_iVAdd2 = iVar4;
-			pIVar9->_iVMult2 = iVar6;
-			pIVar8 = (ItemStruct *)&pIVar7->_iSeed;
-			pIVar1 = (ItemStruct *)&pIVar9->_iSeed;
-		} while (pIVar8 != (ItemStruct *)&(&_premiumitem)[iVar5 + iVar2]._iSufPower);
-		iVar5 = pIVar7->_ivalue;
-		iVar10 = pIVar7->_iIvalue;
-		((ItemStruct *)&pIVar9->_iSeed)->_iVAdd1 = pIVar8->_iVAdd1;
-		pIVar9->_ivalue = iVar5;
-		pIVar9->_iIvalue = iVar10;
-		SellIdx = iVar2;
-		SetCursor__Fi((uint)(&plr)[myplr].HoldItem._iCurs + 0xc);
-		iVar2 = 0;
+			pIVar8 = pIVar1;
+			pIVar6 = pIVar7;
+			iVar9 = pIVar6->_iVMult1;
+			iVar3 = pIVar6->_iVAdd2;
+			iVar5 = pIVar6->_iVMult2;
+			pIVar8->_iVAdd1 = pIVar6->_iVAdd1;
+			pIVar8->_iVMult1 = iVar9;
+			pIVar8->_iVAdd2 = iVar3;
+			pIVar8->_iVMult2 = iVar5;
+			pIVar7 = (ItemStruct *)&pIVar6->_iSeed;
+			pIVar1 = (ItemStruct *)&pIVar8->_iSeed;
+		} while (pIVar7 != (ItemStruct *)&(&_premiumitem)[iVar4 + ii]._iSufPower);
+		iVar4 = pIVar6->_ivalue;
+		iVar9 = pIVar6->_iIvalue;
+		((ItemStruct *)&pIVar8->_iSeed)->_iVAdd1 = pIVar7->_iVAdd1;
+		pIVar8->_ivalue = iVar4;
+		pIVar8->_iIvalue = iVar9;
+		SellIdx = ii;
+		SetCursor__Fi((uint)plr[myplr].HoldItem._iCurs + 0xc);
+		ii = 0;
 		do {
-			iVar5 = cursW;
+			iVar4 = cursW;
 			if (cursW < 0) {
-				iVar5 = cursW + 0xf;
+				iVar4 = cursW + 0xf;
 			}
-			iVar10 = cursH;
+			iVar9 = cursH;
 			if (cursH < 0) {
-				iVar10 = cursH + 0xf;
+				iVar9 = cursH + 0xf;
 			}
-			uVar3 = FUN_80159f24(myplr,iVar2,iVar5 >> 4,iVar10 >> 4,0);
-		} while ((iVar2 + 1 < 0x28) && (iVar2 = iVar2 + 1, (uVar3 & 0xff) == 0));
+			uVar2 = AutoPlace__FiiiiUc(myplr,ii,iVar4 >> 4,iVar9 >> 4,0);
+		} while ((ii + 1 < 0x28) && (ii = ii + 1, uVar2 == '\0'));
 		s = '\n';
-		if ((uVar3 & 0xff) != 0) {
+		if (uVar2 != '\0') {
 			s = '\v';
 		}
 		StartStore__Fc(s);
@@ -5066,7 +5035,7 @@ uchar StoreGoldFit__Fi(int idx)
 	SetCursor__Fi(1);
 	bVar1 = true;
 	if (iVar2 < iVar6) {
-		pcVar4 = (&plr)[myplr].InvGrid;
+		pcVar4 = plr[myplr].InvGrid;
 		do {
 			if (*pcVar4 == '\0') {
 				iVar2 = iVar2 + 1;
@@ -5074,11 +5043,11 @@ uchar StoreGoldFit__Fi(int idx)
 			pcVar4 = pcVar4 + 1;
 		} while ((int)pcVar4 < myplr * 0x19e8 + -0x7ff24518);
 		iVar6 = 0;
-		if (0 < (&plr)[myplr]._pNumInv) {
+		if (0 < plr[myplr]._pNumInv) {
 			iVar3 = 0;
 			do {
-				if (*(short *)((int)&(&plr)[myplr].InvList[0]._itype + iVar3) == 0xb) {
-					puVar5 = *(undefined **)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar3);
+				if (*(short *)((int)&plr[myplr].InvList[0]._itype + iVar3) == 0xb) {
+					puVar5 = *(undefined **)((int)&plr[myplr].InvList[0]._ivalue + iVar3);
 					if (puVar5 != &DAT_00001388) {
 						if ((int)(puVar5 + (int)puVar7) < 0x1389) {
 							puVar7 = (undefined *)0x0;
@@ -5090,7 +5059,7 @@ uchar StoreGoldFit__Fi(int idx)
 				}
 				iVar6 = iVar6 + 1;
 				iVar3 = iVar3 + 0x6c;
-			} while (iVar6 < (&plr)[myplr]._pNumInv);
+			} while (iVar6 < plr[myplr]._pNumInv);
 		}
 		iVar6 = (int)puVar7 / 5000;
 		if (puVar7 != (undefined *)(iVar6 * 5000)) {
@@ -5174,7 +5143,7 @@ void PlaceStoreGold__Fl(long v)
 	iVar9 = 0;
 	while ((iVar9 < 0x28 && (!bVar1))) {
 		if (*(char *)(iVar9 + myplr * 0x19e8 + -0x7ff24540) == '\0') {
-			i = (&plr)[myplr]._pNumInv;
+			i = plr[myplr]._pNumInv;
 			GetGoldSeed__FiP10ItemStruct(myplr,_golditem + StorePlrNo);
 			pIVar2 = _golditem + StorePlrNo;
 			pIVar7 = _golditem + StorePlrNo;
@@ -5199,10 +5168,10 @@ void PlaceStoreGold__Fl(long v)
 			piVar8[6] = iVar4;
 			pnum = myplr;
 			iVar4 = myplr * 0x19e8;
-			(&plr)[myplr]._pNumInv = (&plr)[myplr]._pNumInv + 1;
-			*(undefined *)(iVar4 + -0x7ff24540 + iVar9) = (char)(&plr)[pnum]._pNumInv;
+			plr[myplr]._pNumInv = plr[myplr]._pNumInv + 1;
+			*(undefined *)(iVar4 + -0x7ff24540 + iVar9) = (char)plr[pnum]._pNumInv;
 			pnum = myplr;
-			(&plr)[myplr].InvList[i]._ivalue = v;
+			plr[myplr].InvList[i]._ivalue = v;
 			SetGoldCurs__Fii(pnum,i);
 			bVar1 = true;
 		}
@@ -5243,6 +5212,7 @@ void StoreSellItem__Fv(void)
 	int i;
 	undefined *puVar3;
 	int pnum;
+	uint iv;
 	int iVar4;
 	ItemStruct *pIVar5;
 	ItemStruct *pIVar6;
@@ -5266,11 +5236,12 @@ void StoreSellItem__Fv(void)
 		iVar2 = iVar2 >> 2;
 	}
 	iVar2 = iVar2 + stextvhold;
-	if ((int)(&storehidx)[iVar2] < 0) {
-		FUN_8015d9ac(myplr,~(int)(&storehidx)[iVar2]);
+	iv = SEXT14((&storehidx)[iVar2]);
+	if ((int)iv < 0) {
+		RemoveSpdBarItem__Fii(myplr,~iv);
 	}
 	else {
-		FUN_8015d6fc(myplr);
+		RemoveInvItem__Fii(myplr,iv);
 	}
 	v = (undefined *)(&storehold)[iVar2]._iIvalue;
 	storenumh = storenumh + -1;
@@ -5304,8 +5275,8 @@ void StoreSellItem__Fv(void)
 			pIVar9 = pIVar9 + 1;
 		} while (iVar2 < storenumh);
 	}
-	iVar2 = (&plr)[myplr]._pNumInv;
-	*(undefined **)&(&plr)[myplr]._pGold = v + (&plr)[myplr]._pGold;
+	iVar2 = plr[myplr]._pNumInv;
+	*(undefined **)&plr[myplr]._pGold = v + plr[myplr]._pGold;
 	i = 0;
 	if (0 < iVar2) {
 		iVar2 = 0;
@@ -5314,23 +5285,23 @@ void StoreSellItem__Fv(void)
 			if ((int)v < 1) {
 				return;
 			}
-			if ((*(short *)((int)&(&plr)[myplr].InvList[0]._itype + iVar2) == 0xb) &&
-				 (puVar3 = *(undefined **)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar2),
+			if ((*(short *)((int)&plr[myplr].InvList[0]._itype + iVar2) == 0xb) &&
+				 (puVar3 = *(undefined **)((int)&plr[myplr].InvList[0]._ivalue + iVar2),
 				 puVar3 != &DAT_00001388)) {
 				if ((int)(puVar3 + (int)v) < 0x1389) {
-					*(undefined **)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar2) = puVar3 + (int)v;
+					*(undefined **)((int)&plr[myplr].InvList[0]._ivalue + iVar2) = puVar3 + (int)v;
 					SetGoldCurs__Fii(pnum,i);
 					v = (undefined *)0x0;
 				}
 				else {
 					v = puVar3 + (int)(v + -5000);
-					*(undefined4 *)((int)&(&plr)[myplr].InvList[0]._ivalue + iVar2) = 5000;
+					*(undefined4 *)((int)&plr[myplr].InvList[0]._ivalue + iVar2) = 5000;
 					SetGoldCurs__Fii(pnum,i);
 				}
 			}
 			i = i + 1;
 			iVar2 = iVar2 + 0x6c;
-		} while (i < (&plr)[myplr]._pNumInv);
+		} while (i < plr[myplr]._pNumInv);
 	}
 	if (0 < (int)v) {
 		while (5000 < (int)v) {
@@ -5385,7 +5356,7 @@ void S_SSellEnter__Fv(void)
 		iVar3 = iVar3 + 7;
 	}
 	SellIdx = (iVar3 >> 3) + stextsval;
-	pIVar1 = &(&plr)[myplr].HoldItem;
+	pIVar1 = &plr[myplr].HoldItem;
 	pIVar8 = &storehold + SellIdx;
 	do {
 		pIVar7 = pIVar8;
@@ -5442,7 +5413,7 @@ void SmithRepairItem__Fv(void)
 {
 	int iVar1;
 	
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
 	iVar1 = stextlhold - stextup;
 	if (iVar1 < 0) {
 		iVar1 = iVar1 + 7;
@@ -5452,20 +5423,20 @@ void SmithRepairItem__Fv(void)
 	iVar1 = (int)(&storehidx)[iVar1];
 	if (iVar1 < 0) {
 		if (iVar1 == -1) {
-			(&plr)[myplr].InvBody[0]._iDurability = (&plr)[myplr].InvBody[0]._iMaxDur;
+			plr[myplr].InvBody[0]._iDurability = plr[myplr].InvBody[0]._iMaxDur;
 		}
 		if (iVar1 == -2) {
-			(&plr)[myplr].InvBody[6]._iDurability = (&plr)[myplr].InvBody[6]._iMaxDur;
+			plr[myplr].InvBody[6]._iDurability = plr[myplr].InvBody[6]._iMaxDur;
 		}
 		if (iVar1 == -3) {
-			(&plr)[myplr].InvBody[4]._iDurability = (&plr)[myplr].InvBody[4]._iMaxDur;
+			plr[myplr].InvBody[4]._iDurability = plr[myplr].InvBody[4]._iMaxDur;
 		}
 		if (iVar1 == -4) {
-			(&plr)[myplr].InvBody[5]._iDurability = (&plr)[myplr].InvBody[5]._iMaxDur;
+			plr[myplr].InvBody[5]._iDurability = plr[myplr].InvBody[5]._iMaxDur;
 		}
 	}
 	else {
-		(&plr)[myplr].InvList[iVar1]._iDurability = (&plr)[myplr].InvList[iVar1]._iMaxDur;
+		plr[myplr].InvList[iVar1]._iDurability = plr[myplr].InvList[iVar1]._iMaxDur;
 	}
 	return;
 }
@@ -5512,7 +5483,7 @@ void S_SRepairEnter__Fv(void)
 		iVar2 = iVar2 + 7;
 	}
 	SellIdx = (iVar2 >> 3) + stextsval;
-	pIVar1 = &(&plr)[myplr].HoldItem;
+	pIVar1 = &plr[myplr].HoldItem;
 	pIVar7 = &storehold + SellIdx;
 	do {
 		pIVar6 = pIVar7;
@@ -5533,7 +5504,7 @@ void S_SRepairEnter__Fv(void)
 	pIVar5->_ivalue = iVar2;
 	pIVar5->_iIvalue = iVar3;
 	s = '\v';
-	if ((&plr)[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
+	if (plr[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
 		s = '\t';
 	}
 	StartStore__Fc(s);
@@ -5643,9 +5614,9 @@ void WitchBuyItem__Fv(void)
 	iVar12 = SellIdx;
 	if ((WStaffFlag == '\0') && (SellIdx < 3)) {
 		lVar2 = GetRndSeed__Fv();
-		(&plr)[myplr].HoldItem._iSeed = lVar2;
+		plr[myplr].HoldItem._iSeed = lVar2;
 	}
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
 	StoreAutoPlace__Fv();
 	if ((WStaffFlag != '\0') || (2 < iVar12)) {
 		if (iVar12 == 0x13) {
@@ -5717,16 +5688,16 @@ void S_WBuyEnter__Fv(void)
 
 {
 	ItemStruct *pIVar1;
-	int iVar2;
-	uint uVar3;
+	uchar uVar2;
+	int ii;
+	int iVar3;
 	int iVar4;
-	int iVar5;
 	char s;
+	int iVar5;
 	int iVar6;
-	int iVar7;
+	ItemStruct *pIVar7;
 	ItemStruct *pIVar8;
 	ItemStruct *pIVar9;
-	ItemStruct *pIVar10;
 	
 	if (_NoWitchItems[StorePlrNo] == 0) {
 		StartStore__Fc('\x05');
@@ -5736,61 +5707,61 @@ void S_WBuyEnter__Fv(void)
 		stextlhold = stextsel;
 		stextvhold = stextsval;
 		if (WStaffFlag == '\0') {
-			iVar2 = stextsel - stextup;
-			if (iVar2 < 0) {
-				iVar2 = iVar2 + 3;
+			ii = stextsel - stextup;
+			if (ii < 0) {
+				ii = ii + 3;
 			}
-			iVar2 = iVar2 >> 2;
+			ii = ii >> 2;
 		}
 		else {
-			iVar2 = stextsel - stextup;
-			if (iVar2 < 0) {
-				iVar2 = iVar2 + 7;
+			ii = stextsel - stextup;
+			if (ii < 0) {
+				ii = ii + 7;
 			}
-			iVar2 = iVar2 >> 3;
+			ii = ii >> 3;
 		}
-		iVar2 = iVar2 + stextsval + _WitchIdxOfs[StorePlrNo];
-		if ((&plr)[myplr]._pGold < (&_witchitem)[StorePlrNo * 0x14 + iVar2]._iIvalue) {
+		ii = ii + stextsval + _WitchIdxOfs[StorePlrNo];
+		if (plr[myplr]._pGold < (&_witchitem)[StorePlrNo * 0x14 + ii]._iIvalue) {
 			StartStore__Fc('\t');
 		}
 		else {
-			iVar5 = StorePlrNo * 0x14;
-			pIVar9 = &_witchitem + iVar5 + iVar2;
-			pIVar1 = &(&plr)[myplr].HoldItem;
+			iVar4 = StorePlrNo * 0x14;
+			pIVar8 = &_witchitem + iVar4 + ii;
+			pIVar1 = &plr[myplr].HoldItem;
 			do {
-				pIVar10 = pIVar1;
-				pIVar8 = pIVar9;
-				iVar4 = pIVar8->_iVMult1;
-				iVar6 = pIVar8->_iVAdd2;
-				iVar7 = pIVar8->_iVMult2;
-				pIVar10->_iVAdd1 = pIVar8->_iVAdd1;
-				pIVar10->_iVMult1 = iVar4;
-				pIVar10->_iVAdd2 = iVar6;
-				pIVar10->_iVMult2 = iVar7;
-				pIVar9 = (ItemStruct *)&pIVar8->_iSeed;
-				pIVar1 = (ItemStruct *)&pIVar10->_iSeed;
-			} while (pIVar9 != (ItemStruct *)&(&_witchitem)[iVar5 + iVar2]._iSufPower);
-			iVar5 = pIVar8->_ivalue;
-			iVar4 = pIVar8->_iIvalue;
-			((ItemStruct *)&pIVar10->_iSeed)->_iVAdd1 = pIVar9->_iVAdd1;
-			pIVar10->_ivalue = iVar5;
-			pIVar10->_iIvalue = iVar4;
-			SellIdx = iVar2;
-			SetCursor__Fi((uint)(&plr)[myplr].HoldItem._iCurs + 0xc);
-			iVar2 = 0;
+				pIVar9 = pIVar1;
+				pIVar7 = pIVar8;
+				iVar3 = pIVar7->_iVMult1;
+				iVar5 = pIVar7->_iVAdd2;
+				iVar6 = pIVar7->_iVMult2;
+				pIVar9->_iVAdd1 = pIVar7->_iVAdd1;
+				pIVar9->_iVMult1 = iVar3;
+				pIVar9->_iVAdd2 = iVar5;
+				pIVar9->_iVMult2 = iVar6;
+				pIVar8 = (ItemStruct *)&pIVar7->_iSeed;
+				pIVar1 = (ItemStruct *)&pIVar9->_iSeed;
+			} while (pIVar8 != (ItemStruct *)&(&_witchitem)[iVar4 + ii]._iSufPower);
+			iVar4 = pIVar7->_ivalue;
+			iVar3 = pIVar7->_iIvalue;
+			((ItemStruct *)&pIVar9->_iSeed)->_iVAdd1 = pIVar8->_iVAdd1;
+			pIVar9->_ivalue = iVar4;
+			pIVar9->_iIvalue = iVar3;
+			SellIdx = ii;
+			SetCursor__Fi((uint)plr[myplr].HoldItem._iCurs + 0xc);
+			ii = 0;
 			do {
-				iVar5 = cursW;
+				iVar4 = cursW;
 				if (cursW < 0) {
-					iVar5 = cursW + 0xf;
+					iVar4 = cursW + 0xf;
 				}
-				iVar4 = cursH;
+				iVar3 = cursH;
 				if (cursH < 0) {
-					iVar4 = cursH + 0xf;
+					iVar3 = cursH + 0xf;
 				}
-				uVar3 = FUN_8015a24c(myplr,iVar2,iVar5 >> 4,iVar4 >> 4,0);
-			} while ((iVar2 + 1 < 0x28) && (iVar2 = iVar2 + 1, (uVar3 & 0xff) == 0));
+				uVar2 = SpecialAutoPlace__FiiiiUc(myplr,ii,iVar4 >> 4,iVar3 >> 4,0);
+			} while ((ii + 1 < 0x28) && (ii = ii + 1, uVar2 == '\0'));
 			s = '\n';
-			if ((uVar3 & 0xff) != 0) {
+			if (uVar2 != '\0') {
 				s = '\v';
 			}
 			StartStore__Fc(s);
@@ -5853,7 +5824,7 @@ void S_WSellEnter__Fv(void)
 		SellIdx = SellIdx >> 3;
 	}
 	SellIdx = SellIdx + stextsval;
-	pIVar1 = &(&plr)[myplr].HoldItem;
+	pIVar1 = &plr[myplr].HoldItem;
 	pIVar8 = &storehold + SellIdx;
 	do {
 		pIVar7 = pIVar8;
@@ -5910,7 +5881,7 @@ void WitchRechargeItem__Fv(void)
 {
 	int iVar1;
 	
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
 	iVar1 = stextlhold - stextup;
 	if (iVar1 < 0) {
 		iVar1 = iVar1 + 7;
@@ -5919,10 +5890,10 @@ void WitchRechargeItem__Fv(void)
 	(&storehold)[iVar1]._iCharges = (&storehold)[iVar1]._iMaxCharges;
 	iVar1 = (int)(&storehidx)[iVar1];
 	if (iVar1 < 0) {
-		(&plr)[myplr].InvBody[4]._iCharges = (&plr)[myplr].InvBody[4]._iMaxCharges;
+		plr[myplr].InvBody[4]._iCharges = plr[myplr].InvBody[4]._iMaxCharges;
 	}
 	else {
-		(&plr)[myplr].InvList[iVar1]._iCharges = (&plr)[myplr].InvList[iVar1]._iMaxCharges;
+		plr[myplr].InvList[iVar1]._iCharges = plr[myplr].InvList[iVar1]._iMaxCharges;
 	}
 	CalcPlrInv__FiUc(myplr,'\x01');
 	return;
@@ -5970,7 +5941,7 @@ void S_WRechargeEnter__Fv(void)
 		iVar2 = iVar2 + 7;
 	}
 	SellIdx = (iVar2 >> 3) + stextsval;
-	pIVar1 = &(&plr)[myplr].HoldItem;
+	pIVar1 = &plr[myplr].HoldItem;
 	pIVar7 = &storehold + SellIdx;
 	do {
 		pIVar6 = pIVar7;
@@ -5991,7 +5962,7 @@ void S_WRechargeEnter__Fv(void)
 	pIVar5->_ivalue = iVar2;
 	pIVar5->_iIvalue = iVar3;
 	s = '\v';
-	if ((&plr)[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
+	if (plr[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
 		s = '\t';
 	}
 	StartStore__Fc(s);
@@ -6036,7 +6007,7 @@ void S_BoyEnter__Fv(void)
 		}
 	}
 	else {
-		if ((&plr)[myplr]._pGold < 0x32) {
+		if (plr[myplr]._pGold < 0x32) {
 			stextshold = stextsel;
 			stextlhold = stextsel;
 			stextvhold = stextsval;
@@ -6075,7 +6046,7 @@ void BoyBuyItem__Fv(void)
 {
 	int p;
 	
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
 	StoreAutoPlace__Fv();
 	p = myplr;
 	stextshold = 0xc;
@@ -6130,11 +6101,11 @@ void HealerBuyItem__Fv(void)
 	}
 	if (bVar1) {
 		lVar3 = GetRndSeed__Fv();
-		(&plr)[myplr].HoldItem._iSeed = lVar3;
+		plr[myplr].HoldItem._iSeed = lVar3;
 	}
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
-	if ((&plr)[myplr].HoldItem._iMagical == '\0') {
-		(&plr)[myplr].HoldItem._iIdentified = '\0';
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
+	if (plr[myplr].HoldItem._iMagical == '\0') {
+		plr[myplr].HoldItem._iIdentified = '\0';
 	}
 	StoreAutoPlace__Fv();
 	CalcPlrInv__FiUc(myplr,'\x01');
@@ -6214,63 +6185,62 @@ void S_BBuyEnter__Fv(void)
 	byte bVar1;
 	ItemStruct *pIVar2;
 	ItemStruct *pIVar3;
-	uint uVar4;
-	int iVar5;
+	uchar uVar4;
+	int ii;
 	char s;
+	int iVar5;
 	int iVar6;
-	int iVar7;
+	ItemStruct *pIVar7;
 	ItemStruct *pIVar8;
 	ItemStruct *pIVar9;
-	ItemStruct *pIVar10;
 	
 	if (stextsel == 5) {
 		stextlhold = stextsel;
 		stextshold = 0xd;
 		stextvhold = stextsval;
-		if ((&plr)[myplr]._pGold < _boyitem[StorePlrNo]._iIvalue + (_boyitem[StorePlrNo]._iIvalue >> 1))
-		{
+		if (plr[myplr]._pGold < _boyitem[StorePlrNo]._iIvalue + (_boyitem[StorePlrNo]._iIvalue >> 1)) {
 			StartStore__Fc('\t');
 		}
 		else {
 			pIVar2 = _boyitem + StorePlrNo;
-			pIVar9 = _boyitem + StorePlrNo;
-			pIVar3 = &(&plr)[myplr].HoldItem;
+			pIVar8 = _boyitem + StorePlrNo;
+			pIVar3 = &plr[myplr].HoldItem;
 			do {
-				pIVar10 = pIVar3;
-				pIVar8 = pIVar9;
-				iVar5 = pIVar8->_iVMult1;
-				iVar6 = pIVar8->_iVAdd2;
-				iVar7 = pIVar8->_iVMult2;
-				pIVar10->_iVAdd1 = pIVar8->_iVAdd1;
-				pIVar10->_iVMult1 = iVar5;
-				pIVar10->_iVAdd2 = iVar6;
-				pIVar10->_iVMult2 = iVar7;
-				pIVar9 = (ItemStruct *)&pIVar8->_iSeed;
-				pIVar3 = (ItemStruct *)&pIVar10->_iSeed;
-			} while (pIVar9 != (ItemStruct *)&pIVar2->_iSufPower);
-			iVar5 = pIVar8->_ivalue;
-			iVar6 = pIVar8->_iIvalue;
-			((ItemStruct *)&pIVar10->_iSeed)->_iVAdd1 = pIVar9->_iVAdd1;
-			pIVar10->_ivalue = iVar5;
-			pIVar10->_iIvalue = iVar6;
-			bVar1 = (&plr)[myplr].HoldItem._iCurs;
-			iVar5 = (&plr)[myplr].HoldItem._iIvalue;
-			(&plr)[myplr].HoldItem._iIvalue = iVar5 + (iVar5 >> 1);
+				pIVar9 = pIVar3;
+				pIVar7 = pIVar8;
+				ii = pIVar7->_iVMult1;
+				iVar5 = pIVar7->_iVAdd2;
+				iVar6 = pIVar7->_iVMult2;
+				pIVar9->_iVAdd1 = pIVar7->_iVAdd1;
+				pIVar9->_iVMult1 = ii;
+				pIVar9->_iVAdd2 = iVar5;
+				pIVar9->_iVMult2 = iVar6;
+				pIVar8 = (ItemStruct *)&pIVar7->_iSeed;
+				pIVar3 = (ItemStruct *)&pIVar9->_iSeed;
+			} while (pIVar8 != (ItemStruct *)&pIVar2->_iSufPower);
+			ii = pIVar7->_ivalue;
+			iVar5 = pIVar7->_iIvalue;
+			((ItemStruct *)&pIVar9->_iSeed)->_iVAdd1 = pIVar8->_iVAdd1;
+			pIVar9->_ivalue = ii;
+			pIVar9->_iIvalue = iVar5;
+			bVar1 = plr[myplr].HoldItem._iCurs;
+			ii = plr[myplr].HoldItem._iIvalue;
+			plr[myplr].HoldItem._iIvalue = ii + (ii >> 1);
 			SetCursor__Fi((uint)bVar1 + 0xc);
-			iVar5 = 0;
+			ii = 0;
 			do {
-				iVar6 = cursW;
+				iVar5 = cursW;
 				if (cursW < 0) {
-					iVar6 = cursW + 0xf;
+					iVar5 = cursW + 0xf;
 				}
-				iVar7 = cursH;
+				iVar6 = cursH;
 				if (cursH < 0) {
-					iVar7 = cursH + 0xf;
+					iVar6 = cursH + 0xf;
 				}
-				uVar4 = FUN_80159f24(myplr,iVar5,iVar6 >> 4,iVar7 >> 4,0);
-			} while ((iVar5 + 1 < 0x28) && (iVar5 = iVar5 + 1, (uVar4 & 0xff) == 0));
+				uVar4 = AutoPlace__FiiiiUc(myplr,ii,iVar5 >> 4,iVar6 >> 4,0);
+			} while ((ii + 1 < 0x28) && (ii = ii + 1, uVar4 == '\0'));
 			s = '\n';
-			if ((uVar4 & 0xff) != 0) {
+			if (uVar4 != '\0') {
 				s = '\v';
 			}
 			StartStore__Fc(s);
@@ -6318,32 +6288,32 @@ void StoryIdItem__Fv(void)
 	iVar1 = (int)(&storehidx)[(iVar1 >> 3) + stextvhold];
 	if (iVar1 < 0) {
 		if (iVar1 == -1) {
-			(&plr)[myplr].InvBody[0]._iIdentified = '\x01';
+			plr[myplr].InvBody[0]._iIdentified = '\x01';
 		}
 		if (iVar1 == -2) {
-			(&plr)[myplr].InvBody[6]._iIdentified = '\x01';
+			plr[myplr].InvBody[6]._iIdentified = '\x01';
 		}
 		if (iVar1 == -3) {
-			(&plr)[myplr].InvBody[4]._iIdentified = '\x01';
+			plr[myplr].InvBody[4]._iIdentified = '\x01';
 		}
 		if (iVar1 == -4) {
-			(&plr)[myplr].InvBody[5]._iIdentified = '\x01';
+			plr[myplr].InvBody[5]._iIdentified = '\x01';
 		}
 		if (iVar1 == -5) {
-			(&plr)[myplr].InvBody[1]._iIdentified = '\x01';
+			plr[myplr].InvBody[1]._iIdentified = '\x01';
 		}
 		if (iVar1 == -6) {
-			(&plr)[myplr].InvBody[2]._iIdentified = '\x01';
+			plr[myplr].InvBody[2]._iIdentified = '\x01';
 		}
 		if (iVar1 == -7) {
-			(&plr)[myplr].InvBody[3]._iIdentified = '\x01';
+			plr[myplr].InvBody[3]._iIdentified = '\x01';
 		}
 	}
 	else {
-		(&plr)[myplr].InvList[iVar1]._iIdentified = '\x01';
+		plr[myplr].InvList[iVar1]._iIdentified = '\x01';
 	}
-	(&plr)[myplr].HoldItem._iIdentified = '\x01';
-	TakePlrsMoney__Fl((&plr)[myplr].HoldItem._iIvalue);
+	plr[myplr].HoldItem._iIdentified = '\x01';
+	TakePlrsMoney__Fl(plr[myplr].HoldItem._iIvalue);
 	CalcPlrInv__FiUc(myplr,'\x01');
 	return;
 }
@@ -6486,16 +6456,16 @@ void S_HBuyEnter__Fv(void)
 
 {
 	ItemStruct *pIVar1;
-	int iVar2;
-	uint uVar3;
+	uchar uVar2;
+	int ii;
+	int iVar3;
 	int iVar4;
-	int iVar5;
 	char s;
+	int iVar5;
 	int iVar6;
-	int iVar7;
+	ItemStruct *pIVar7;
 	ItemStruct *pIVar8;
 	ItemStruct *pIVar9;
-	ItemStruct *pIVar10;
 	
 	if (stextsel == 0x16) {
 		StartStore__Fc('\x0e');
@@ -6504,53 +6474,53 @@ void S_HBuyEnter__Fv(void)
 	else {
 		stextshold = 0x10;
 		stextlhold = stextsel;
-		iVar2 = stextsel - stextup;
+		ii = stextsel - stextup;
 		stextvhold = stextsval;
-		if (iVar2 < 0) {
-			iVar2 = iVar2 + 3;
+		if (ii < 0) {
+			ii = ii + 3;
 		}
-		iVar2 = (iVar2 >> 2) + stextsval;
-		if ((&plr)[myplr]._pGold < (&_healitem)[StorePlrNo * 0x14 + iVar2]._iIvalue) {
+		ii = (ii >> 2) + stextsval;
+		if (plr[myplr]._pGold < (&_healitem)[StorePlrNo * 0x14 + ii]._iIvalue) {
 			StartStore__Fc('\t');
 		}
 		else {
-			iVar5 = StorePlrNo * 0x14;
-			pIVar9 = &_healitem + iVar5 + iVar2;
-			pIVar1 = &(&plr)[myplr].HoldItem;
+			iVar4 = StorePlrNo * 0x14;
+			pIVar8 = &_healitem + iVar4 + ii;
+			pIVar1 = &plr[myplr].HoldItem;
 			do {
-				pIVar10 = pIVar1;
-				pIVar8 = pIVar9;
-				iVar4 = pIVar8->_iVMult1;
-				iVar6 = pIVar8->_iVAdd2;
-				iVar7 = pIVar8->_iVMult2;
-				pIVar10->_iVAdd1 = pIVar8->_iVAdd1;
-				pIVar10->_iVMult1 = iVar4;
-				pIVar10->_iVAdd2 = iVar6;
-				pIVar10->_iVMult2 = iVar7;
-				pIVar9 = (ItemStruct *)&pIVar8->_iSeed;
-				pIVar1 = (ItemStruct *)&pIVar10->_iSeed;
-			} while (pIVar9 != (ItemStruct *)&(&_healitem)[iVar5 + iVar2]._iSufPower);
-			iVar5 = pIVar8->_ivalue;
-			iVar4 = pIVar8->_iIvalue;
-			((ItemStruct *)&pIVar10->_iSeed)->_iVAdd1 = pIVar9->_iVAdd1;
-			pIVar10->_ivalue = iVar5;
-			pIVar10->_iIvalue = iVar4;
-			SellIdx = iVar2;
-			SetCursor__Fi((uint)(&plr)[myplr].HoldItem._iCurs + 0xc);
-			iVar2 = 0;
+				pIVar9 = pIVar1;
+				pIVar7 = pIVar8;
+				iVar3 = pIVar7->_iVMult1;
+				iVar5 = pIVar7->_iVAdd2;
+				iVar6 = pIVar7->_iVMult2;
+				pIVar9->_iVAdd1 = pIVar7->_iVAdd1;
+				pIVar9->_iVMult1 = iVar3;
+				pIVar9->_iVAdd2 = iVar5;
+				pIVar9->_iVMult2 = iVar6;
+				pIVar8 = (ItemStruct *)&pIVar7->_iSeed;
+				pIVar1 = (ItemStruct *)&pIVar9->_iSeed;
+			} while (pIVar8 != (ItemStruct *)&(&_healitem)[iVar4 + ii]._iSufPower);
+			iVar4 = pIVar7->_ivalue;
+			iVar3 = pIVar7->_iIvalue;
+			((ItemStruct *)&pIVar9->_iSeed)->_iVAdd1 = pIVar8->_iVAdd1;
+			pIVar9->_ivalue = iVar4;
+			pIVar9->_iIvalue = iVar3;
+			SellIdx = ii;
+			SetCursor__Fi((uint)plr[myplr].HoldItem._iCurs + 0xc);
+			ii = 0;
 			do {
-				iVar5 = cursW;
+				iVar4 = cursW;
 				if (cursW < 0) {
-					iVar5 = cursW + 0xf;
+					iVar4 = cursW + 0xf;
 				}
-				iVar4 = cursH;
+				iVar3 = cursH;
 				if (cursH < 0) {
-					iVar4 = cursH + 0xf;
+					iVar3 = cursH + 0xf;
 				}
-				uVar3 = FUN_8015a24c(myplr,iVar2,iVar5 >> 4,iVar4 >> 4,0);
-			} while ((iVar2 + 1 < 0x28) && (iVar2 = iVar2 + 1, (uVar3 & 0xff) == 0));
+				uVar2 = SpecialAutoPlace__FiiiiUc(myplr,ii,iVar4 >> 4,iVar3 >> 4,0);
+			} while ((ii + 1 < 0x28) && (ii = ii + 1, uVar2 == '\0'));
 			s = '\n';
-			if ((uVar3 & 0xff) != 0) {
+			if (uVar2 != '\0') {
 				s = '\v';
 			}
 			StartStore__Fc(s);
@@ -6654,7 +6624,7 @@ void S_SIDEnter__Fv(void)
 			iVar2 = iVar2 + 7;
 		}
 		SellIdx = (iVar2 >> 3) + stextsval;
-		pIVar1 = &(&plr)[myplr].HoldItem;
+		pIVar1 = &plr[myplr].HoldItem;
 		pIVar7 = &storehold + SellIdx;
 		do {
 			pIVar6 = pIVar7;
@@ -6675,7 +6645,7 @@ void S_SIDEnter__Fv(void)
 		pIVar5->_ivalue = iVar2;
 		pIVar5->_iIvalue = iVar3;
 		s = '\v';
-		if ((&plr)[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
+		if (plr[myplr]._pGold < (&storehold)[SellIdx]._iIvalue) {
 			s = '\t';
 		}
 		StartStore__Fc(s);
@@ -6755,8 +6725,8 @@ void S_TalkEnter__Fv(void)
 		iVar3 = 0;
 		piVar2 = &Qtalklist + talker * 0x10;
 		do {
-			if ((((&quests._qactive)[iVar3] == '\x02') && (*piVar2 != -1)) &&
-				 ((&quests._qlog)[iVar3] != '\0')) {
+			if ((((&quests[0]._qactive)[iVar3] == '\x02') && (*piVar2 != -1)) &&
+				 ((&quests[0]._qlog)[iVar3] != '\0')) {
 				iVar4 = iVar4 + 1;
 			}
 			piVar2 = piVar2 + 1;
@@ -6773,8 +6743,8 @@ void S_TalkEnter__Fv(void)
 			iVar4 = 0;
 			iVar5 = 0;
 			do {
-				if ((((&quests._qactive)[iVar5] == '\x02') && ((&Qtalklist)[talker * 0x10 + iVar4] != -1))
-					 && ((&quests._qlog)[iVar5] != '\0')) {
+				if ((((&quests[0]._qactive)[iVar5] == '\x02') && ((&Qtalklist)[talker * 0x10 + iVar4] != -1)
+						) && ((&quests[0]._qlog)[iVar5] != '\0')) {
 					if (iVar3 == stextsel) {
 						InitQTextMsg__Fi((&Qtalklist)[talker * 0x10 + iVar4]);
 					}

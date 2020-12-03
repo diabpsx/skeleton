@@ -363,8 +363,8 @@ void DrawSpeedBar__6GPanelP7PanelXYP12PlayerStruct(GPanel *this,PanelXY *XY,Play
 				 (puVar2 + this->GPanelOt)[-2] & 0xff000000 | (uint)pPVar5 & 0xffffff;
 		if ((&_SpdBeltSelFlag)[X] != '\0') {
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
-								(X_01 + _pcurr_inv[X] * 0x11 + 5,Y + 0xd,-0x60,'@',0xf0,0x20,0x60,0,(void *)0x0,
-								 this->GPanelOt + -1,&DAT_00000001,(void *)0x0,8);
+								(X_01 + _pcurr_inv[X] * 0x11 + 5,Y + 0xd,-0x60,'@',0xf0,0x20,0x60,0,0,
+								 this->GPanelOt + -1,1,0,8);
 		}
 	}
 	X_00 = 0;

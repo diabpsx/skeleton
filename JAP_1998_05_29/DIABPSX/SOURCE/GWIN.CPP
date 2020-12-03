@@ -47,8 +47,6 @@ void GRL_InitGwin__Fv(void)
 	/* end block 2 */
 	// End Line: 215
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 TDRFuncPtr_GRL_SetWindowProc__FPFUlUilUl_Ul
 GRL_SetWindowProc__FPFUlUilUl_Ul(TDRFuncPtr_GRL_SetWindowProc__FPFUlUilUl_Ul0NewProc NewProc)
 

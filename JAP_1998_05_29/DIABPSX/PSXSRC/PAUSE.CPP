@@ -204,7 +204,7 @@ int GetPausePad__Fv(void)
 				(ignore_buttons == (void *)0x0)) && (PadNum = 0, demo_pad_time == 0)) {
 			puVar4 = (undefined *)0x0;
 			while ((PadNum <= FePlayerNo && (!bVar1))) {
-				if ((&plr.plractive)[(int)puVar4] != '\0') {
+				if ((&plr[0].plractive)[(int)puVar4] != '\0') {
 					this = PAD_GetPad__FiUc(PadNum,'\0');
 					uVar2 = CheckActive__4CPad(this);
 					if (uVar2 == '\0') {
@@ -702,11 +702,9 @@ void MY_PausePrint__17CTempPauseMessageiiiP4RECT
 			iVar3 = GetStrWidth__5CFontPc(&MediumFont,Str);
 			iVar4 = (int)((0x100U - iVar3) + (0x100U - iVar3 >> 0x1f)) >> 1;
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
-								(iVar4 + 0x16,Y + 0x60,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,iVar2 + -1,
-								 &DAT_00000001,(void *)0x0,8);
+								(iVar4 + 0x16,Y + 0x60,-0x60,'@',0xf0,0x20,0x40,0,1,iVar2 + -1,1,0,8);
 			DrawSpinner__FiiUcUcUciiibiT8T8Uc
-								(iVar3 + iVar4 + 0x23,Y + 0x60,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,iVar2 + -1,
-								 &DAT_00000001,(void *)0x0,8);
+								(iVar3 + iVar4 + 0x23,Y + 0x60,-0x60,'@',0xf0,0x20,0x40,0,1,iVar2 + -1,1,0,8);
 			return;
 		}
 		Str = GetStr__Fi(Txt);
@@ -987,7 +985,7 @@ void PrintPaused__17CTempPauseMessage(CTempPauseMessage *this)
 		local_20.y = 0x70;
 		local_20.w = 0x40;
 		local_20.h = 0xf;
-		Str = GetStr__Fi(0x302);
+		Str = GetStr__Fi(STR_PAUSED_770);
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
 							(&MediumFont,0,0xb,Str,JustCentre,&local_20,0xff,0xff,0xff);
 		SetOTpos__5CFonti(&MediumFont,OT);

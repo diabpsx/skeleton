@@ -119,9 +119,9 @@ LAB_800675a0:
 	}
 	else {
 		if (gbMaxPlayers != '\x01') {
-			if (QuestStruct_800ddb6c._qvar1 == '\x02') {
+			if (quests[15]._qvar1 == '\x02') {
 				AddObject__Fiii(0x53,setpc_x * 2 + 0x14,setpc_y * 2 + 0x16);
-				QuestStruct_800ddb6c._qvar1 = '\x03';
+				quests[15]._qvar1 = '\x03';
 				if (deltaload == '\0') {
 					NetSendCmdQuest__FUcUc('\x01','\x0f');
 				}
@@ -129,51 +129,51 @@ LAB_800675a0:
 			goto LAB_800675a0;
 		}
 	}
-	if (((((currlevel == QuestStruct_800ddb6c._qlevel) && (setlevel == '\0')) &&
-			 (1 < QuestStruct_800ddb6c._qvar1)) && ((uint)QuestStruct_800ddb6c._qactive - 2 < 2)) &&
-		 ((QuestStruct_800ddb6c._qvar2 == '\0' || (QuestStruct_800ddb6c._qvar2 == '\x02')))) {
-		local_28 = QuestStruct_800ddb6c._qtx * 2 + 0x10;
-		local_24 = QuestStruct_800ddb6c._qty * 2 + 0x10;
+	if (((((currlevel == quests[15]._qlevel) && (setlevel == '\0')) && (1 < quests[15]._qvar1)) &&
+			((uint)quests[15]._qactive - 2 < 2)) &&
+		 ((quests[15]._qvar2 == '\0' || (quests[15]._qvar2 == '\x02')))) {
+		local_28 = quests[15]._qtx * 2 + 0x10;
+		local_24 = quests[15]._qty * 2 + 0x10;
 		CheckRPortalOK__FPiT0(&local_28,&local_24);
-		QuestStruct_800ddb6c._qtx = local_28;
-		QuestStruct_800ddb6c._qty = local_24;
-		FUN_80142a04(local_28,local_24,local_28,local_24,0,0x41,0,myplr,0,0);
-		QuestStruct_800ddb6c._qvar2 = '\x01';
-		if (QuestStruct_800ddb6c._qactive == '\x02') {
-			QuestStruct_800ddb6c._qvar1 = '\x03';
+		quests[15]._qtx = local_28;
+		quests[15]._qty = local_24;
+		AddMissile__Fiiiiiiciii(local_28,local_24,local_28,local_24,0,0x41,0,myplr,0,0);
+		quests[15]._qvar2 = '\x01';
+		if (quests[15]._qactive == '\x02') {
+			quests[15]._qvar1 = '\x03';
 		}
 		if (deltaload == '\0') {
 			NetSendCmdQuest__FUcUc('\x01','\x0f');
 		}
 	}
-	if (QuestStruct_800ddb6c._qactive == '\x03') {
+	if (quests[15]._qactive == '\x03') {
 		if (setlevel == '\0') goto LAB_8006786c;
-		if ((setlvlnum == '\x05') && (QuestStruct_800ddb6c._qvar2 == '\x04')) {
-			FUN_80142a04(0x23,0x20,0x23,0x20,0,0x41,0,myplr,0,0);
-			QuestStruct_800ddb6c._qvar2 = '\x03';
+		if ((setlvlnum == '\x05') && (quests[15]._qvar2 == '\x04')) {
+			AddMissile__Fiiiiiiciii(0x23,0x20,0x23,0x20,0,0x41,0,myplr,0,0);
+			quests[15]._qvar2 = '\x03';
 			if (deltaload == '\0') {
 				NetSendCmdQuest__FUcUc('\x01','\x0f');
 			}
 		}
 	}
 	if (setlevel != '\0') {
-		if (setlvlnum != QuestStruct_800ddb44._qslvl) {
+		if (setlvlnum != quests[13]._qslvl) {
 			return;
 		}
-		if (QuestStruct_800ddb44._qactive == '\x01') {
+		if (quests[13]._qactive == '\x01') {
 			return;
 		}
-		if (leveltype != QuestStruct_800ddb44._qlvltype) {
+		if (leveltype != quests[13]._qlvltype) {
 			return;
 		}
-		if (((nummonsters != 4) || (QuestStruct_800ddb44._qactive == '\x03')) &&
-			 (QuestStruct_800ddb44._qactive != '\x03')) {
+		if (((nummonsters != 4) || (quests[13]._qactive == '\x03')) && (quests[13]._qactive != '\x03'))
+		{
 			return;
 		}
 		if (WaterDone != (void *)0x0) {
 			return;
 		}
-		QuestStruct_800ddb44._qactive = '\x03';
+		quests[13]._qactive = '\x03';
 		PlaySFX__Fi(IS_QUESTDN);
 		WaterDone = &DAT_00000001;
 		if (deltaload != '\0') {
@@ -188,18 +188,19 @@ LAB_8006786c:
 	while (iVar3 = 0, iVar6 < 0x10) {
 		puVar4 = (undefined *)0x0;
 		while (iVar3 < 2) {
-			if (((((&plr.plractive)[(int)puVar4] != '\0') && (currlevel == (&quests._qlevel)[iVar5])) &&
-					(((&quests._qslvl)[iVar5] != '\0' &&
-					 (((&quests._qactive)[iVar5] != '\0' &&
-						((int)*(short *)((int)&plr._px + (int)puVar4) == *(int *)((int)&quests._qtx + iVar5)))))
-					)) && ((int)*(short *)((int)&plr._py + (int)puVar4) == *(int *)((int)&quests._qty + iVar5)
-								)) {
-				if ((&quests._qlvltype)[iVar5] != -1) {
-					setlvltype = (&quests._qlvltype)[iVar5];
+			if (((((&plr[0].plractive)[(int)puVar4] != '\0') && (currlevel == (&quests[0]._qlevel)[iVar5])
+					 ) && (((&quests[0]._qslvl)[iVar5] != '\0' &&
+								 (((&quests[0]._qactive)[iVar5] != '\0' &&
+									((int)*(short *)((int)&plr[0]._px + (int)puVar4) ==
+									 *(int *)((int)&quests[0]._qtx + iVar5))))))) &&
+				 ((int)*(short *)((int)&plr[0]._py + (int)puVar4) == *(int *)((int)&quests[0]._qty + iVar5))
+				 ) {
+				if ((&quests[0]._qlvltype)[iVar5] != -1) {
+					setlvltype = (&quests[0]._qlvltype)[iVar5];
 				}
 				myplr = iVar3;
 				FadeGameOut__Fv();
-				StartNewLvl__Fiii(myplr,0x45,(uint)(&quests._qslvl)[iVar5]);
+				StartNewLvl__Fiii(myplr,0x45,(uint)(&quests[0]._qslvl)[iVar5]);
 			}
 			puVar4 = &DAT_000019e8 + (int)puVar4;
 			iVar3 = iVar3 + 1;
@@ -276,15 +277,15 @@ uchar ForceQuests__Fv(void)
 		iVar5 = 0;
 		iVar4 = 0;
 		while (iVar5 < 0x10) {
-			if (((iVar5 != 0xf) && (currlevel == (&quests._qlevel)[iVar4])) &&
-				 (iVar3 = 0, (&quests._qslvl)[iVar4] != '\0')) {
-				iVar7 = *(int *)((int)&quests._qtx + iVar4);
-				bVar1 = (&quests)[(uint)(&quests._qidx)[iVar4]]._qslvl;
-				iVar6 = *(int *)((int)&quests._qty + iVar4);
+			if (((iVar5 != 0xf) && (currlevel == (&quests[0]._qlevel)[iVar4])) &&
+				 (iVar3 = 0, (&quests[0]._qslvl)[iVar4] != '\0')) {
+				iVar7 = *(int *)((int)&quests[0]._qtx + iVar4);
+				bVar1 = quests[(uint)(&quests[0]._qidx)[iVar4]]._qslvl;
+				iVar6 = *(int *)((int)&quests[0]._qty + iVar4);
 				do {
-					if ((iVar7 + (int)(&offset_x)[iVar3] == cursmx) &&
-						 (iVar6 + (int)(&offset_y)[iVar3] == cursmy)) {
-						__format = GetStr__Fi(0x498);
+					if ((iVar7 + (int)offset_x[iVar3] == cursmx) && (iVar6 + (int)offset_y[iVar3] == cursmy))
+					{
+						__format = GetStr__Fi(STR_TO__S_1176);
 						pcVar2 = GetStr__Fi(questtrigstr[(uint)bVar1 - 1]);
 						sprintf(_infostr + sel_data * 0x100,__format,pcVar2);
 						cursmx = iVar7;
@@ -325,10 +326,10 @@ uchar QuestStatus__Fi(int i)
 
 {
 	if (setlevel == '\0') {
-		if (currlevel != (&quests)[i]._qlevel) {
+		if (currlevel != quests[i]._qlevel) {
 			return '\0';
 		}
-		if ((&quests)[i]._qactive != '\0') {
+		if (quests[i]._qactive != '\0') {
 			if (gbMaxPlayers == '\x01') {
 				return '\x01';
 			}
@@ -444,9 +445,9 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 	
 	uVar2 = (monster[m].MType)->mtype;
 	if (uVar2 == '2') {
-		QuestStruct_800ddb30._qactive = '\x03';
+		quests[12]._qactive = '\x03';
 		sfxdelay = 0x1e;
-		cVar1 = (&plr)[myplr]._pClass;
+		cVar1 = plr[myplr]._pClass;
 		if (cVar1 == '\0') {
 			sfxdnum = 0x324;
 		}
@@ -464,14 +465,14 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 			NetSendCmdQuest__FUcUc('\x01','\f');
 			return;
 		}
-		QuestStruct_800ddb30._qactive = '\x03';
+		quests[12]._qactive = '\x03';
 		sfxdelay = 0x1e;
 		return;
 	}
 	if (uVar2 == '3') {
-		QuestStruct_ARRAY_800dda90[2]._qactive = '\x03';
+		quests[6]._qactive = '\x03';
 		sfxdelay = 0x1e;
-		cVar1 = (&plr)[myplr]._pClass;
+		cVar1 = plr[myplr]._pClass;
 		if (cVar1 == '\0') {
 			sfxdnum = 0x322;
 		}
@@ -489,22 +490,22 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 			NetSendCmdQuest__FUcUc('\x01','\x06');
 			return;
 		}
-		QuestStruct_ARRAY_800dda90[2]._qactive = '\x03';
+		quests[6]._qactive = '\x03';
 		sfxdelay = 0x1e;
 		return;
 	}
 	uVar4 = monster[m].mName;
 	if (uVar4 == (uint)UniqMonst[0].mName) {
-		QuestStruct_ARRAY_800dda54[1]._qactive = '\x03';
-		cVar1 = (&plr)[myplr]._pClass;
+		quests[2]._qactive = '\x03';
+		cVar1 = plr[myplr]._pClass;
 		if (cVar1 == '\0') {
-			QuestStruct_ARRAY_800dda54[1]._qactive = '\x03';
+			quests[2]._qactive = '\x03';
 			sfxdelay = 0x1e;
 			sfxdnum = 0x30e;
 			return;
 		}
 		if (cVar1 == '\x01') {
-			QuestStruct_ARRAY_800dda54[1]._qactive = '\x03';
+			quests[2]._qactive = '\x03';
 			sfxdelay = 0x1e;
 			sfxdnum = 0x2a0;
 			return;
@@ -513,16 +514,16 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 	}
 	else {
 		if (uVar4 == (uint)UniqMonst[2].mName) {
-			QuestStruct_ARRAY_800dda54[2]._qactive = '\x03';
-			cVar1 = (&plr)[myplr]._pClass;
+			quests[3]._qactive = '\x03';
+			cVar1 = plr[myplr]._pClass;
 			if (cVar1 == '\0') {
-				QuestStruct_ARRAY_800dda54[2]._qactive = '\x03';
+				quests[3]._qactive = '\x03';
 				sfxdelay = 0x1e;
 				sfxdnum = 0x30f;
 				return;
 			}
 			if (cVar1 == '\x01') {
-				QuestStruct_ARRAY_800dda54[2]._qactive = '\x03';
+				quests[3]._qactive = '\x03';
 				sfxdelay = 0x1e;
 				sfxdnum = 0x2a1;
 				return;
@@ -534,15 +535,15 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 				uVar4 = (uint)gbMaxPlayers;
 				y = 0;
 				if (gbMaxPlayers != '\x01') {
-					QuestStruct_800ddb6c._qactive = '\x03';
-					QuestStruct_800ddb6c._qvar1 = '\a';
+					quests[15]._qactive = '\x03';
+					quests[15]._qvar1 = '\a';
 					sfxdelay = 0x1e;
-					QuestStruct_ARRAY_800dda90[1]._qactive = '\x02';
+					quests[5]._qactive = '\x02';
 					do {
 						x = 0;
 						do {
 							iVar3 = FindBlock__Fii(x,y);
-							if ((iVar3 == 0x172) && (QuestStruct_800ddb6c._qactive == '\x03')) {
+							if ((iVar3 == 0x172) && (quests[15]._qactive == '\x03')) {
 								(&trigs)[numtrigs]._tx = x;
 								(&trigs)[numtrigs]._ty = y;
 								(&trigs)[numtrigs]._tmsg = 0x42;
@@ -552,7 +553,7 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 						} while (x < 0x60);
 						y = y + 1;
 					} while (y < 0x60);
-					cVar1 = (&plr)[myplr]._pClass;
+					cVar1 = plr[myplr]._pClass;
 					if (cVar1 == '\0') {
 						sfxdnum = 0x325;
 					}
@@ -573,49 +574,49 @@ void CheckQuestKill__FiUc(int m,uchar sendmsg)
 					}
 					return;
 				}
-				QuestStruct_800ddb6c._qactive = '\x03';
+				quests[15]._qactive = '\x03';
 				sfxdelay = 0x1e;
 				InitVPTriggers__Fv();
-				uVar5 = SEXT14((&plr)[myplr]._pClass);
+				uVar5 = SEXT14(plr[myplr]._pClass);
 				if (uVar5 == 0) {
-					QuestStruct_ARRAY_800dda90[1]._qactive = '\x02';
-					QuestStruct_800ddb6c._qvar1 = '\a';
-					QuestStruct_800ddb6c._qvar2 = '\x04';
+					quests[5]._qactive = '\x02';
+					quests[15]._qvar1 = '\a';
+					quests[15]._qvar2 = '\x04';
 					sfxdnum = 0x325;
 					return;
 				}
 				if (uVar5 == uVar4) {
-					QuestStruct_ARRAY_800dda90[1]._qactive = '\x02';
-					QuestStruct_800ddb6c._qvar1 = '\a';
-					QuestStruct_800ddb6c._qvar2 = '\x04';
+					quests[5]._qactive = '\x02';
+					quests[15]._qvar1 = '\a';
+					quests[15]._qvar2 = '\x04';
 					sfxdnum = 0x2b7;
 					return;
 				}
 				if (uVar5 == 2) {
-					QuestStruct_ARRAY_800dda90[1]._qactive = '\x02';
-					QuestStruct_800ddb6c._qvar1 = '\a';
-					QuestStruct_800ddb6c._qvar2 = '\x04';
+					quests[5]._qactive = '\x02';
+					quests[15]._qvar1 = '\a';
+					quests[15]._qvar2 = '\x04';
 					sfxdnum = 0x24f;
 					return;
 				}
-				QuestStruct_ARRAY_800dda90[1]._qactive = '\x02';
-				QuestStruct_800ddb6c._qvar1 = '\a';
-				QuestStruct_800ddb6c._qvar2 = '\x04';
+				quests[5]._qactive = '\x02';
+				quests[15]._qvar1 = '\a';
+				quests[15]._qvar2 = '\x04';
 				return;
 			}
 			if (uVar4 != (uint)UniqMonst[8].mName) {
 				return;
 			}
-			QuestStruct_ARRAY_800dda90[7]._qactive = '\x03';
-			cVar1 = (&plr)[myplr]._pClass;
+			quests[11]._qactive = '\x03';
+			cVar1 = plr[myplr]._pClass;
 			if (cVar1 == '\0') {
-				QuestStruct_ARRAY_800dda90[7]._qactive = '\x03';
+				quests[11]._qactive = '\x03';
 				sfxdelay = 0x1e;
 				sfxdnum = 0x330;
 				return;
 			}
 			if (cVar1 == '\x01') {
-				QuestStruct_ARRAY_800dda90[7]._qactive = '\x03';
+				quests[11]._qactive = '\x03';
 				sfxdelay = 0x1e;
 				sfxdnum = 0x2c2;
 				return;
@@ -659,30 +660,30 @@ void SetReturnLvlPos__Fv(void)
 	int iVar2;
 	int iVar3;
 	
-	iVar3 = QuestStruct_800ddb58._qty;
-	iVar2 = QuestStruct_800ddb58._qtx;
-	bVar1 = QuestStruct_800ddb58._qlevel;
+	iVar3 = quests[14]._qty;
+	iVar2 = quests[14]._qtx;
+	bVar1 = quests[14]._qlevel;
 	if (setlvlnum != '\x02') {
 		if (2 < setlvlnum) {
 			if (setlvlnum == '\x04') {
-				ReturnLvlX = QuestStruct_800ddb44._qtx;
-				ReturnLvlY = QuestStruct_800ddb44._qty + 1;
-				ReturnLvl = (uint)QuestStruct_800ddb44._qlevel;
+				ReturnLvlX = quests[13]._qtx;
+				ReturnLvlY = quests[13]._qty + 1;
+				ReturnLvl = (uint)quests[13]._qlevel;
 				ReturnLvlT = 1;
 				return;
 			}
 			if (setlvlnum != '\x05') {
 				return;
 			}
-			ReturnLvlX = QuestStruct_800ddb6c._qtx + 1;
-			ReturnLvlY = QuestStruct_800ddb6c._qty + -1;
-			ReturnLvl = (uint)QuestStruct_800ddb6c._qlevel;
+			ReturnLvlX = quests[15]._qtx + 1;
+			ReturnLvlY = quests[15]._qty + -1;
+			ReturnLvl = (uint)quests[15]._qlevel;
 			ReturnLvlT = 4;
 			return;
 		}
-		iVar3 = QuestStruct_800ddb30._qty;
-		iVar2 = QuestStruct_800ddb30._qtx;
-		bVar1 = QuestStruct_800ddb30._qlevel;
+		iVar3 = quests[12]._qty;
+		iVar2 = quests[12]._qtx;
+		bVar1 = quests[12]._qlevel;
 		if (setlvlnum != '\x01') {
 			return;
 		}
@@ -717,8 +718,8 @@ void SetReturnLvlPos__Fv(void)
 void GetReturnLvlPos__Fv(void)
 
 {
-	if (QuestStruct_800ddb6c._qactive == '\x03') {
-		QuestStruct_800ddb6c._qvar2 = '\x02';
+	if (quests[15]._qactive == '\x03') {
+		quests[15]._qvar2 = '\x02';
 	}
 	currlevel = (uchar)ReturnLvl;
 	leveltype = (uchar)ReturnLvlT;
@@ -760,12 +761,12 @@ void ResyncQuests__Fv(void)
 	
 	uVar3 = QuestStatus__Fi(7);
 	if (uVar3 != '\0') {
-		if (QuestStruct_ARRAY_800dda90[3]._qvar1 == '\x01') {
+		if (quests[7]._qvar1 == '\x01') {
 			ObjChangeMapResync__Fiiii
 								(setpc_x + setpc_w + -2,setpc_y + setpc_h + -2,setpc_x + setpc_w + 1,
 								 setpc_y + setpc_h + 1);
 		}
-		if (QuestStruct_ARRAY_800dda90[3]._qvar1 == '\x02') {
+		if (quests[7]._qvar1 == '\x02') {
 			ObjChangeMapResync__Fiiii
 								(setpc_x + setpc_w + -2,setpc_y + setpc_h + -2,setpc_x + setpc_w + 1,
 								 setpc_y + setpc_h + 1);
@@ -784,7 +785,7 @@ void ResyncQuests__Fv(void)
 			DRLG_MRectTrans__Fiiii(setpc_x,setpc_y,setpc_x + (setpc_w >> 1) + 4,setpc_y + (setpc_h >> 1));
 			TransVal = cVar2;
 		}
-		if (QuestStruct_ARRAY_800dda90[3]._qvar1 == '\x03') {
+		if (quests[7]._qvar1 == '\x03') {
 			ObjChangeMapResync__Fiiii(setpc_x,setpc_y,setpc_x + setpc_w + 1,setpc_y + setpc_h + 1);
 			iVar4 = 0;
 			if (0 < numobjects) {
@@ -800,16 +801,15 @@ void ResyncQuests__Fv(void)
 			TransVal = cVar2;
 		}
 	}
-	if (currlevel == QuestStruct_ARRAY_800dda54[0]._qlevel) {
-		if ((QuestStruct_ARRAY_800dda54[0]._qactive == '\x01') &&
-			 (QuestStruct_ARRAY_800dda54[0]._qvar1 == '\0')) {
-			SpawnQuestItem__Fiiiii(0x13,0,0,5,(uint)QuestStruct_ARRAY_800dda54[0]._qactive);
-			QuestStruct_ARRAY_800dda54[0]._qvar1 = '\x01';
+	if (currlevel == quests[1]._qlevel) {
+		if ((quests[1]._qactive == '\x01') && (quests[1]._qvar1 == '\0')) {
+			SpawnQuestItem__Fiiiii(0x13,0,0,5,(uint)quests[1]._qactive);
+			quests[1]._qvar1 = '\x01';
 		}
 		else {
-			if (QuestStruct_ARRAY_800dda54[0]._qactive == '\x02') {
-				if (QuestStruct_ARRAY_800dda54[0]._qvar1 < 5) {
-					if (6 < QuestStruct_ARRAY_800dda54[0]._qvar1) {
+			if (quests[1]._qactive == '\x02') {
+				if (quests[1]._qvar1 < 5) {
+					if (6 < quests[1]._qvar1) {
 						DAT_800cfc04 = 0xffffffff;
 					}
 				}
@@ -820,20 +820,19 @@ void ResyncQuests__Fv(void)
 			}
 		}
 	}
-	if ((((uint)currlevel == (uint)QuestStruct_ARRAY_800dda90[0]._qlevel + 1) &&
-			(QuestStruct_ARRAY_800dda90[0]._qactive == '\x02')) &&
-		 (QuestStruct_ARRAY_800dda90[0]._qvar1 == '\0')) {
-		QuestStruct_ARRAY_800dda90[0]._qvar1 = '\x01';
+	if ((((uint)currlevel == (uint)quests[4]._qlevel + 1) && (quests[4]._qactive == '\x02')) &&
+		 (quests[4]._qvar1 == '\0')) {
+		quests[4]._qvar1 = '\x01';
 		SpawnQuestItem__Fiiiii(0xf,0,0,5,1);
 	}
 	if ((setlevel != '\0') && (setlvlnum == '\x05')) {
-		if (3 < QuestStruct_800ddb6c._qvar1) {
+		if (3 < quests[15]._qvar1) {
 			ObjChangeMapResync__Fiiii(1,0xb,0x14,0x12);
 		}
-		if (5 < QuestStruct_800ddb6c._qvar1) {
+		if (5 < quests[15]._qvar1) {
 			ObjChangeMapResync__Fiiii(1,0x12,0x14,0x18);
 		}
-		if (6 < QuestStruct_800ddb6c._qvar1) {
+		if (6 < quests[15]._qvar1) {
 			InitVPTriggers__Fv();
 		}
 		iVar4 = 0;
@@ -845,10 +844,10 @@ void ResyncQuests__Fv(void)
 			} while (iVar4 < numobjects);
 		}
 	}
-	if ((((currlevel == QuestStruct_800ddb6c._qlevel) && (setlevel == '\0')) &&
-			((QuestStruct_800ddb6c._qvar2 == '\x01' || (2 < QuestStruct_800ddb6c._qvar2)))) &&
-		 ((uint)QuestStruct_800ddb6c._qactive - 2 < 2)) {
-		QuestStruct_800ddb6c._qvar2 = '\x02';
+	if ((((currlevel == quests[15]._qlevel) && (setlevel == '\0')) &&
+			((quests[15]._qvar2 == '\x01' || (2 < quests[15]._qvar2)))) &&
+		 ((uint)quests[15]._qactive - 2 < 2)) {
+		quests[15]._qvar2 = '\x02';
 	}
 	return;
 }
@@ -944,11 +943,10 @@ void PrintQLString__FiiUcPcc(int x,int y,uchar cjustflag,char *str,int col)
 		iVar1 = GetStrWidth__5CFontPc(&MediumFont,str);
 		iVar2 = (int)((QS_PW - iVar1) + ((uint)(QS_PW - iVar1) >> 0x1f)) >> 1;
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(iVar2 + QS_PX + -0xb,uVar3 + QS_PY + 3,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,
-							 0xffff,&DAT_00000001,(void *)0x0,8);
+							(iVar2 + QS_PX + -0xb,uVar3 + QS_PY + 3,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8);
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(iVar2 + iVar1 + QS_PX + 3,uVar3 + QS_PY + 3,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,
-							 0xffff,&DAT_00000001,(void *)0x0,8);
+							(iVar2 + iVar1 + QS_PX + 3,uVar3 + QS_PY + 3,-0x60,'@',0xf0,0x20,0x40,0,1,0xffff,1,0,8
+							);
 	}
 	return;
 }
@@ -1002,7 +1000,7 @@ void DrawQuestLog__Fv(void)
 	QSRect.w = (short)QS_PW;
 	QSRect.h = (short)QS_PH;
 	if (qtextflag == '\0') {
-		str = GetStr__Fi(0x33b);
+		str = GetStr__Fi(STR_QUEST_LOG_827);
 		PrintQLString__FiiUcPcc(0,2,'\x01',str,1);
 	}
 	iVar2 = 7;
@@ -1104,7 +1102,7 @@ void StartQuestlog__Fv(void)
 	if (0 < ALLQUESTS) {
 		iVar3 = 0;
 		do {
-			if (((&quests._qactive)[iVar3] == '\x02') && ((&quests._qlog)[iVar3] != '\0')) {
+			if (((&quests[0]._qactive)[iVar3] == '\x02') && ((&quests[0]._qlog)[iVar3] != '\0')) {
 				piVar2 = qlist + numqlines;
 				numqlines = numqlines + 1;
 				*piVar2 = iVar4;
@@ -1318,7 +1316,7 @@ void QuestlogEnter__Fv(void)
 		else {
 			iVar1 = qlist[(qline + qtoffset * 2) - qtopline >> 1];
 			PlaySFX__Fi(IS_TITLSLCT);
-			InitQTextMsg__Fi((uint)(&quests)[iVar1]._qmsg);
+			InitQTextMsg__Fi((uint)quests[iVar1]._qmsg);
 			questlog = '\0';
 		}
 	}
@@ -1378,14 +1376,14 @@ void SetMultiQuest__FiiUci(int q,int s,uchar l,int v1)
 {
 	byte bVar1;
 	
-	if ((&quests)[q]._qactive != 3) {
-		if ((int)(uint)(&quests)[q]._qactive < s) {
-			(&quests)[q]._qactive = (uchar)s;
+	if (quests[q]._qactive != 3) {
+		if ((int)(uint)quests[q]._qactive < s) {
+			quests[q]._qactive = (uchar)s;
 		}
-		bVar1 = (&quests)[q]._qvar1;
-		(&quests)[q]._qlog = (&quests)[q]._qlog | l;
+		bVar1 = quests[q]._qvar1;
+		quests[q]._qlog = quests[q]._qlog | l;
 		if ((int)(uint)bVar1 < v1) {
-			(&quests)[q]._qvar1 = (uchar)v1;
+			quests[q]._qvar1 = (uchar)v1;
 		}
 	}
 	return;

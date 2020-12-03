@@ -735,7 +735,7 @@ void DrawQText__Fv(void)
 	RECT local_40;
 	int local_38;
 	
-	memset(&tempstr,0,0x100);
+	memset(tempstr,0,0x100);
 	if (FeFlag == '\0') {
 		local_40.y = 0x18;
 		local_40.h = 0xb9;
@@ -766,7 +766,7 @@ void DrawQText__Fv(void)
 		puVar8 = (uchar *)0x0;
 		iVar6 = 0;
 		iVar7 = 0;
-		__src = &tempstr;
+		__src = tempstr;
 		do {
 			ch = *puVar5;
 			puVar4 = puVar5;
@@ -806,7 +806,7 @@ void DrawQText__Fv(void)
 			bVar1 = true;
 		}
 		*__src = '\0';
-		KANJI_strlen__FPc(&tempstr);
+		KANJI_strlen__FPc(tempstr);
 		if (FeFlag == '\0') {
 			OT_00 = OT + -0x1e;
 		}
@@ -814,7 +814,7 @@ void DrawQText__Fv(void)
 			OT_00 = OT + -0x46;
 		}
 		Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc
-							(&MediumFont,0x10,OT_00,&tempstr,JustLeft,&local_40,(uint)BORDERR,(uint)BORDERG,
+							(&MediumFont,0x10,OT_00,tempstr,JustLeft,&local_40,(uint)BORDERR,(uint)BORDERG,
 							 (uint)BORDERB);
 		if (puVar9 == (uchar *)0x0) {
 			puVar9 = puVar5;
@@ -893,7 +893,7 @@ LAB_8004e7b4:
 	if (FeFlag != '\0') {
 		StrId = (undefined *)0x2000;
 	}
-	__src = GetStr__Fi((int)StrId);
+	__src = GetStr__Fi((text_strs)StrId);
 	strcpy(MtPrevText,__src);
 	OT = GetStrWidth__5CFontPc(&MediumFont,MtPrevText);
 	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc

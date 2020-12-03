@@ -31,8 +31,6 @@ void DoEpi(TASK *T)
 	/* end block 1 */
 	// End Line: 200
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DoPro(TASK *T)
 
 {
@@ -52,8 +50,6 @@ void DoPro(TASK *T)
 		// Start line: 232
 	/* end block 1 */
 	// End Line: 233
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar TSK_OpenModule(ulong MemType)
 
@@ -93,8 +89,6 @@ uchar TSK_OpenModule(ulong MemType)
 		// Start line: 284
 	/* end block 2 */
 	// End Line: 285
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 TASK * TSK_AddTask(ulong Id,TDRFuncPtr_TSK_AddTask1Main Main,int StackSize,int DataSize)
 
@@ -261,8 +255,6 @@ void TSK_DoTasks(void)
 	/* end block 2 */
 	// End Line: 613
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_Sleep(int Frames)
 
 {
@@ -304,8 +296,6 @@ void TSK_Sleep(int Frames)
 		// Start line: 680
 	/* end block 1 */
 	// End Line: 681
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ReturnToSchedulerIfCurrentTask(TASK *T)
 
@@ -357,8 +347,6 @@ void TSK_Die(void)
 		// Start line: 740
 	/* end block 1 */
 	// End Line: 741
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_Kill(TASK *T)
 
@@ -419,8 +407,6 @@ TASK * TSK_GetFirstActive(void)
 	/* end block 2 */
 	// End Line: 811
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar TSK_IsStackCorrupted(TASK *T)
 
 {
@@ -458,8 +444,6 @@ uchar TSK_IsStackCorrupted(TASK *T)
 	/* end block 2 */
 	// End Line: 865
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_JumpAndResetStack(TDRFuncPtr_TSK_JumpAndResetStack0RunFunc RunFunc)
 
 {
@@ -487,8 +471,6 @@ void TSK_JumpAndResetStack(TDRFuncPtr_TSK_JumpAndResetStack0RunFunc RunFunc)
 		// Start line: 916
 	/* end block 1 */
 	// End Line: 917
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_RepointProc(TASK *T,TDRFuncPtr_TSK_RepointProc1Func Func)
 
@@ -536,8 +518,6 @@ TASK * TSK_GetCurrentTask(void)
 	/* end block 1 */
 	// End Line: 993
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar TSK_IsCurrentTask(TASK *T)
 
 {
@@ -564,8 +544,6 @@ uchar TSK_IsCurrentTask(TASK *T)
 		// Start line: 1025
 	/* end block 2 */
 	// End Line: 1026
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 TASK * TSK_Exist(TASK *T,ulong Id,ulong Mask)
 
@@ -598,8 +576,6 @@ TASK * TSK_Exist(TASK *T,ulong Id,ulong Mask)
 		// Start line: 1082
 	/* end block 1 */
 	// End Line: 1083
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_SetExecFilter(ulong Id,ulong Mask)
 
@@ -659,8 +635,6 @@ void TSK_ClearExecFilter(void)
 		// Start line: 1143
 	/* end block 2 */
 	// End Line: 1144
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int TSK_KillTasks(TASK *CallingT,ulong Id,ulong Mask)
 
@@ -725,8 +699,6 @@ int TSK_KillTasks(TASK *CallingT,ulong Id,ulong Mask)
 	/* end block 2 */
 	// End Line: 1264
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_IterateTasks(ulong Id,ulong Mask,TDRFuncPtr_TSK_IterateTasks2CallBack CallBack)
 
 {
@@ -757,8 +729,6 @@ void TSK_IterateTasks(ulong Id,ulong Mask,TDRFuncPtr_TSK_IterateTasks2CallBack C
 	/* end block 1 */
 	// End Line: 1320
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_MakeTaskInactive(TASK *T)
 
 {
@@ -776,8 +746,6 @@ void TSK_MakeTaskInactive(TASK *T)
 		// Start line: 1341
 	/* end block 1 */
 	// End Line: 1342
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_MakeTaskActive(TASK *T)
 
@@ -797,8 +765,6 @@ void TSK_MakeTaskActive(TASK *T)
 	/* end block 1 */
 	// End Line: 1366
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_MakeTaskImmortal(TASK *T)
 
 {
@@ -816,8 +782,6 @@ void TSK_MakeTaskImmortal(TASK *T)
 		// Start line: 1387
 	/* end block 1 */
 	// End Line: 1388
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_MakeTaskMortal(TASK *T)
 
@@ -837,8 +801,6 @@ void TSK_MakeTaskMortal(TASK *T)
 	/* end block 1 */
 	// End Line: 1412
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar TSK_IsTaskActive(TASK *T)
 
 {
@@ -856,8 +818,6 @@ uchar TSK_IsTaskActive(TASK *T)
 	/* end block 1 */
 	// End Line: 1436
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar TSK_IsTaskMortal(TASK *T)
 
 {
@@ -874,8 +834,6 @@ uchar TSK_IsTaskMortal(TASK *T)
 		// Start line: 1459
 	/* end block 1 */
 	// End Line: 1460
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DetachFromList(TASK **Head,TASK *ThisObj)
 
@@ -902,8 +860,6 @@ void DetachFromList(TASK **Head,TASK *ThisObj)
 		// Start line: 1495
 	/* end block 1 */
 	// End Line: 1496
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void AddToList(TASK **Head,TASK *ThisObj)
 
@@ -938,8 +894,6 @@ void AddToList(TASK **Head,TASK *ThisObj)
 	/* end block 2 */
 	// End Line: 1525
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void LoTskKill(TASK *T)
 
 {
@@ -964,8 +918,6 @@ void LoTskKill(TASK *T)
 		// Start line: 1575
 	/* end block 1 */
 	// End Line: 1576
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ExecuteTask(TASK *T)
 
@@ -996,8 +948,6 @@ void ExecuteTask(TASK *T)
 		// Start line: 1603
 	/* end block 2 */
 	// End Line: 1604
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 TDRFuncPtr_TSK_SetDoTasksPrologue
 TSK_SetDoTasksPrologue(TDRFuncPtr_TSK_SetDoTasksPrologue0Func Func)
@@ -1030,8 +980,6 @@ TSK_SetDoTasksPrologue(TDRFuncPtr_TSK_SetDoTasksPrologue0Func Func)
 	/* end block 2 */
 	// End Line: 1622
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 TDRFuncPtr_TSK_SetDoTasksEpilogue
 TSK_SetDoTasksEpilogue(TDRFuncPtr_TSK_SetDoTasksEpilogue0Func Func)
 
@@ -1063,8 +1011,6 @@ TSK_SetDoTasksEpilogue(TDRFuncPtr_TSK_SetDoTasksEpilogue0Func Func)
 	/* end block 2 */
 	// End Line: 1642
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 TDRFuncPtr_TSK_SetTaskPrologue TSK_SetTaskPrologue(TDRFuncPtr_TSK_SetTaskPrologue0Pro Pro)
 
 {
@@ -1095,8 +1041,6 @@ TDRFuncPtr_TSK_SetTaskPrologue TSK_SetTaskPrologue(TDRFuncPtr_TSK_SetTaskPrologu
 	/* end block 2 */
 	// End Line: 1660
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 TDRFuncPtr_TSK_SetTaskEpilogue TSK_SetTaskEpilogue(TDRFuncPtr_TSK_SetTaskEpilogue0Epi Epi)
 
 {
@@ -1117,8 +1061,6 @@ TDRFuncPtr_TSK_SetTaskEpilogue TSK_SetTaskEpilogue(TDRFuncPtr_TSK_SetTaskEpilogu
 		// Start line: 1675
 	/* end block 1 */
 	// End Line: 1676
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void TSK_SetEpiProFilter(ulong Id,ulong Mask)
 
@@ -1161,8 +1103,6 @@ void TSK_ClearEpiProFilter(void)
 	/* end block 1 */
 	// End Line: 1710
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void TSK_SetExtraStackProtection(uchar OnOff)
 
 {
@@ -1189,8 +1129,6 @@ void TSK_SetExtraStackProtection(uchar OnOff)
 		// Start line: 1729
 	/* end block 2 */
 	// End Line: 1730
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 TDRFuncPtr_TSK_SetStackFloodCallback
 TSK_SetStackFloodCallback(TDRFuncPtr_TSK_SetStackFloodCallback0Func Func)
@@ -1222,8 +1160,6 @@ TSK_SetStackFloodCallback(TDRFuncPtr_TSK_SetStackFloodCallback0Func Func)
 		// Start line: 1755
 	/* end block 2 */
 	// End Line: 1756
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int TSK_SetExtraStackSize(int Size)
 
@@ -1257,8 +1193,6 @@ int TSK_SetExtraStackSize(int Size)
 		// Start line: 1770
 	/* end block 2 */
 	// End Line: 1771
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void ExtraMarkStack(ulong *Stack,int SizeLongs)
 
@@ -1295,8 +1229,6 @@ void ExtraMarkStack(ulong *Stack,int SizeLongs)
 		// Start line: 1785
 	/* end block 2 */
 	// End Line: 1786
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 int CheckExtraStack(ulong *Stack,int LongsToCheck)
 

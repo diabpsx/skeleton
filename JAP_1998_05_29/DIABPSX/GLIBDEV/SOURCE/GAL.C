@@ -11,8 +11,6 @@
 	/* end block 1 */
 	// End Line: 352
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GAL_SetErrorChecking(uchar OnOff)
 
 {
@@ -41,8 +39,6 @@ void GAL_SetErrorChecking(uchar OnOff)
 		// Start line: 390
 	/* end block 2 */
 	// End Line: 391
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 long GAL_SplitBlock(long CurBlock,ulong Size)
 
@@ -160,8 +156,6 @@ void GAL_InitModule(void)
 	/* end block 2 */
 	// End Line: 611
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GAL_AddMemType(MEM_INIT_INFO *M)
 
 {
@@ -239,8 +233,6 @@ LAB_800215b8:
 		// Start line: 842
 	/* end block 2 */
 	// End Line: 843
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 long GAL_Alloc(ulong Size,ulong Type,char *Name)
 
@@ -320,8 +312,6 @@ LAB_80021668:
 	/* end block 2 */
 	// End Line: 1065
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GAL_Lock(long Handle)
 
 {
@@ -359,8 +349,6 @@ void * GAL_Lock(long Handle)
 		// Start line: 1152
 	/* end block 2 */
 	// End Line: 1153
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GAL_Unlock(long Handle)
 
@@ -403,8 +391,6 @@ uchar GAL_Unlock(long Handle)
 		// Start line: 1249
 	/* end block 2 */
 	// End Line: 1250
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GAL_Free(long Handle)
 
@@ -461,8 +447,6 @@ uchar GAL_Free(long Handle)
 	/* end block 2 */
 	// End Line: 1371
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ulong GAL_GetFreeMem(ulong Type)
 
 {
@@ -518,8 +502,6 @@ ulong GAL_GetFreeMem(ulong Type)
 	/* end block 2 */
 	// End Line: 1457
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ulong GAL_GetUsedMem(ulong Type)
 
 {
@@ -567,8 +549,6 @@ ulong GAL_GetUsedMem(ulong Type)
 	/* end block 2 */
 	// End Line: 1545
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ulong GAL_LargestFreeBlock(ulong Type)
 
 {
@@ -605,8 +585,6 @@ ulong GAL_LargestFreeBlock(ulong Type)
 	/* end block 1 */
 	// End Line: 1622
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void AttachHdrToList(MEM_HDR **Head,MEM_HDR *Block)
 
 {
@@ -632,8 +610,6 @@ void AttachHdrToList(MEM_HDR **Head,MEM_HDR *Block)
 		// Start line: 1661
 	/* end block 1 */
 	// End Line: 1662
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void DetachHdrFromList(MEM_HDR **Head,MEM_HDR *Block)
 
@@ -667,8 +643,6 @@ void DetachHdrFromList(MEM_HDR **Head,MEM_HDR *Block)
 		// Start line: 1707
 	/* end block 2 */
 	// End Line: 1708
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar IsActiveValidHandle(long Handle)
 
@@ -705,8 +679,6 @@ uchar IsActiveValidHandle(long Handle)
 	/* end block 2 */
 	// End Line: 1764
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * AlignPtr(void *P,ulong Align)
 
 {
@@ -732,8 +704,6 @@ void * AlignPtr(void *P,ulong Align)
 		// Start line: 1805
 	/* end block 1 */
 	// End Line: 1806
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 ulong AlignSize(ulong Size,ulong Align)
 
@@ -767,8 +737,6 @@ ulong AlignSize(ulong Size,ulong Align)
 		// Start line: 1842
 	/* end block 2 */
 	// End Line: 1843
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 MEM_HDR * FindClosestSizedBlock(MEM_HDR *Head,ulong Size)
 
@@ -809,8 +777,6 @@ MEM_HDR * FindClosestSizedBlock(MEM_HDR *Head,ulong Size)
 		// Start line: 1913
 	/* end block 2 */
 	// End Line: 1914
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 MEM_HDR * FindHighestMemBlock(MEM_HDR *Head,ulong Size)
 
@@ -862,8 +828,6 @@ MEM_HDR * FindHighestMemBlock(MEM_HDR *Head,ulong Size)
 	/* end block 2 */
 	// End Line: 2002
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 MEM_HDR * FindLowestMemBlock(MEM_HDR *Head,ulong Size)
 
 {
@@ -911,8 +875,6 @@ MEM_HDR * FindLowestMemBlock(MEM_HDR *Head,ulong Size)
 		// Start line: 2096
 	/* end block 2 */
 	// End Line: 2097
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 MEM_INIT_INFO * GetMemInitInfoBlockFromType(ulong Type)
 
@@ -964,8 +926,6 @@ MEM_INIT_INFO * GetMemInitInfoBlockFromType(ulong Type)
 	/* end block 2 */
 	// End Line: 2159
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void MergeToEmptyList(MEM_INIT_INFO *MI,MEM_HDR *M)
 
 {
@@ -1014,8 +974,6 @@ void MergeToEmptyList(MEM_INIT_INFO *MI,MEM_HDR *M)
 		// Start line: 2311
 	/* end block 2 */
 	// End Line: 2312
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 long GAL_AllocAt(ulong Size,void *Addr,ulong Type,char *Name)
 
@@ -1066,8 +1024,6 @@ long GAL_AllocAt(ulong Size,void *Addr,ulong Type,char *Name)
 		// Start line: 2434
 	/* end block 2 */
 	// End Line: 2435
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 long LoAlloc(MEM_INIT_INFO *M,MEM_HDR *Block,void *Addr,ulong Size,char *Name)
 
@@ -1146,8 +1102,6 @@ LAB_80021f50:
 	/* end block 2 */
 	// End Line: 2660
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 MEM_HDR * FindBlockInTheseBounds(MEM_HDR *Head,void *Addr,ulong Size)
 
 {
@@ -1220,8 +1174,6 @@ MEM_HDR * GetFreeMemHdrBlock(void)
 	/* end block 1 */
 	// End Line: 2796
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void ReleaseMemHdrBlock(MEM_HDR *Index)
 
 {
@@ -1258,8 +1210,6 @@ void ReleaseMemHdrBlock(MEM_HDR *Index)
 		// Start line: 2825
 	/* end block 2 */
 	// End Line: 2826
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void GAL_IterateEmptyMem(ulong MemType,TDRFuncPtr_GAL_IterateEmptyMem1Func Func)
 
@@ -1310,8 +1260,6 @@ void GAL_IterateEmptyMem(ulong MemType,TDRFuncPtr_GAL_IterateEmptyMem1Func Func)
 	/* end block 2 */
 	// End Line: 2891
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GAL_IterateUsedMem(ulong MemType,TDRFuncPtr_GAL_IterateUsedMem1Func Func)
 
 {
@@ -1343,8 +1291,6 @@ void GAL_IterateUsedMem(ulong MemType,TDRFuncPtr_GAL_IterateUsedMem1Func Func)
 		// Start line: 2957
 	/* end block 1 */
 	// End Line: 2958
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GAL_SetMemName(long Hnd,char *Text)
 
@@ -1381,8 +1327,6 @@ uchar GAL_SetMemName(long Hnd,char *Text)
 		// Start line: 3011
 	/* end block 2 */
 	// End Line: 3012
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 ulong GAL_TotalMem(ulong Type)
 
@@ -1422,8 +1366,6 @@ ulong GAL_TotalMem(ulong Type)
 	/* end block 2 */
 	// End Line: 3078
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * GAL_MemBase(ulong Type)
 
 {
@@ -1459,8 +1401,6 @@ void * GAL_MemBase(ulong Type)
 	/* end block 2 */
 	// End Line: 3147
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GAL_DefragMem(ulong type)
 
 {
@@ -1487,8 +1427,6 @@ uchar GAL_DefragMem(ulong type)
 		// Start line: 3207
 	/* end block 1 */
 	// End Line: 3208
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GSetError(GAL_ERROR_CODE Err)
 
@@ -1521,8 +1459,6 @@ uchar GSetError(GAL_ERROR_CODE Err)
 		// Start line: 3247
 	/* end block 2 */
 	// End Line: 3248
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GAL_CheckMem(ulong Type)
 
@@ -1591,8 +1527,6 @@ LAB_8002253c:
 	/* end block 2 */
 	// End Line: 3399
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar CheckCollisions(MEM_INIT_INFO *M,MEM_HDR *MemHdr)
 
 {
@@ -1639,8 +1573,6 @@ uchar CheckCollisions(MEM_INIT_INFO *M,MEM_HDR *MemHdr)
 	/* end block 2 */
 	// End Line: 3480
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar AreBlocksColliding(MEM_HDR *Hdr1,MEM_HDR *Hdr2)
 
 {
@@ -1673,15 +1605,13 @@ uchar AreBlocksColliding(MEM_HDR *Hdr1,MEM_HDR *Hdr2)
 	/* end block 1 */
 	// End Line: 3533
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 char * GAL_GetErrorText(GAL_ERROR_CODE Err)
 
 {
 	char *pcVar1;
 	
 	if (Err < NUM_OF_ERROR_MESSAGES) {
-		pcVar1 = (&GalErrors10)[Err];
+		pcVar1 = GalErrors10[Err];
 	}
 	else {
 		pcVar1 = "Invalid error code";
@@ -1760,8 +1690,6 @@ char * GAL_GetLastErrorText(void)
 	/* end block 2 */
 	// End Line: 3615
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int GAL_HowManyEmptyRegions(ulong Type)
 
 {
@@ -1815,8 +1743,6 @@ int GAL_HowManyEmptyRegions(ulong Type)
 	/* end block 2 */
 	// End Line: 3689
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 int GAL_HowManyUsedRegions(ulong Type)
 
 {
@@ -1850,8 +1776,6 @@ int GAL_HowManyUsedRegions(ulong Type)
 		// Start line: 3757
 	/* end block 1 */
 	// End Line: 3758
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void GAL_SetTimeStamp(int Time)
 
@@ -1919,8 +1843,6 @@ int GAL_GetTimeStamp(void)
 	/* end block 2 */
 	// End Line: 3833
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 long GAL_AlignSizeToType(ulong Size,ulong MemType)
 
 {
@@ -1955,8 +1877,6 @@ long GAL_AlignSizeToType(ulong Size,ulong MemType)
 	/* end block 2 */
 	// End Line: 3900
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 long GAL_AllocMultiStruct(GAL_STRUCT *G,ulong Type,char *Name)
 
 {
@@ -1988,8 +1908,6 @@ long GAL_AllocMultiStruct(GAL_STRUCT *G,ulong Type,char *Name)
 		// Start line: 3941
 	/* end block 2 */
 	// End Line: 3942
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uint GAL_ProcessMultiStruct(GAL_STRUCT *G,ulong Type)
 
@@ -2035,8 +1953,6 @@ uint GAL_ProcessMultiStruct(GAL_STRUCT *G,ulong Type)
 		// Start line: 4017
 	/* end block 2 */
 	// End Line: 4018
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 long GAL_GetSize(long hnd)
 
@@ -2088,8 +2004,6 @@ long GAL_GetSize(long hnd)
 		// Start line: 4072
 	/* end block 2 */
 	// End Line: 4073
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GazDefragMem(ulong MemType)
 
@@ -2177,8 +2091,6 @@ LAB_800229e0:
 	/* end block 2 */
 	// End Line: 4348
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PutBlocksInRegionIntoList(MEM_REG *Reg,MEM_HDR **ToList,MEM_HDR **FromList)
 
 {
@@ -2211,8 +2123,6 @@ void PutBlocksInRegionIntoList(MEM_REG *Reg,MEM_HDR **ToList,MEM_HDR **FromList)
 		// Start line: 4426
 	/* end block 1 */
 	// End Line: 4427
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar CollideRegions(MEM_REG *Reg1,MEM_REG *Reg2)
 
@@ -2253,8 +2163,6 @@ uchar CollideRegions(MEM_REG *Reg1,MEM_REG *Reg2)
 	/* end block 2 */
 	// End Line: 4463
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void DeleteEmptyBlocks(MEM_INIT_INFO *M)
 
 {
@@ -2291,8 +2199,6 @@ void DeleteEmptyBlocks(MEM_INIT_INFO *M)
 		// Start line: 4518
 	/* end block 2 */
 	// End Line: 4519
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GetRegion(MEM_REG *Reg,MEM_HDR *LockedBlocks,MEM_INIT_INFO *M)
 
@@ -2354,8 +2260,6 @@ uchar GetRegion(MEM_REG *Reg,MEM_HDR *LockedBlocks,MEM_INIT_INFO *M)
 	/* end block 2 */
 	// End Line: 4669
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 MEM_HDR * FindNextBlock(void *Addr,MEM_HDR *Blocks)
 
 {
@@ -2391,8 +2295,6 @@ MEM_HDR * FindNextBlock(void *Addr,MEM_HDR *Blocks)
 		// Start line: 4733
 	/* end block 2 */
 	// End Line: 4734
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 ulong ShuffleBlocks(MEM_HDR *Blocks,MEM_REG *Reg,MEM_INIT_INFO *M)
 
@@ -2449,8 +2351,6 @@ ulong ShuffleBlocks(MEM_HDR *Blocks,MEM_REG *Reg,MEM_INIT_INFO *M)
 	/* end block 2 */
 	// End Line: 4825
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void PutAllLockedBlocksOntoList(MEM_HDR **ToHead,MEM_HDR **FromHead)
 
 {
@@ -2498,8 +2398,6 @@ void PutAllLockedBlocksOntoList(MEM_HDR **ToHead,MEM_HDR **FromHead)
 		// Start line: 4895
 	/* end block 2 */
 	// End Line: 4896
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SortMemHdrListByAddr(MEM_HDR **Head)
 
@@ -2572,8 +2470,6 @@ void SortMemHdrListByAddr(MEM_HDR **Head)
 	/* end block 2 */
 	// End Line: 5019
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GraftMemHdrList(MEM_HDR **ToList,MEM_HDR **FromList)
 
 {
@@ -2610,8 +2506,6 @@ void GraftMemHdrList(MEM_HDR **ToList,MEM_HDR **FromList)
 	/* end block 1 */
 	// End Line: 5084
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GAL_MemDump(ulong Type)
 
 {
@@ -2633,8 +2527,6 @@ void GAL_MemDump(ulong Type)
 		// Start line: 5124
 	/* end block 1 */
 	// End Line: 5125
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void GAL_SetVerbosity(GAL_VERB_LEV G)
 
@@ -2702,8 +2594,6 @@ int CountFreeBlocks(void)
 		// Start line: 5203
 	/* end block 2 */
 	// End Line: 5204
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SetBlockName(MEM_HDR *MemHdr,char *NewName)
 
@@ -2781,8 +2671,6 @@ ulong GAL_GetLastTypeAlloced(void)
 	/* end block 2 */
 	// End Line: 5281
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 TDRFuncPtr_GAL_SetAllocFilter GAL_SetAllocFilter(TDRFuncPtr_GAL_SetAllocFilter0NewFilter NewFilter)
 
 {
@@ -2813,8 +2701,6 @@ TDRFuncPtr_GAL_SetAllocFilter GAL_SetAllocFilter(TDRFuncPtr_GAL_SetAllocFilter0N
 	/* end block 2 */
 	// End Line: 5310
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GAL_SortUsedRegionsBySize(ulong MemType)
 
 {
@@ -2840,8 +2726,6 @@ uchar GAL_SortUsedRegionsBySize(ulong MemType)
 		// Start line: 5344
 	/* end block 1 */
 	// End Line: 5345
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar SortSize(MEM_HDR *B1,MEM_HDR *B2)
 
@@ -2869,8 +2753,6 @@ uchar SortSize(MEM_HDR *B1,MEM_HDR *B2)
 	/* end block 2 */
 	// End Line: 5370
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GAL_SortUsedRegionsByAddress(ulong MemType)
 
 {
@@ -2896,8 +2778,6 @@ uchar GAL_SortUsedRegionsByAddress(ulong MemType)
 		// Start line: 5404
 	/* end block 1 */
 	// End Line: 5405
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar SortAddr(MEM_HDR *B1,MEM_HDR *B2)
 
@@ -2935,8 +2815,6 @@ uchar SortAddr(MEM_HDR *B1,MEM_HDR *B2)
 		// Start line: 5433
 	/* end block 2 */
 	// End Line: 5434
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void SortMemHdrList(MEM_HDR **Head,TDRFuncPtr_SortMemHdrList1CompFunc CompFunc)
 

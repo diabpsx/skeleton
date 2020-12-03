@@ -98,7 +98,7 @@ switchD_80096b84_caseD_49:
 		break;
 	case 0x47:
 	case 0x48:
-		iVar2 = gnLevelTypeTbl[(&plr)[myplr].plrlevel];
+		iVar2 = gnLevelTypeTbl[plr[myplr].plrlevel];
 		uVar1 = iVar2;
 		if (iVar2 == 2) goto LAB_80096e1c;
 		if (2 < iVar2) {
@@ -231,7 +231,7 @@ void GoSetLevel__Fv(void)
 	if ((currlevel == '\0') || (0x10 < currlevel)) {
 		DBG_Error((char *)0x0,"psxsrc/PSXMSG.CPP",0x1bc);
 	}
-	if ((QuestStruct_800ddb6c._qvar1 < 7) && (setlvlnum == '\x05')) {
+	if ((quests[15]._qvar1 < 7) && (setlvlnum == '\x05')) {
 		play_movie("FPRST3.MOV");
 	}
 	PutUpCutScreen__Fi(CutScreen);
@@ -408,8 +408,8 @@ void GoLoadGame__Fv(void)
 	cVar2 = ItemDataStruct_801113c4.iLoc;
 	iVar5 = 0;
 	while (iVar5 < FePlayerNo + 1) {
-		if (((QuestStruct_ARRAY_800dda54[0]._qactive == '\x03') &&
-				(2 < (uint)QuestStruct_ARRAY_800dda54[0]._qvar1 - 2)) && (iVar4 = 1, cVar2 != -1)) {
+		if (((quests[1]._qactive == '\x03') && (2 < (uint)quests[1]._qvar1 - 2)) &&
+			 (iVar4 = 1, cVar2 != -1)) {
 			iVar3 = 0x20;
 			do {
 				if ((&AllItemsList.iMiscId)[iVar3] == ',') {

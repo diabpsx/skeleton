@@ -40,8 +40,6 @@ uchar GU_InitModule(void)
 	/* end block 2 */
 	// End Line: 134
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GU_SetRndSeed(ulong *Tab)
 
 {
@@ -136,8 +134,6 @@ long GU_GetSRnd(void)
 	/* end block 1 */
 	// End Line: 242
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 ulong GU_GetRndRange(uint Range)
 
 {
@@ -160,8 +156,6 @@ ulong GU_GetRndRange(uint Range)
 		// Start line: 266
 	/* end block 1 */
 	// End Line: 267
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uint GU_AlignVal(uint w,uint round)
 

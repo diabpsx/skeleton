@@ -242,8 +242,6 @@ void * LoSave__4PCIOPCcPUci(PCIO *this,char *Name,uchar *Addr,int Len)
 	/* end block 2 */
 	// End Line: 351
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * LoStreamFile__4PCIOPCciPFPUciib_bii
 								 (PCIO *this,char *Name,int Slice,
 								 TDRFuncPtr_LoStreamFile__4PCIOPCciPFPUciib_bii3Func Func,int Offset,int Size)

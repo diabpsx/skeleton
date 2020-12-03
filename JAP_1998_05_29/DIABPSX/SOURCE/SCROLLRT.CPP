@@ -33,17 +33,17 @@ void DrawView__Fii(int StartX,int StartY)
 	}
 	if (!bVar1) {
 		if ((automapflag != '\0') && (DoShowPanel != (void *)0x0)) {
-			FUN_80162e50();
+			DrawAutomap__Fv();
 		}
 		if (chrflag == '\0') {
 			if ((questlog == '\0') && (invflag != '\0')) {
-				FUN_801590b4();
+				DrawInv__Fv();
 			}
 			if (((chrflag == '\0') && (questlog == '\0')) && (invflag == '\0')) {
-				if ((plr.plractive != '\0') && (plr._pStatPts != 0)) {
+				if ((plr[0].plractive != '\0') && (plr[0]._pStatPts != 0)) {
 					DrawLevelUpIcon__Fi(0);
 				}
-				if ((PlayerStruct_800dbf20.plractive != '\0') && (PlayerStruct_800dbf20._pStatPts != 0)) {
+				if ((plr[1].plractive != '\0') && (plr[1]._pStatPts != 0)) {
 					DrawLevelUpIcon__Fi(1);
 				}
 			}

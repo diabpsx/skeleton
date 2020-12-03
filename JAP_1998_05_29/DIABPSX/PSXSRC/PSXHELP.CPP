@@ -307,7 +307,7 @@ int DrawHelpLine__FiiPccccP10HelpStruct(int x,int y,char *txt,char R,int G,int B
 	iVar1 = GetControlKey__FiPb(hp->HelpTxt,0xd8);
 	if (local_28 == 0) {
 		if (iVar1 == 0) goto LAB_800ae804;
-		sprintf(&tempstr,"%c   %s",iVar1,txt);
+		sprintf(tempstr,"%c   %s",iVar1,txt);
 	}
 	else {
 		iVar2 = GetControlKey__FiPb(0xc6,0xd8);
@@ -316,15 +316,14 @@ LAB_800ae804:
 			R_00 = (uint)REDR;
 			G_00 = (uint)REDG;
 			B_00 = (uint)REDB;
-			sprintf(&tempstr,"    %s",txt);
+			sprintf(tempstr,"    %s",txt);
 		}
 		else {
-			sprintf(&tempstr,"%c + %c %s",iVar2,iVar1,txt);
+			sprintf(tempstr,"%c + %c %s",iVar2,iVar1,txt);
 		}
 	}
-	txt = &tempstr;
-	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,x,y,&tempstr,JustLeft,&HelpRect,R_00,G_00,B_00)
-	;
+	txt = tempstr;
+	Print__5CFontiiPc8TXT_JUSTP4RECTUcUcUc(&MediumFont,x,y,tempstr,JustLeft,&HelpRect,R_00,G_00,B_00);
 LAB_800ae91c:
 	iVar1 = GetStrWidth__5CFontPc(&MediumFont,txt);
 	return iVar1;
@@ -445,11 +444,9 @@ void DisplayHelp__Fv(void)
 							goto LAB_800aec7c;
 						}
 						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											(0x14,y + 0x32,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0x118,&DAT_00000001,
-											 (void *)0x0,8);
+											(0x14,y + 0x32,-0x60,'@',0xf0,0x20,0x40,0,1,0x118,1,0,8);
 						DrawSpinner__FiiUcUcUciiibiT8T8Uc
-											(iVar2 + 0x24,y + 0x32,-0x60,'@',0xf0,0x20,0x40,0,&DAT_00000001,0x118,
-											 &DAT_00000001,(void *)0x0,8);
+											(iVar2 + 0x24,y + 0x32,-0x60,'@',0xf0,0x20,0x40,0,1,0x118,1,0,8);
 					}
 					y = y + 0x10;
 				}
@@ -543,7 +540,7 @@ void DrawHelp__Fv(void)
 		HelpRect.x = 0x10;
 		HelpRect.h = 0x10;
 		Back__6Dialogiiii(&HelpBack,0x10,0x20,0x11a,0x10);
-		Str = GetStr__Fi(0x1e5);
+		Str = GetStr__Fi(STR_HELP_485);
 		Y = 0xb;
 		local_2c = &HelpRect;
 		bVar1 = GOLDR;
@@ -551,7 +548,7 @@ void DrawHelp__Fv(void)
 		bVar1 = GOLDB;
 	}
 	else {
-		Str = GetStr__Fi(0x1e5);
+		Str = GetStr__Fi(STR_HELP_485);
 		this = &LargeFont;
 		Y = 0x2e;
 		local_2c = (RECT *)0x0;

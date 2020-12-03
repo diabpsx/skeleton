@@ -101,20 +101,20 @@ void ShowProgress__FUi(uint uMsg)
 		break;
 	case 0x47:
 		FreeGameMem__Fv();
-		currlevel = (uchar)(&plr)[myplr].plrlevel;
-		leveltype = (uchar)gnLevelTypeTbl[(&plr)[myplr].plrlevel & 0xff];
+		currlevel = (uchar)plr[myplr].plrlevel;
+		leveltype = (uchar)gnLevelTypeTbl[plr[myplr].plrlevel & 0xff];
 		lvldir = 6;
 		goto LAB_8003e110;
 	case 0x48:
 		FreeGameMem__Fv();
-		currlevel = (uchar)(&plr)[myplr].plrlevel;
-		leveltype = (uchar)gnLevelTypeTbl[(&plr)[myplr].plrlevel & 0xff];
+		currlevel = (uchar)plr[myplr].plrlevel;
+		leveltype = (uchar)gnLevelTypeTbl[plr[myplr].plrlevel & 0xff];
 		lvldir = 7;
 		goto LAB_8003e110;
 	case 0x49:
 		FreeGameMem__Fv();
-		currlevel = (uchar)(&plr)[myplr].plrlevel;
-		leveltype = (uchar)gnLevelTypeTbl[(&plr)[myplr].plrlevel & 0xff];
+		currlevel = (uchar)plr[myplr].plrlevel;
+		leveltype = (uchar)gnLevelTypeTbl[plr[myplr].plrlevel & 0xff];
 		lvldir = 0;
 LAB_8003e110:
 		firstflag = '\0';
@@ -135,13 +135,12 @@ switchD_8003deb4_caseD_a:
 	SyncPortals__Fv();
 	GRL_SetWindowProc__FPFUlUilUl_Ul((TDRFuncPtr_GRL_SetWindowProc__FPFUlUilUl_Ul0NewProc)NewProc);
 	NetSendCmdLocParam1__FUcUcUcUcUs
-						('\x01','5',*(uchar *)&(&plr)[myplr]._px,*(uchar *)&(&plr)[myplr]._py,
-						 (uint)*(ushort *)&(&plr)[myplr].plrlevel);
-	if (PlayerStruct_800dbf20.plractive != '\0') {
+						('\x01','5',*(uchar *)&plr[myplr]._px,*(uchar *)&plr[myplr]._py,
+						 (uint)*(ushort *)&plr[myplr].plrlevel);
+	if (plr[1].plractive != '\0') {
 		myplr = 1;
 		NetSendCmdLocParam1__FUcUcUcUcUs
-							('\x01','5',(uchar)PlayerStruct_800dbf20._px,(uchar)PlayerStruct_800dbf20._py,
-							 (uint)(ushort)PlayerStruct_800dbf20.plrlevel);
+							('\x01','5',(uchar)plr[1]._px,(uchar)plr[1]._py,(uint)(ushort)plr[1].plrlevel);
 		myplr = 0;
 	}
 	ResetPal__Fv();

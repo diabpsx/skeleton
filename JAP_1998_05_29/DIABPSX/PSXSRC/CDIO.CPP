@@ -261,8 +261,6 @@ void * CD_GetCdlFILE__FPCcP7CdlFILE(char *Name,CdlFILE *RetFile)
 	/* end block 2 */
 	// End Line: 616
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void * LoStreamFile__4CdIOPCciPFPUciib_bii
 								 (CdIO *this,char *Name,int Slice,
 								 TDRFuncPtr_LoStreamFile__4CdIOPCciPFPUciib_bii3Func Func,int Offset,int Size)
@@ -367,8 +365,6 @@ void * LoStreamFile__4CdIOPCciPFPUciib_bii
 		// Start line: 820
 	/* end block 2 */
 	// End Line: 821
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 void * LoAsyncStreamFile__4CdIOPCciPFPUciib_bii
 								 (CdIO *this,char *Name,int Slice,

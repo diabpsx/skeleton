@@ -30,8 +30,6 @@ MEM_INFO * GSYS_GetWorkMemInfo(void)
 	/* end block 1 */
 	// End Line: 179
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GSYS_SetStackAndJump(void *Stack,TDRFuncPtr_GSYS_SetStackAndJump1Func Func,void *Param)
 
 {
@@ -58,8 +56,6 @@ void GSYS_SetStackAndJump(void *Stack,TDRFuncPtr_GSYS_SetStackAndJump1Func Func,
 	/* end block 2 */
 	// End Line: 225
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 void GSYS_MarkStack(void *Stack,ulong StackSize)
 
 {
@@ -84,8 +80,6 @@ void GSYS_MarkStack(void *Stack,ulong StackSize)
 		// Start line: 264
 	/* end block 2 */
 	// End Line: 265
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GSYS_IsStackCorrupted(void *Stack,ulong StackSize)
 
@@ -133,8 +127,6 @@ uchar GSYS_InitMachine(void)
 	/* end block 2 */
 	// End Line: 350
 
-/* WARNING: Unknown calling convention yet parameter storage is locked */
-
 uchar GSYS_CheckPtr(void *Ptr)
 
 {
@@ -161,8 +153,6 @@ uchar GSYS_CheckPtr(void *Ptr)
 		// Start line: 396
 	/* end block 2 */
 	// End Line: 397
-
-/* WARNING: Unknown calling convention yet parameter storage is locked */
 
 uchar GSYS_IsStackOutOfBounds(void *Stack,ulong StackSize)
 

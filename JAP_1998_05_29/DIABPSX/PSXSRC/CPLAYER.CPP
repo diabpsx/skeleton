@@ -205,35 +205,34 @@ void SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(CPlayer *this,PlayerStruc
 	bVar2 = false;
 	sx = ((int)Plr->_pxoff * 0x28c) / 1000;
 	sy = ((int)Plr->_pyoff * 0x271) / 1000;
-	if ((plr.plractive == '\0') || (plr._pmode == PM_DEATH)) {
+	if ((plr[0].plractive == '\0') || (plr[0]._pmode == PM_DEATH)) {
 LAB_80095ca0:
-		if ((PlayerStruct_800dbf20.plractive == '\0') || (PlayerStruct_800dbf20._pmode == PM_DEATH))
-		goto LAB_80095d88;
-		sx = ((int)PlayerStruct_800dbf20._pxoff * 0x28c) / 1000;
-		sy = ((int)PlayerStruct_800dbf20._pyoff * 0x271) / 1000;
+		if ((plr[1].plractive == '\0') || (plr[1]._pmode == PM_DEATH)) goto LAB_80095d88;
+		sx = ((int)plr[1]._pxoff * 0x28c) / 1000;
+		sy = ((int)plr[1]._pyoff * 0x271) / 1000;
 		y = ScrToWorldX__7CBlocksii(Bg,sx,sy);
-		y = (int)PlayerStruct_800dbf20._px * 0x14 + y;
+		y = (int)plr[1]._px * 0x14 + y;
 		sx = ScrToWorldY__7CBlocksii(Bg,sx,sy);
-		sVar1 = PlayerStruct_800dbf20._py;
+		sVar1 = plr[1]._py;
 	}
 	else {
-		if (PlayerStruct_800dbf20.plractive != '\0') {
-			if (PlayerStruct_800dbf20._pmode != PM_DEATH) {
-				uVar3 = (int)Plr->_pxoff + (int)PlayerStruct_800dbf20._pxoff;
-				uVar4 = (int)Plr->_pyoff + (int)PlayerStruct_800dbf20._pyoff;
+		if (plr[1].plractive != '\0') {
+			if (plr[1]._pmode != PM_DEATH) {
+				uVar3 = (int)Plr->_pxoff + (int)plr[1]._pxoff;
+				uVar4 = (int)Plr->_pyoff + (int)plr[1]._pyoff;
 				sx = (((int)(uVar3 + (uVar3 >> 0x1f)) >> 1) * 0x271) / 1000;
 				sy = (((int)(uVar4 + (uVar4 >> 0x1f)) >> 1) * 0x271) / 1000;
 				y = ScrToWorldX__7CBlocksii(Bg,sx,sy);
-				x = ((int)plr._px + (int)PlayerStruct_800dbf20._px) * 10 + y + 10;
+				x = ((int)plr[0]._px + (int)plr[1]._px) * 10 + y + 10;
 				sx = ScrToWorldY__7CBlocksii(Bg,sx,sy);
 				bVar2 = true;
-				y = ((int)plr._py + (int)PlayerStruct_800dbf20._py) * 10 + sx + 10;
+				y = ((int)plr[0]._py + (int)plr[1]._py) * 10 + sx + 10;
 				goto LAB_80095e28;
 			}
 			goto LAB_80095ca0;
 		}
 LAB_80095d88:
-		if (plr._pmode == PM_DEATH) goto LAB_80095e28;
+		if (plr[0]._pmode == PM_DEATH) goto LAB_80095e28;
 		y = ScrToWorldX__7CBlocksii(Bg,sx,sy);
 		y = (int)Plr->_px * 0x14 + y;
 		sx = ScrToWorldY__7CBlocksii(Bg,sx,sy);

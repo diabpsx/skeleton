@@ -425,27 +425,27 @@ void DoShowPanelGFX__FP6GPanelT0(GPanel *P1,GPanel *P2)
 	PanelXY *XY;
 	PlayerStruct *Plr;
 	
-	if (plr.plractive == '\0') {
-		if (PlayerStruct_800dbf20.plractive == '\0') {
+	if (plr[0].plractive == '\0') {
+		if (plr[1].plractive == '\0') {
 			return;
 		}
 		sel_data = 1;
 		XY = &DefP2PanelXY;
-		Plr = &PlayerStruct_800dbf20;
+		Plr = plr + 1;
 	}
 	else {
-		if (PlayerStruct_800dbf20.plractive == '\0') {
+		if (plr[1].plractive == '\0') {
 			sel_data = 0;
 			XY = &DefP1PanelXY;
-			Plr = &plr;
+			Plr = plr;
 			P2 = P1;
 		}
 		else {
 			sel_data = 0;
-			Print__6GPanelP7PanelXYP12PlayerStruct(P1,&DefP1PanelXY2,&plr);
+			Print__6GPanelP7PanelXYP12PlayerStruct(P1,&DefP1PanelXY2,plr);
 			XY = &DefP2PanelXY2;
 			sel_data = 1;
-			Plr = &PlayerStruct_800dbf20;
+			Plr = plr + 1;
 		}
 	}
 	Print__6GPanelP7PanelXYP12PlayerStruct(P2,XY,Plr);
@@ -565,10 +565,10 @@ void BgTask__FP4TASK(TASK *T)
 	UPDATEPROGRESS__Fi(4);
 	__7CPlayerbii(&CStack384,Val,0,FePlayerNo);
 	__7CPlayerbii(&CStack240,Val,1,FePlayerNo);
-	MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2(&CStack384,&plr,Val,&DAT_00000001);
+	MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2(&CStack384,plr,Val,&DAT_00000001);
 	if (FePlayerNo != 0) {
 		MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2
-							(&CStack240,&PlayerStruct_800dbf20,Val,&DAT_00000001);
+							(&CStack240,plr + 1,Val,&DAT_00000001);
 	}
 	UPDATEPROGRESS__Fi(1);
 	FinishProgress__Fv();
@@ -583,7 +583,7 @@ void BgTask__FP4TASK(TASK *T)
 	MissDat = GM_UseTexData__Fi(List);
 	music_start__Fi((uint)leveltype);
 	PaletteFadeIn__Fi(8);
-	SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(&CStack384,&plr,&CStack648);
+	SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(&CStack384,plr,&CStack648);
 	MoveToScrollTarget__7CBlocks(&CStack648);
 	GLUE_SetShowGameScreenFlag__Fb(&DAT_00000001);
 	GLUE_SetHomingScrollFlag__Fb(&DAT_00000001);
@@ -595,7 +595,7 @@ void BgTask__FP4TASK(TASK *T)
 	VID_GetTick__Fv();
 	JustLoadedPlayer = '\0';
 	GameStarted = &DAT_00000001;
-	if (((setlevel != '\0') && (setlvlnum == '\x01')) && (QuestStruct_800ddb30._qactive == '\x02')) {
+	if (((setlevel != '\0') && (setlvlnum == '\x01')) && (quests[12]._qactive == '\x02')) {
 		PlaySFX__Fi(USFX_SKING1);
 	}
 	while( true ) {
@@ -609,9 +609,9 @@ void BgTask__FP4TASK(TASK *T)
 				SetRandOffset__7CBlocksi(&CStack648,QuakeAmount);
 				QuakeTime = QuakeTime + -1;
 			}
-			Plr = &plr;
-			if (plr.plractive == '\0') {
-				Plr = &PlayerStruct_800dbf20;
+			Plr = plr;
+			if (plr[0].plractive == '\0') {
+				Plr = plr + 1;
 			}
 			SetScrollTarget__7CPlayerR12PlayerStructR7CBlocks(&CStack384,Plr,&CStack648);
 			if ((DoHomingScroll != (void *)0x0) && (deathflag == '\0')) {
@@ -622,12 +622,12 @@ void BgTask__FP4TASK(TASK *T)
 			if (DoShowPanel != (void *)0x0) {
 				DoShowPanelGFX__FP6GPanelT0(&GStack96,&GStack64);
 			}
-			MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2(&CStack384,&plr,Val,(void *)0x0);
-			Print__7CPlayerR12PlayerStructR7CBlocks(&CStack384,&plr,&CStack648);
+			MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2(&CStack384,plr,Val,(void *)0x0);
+			Print__7CPlayerR12PlayerStructR7CBlocks(&CStack384,plr,&CStack648);
 			if (FePlayerNo != 0) {
 				MakeSurePlayerDressedProperly__FR7CPlayerR12PlayerStructbT2
-									(&CStack240,&PlayerStruct_800dbf20,Val,(void *)0x0);
-				Print__7CPlayerR12PlayerStructR7CBlocks(&CStack240,&PlayerStruct_800dbf20,&CStack648);
+									(&CStack240,plr + 1,Val,(void *)0x0);
+				Print__7CPlayerR12PlayerStructR7CBlocks(&CStack240,plr + 1,&CStack648);
 			}
 			if (bVar1) {
 				DrawLBird__Fv();
@@ -948,7 +948,7 @@ void GLUE_StartGameExit__Fv(void)
 	
 	puVar1 = &DAT_000019e8;
 	do {
-		(&plr.plractive)[(int)puVar1] = '\0';
+		(&plr[0].plractive)[(int)puVar1] = '\0';
 		puVar1 = puVar1 + -0x19e8;
 	} while (-1 < (int)puVar1);
 	GLUE_SuspendGame__Fv();

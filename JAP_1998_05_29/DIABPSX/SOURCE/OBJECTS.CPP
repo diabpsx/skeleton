@@ -404,7 +404,7 @@ void DeleteObject__Fii(int oi,int i)
 	uchar *puVar1;
 	int iVar2;
 	
-	(&dung_map)[(int)object[oi]._ox * 0x70 + (int)object[oi]._oy].dObject = '\0';
+	dung_map[(int)object[oi]._ox * 0x70 + (int)object[oi]._oy].dObject = '\0';
 	*(undefined *)(-0x7ff25ce1 - numobjects) = (char)oi;
 	iVar2 = numobjects + -1;
 	if ((0 < iVar2) && (i != iVar2)) {
@@ -579,12 +579,12 @@ void AddObject__Fiii(int ot,int ox,int oy)
 	
 	lVar2 = numobjects;
 	cVar1 = objectavail[0];
-	if ((numobjects < 0x7f) && ((&dung_map)[ox * 0x70 + oy].dObject == '\0')) {
+	if ((numobjects < 0x7f) && (dung_map[ox * 0x70 + oy].dObject == '\0')) {
 		i = (int)objectavail[0];
 		objectavail[0] = objectavail[0x7e - numobjects];
 		object[i]._olid = -1;
 		(&objectactive)[lVar2] = cVar1;
-		(&dung_map)[ox * 0x70 + oy].dObject = cVar1 + '\x01';
+		dung_map[ox * 0x70 + oy].dObject = cVar1 + '\x01';
 		SetupObject__Fiiii(i,ox,oy,ot);
 		if (ot != 0x53) {
 			FUN_80159c74(ot,ox,oy,i);
@@ -630,13 +630,13 @@ void PostAddObject__Fiii(int ot,int ox,int oy)
 	uVar2 = QuestStatus__Fi(9);
 	lVar1 = numobjects;
 	cVar3 = objectavail[0];
-	if ((uVar2 == '\0') || ((int)(&dung_map)[ox * 0x70 + oy].dObject == 0)) {
+	if ((uVar2 == '\0') || ((int)dung_map[ox * 0x70 + oy].dObject == 0)) {
 LAB_80053f9c:
 		i = (int)objectavail[0];
 		objectavail[0] = objectavail[0x7e - numobjects];
 		object[i]._olid = -1;
 		(&objectactive)[lVar1] = cVar3;
-		(&dung_map)[ox * 0x70 + oy].dObject = cVar3 + '\x01';
+		dung_map[ox * 0x70 + oy].dObject = cVar3 + '\x01';
 		SetupObject__Fiiii(i,ox,oy,ot);
 		if (ot != 0x53) {
 			PostObjObjAddSwitch__Fiiii(ot,ox,oy,i);
@@ -644,7 +644,7 @@ LAB_80053f9c:
 		numobjects = numobjects + 1;
 	}
 	else {
-		i = (int)(&dung_map)[ox * 0x70 + oy].dObject + -1;
+		i = (int)dung_map[ox * 0x70 + oy].dObject + -1;
 		if (ot == 0x2a) {
 			if (deltaload != '\0') {
 				if (object[i]._oVar4 != 0) {
@@ -747,10 +747,10 @@ void Obj_Light__Fii(int i,int lr)
 			cVar1 = object[i]._ox;
 			cVar2 = object[i]._oy;
 			do {
-				if (((&plr.plractive)[(int)puVar6] != '\0') &&
-					 ((uint)currlevel == *(uint *)((int)&plr.plrlevel + (int)puVar6))) {
-					iVar4 = abs((int)*(short *)((int)&plr._px + (int)puVar6) - (int)cVar1);
-					iVar5 = abs((int)*(short *)((int)&plr._py + (int)puVar6) - (int)cVar2);
+				if (((&plr[0].plractive)[(int)puVar6] != '\0') &&
+					 ((uint)currlevel == *(uint *)((int)&plr[0].plrlevel + (int)puVar6))) {
+					iVar4 = abs((int)*(short *)((int)&plr[0]._px + (int)puVar6) - (int)cVar1);
+					iVar5 = abs((int)*(short *)((int)&plr[0]._py + (int)puVar6) - (int)cVar2);
 					if ((iVar4 < iVar8) && (iVar5 < iVar8)) {
 						bVar3 = true;
 					}
@@ -857,21 +857,21 @@ void Obj_Circle__Fi(int i)
 	short sVar4;
 	bool bVar5;
 	char cVar6;
-	int pnum;
+	int id;
 	short *psVar7;
 	int iVar8;
 	int iVar9;
 	short *psVar10;
 	undefined *puVar11;
 	
-	pnum = 0;
-	psVar7 = &plr._py;
-	psVar10 = &plr._px;
+	id = 0;
+	psVar7 = &plr[0]._py;
+	psVar10 = &plr[0]._px;
 	puVar11 = (undefined *)0x0;
 	bVar5 = false;
 	iVar9 = (int)object[i]._ox;
 	iVar8 = (int)object[i]._oy;
-	while ((pnum < 2 && (!bVar5))) {
+	while ((id < 2 && (!bVar5))) {
 		if ((((int)*psVar10 == iVar9) && ((int)*psVar7 == iVar8)) || (deltaload != '\0')) {
 			bVar5 = true;
 			cVar6 = object[i]._otype;
@@ -900,14 +900,15 @@ void Obj_Circle__Fi(int i)
 				sVar4 = object[i]._oVar4;
 				object[i]._oVar6 = 4;
 				ObjChangeMapResync__Fiiii((int)sVar1,(int)sVar2,(int)sVar3,(int)sVar4);
-				if (((QuestStruct_800ddb6c._qactive == '\x02') && (QuestStruct_800ddb6c._qvar1 < 5)) &&
-					 (QuestStruct_800ddb6c._qvar1 = '\x04', deltaload == '\0')) {
+				if (((quests[15]._qactive == '\x02') && (quests[15]._qvar1 < 5)) &&
+					 (quests[15]._qvar1 = '\x04', deltaload == '\0')) {
 					NetSendCmdQuest__FUcUc('\x01','\x0f');
 				}
-				FUN_80142a04((int)*psVar10,(int)*psVar7,0x23,0x2e,(int)(&plr._pdir)[(int)puVar11],3,0,pnum,0
-										 ,0);
-				ClrPlrPath__Fi(pnum);
-				StartStand__Fii(pnum,0);
+				AddMissile__Fiiiiiiciii
+									((int)*psVar10,(int)*psVar7,0x23,0x2e,(int)(&plr[0]._pdir)[(int)puVar11],3,0,id,0,
+									 0);
+				ClrPlrPath__Fi(id);
+				StartStand__Fii(id,0);
 			}
 		}
 		else {
@@ -924,7 +925,7 @@ void Obj_Circle__Fi(int i)
 		psVar7 = psVar7 + 0xcf4;
 		psVar10 = psVar10 + 0xcf4;
 		puVar11 = &DAT_000019e8 + (int)puVar11;
-		pnum = pnum + 1;
+		id = id + 1;
 	}
 	return;
 }
@@ -1019,8 +1020,8 @@ void DrawExpl__Fiiiiiccc(int sx,int sy,int f,int ot,int scale,int rtint,int gtin
 			Frm = scale + 3;
 		}
 		DrawSpinner__FiiUcUcUciiibiT8T8Uc
-							(sx,sy + -10,~(byte)rtint,~(byte)gtint,~(btint & 0xffU) & 0xff,Frm >> 2,0x40,4,
-							 (void *)0x0,iVar4 + 2,&DAT_00000001,(void *)0x0,8);
+							(sx,sy + -10,~(byte)rtint,~(byte)gtint,~(btint & 0xffU) & 0xff,Frm >> 2,0x40,4,0,
+							 iVar4 + 2,1,0,8);
 	}
 	if (0x100 < scale) {
 		iVar10 = 0x78;
@@ -1153,8 +1154,8 @@ void Obj_Door__Fi(int i)
 	else {
 		y = (int)object[i]._oy;
 		x = (int)object[i]._ox;
-		sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-		cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+		sVar2 = dung_map[x * 0x70 + y].dMonster;
+		cVar1 = dung_map[x * 0x70 + y].dItem;
 		uVar3 = GetdDead__Fii(x,y);
 		uVar4 = IsDplayer__Fii(x,y);
 		object[i]._oSelFlag = '\x02';
@@ -1292,7 +1293,7 @@ void Obj_FlameTrap__Fi(int i)
 				y = x * 0x380 + (int)cVar1 * 8;
 				do {
 					uVar4 = IsDplayer__Fii(x,(int)cVar1);
-					if ((uVar4 != '\0') || (*(short *)((int)&dung_map.dMonster + y) != 0)) {
+					if ((uVar4 != '\0') || (*(short *)((int)&dung_map[0].dMonster + y) != 0)) {
 						object[i]._oVar4 = 1;
 					}
 					y = y + 0x380;
@@ -1306,7 +1307,7 @@ void Obj_FlameTrap__Fi(int i)
 				x = y * 8 + (int)cVar1 * 0x380;
 				do {
 					uVar4 = IsDplayer__Fii((int)cVar1,y);
-					if ((uVar4 != '\0') || (*(short *)((int)&dung_map.dMonster + x) != 0)) {
+					if ((uVar4 != '\0') || (*(short *)((int)&dung_map[0].dMonster + x) != 0)) {
 						object[i]._oVar4 = 1;
 					}
 					x = x + 8;
@@ -1383,18 +1384,18 @@ void Obj_Trap__Fi(int i)
 	char cVar2;
 	bool bVar3;
 	uchar uVar4;
-	int iVar5;
+	int midir;
 	int x;
 	int y;
+	int iVar5;
 	int iVar6;
-	int iVar7;
 	int x2;
 	int y2;
 	
 	bVar3 = false;
 	if (object[i]._oVar4 == 0) {
-		iVar6 = (int)(&dung_map)[(int)object[i]._oVar1 * 0x70 + (int)object[i]._oVar2].dObject + -1;
-		switch((int)(((uint)(byte)object[iVar6]._otype - 1) * 0x1000000) >> 0x18) {
+		iVar5 = (int)dung_map[(int)object[i]._oVar1 * 0x70 + (int)object[i]._oVar2].dObject + -1;
+		switch((int)(((uint)(byte)object[iVar5]._otype - 1) * 0x1000000) >> 0x18) {
 		case 0:
 		case 1:
 		case 0x29:
@@ -1402,7 +1403,7 @@ void Obj_Trap__Fi(int i)
 		case 0x49:
 		case 0x4a:
 			bVar3 = false;
-			if (object[iVar6]._oVar4 != 0) {
+			if (object[iVar5]._oVar4 != 0) {
 				bVar3 = true;
 			}
 			break;
@@ -1413,24 +1414,24 @@ void Obj_Trap__Fi(int i)
 		case 0x1b:
 		case 0x2f:
 			bVar3 = false;
-			if (object[iVar6]._oSelFlag == '\0') {
+			if (object[iVar5]._oSelFlag == '\0') {
 				bVar3 = true;
 			}
 		}
 		if (bVar3) {
 			object[i]._oVar4 = 1;
-			y2 = (int)object[iVar6]._oy;
-			iVar7 = (int)object[iVar6]._ox;
+			y2 = (int)object[iVar5]._oy;
+			iVar6 = (int)object[iVar5]._ox;
 			cVar1 = object[i]._ox;
 			y = y2 + -1;
-			iVar5 = y2 + 1;
+			midir = y2 + 1;
 			cVar2 = object[i]._oy;
-			x2 = iVar7;
-			if (y <= iVar5) {
-				x2 = iVar7;
+			x2 = iVar6;
+			if (y <= midir) {
+				x2 = iVar6;
 				do {
-					x = iVar7 + -1;
-					if (x <= iVar7 + 1) {
+					x = iVar6 + -1;
+					if (x <= iVar6 + 1) {
 						do {
 							uVar4 = IsDplayer__Fii(x,y);
 							if (uVar4 != '\0') {
@@ -1438,17 +1439,17 @@ void Obj_Trap__Fi(int i)
 								y2 = y;
 							}
 							x = x + 1;
-						} while (x <= iVar7 + 1);
+						} while (x <= iVar6 + 1);
 					}
 					y = y + 1;
-				} while (y <= iVar5);
+				} while (y <= midir);
 			}
 			if (deltaload == '\0') {
-				iVar5 = GetDirection__Fiiii((int)cVar1,(int)cVar2,x2,y2);
-				FUN_80142a04((int)cVar1,(int)cVar2,x2,y2,iVar5,(int)object[i]._oVar3,1,0xffffffff,0,0);
-				PlaySfxLoc__Fiii(0x35,(int)object[iVar6]._ox,(int)object[iVar6]._oy);
+				midir = GetDirection__Fiiii((int)cVar1,(int)cVar2,x2,y2);
+				AddMissile__Fiiiiiiciii((int)cVar1,(int)cVar2,x2,y2,midir,(int)object[i]._oVar3,1,-1,0,0);
+				PlaySfxLoc__Fiii(0x35,(int)object[iVar5]._ox,(int)object[iVar5]._oy);
 			}
-			object[iVar6]._oTrapFlag = '\0';
+			object[iVar5]._oTrapFlag = '\0';
 		}
 	}
 	return;
@@ -1508,17 +1509,17 @@ void Obj_BCrossDamage__Fi(int i)
 	aiStack52[3] = DAT_80116b14;
 	local_24 = DAT_80116b18;
 	pnum = 0;
-	psVar3 = &plr._py;
-	psVar4 = &plr._px;
-	plVar6 = &plr._pHitPoints;
-	plVar7 = &plr._pHPBase;
+	psVar3 = &plr[0]._py;
+	psVar4 = &plr[0]._px;
+	plVar6 = &plr[0]._pHitPoints;
+	plVar7 = &plr[0]._pHPBase;
 	puVar5 = (undefined *)0x0;
 	do {
-		if (*(int *)((int)&plr._pmode + (int)puVar5) != 8) {
-			if (0 < (int)(&plr._pFireResist)[(int)puVar5]) {
+		if (*(int *)((int)&plr[0]._pmode + (int)puVar5) != 8) {
+			if (0 < (int)(&plr[0]._pFireResist)[(int)puVar5]) {
 				aiStack52[(uint)leveltype] =
 						 aiStack52[(uint)leveltype] -
-						 (aiStack52[(uint)leveltype] * (int)(&plr._pFireResist)[(int)puVar5]) / 100;
+						 (aiStack52[(uint)leveltype] * (int)(&plr[0]._pFireResist)[(int)puVar5]) / 100;
 			}
 			if (((int)*psVar4 == (int)object[i]._ox) && ((int)*psVar3 == (int)object[i]._oy + -1)) {
 				uVar2 = (uint)leveltype;
@@ -1528,7 +1529,7 @@ void Obj_BCrossDamage__Fi(int i)
 					StartPlrKill__Fii(pnum,0);
 				}
 				else {
-					cVar1 = (&plr._pClass)[(int)puVar5];
+					cVar1 = (&plr[0]._pClass)[(int)puVar5];
 					if (cVar1 == '\0') {
 						x = (int)*psVar4;
 						y = (int)*psVar3;
@@ -1701,8 +1702,8 @@ void ObjSetMicro__Fiii(int dx,int dy,int pn)
 
 {
 	if (dPiece == (short *)0x0) {
-		(&dung_map)[dx * 0x70 + dy].dBits = (&dung_map)[dx * 0x70 + dy].dBits & 0xf0;
-		if (nSolidTable[pn] == '\0') {
+		dung_map[dx * 0x70 + dy].dBits = dung_map[dx * 0x70 + dy].dBits & 0xf0;
+		if ((&nSolidTable)[pn] == '\0') {
 			ClearSOLID__Fii(dx,dy);
 		}
 		else {
@@ -1714,7 +1715,7 @@ void ObjSetMicro__Fiii(int dx,int dy,int pn)
 		else {
 			SetMISSILE__Fii(dx,dy);
 		}
-		if (nBlockTable[pn] == '\0') {
+		if ((&nBlockTable)[pn] == '\0') {
 			ClearBLOCK__Fii(dx,dy);
 		}
 		else {
@@ -1957,11 +1958,11 @@ void RedoPlayerVision__Fv(void)
 	iVar2 = 0;
 	puVar1 = (undefined *)0x0;
 	do {
-		if (((&plr.plractive)[(int)puVar1] != '\0') &&
-			 ((uint)currlevel == *(uint *)((int)&plr.plrlevel + (int)puVar1))) {
+		if (((&plr[0].plractive)[(int)puVar1] != '\0') &&
+			 ((uint)currlevel == *(uint *)((int)&plr[0].plrlevel + (int)puVar1))) {
 			ChangeVisionXY__Fiii
-								((int)(&plr._pvid)[(int)puVar1],(int)*(short *)((int)&plr._px + (int)puVar1),
-								 (int)*(short *)((int)&plr._py + (int)puVar1));
+								((int)(&plr[0]._pvid)[(int)puVar1],(int)*(short *)((int)&plr[0]._px + (int)puVar1),
+								 (int)*(short *)((int)&plr[0]._py + (int)puVar1));
 		}
 		iVar2 = iVar2 + 1;
 		puVar1 = &DAT_000019e8 + (int)puVar1;
@@ -2029,8 +2030,8 @@ void OperateL1RDoor__FiiUc(int pnum,int oi,uchar sendflag)
 			if (deltaload == '\0') {
 				PlaySfxLoc__Fiii(0x13,x,y);
 			}
-			sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-			cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+			sVar2 = dung_map[x * 0x70 + y].dMonster;
+			cVar1 = dung_map[x * 0x70 + y].dItem;
 			uVar3 = GetdDead__Fii(x,y);
 			if (uVar3 == '\0' && (cVar1 == '\0' && sVar2 == 0)) {
 				if ((pnum == myplr) && (sendflag != '\0')) {
@@ -2131,8 +2132,8 @@ void OperateL1LDoor__FiiUc(int pnum,int oi,uchar sendflag)
 	if (deltaload == '\0') {
 		PlaySfxLoc__Fiii(0x13,x,y);
 	}
-	sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-	cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+	sVar2 = dung_map[x * 0x70 + y].dMonster;
+	cVar1 = dung_map[x * 0x70 + y].dItem;
 	uVar3 = GetdDead__Fii(x,y);
 	if (uVar3 != '\0' || (cVar1 != '\0' || sVar2 != 0)) {
 		object[oi]._oVar4 = 2;
@@ -2223,8 +2224,8 @@ void OperateL2RDoor__FiiUc(int pnum,int oi,uchar sendflag)
 			if (deltaload == '\0') {
 				PlaySfxLoc__Fiii(0x13,x,y);
 			}
-			sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-			cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+			sVar2 = dung_map[x * 0x70 + y].dMonster;
+			cVar1 = dung_map[x * 0x70 + y].dItem;
 			uVar3 = GetdDead__Fii(x,y);
 			if (uVar3 == '\0' && (cVar1 == '\0' && sVar2 == 0)) {
 				if ((pnum == myplr) && (sendflag != '\0')) {
@@ -2306,8 +2307,8 @@ void OperateL2LDoor__FiiUc(int pnum,int oi,uchar sendflag)
 			if (deltaload == '\0') {
 				PlaySfxLoc__Fiii(0x13,x,y);
 			}
-			sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-			cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+			sVar2 = dung_map[x * 0x70 + y].dMonster;
+			cVar1 = dung_map[x * 0x70 + y].dItem;
 			uVar3 = GetdDead__Fii(x,y);
 			if (uVar3 == '\0' && (cVar1 == '\0' && sVar2 == 0)) {
 				if ((pnum == myplr) && (sendflag != '\0')) {
@@ -2387,8 +2388,8 @@ void OperateL3RDoor__FiiUc(int pnum,int oi,uchar sendflag)
 			if (deltaload == '\0') {
 				PlaySfxLoc__Fiii(0x13,x,y);
 			}
-			sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-			cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+			sVar2 = dung_map[x * 0x70 + y].dMonster;
+			cVar1 = dung_map[x * 0x70 + y].dItem;
 			uVar3 = GetdDead__Fii(x,y);
 			if (uVar3 == '\0' && (cVar1 == '\0' && sVar2 == 0)) {
 				if ((pnum == myplr) && (sendflag != '\0')) {
@@ -2466,8 +2467,8 @@ void OperateL3LDoor__FiiUc(int pnum,int oi,uchar sendflag)
 			if (deltaload == '\0') {
 				PlaySfxLoc__Fiii(0x13,x,y);
 			}
-			sVar2 = (&dung_map)[x * 0x70 + y].dMonster;
-			cVar1 = (&dung_map)[x * 0x70 + y].dItem;
+			sVar2 = dung_map[x * 0x70 + y].dMonster;
+			cVar1 = dung_map[x * 0x70 + y].dItem;
 			uVar3 = GetdDead__Fii(x,y);
 			if (uVar3 == '\0' && (cVar1 == '\0' && sVar2 == 0)) {
 				if ((pnum == myplr) && (sendflag != '\0')) {
@@ -2530,14 +2531,14 @@ void MonstCheckDoors__Fi(int m)
 	iVar6 = (int)monster[m]._mx;
 	iVar3 = iVar7 + -1;
 	iVar4 = iVar6 + -1;
-	if (((((&dung_map)[iVar4 * 0x70 + iVar3].dObject == '\0') &&
-			 (oi = iVar6 + 1, (&dung_map)[iVar6 * 0x70 + iVar3].dObject == '\0')) &&
-			((&dung_map)[oi * 0x70 + iVar3].dObject == '\0')) &&
-		 ((((&dung_map)[iVar4 * 0x70 + iVar7].dObject == '\0' &&
-			 (iVar3 = iVar7 + 1, (&dung_map)[oi * 0x70 + iVar7].dObject == '\0')) &&
-			(((&dung_map)[iVar4 * 0x70 + iVar3].dObject == '\0' &&
-			 (((&dung_map)[iVar6 * 0x70 + iVar3].dObject == '\0' &&
-				((&dung_map)[oi * 0x70 + iVar3].dObject == '\0')))))))) {
+	if ((((dung_map[iVar4 * 0x70 + iVar3].dObject == '\0') &&
+			 (oi = iVar6 + 1, dung_map[iVar6 * 0x70 + iVar3].dObject == '\0')) &&
+			(dung_map[oi * 0x70 + iVar3].dObject == '\0')) &&
+		 (((dung_map[iVar4 * 0x70 + iVar7].dObject == '\0' &&
+			 (iVar3 = iVar7 + 1, dung_map[oi * 0x70 + iVar7].dObject == '\0')) &&
+			((dung_map[iVar4 * 0x70 + iVar3].dObject == '\0' &&
+			 ((dung_map[iVar6 * 0x70 + iVar3].dObject == '\0' &&
+				(dung_map[oi * 0x70 + iVar3].dObject == '\0')))))))) {
 		return;
 	}
 	iVar3 = 0;
@@ -2728,7 +2729,7 @@ void ObjChangeMap__Fiiii(int x1,int y1,int x2,int y2)
 
 {
 	byte *pbVar1;
-	uchar *puVar2;
+	undefined *puVar2;
 	int x;
 	int y;
 	ushort *puVar3;
@@ -2740,7 +2741,7 @@ void ObjChangeMap__Fiiii(int x1,int y1,int x2,int y2)
 		do {
 			if (x1 <= x2) {
 				puVar3 = dungeon + x1 * 0x30;
-				puVar2 = pdungeon + x1 * 0x28;
+				puVar2 = &pdungeon + x1 * 0x28;
 				x = x1;
 				do {
 					pbVar1 = puVar2 + y;
@@ -2815,7 +2816,7 @@ void DRLG_MRectTrans__Fiiii(int x1,int y1,int x2,int y2)
 			iVar5 = iVar2;
 			do {
 				iVar5 = iVar5 + 1;
-				(&dung_map.dTransVal)[iVar1] = TransVal;
+				(&dung_map[0].dTransVal)[iVar1] = TransVal;
 				iVar1 = iVar1 + 0x380;
 			} while (iVar5 <= iVar4);
 		}
@@ -2852,7 +2853,7 @@ void ObjChangeMapResync__Fiiii(int x1,int y1,int x2,int y2)
 
 {
 	byte *pbVar1;
-	uchar *puVar2;
+	undefined *puVar2;
 	int y;
 	ushort *puVar3;
 	int x;
@@ -2863,7 +2864,7 @@ void ObjChangeMapResync__Fiiii(int x1,int y1,int x2,int y2)
 		do {
 			if (x1 <= x2) {
 				puVar3 = dungeon + x1 * 0x30;
-				puVar2 = pdungeon + x1 * 0x28;
+				puVar2 = &pdungeon + x1 * 0x28;
 				x = x1;
 				do {
 					pbVar1 = puVar2 + y;
@@ -2917,8 +2918,8 @@ void OperateL1Door__FiiUc(int pnum,int i,uchar sendflag)
 	int iVar1;
 	int iVar2;
 	
-	iVar1 = abs((int)object[i]._ox - (int)(&plr)[pnum]._px);
-	iVar2 = abs((int)object[i]._oy - (int)(&plr)[pnum]._py);
+	iVar1 = abs((int)object[i]._ox - (int)plr[pnum]._px);
+	iVar2 = abs((int)object[i]._oy - (int)plr[pnum]._py);
 	if (((iVar1 == 1) && (iVar2 < 2)) && (object[i]._otype == '\x01')) {
 		OperateL1LDoor__FiiUc(pnum,i,sendflag);
 	}
@@ -3073,62 +3074,67 @@ void OperateBook__Fii(int pnum,int i)
 	uchar uVar5;
 	short sVar6;
 	int iVar7;
-	int iVar8;
-	undefined4 uVar9;
-	undefined4 uVar10;
+	undefined4 uVar8;
+	int iVar9;
+	int v2;
+	int v1;
 	
-	uVar10 = 0;
-	uVar9 = 0;
+	v1 = 0;
+	v2 = 0;
 	if (object[i]._oSelFlag != '\0') {
 		if ((setlevel != '\0') && (setlvlnum == '\x05')) {
 			bVar2 = false;
 			if (deltaload == '\0') {
 				bVar4 = false;
-				iVar8 = 0;
+				iVar9 = 0;
 				if (0 < numobjects) {
 					do {
-						iVar7 = (int)(&objectactive)[iVar8];
+						iVar7 = (int)(&objectactive)[iVar9];
 						if (object[iVar7]._otype == 'U') {
 							sVar6 = object[iVar7]._oVar6;
 							if (sVar6 == 1) {
-								uVar10 = 0x1b;
-								uVar9 = 0x1d;
+								v1 = 0x1b;
+								v2 = 0x1d;
 								bVar4 = true;
-								QuestStruct_800ddb6c.pad_for_laz = QuestStruct_800ddb6c.pad_for_laz | 2;
+								quests[15].pad_for_laz = quests[15].pad_for_laz | 2;
 								object[iVar7]._oVar6 = 4;
 								sVar6 = object[iVar7]._oVar6;
 							}
 							if (sVar6 == 2) {
-								uVar10 = 0x2b;
-								uVar9 = 0x1d;
+								v1 = 0x2b;
+								v2 = 0x1d;
 								bVar4 = true;
-								QuestStruct_800ddb6c.pad_for_laz = QuestStruct_800ddb6c.pad_for_laz | 1;
+								quests[15].pad_for_laz = quests[15].pad_for_laz | 1;
 								object[iVar7]._oVar6 = 4;
 							}
 						}
 						uVar5 = deltaload;
 						if (bVar4) {
-							object[(int)DAT_800ef5cb + -1]._oVar5 = object[(int)DAT_800ef5cb + -1]._oVar5 + 1;
+							object[(int)dung_map[35][36].dObject + -1]._oVar5 =
+									 object[(int)dung_map[35][36].dObject + -1]._oVar5 + 1;
 							if (uVar5 == '\0') {
-								FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,uVar10,uVar9,
-														 (int)(&plr)[pnum]._pdir,3,0,pnum,0,0);
+								AddMissile__Fiiiiiiciii
+													((int)plr[pnum]._px,(int)plr[pnum]._py,v1,v2,(int)plr[pnum]._pdir,3,0,pnum
+													 ,0,0);
 							}
 							bVar2 = true;
 							bVar4 = false;
 						}
-						iVar8 = iVar8 + 1;
-					} while (iVar8 < numobjects);
+						iVar9 = iVar9 + 1;
+					} while (iVar9 < numobjects);
 				}
 			}
 			else {
-				bVar2 = (QuestStruct_800ddb6c.pad_for_laz & 2) != 0;
+				bVar2 = (quests[15].pad_for_laz & 2) != 0;
 				if (bVar2) {
-					object[(int)DAT_800ef5cb + -1]._oVar5 = object[(int)DAT_800ef5cb + -1]._oVar5 + 1;
-					object[(int)DAT_800ed69b + -1]._oVar6 = 4;
+					object[(int)dung_map[35][36].dObject + -1]._oVar5 =
+							 object[(int)dung_map[35][36].dObject + -1]._oVar5 + 1;
+					object[(int)dung_map[26][46].dObject + -1]._oVar6 = 4;
 				}
-				if ((QuestStruct_800ddb6c.pad_for_laz & 1) != 0) {
-					object[(int)DAT_800ef5cb + -1]._oVar5 = object[(int)DAT_800ef5cb + -1]._oVar5 + 1;
-					object[(int)DAT_800f1923 + -1]._oVar6 = 4;
+				if ((quests[15].pad_for_laz & 1) != 0) {
+					object[(int)dung_map[35][36].dObject + -1]._oVar5 =
+							 object[(int)dung_map[35][36].dObject + -1]._oVar5 + 1;
+					object[(int)dung_map[45][47].dObject + -1]._oVar6 = 4;
 					bVar2 = true;
 				}
 			}
@@ -3140,36 +3146,37 @@ void OperateBook__Fii(int pnum,int i)
 		object[i]._oSelFlag = '\0';
 		object[i]._oAnimFrame = cVar3 + '\x01';
 		if ((setlevel != '\0') && (setlvlnum == '\x05')) {
-			iVar8 = 0;
+			v2 = 0;
 			ObjChangeMapResync__Fiiii
 								((int)object[i]._oVar1,(int)object[i]._oVar2,(int)object[i]._oVar3,
 								 (int)object[i]._oVar4);
 			if (0 < numobjects) {
 				do {
-					pcVar1 = &objectactive + iVar8;
-					iVar8 = iVar8 + 1;
+					pcVar1 = &objectactive + v2;
+					v2 = v2 + 1;
 					SyncObjectAnim__Fi((int)*pcVar1);
-				} while (iVar8 < numobjects);
+				} while (v2 < numobjects);
 			}
 		}
-		iVar8 = myplr;
+		v2 = myplr;
 		if (deltaload == '\0') {
 			if ((setlevel != '\0') && (setlvlnum == '\x02')) {
-				uVar9 = *(undefined4 *)((int)&(&plr)[myplr]._pMemSpells + 4);
-				*(uint *)&(&plr)[myplr]._pMemSpells = *(uint *)&(&plr)[myplr]._pMemSpells | 0x1000;
-				*(undefined4 *)((int)&(&plr)[iVar8]._pMemSpells + 4) = uVar9;
-				if ((&plr)[pnum]._pSplLvl[0xd] < '\x0f') {
-					(&plr)[iVar8]._pSplLvl[0xd] = (&plr)[iVar8]._pSplLvl[0xd] + '\x01';
+				uVar8 = *(undefined4 *)((int)&plr[myplr]._pMemSpells + 4);
+				*(uint *)&plr[myplr]._pMemSpells = *(uint *)&plr[myplr]._pMemSpells | 0x1000;
+				*(undefined4 *)((int)&plr[v2]._pMemSpells + 4) = uVar8;
+				if (plr[pnum]._pSplLvl[0xd] < '\x0f') {
+					plr[v2]._pSplLvl[0xd] = plr[v2]._pSplLvl[0xd] + '\x01';
 				}
-				QuestStruct_800ddb58._qactive = '\x03';
+				quests[14]._qactive = '\x03';
 				if ((deltaload == '\0') && (NetSendCmdQuest__FUcUc('\x01','\x0e'), deltaload == '\0')) {
 					PlaySfxLoc__Fiii(0xc,(int)object[i]._ox,(int)object[i]._oy);
 				}
 				InitDiabloMsg__Fc('+');
-				iVar8 = myplr;
+				v2 = myplr;
 				(&ScrollFlag)[myplr] = 1;
-				FUN_80142a04((int)(&plr)[iVar8]._px,(int)(&plr)[iVar8]._py,(int)object[i]._ox + -2,
-										 (int)object[i]._oy + -4,(int)(&plr)[iVar8]._pdir,2,0,iVar8,0,0);
+				AddMissile__Fiiiiiiciii
+									((int)plr[v2]._px,(int)plr[v2]._py,(int)object[i]._ox + -2,(int)object[i]._oy + -4
+									 ,(int)plr[v2]._pdir,2,0,v2,0,0);
 			}
 			NetSendCmdParam1__FUcUcUs('\0','-',(ushort)i);
 		}
@@ -3214,30 +3221,29 @@ void OperateBookLever__Fii(int pnum,int i)
 	iVar4 = setpc_y * 2;
 	if (numitems < 0x7f) {
 		if ((object[i]._oSelFlag != '\0') && (qtextflag == '\0')) {
-			if ((object[i]._otype == 'G') && (QuestStruct_ARRAY_800dda90[4]._qvar1 == '\0')) {
-				QuestStruct_ARRAY_800dda90[4]._qactive = '\x02';
-				QuestStruct_ARRAY_800dda90[4]._qlog = '\x01';
-				QuestStruct_ARRAY_800dda90[4]._qvar1 = '\x01';
+			if ((object[i]._otype == 'G') && (quests[8]._qvar1 == '\0')) {
+				quests[8]._qactive = '\x02';
+				quests[8]._qlog = '\x01';
+				quests[8]._qvar1 = '\x01';
 				object[i]._oVar6 = 2;
 				if (uVar1 == '\0') {
 					NetSendCmdQuest__FUcUc('\x01','\b');
 				}
 			}
-			if (((object[i]._otype == 'H') && (QuestStruct_ARRAY_800dda90[5]._qvar1 == '\0')) &&
-				 (deltaload == '\0')) {
-				QuestStruct_ARRAY_800dda90[5]._qactive = '\x02';
-				QuestStruct_ARRAY_800dda90[5]._qlog = '\x01';
-				QuestStruct_ARRAY_800dda90[5]._qvar1 = '\x01';
-				QuestStruct_ARRAY_800dda90[5]._qvar2 = '\x01';
+			if (((object[i]._otype == 'H') && (quests[9]._qvar1 == '\0')) && (deltaload == '\0')) {
+				quests[9]._qactive = '\x02';
+				quests[9]._qlog = '\x01';
+				quests[9]._qvar1 = '\x01';
+				quests[9]._qvar2 = '\x01';
 				object[i]._oVar6 = 2;
 				SpawnQuestItem__Fiiiii(0x15,setpc_x * 2 + 0x19,setpc_y * 2 + 0x21,0,1);
 				NetSendCmdQuest__FUcUc('\x01','\t');
 			}
 			uVar1 = deltaload;
-			if ((object[i]._otype == 'X') && (QuestStruct_ARRAY_800dda90[7]._qvar1 == '\0')) {
-				QuestStruct_ARRAY_800dda90[7]._qactive = '\x02';
-				QuestStruct_ARRAY_800dda90[7]._qlog = '\x01';
-				QuestStruct_ARRAY_800dda90[7]._qvar1 = '\x01';
+			if ((object[i]._otype == 'X') && (quests[11]._qvar1 == '\0')) {
+				quests[11]._qactive = '\x02';
+				quests[11]._qlog = '\x01';
+				quests[11]._qvar1 = '\x01';
 				object[i]._oVar6 = 2;
 				if (uVar1 == '\0') {
 					NetSendCmdQuest__FUcUc('\x01','\v');
@@ -3260,7 +3266,7 @@ void OperateBookLever__Fii(int pnum,int i)
 						TransVal = cVar2;
 						ConvertdPiece__Fv();
 					}
-					if (QuestStruct_ARRAY_800dda90[4].pad_for_laz == '\0') {
+					if (quests[8].pad_for_laz == '\0') {
 						CreateItem__Fiii(3,iVar3 + 0x15,iVar4 + 0x15);
 					}
 				}
@@ -3328,19 +3334,19 @@ void OperateSChambBk__Fii(int pnum,int i)
 			}
 		}
 		object[i]._oAnimFrame = (char)object[i]._oVar6;
-		if (QuestStruct_800ddb58._qactive == '\x01') {
-			QuestStruct_800ddb58._qactive = '\x02';
-			QuestStruct_800ddb58._qlog = '\x01';
+		if (quests[14]._qactive == '\x01') {
+			quests[14]._qactive = '\x02';
+			quests[14]._qlog = '\x01';
 			if (deltaload != '\0') {
-				QuestStruct_800ddb58._qactive = '\x02';
-				QuestStruct_800ddb58._qlog = '\x01';
+				quests[14]._qactive = '\x02';
+				quests[14]._qlog = '\x01';
 				return;
 			}
 			NetSendCmdQuest__FUcUc('\x01','\x0e');
 		}
 		if (deltaload == '\0') {
 			PlaySfxLoc__Fiii(0x26,(int)object[i]._ox,(int)object[i]._oy);
-			cVar2 = (&plr)[myplr]._pClass;
+			cVar2 = plr[myplr]._pClass;
 			if (cVar2 == '\0') {
 				m = 0xeb;
 			}
@@ -3354,7 +3360,7 @@ void OperateSChambBk__Fii(int pnum,int i)
 					}
 				}
 			}
-			QuestStruct_800ddb58._qmsg = (uchar)m;
+			quests[14]._qmsg = (uchar)m;
 			InitQTextMsg__Fi(m);
 			NetSendCmdParam1__FUcUcUs('\0','-',(ushort)i);
 		}
@@ -3390,10 +3396,10 @@ void OperateChest__FiiUc(int pnum,int i,uchar sendmsg)
 
 {
 	short sVar1;
-	int iVar2;
-	undefined4 uVar3;
+	int midir;
+	int mitype;
 	
-	uVar3 = 0;
+	mitype = 0;
 	if (object[i]._oSelFlag != '\0') {
 		if (deltaload == '\0') {
 			PlaySfxLoc__Fiii(0x12,(int)object[i]._ox,(int)object[i]._oy);
@@ -3403,7 +3409,7 @@ void OperateChest__FiiUc(int pnum,int i,uchar sendmsg)
 		if (deltaload == '\0') {
 			SetRndSeed__Fl(object[i]._oRndSeed);
 			if (setlevel == '\0') {
-				iVar2 = 0;
+				midir = 0;
 				if (0 < object[i]._oVar1) {
 					do {
 						if (object[i]._oVar2 == 0) {
@@ -3412,40 +3418,41 @@ void OperateChest__FiiUc(int pnum,int i,uchar sendmsg)
 						else {
 							CreateRndItem__FiiUcUcUc((int)object[i]._ox,(int)object[i]._oy,'\0',sendmsg,0);
 						}
-						iVar2 = iVar2 + 1;
-					} while (iVar2 < (int)object[i]._oVar1);
+						midir = midir + 1;
+					} while (midir < (int)object[i]._oVar1);
 				}
 			}
 			else {
-				iVar2 = 0;
+				midir = 0;
 				if (0 < object[i]._oVar1) {
 					do {
 						CreateRndItem__FiiUcUcUc((int)object[i]._ox,(int)object[i]._oy,'\x01',sendmsg,0);
-						iVar2 = iVar2 + 1;
-					} while (iVar2 < (int)object[i]._oVar1);
+						midir = midir + 1;
+					} while (midir < (int)object[i]._oVar1);
 				}
 			}
 			if ((object[i]._oTrapFlag != '\0') && ((uint)(byte)object[i]._otype - 0x44 < 3)) {
-				iVar2 = GetDirection__Fiiii((int)object[i]._ox,(int)object[i]._oy,(int)(&plr)[pnum]._px,
-																		(int)(&plr)[pnum]._py);
+				midir = GetDirection__Fiiii((int)object[i]._ox,(int)object[i]._oy,(int)plr[pnum]._px,
+																		(int)plr[pnum]._py);
 				sVar1 = object[i]._oVar4;
 				if (sVar1 == 1) {
-					uVar3 = 0x1b;
+					mitype = 0x1b;
 				}
 				else {
 					if (sVar1 < 2) {
 						if (sVar1 == 0) {
-							uVar3 = 0;
+							mitype = 0;
 						}
 					}
 					else {
 						if (sVar1 == 2) {
-							uVar3 = 0x2a;
+							mitype = 0x2a;
 						}
 					}
 				}
-				FUN_80142a04((int)object[i]._ox,(int)object[i]._oy,(int)(&plr)[pnum]._px,
-										 (int)(&plr)[pnum]._py,iVar2,uVar3,1,0xffffffff,0,0);
+				AddMissile__Fiiiiiiciii
+									((int)object[i]._ox,(int)object[i]._oy,(int)plr[pnum]._px,(int)plr[pnum]._py,midir
+									 ,mitype,1,-1,0,0);
 				object[i]._oTrapFlag = '\0';
 			}
 			NetSendCmdParam2__FUcUcUsUs('\0','.',(ushort)pnum,(ushort)i);
@@ -3487,25 +3494,24 @@ void OperateMushPatch__Fii(int pnum,int i)
 	if (numitems < 0x7f) {
 		if (object[i]._oSelFlag != '\0') {
 			object[i]._oSelFlag = '\0';
-			if ((QuestStruct_ARRAY_800dda54[0]._qactive == '\x02') &&
-				 (1 < QuestStruct_ARRAY_800dda54[0]._qvar1)) {
+			if ((quests[1]._qactive == '\x02') && (1 < quests[1]._qvar1)) {
 				if (deltaload == '\0') {
 					PlaySfxLoc__Fiii(0x12,(int)object[i]._ox,(int)object[i]._oy);
 				}
 				object[i]._oAnimFrame = '\x02';
-				if (QuestStruct_ARRAY_800dda54[0].pad_for_laz == '\0') {
+				if (quests[1].pad_for_laz == '\0') {
 					GetSuperItemLoc__FiiRiT2((int)object[i]._ox,(int)object[i]._oy,&local_18,&local_14);
 					SpawnQuestItem__Fiiiii(0x11,local_18,local_14,0,0);
 				}
 				if (deltaload == '\0') {
-					QuestStruct_ARRAY_800dda54[0]._qvar1 = '\x03';
+					quests[1]._qvar1 = '\x03';
 					NetSendCmdQuest__FUcUc('\x01','\x01');
 					NetSendCmdParam2__FUcUcUsUs('\0','.',(ushort)pnum,(ushort)i);
 				}
 			}
 			else {
 				if ((deltaload == '\0') && (pnum == myplr)) {
-					cVar1 = (&plr)[pnum]._pClass;
+					cVar1 = plr[pnum]._pClass;
 					if (cVar1 == '\0') {
 						PlaySFX__Fi(PS_WARR13);
 					}
@@ -3560,9 +3566,9 @@ void OperateInnSignChest__Fii(int pnum,int i)
 	int local_14;
 	
 	if (numitems < 0x7f) {
-		if (QuestStruct_ARRAY_800dda90[3]._qvar1 < 2) {
+		if (quests[7]._qvar1 < 2) {
 			if ((deltaload == '\0') && (pnum == myplr)) {
-				cVar1 = (&plr)[pnum]._pClass;
+				cVar1 = plr[pnum]._pClass;
 				if (cVar1 == '\0') {
 					PlaySFX__Fi(PS_WARR24);
 				}
@@ -3634,25 +3640,25 @@ void OperateSlainHero__FiiUc(int pnum,int i,uchar sendmsg)
 	if (deltaload != '\0') {
 		return;
 	}
-	cVar1 = (&plr)[pnum]._pClass;
+	cVar1 = plr[pnum]._pClass;
 	if (cVar1 == '\0') {
 		CreateMagicArmor__FiiiiUcUc((int)object[i]._ox,(int)object[i]._oy,9,0x99,1,0);
-		x = (int)(&plr)[myplr]._px;
-		y = (int)(&plr)[myplr]._py;
+		x = (int)plr[myplr]._px;
+		y = (int)plr[myplr]._py;
 		psfx = 0x2d4;
 	}
 	else {
 		if (cVar1 == '\x01') {
 			CreateMagicWeapon__FiiiiUcUc((int)object[i]._ox,(int)object[i]._oy,3,0x77,1,0);
-			x = (int)(&plr)[myplr]._px;
-			y = (int)(&plr)[myplr]._py;
+			x = (int)plr[myplr]._px;
+			y = (int)plr[myplr]._py;
 			psfx = 0x26c;
 		}
 		else {
 			if (cVar1 != '\x02') goto LAB_80059594;
 			CreateSpellBook__FiiiUcUc((int)object[i]._ox,(int)object[i]._oy,3,'\x01',0);
-			x = (int)(&plr)[myplr]._px;
-			y = (int)(&plr)[myplr]._py;
+			x = (int)plr[myplr]._px;
+			y = (int)plr[myplr]._py;
 			psfx = 0x204;
 		}
 	}
@@ -3808,8 +3814,8 @@ void OperateL2Door__FiiUc(int pnum,int i,uchar sendflag)
 	int iVar1;
 	int iVar2;
 	
-	iVar1 = abs((int)object[i]._ox - (int)(&plr)[pnum]._px);
-	iVar2 = abs((int)object[i]._oy - (int)(&plr)[pnum]._py);
+	iVar1 = abs((int)object[i]._ox - (int)plr[pnum]._px);
+	iVar2 = abs((int)object[i]._oy - (int)plr[pnum]._py);
 	if (((iVar1 == 1) && (iVar2 < 2)) && (object[i]._otype == '*')) {
 		OperateL2LDoor__FiiUc(pnum,i,sendflag);
 	}
@@ -3848,8 +3854,8 @@ void OperateL3Door__FiiUc(int pnum,int i,uchar sendflag)
 	int iVar1;
 	int iVar2;
 	
-	iVar1 = abs((int)object[i]._ox - (int)(&plr)[pnum]._px);
-	iVar2 = abs((int)object[i]._oy - (int)(&plr)[pnum]._py);
+	iVar1 = abs((int)object[i]._ox - (int)plr[pnum]._px);
+	iVar2 = abs((int)object[i]._oy - (int)plr[pnum]._py);
 	if (((iVar1 == 1) && (iVar2 < 2)) && (object[i]._otype == 'K')) {
 		OperateL3RDoor__FiiUc(pnum,i,sendflag);
 	}
@@ -4039,20 +4045,20 @@ void OperatePedistal__Fii(int pnum,int i)
 		if (deltaload == '\0') {
 			if ((object[i]._oVar6 != 3) &&
 				 (pIVar1 = PlrHasItem__FiiRi(pnum,0x15,local_20), pIVar1 != (ItemStruct *)0x0)) {
-				FUN_8015d6fc(pnum,local_20[0]);
+				RemoveInvItem__Fii(pnum,local_20[0]);
 				object[i]._oAnimFrame = object[i]._oAnimFrame + '\x01';
 				object[i]._oVar6 = object[i]._oVar6 + 1;
 				if (object[i]._oVar6 == 1) {
 					PlaySfxLoc__Fiii(0x6a,(int)object[i]._ox,(int)object[i]._oy);
 					ObjChangeMap__Fiiii(setpc_x,setpc_y + 3,setpc_x + 2,setpc_y + 7);
-					QuestStruct_ARRAY_800dda90[5]._qvar2 = '\x02';
+					quests[9]._qvar2 = '\x02';
 					SpawnQuestItem__Fiiiii(0x15,setpc_x * 2 + 0x13,setpc_y * 2 + 0x1a,0,1);
 					NetSendCmdQuest__FUcUc('\x01','\t');
 				}
 				if (object[i]._oVar6 == 2) {
 					PlaySfxLoc__Fiii(0x6a,(int)object[i]._ox,(int)object[i]._oy);
 					ObjChangeMap__Fiiii(setpc_x + 6,setpc_y + 3,setpc_x + setpc_w,setpc_y + 7);
-					QuestStruct_ARRAY_800dda90[5]._qvar2 = '\x03';
+					quests[9]._qvar2 = '\x03';
 					SpawnQuestItem__Fiiiii(0x15,setpc_x * 2 + 0x1f,setpc_y * 2 + 0x1a,0,1);
 					NetSendCmdQuest__FUcUc('\x01','\t');
 				}
@@ -4065,23 +4071,23 @@ void OperatePedistal__Fii(int pnum,int i)
 					mem_free_dbg__FPv(pMap);
 					CreateItem__Fiii(7,setpc_x * 2 + 0x19,setpc_y * 2 + 0x13);
 					object[i]._oSelFlag = '\0';
-					QuestStruct_ARRAY_800dda90[5]._qvar2 = '\x04';
+					quests[9]._qvar2 = '\x04';
 					NetSendCmdQuest__FUcUc('\x01','\t');
 				}
 				NetSendCmdParam1__FUcUcUs('\0','-',(ushort)i);
 			}
 		}
 		else {
-			if (QuestStruct_ARRAY_800dda90[5]._qvar2 == '\x02') {
+			if (quests[9]._qvar2 == '\x02') {
 				ObjChangeMap__Fiiii(setpc_x,setpc_y + 3,setpc_x + 2,setpc_y + 7);
 				object[i]._oAnimFrame = '\x02';
 			}
-			if (QuestStruct_ARRAY_800dda90[5]._qvar2 == '\x03') {
+			if (quests[9]._qvar2 == '\x03') {
 				ObjChangeMap__Fiiii(setpc_x,setpc_y + 3,setpc_x + 2,setpc_y + 7);
 				ObjChangeMap__Fiiii(setpc_x + 6,setpc_y + 3,setpc_x + setpc_w,setpc_y + 7);
 				object[i]._oAnimFrame = '\x03';
 			}
-			if (QuestStruct_ARRAY_800dda90[5]._qvar2 == '\x04') {
+			if (quests[9]._qvar2 == '\x04') {
 				ObjChangeMap__Fiiii(setpc_x,setpc_y + 3,setpc_x + 2,setpc_y + 7);
 				ObjChangeMap__Fiiii(setpc_x + 6,setpc_y + 3,setpc_x + setpc_w,setpc_y + 7);
 				ObjChangeMap__Fiiii((int)object[i]._oVar1,(int)object[i]._oVar2,(int)object[i]._oVar3,
@@ -4139,13 +4145,13 @@ void TryDisarm__Fii(int pnum,int i)
 		NewCursor__Fi(1);
 	}
 	if (((object[i]._oTrapFlag != '\0') &&
-			(sVar1 = (&plr)[pnum]._pDexterity, uVar3 = (uint)currlevel, lVar2 = ENG_random__Fl(100),
+			(sVar1 = plr[pnum]._pDexterity, uVar3 = (uint)currlevel, lVar2 = ENG_random__Fl(100),
 			lVar2 <= (int)((int)sVar1 * 2 + uVar3 * -5))) && (iVar5 = 0, 0 < numobjects)) {
 		do {
 			iVar4 = (int)(&objectactive)[iVar5];
 			if ((object[iVar4]._otype == '6' || object[iVar4]._otype == '5') &&
-				 ((int)(&dung_map)[(int)object[iVar4]._oVar1 * 0x70 + (int)object[iVar4]._oVar2].dObject +
-					-1 == i)) {
+				 ((int)dung_map[(int)object[iVar4]._oVar1 * 0x70 + (int)object[iVar4]._oVar2].dObject + -1
+					== i)) {
 				object[iVar4]._oVar4 = 1;
 				object[i]._oTrapFlag = '\0';
 			}
@@ -4339,8 +4345,8 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				l_01 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
-					if (((*(short *)((int)&plr.InvBody[0]._itype + local_d0) != -1) &&
-							(sVar4 = *(short *)((int)&plr.InvBody[0]._iMaxDur + local_d0), sVar4 != 0xff)) &&
+					if (((*(short *)((int)&plr[0].InvBody[0]._itype + local_d0) != -1) &&
+							(sVar4 = *(short *)((int)&plr[0].InvBody[0]._iMaxDur + local_d0), sVar4 != 0xff)) &&
 						 (sVar4 != 0)) {
 						l_00 = l_00 + 1;
 					}
@@ -4351,15 +4357,15 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				if (0 < l_00) {
 					l_00 = pnum * 0x19e8;
 					do {
-						if (((*(short *)((int)&plr.InvBody[0]._itype + l_00) != -1) &&
-								(sVar4 = *(short *)((int)&plr.InvBody[0]._iMaxDur + l_00), sVar4 != 0xff)) &&
+						if (((*(short *)((int)&plr[0].InvBody[0]._itype + l_00) != -1) &&
+								(sVar4 = *(short *)((int)&plr[0].InvBody[0]._iMaxDur + l_00), sVar4 != 0xff)) &&
 							 (sVar4 != 0)) {
-							sVar4 = *(short *)((int)&plr.InvBody[0]._iDurability + l_00);
-							sVar7 = *(short *)((int)&plr.InvBody[0]._iMaxDur + l_00) + 10;
-							*(short *)((int)&plr.InvBody[0]._iMaxDur + l_00) = sVar7;
-							*(short *)((int)&plr.InvBody[0]._iDurability + l_00) = sVar4 + 10;
-							if (sVar7 < *(short *)((int)&plr.InvBody[0]._iDurability + l_00)) {
-								*(short *)((int)&plr.InvBody[0]._iDurability + l_00) = sVar7;
+							sVar4 = *(short *)((int)&plr[0].InvBody[0]._iDurability + l_00);
+							sVar7 = *(short *)((int)&plr[0].InvBody[0]._iMaxDur + l_00) + 10;
+							*(short *)((int)&plr[0].InvBody[0]._iMaxDur + l_00) = sVar7;
+							*(short *)((int)&plr[0].InvBody[0]._iDurability + l_00) = sVar4 + 10;
+							if (sVar7 < *(short *)((int)&plr[0].InvBody[0]._iDurability + l_00)) {
+								*(short *)((int)&plr[0].InvBody[0]._iDurability + l_00) = sVar7;
 							}
 						}
 						local_d0 = local_d0 + 1;
@@ -4368,70 +4374,71 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 					do {
 						do {
 							x = ENG_random__Fl(7);
-						} while ((&plr)[pnum].InvBody[x]._itype == -1);
-						sVar4 = (&plr)[pnum].InvBody[x]._iMaxDur;
+						} while (plr[pnum].InvBody[x]._itype == -1);
+						sVar4 = plr[pnum].InvBody[x]._iMaxDur;
 					} while ((sVar4 == 0xff) || (sVar4 == 0));
-					(&plr)[pnum].InvBody[x]._iDurability = (&plr)[pnum].InvBody[x]._iDurability + -0x14;
-					sVar4 = (&plr)[pnum].InvBody[x]._iDurability;
-					(&plr)[pnum].InvBody[x]._iMaxDur = (&plr)[pnum].InvBody[x]._iMaxDur + -0x14;
+					plr[pnum].InvBody[x]._iDurability = plr[pnum].InvBody[x]._iDurability + -0x14;
+					sVar4 = plr[pnum].InvBody[x]._iDurability;
+					plr[pnum].InvBody[x]._iMaxDur = plr[pnum].InvBody[x]._iMaxDur + -0x14;
 					if (sVar4 < 1) {
-						(&plr)[pnum].InvBody[x]._iDurability = 1;
+						plr[pnum].InvBody[x]._iDurability = 1;
 					}
-					if ((&plr)[pnum].InvBody[x]._iMaxDur < 1) {
-						(&plr)[pnum].InvBody[x]._iMaxDur = 1;
+					if (plr[pnum].InvBody[x]._iMaxDur < 1) {
+						plr[pnum].InvBody[x]._iMaxDur = 1;
 					}
 				}
 				InitDiabloMsg__Fc('\r');
 				break;
 			case 2:
-				if ((&plr)[pnum].InvBody[0]._itype != -1) {
-					(&plr)[pnum].InvBody[0]._iAC = (&plr)[pnum].InvBody[0]._iAC + '\x02';
+				if (plr[pnum].InvBody[0]._itype != -1) {
+					plr[pnum].InvBody[0]._iAC = plr[pnum].InvBody[0]._iAC + '\x02';
 				}
-				if ((&plr)[pnum].InvBody[6]._itype != -1) {
-					(&plr)[pnum].InvBody[6]._iAC = (&plr)[pnum].InvBody[6]._iAC + '\x02';
+				if (plr[pnum].InvBody[6]._itype != -1) {
+					plr[pnum].InvBody[6]._iAC = plr[pnum].InvBody[6]._iAC + '\x02';
 				}
-				sVar4 = (&plr)[pnum].InvBody[4]._itype;
+				sVar4 = plr[pnum].InvBody[4]._itype;
 				if (sVar4 != -1) {
 					if (sVar4 == 5) {
-						(&plr)[pnum].InvBody[4]._iAC = (&plr)[pnum].InvBody[4]._iAC + '\x02';
+						plr[pnum].InvBody[4]._iAC = plr[pnum].InvBody[4]._iAC + '\x02';
 					}
 					else {
-						cVar2 = (&plr)[pnum].InvBody[4]._iMinDam;
-						(&plr)[pnum].InvBody[4]._iMaxDam = (&plr)[pnum].InvBody[4]._iMaxDam + -1;
-						if ((&plr)[pnum].InvBody[4]._iMaxDam < cVar2) {
-							(&plr)[pnum].InvBody[4]._iMaxDam = cVar2;
+						cVar2 = plr[pnum].InvBody[4]._iMinDam;
+						plr[pnum].InvBody[4]._iMaxDam = plr[pnum].InvBody[4]._iMaxDam + -1;
+						if (plr[pnum].InvBody[4]._iMaxDam < cVar2) {
+							plr[pnum].InvBody[4]._iMaxDam = cVar2;
 						}
 					}
 				}
-				sVar4 = (&plr)[pnum].InvBody[5]._itype;
+				sVar4 = plr[pnum].InvBody[5]._itype;
 				if (sVar4 != -1) {
 					if (sVar4 == 5) {
-						(&plr)[pnum].InvBody[5]._iAC = (&plr)[pnum].InvBody[5]._iAC + '\x02';
+						plr[pnum].InvBody[5]._iAC = plr[pnum].InvBody[5]._iAC + '\x02';
 					}
 					else {
-						cVar2 = (&plr)[pnum].InvBody[5]._iMinDam;
-						(&plr)[pnum].InvBody[5]._iMaxDam = (&plr)[pnum].InvBody[5]._iMaxDam + -1;
-						if ((&plr)[pnum].InvBody[5]._iMaxDam < cVar2) {
-							(&plr)[pnum].InvBody[5]._iMaxDam = cVar2;
+						cVar2 = plr[pnum].InvBody[5]._iMinDam;
+						plr[pnum].InvBody[5]._iMaxDam = plr[pnum].InvBody[5]._iMaxDam + -1;
+						if (plr[pnum].InvBody[5]._iMaxDam < cVar2) {
+							plr[pnum].InvBody[5]._iMaxDam = cVar2;
 						}
 					}
 				}
 				local_d0 = pnum * 0x19e8;
 				l_00 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_01 = 0;
 					do {
-						switch((int)(((uint)*(ushort *)((int)&(&plr)[pnum].InvList[0]._itype + l_01) - 1) *
-												0x10000) >> 0x10) {
+						switch((int)(((uint)*(ushort *)((int)&plr[pnum].InvList[0]._itype + l_01) - 1) * 0x10000
+												) >> 0x10) {
 						case 0:
 						case 1:
 						case 2:
 						case 3:
 						case 9:
-							cVar2 = (&plr.InvList[0]._iMinDam)[local_d0];
-							(&plr.InvList[0]._iMaxDam)[local_d0] = (&plr.InvList[0]._iMaxDam)[local_d0] + -1;
-							if ((&plr.InvList[0]._iMaxDam)[local_d0] < cVar2) {
-								(&plr.InvList[0]._iMaxDam)[local_d0] = cVar2;
+							cVar2 = (&plr[0].InvList[0]._iMinDam)[local_d0];
+							(&plr[0].InvList[0]._iMaxDam)[local_d0] = (&plr[0].InvList[0]._iMaxDam)[local_d0] + -1
+							;
+							if ((&plr[0].InvList[0]._iMaxDam)[local_d0] < cVar2) {
+								(&plr[0].InvList[0]._iMaxDam)[local_d0] = cVar2;
 							}
 							break;
 						case 4:
@@ -4439,73 +4446,72 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 						case 6:
 						case 7:
 						case 8:
-							(&plr.InvList[0]._iAC)[local_d0] = (&plr.InvList[0]._iAC)[local_d0] + '\x02';
+							(&plr[0].InvList[0]._iAC)[local_d0] = (&plr[0].InvList[0]._iAC)[local_d0] + '\x02';
 						}
 						local_d0 = local_d0 + 0x6c;
 						l_00 = l_00 + 1;
 						l_01 = l_01 + 0x6c;
-					} while (l_00 < (&plr)[pnum]._pNumInv);
+					} while (l_00 < plr[pnum]._pNumInv);
 				}
 				InitDiabloMsg__Fc('\x0e');
 				break;
 			case 3:
-				sVar4 = (&plr)[pnum].InvBody[4]._itype;
+				sVar4 = plr[pnum].InvBody[4]._itype;
 				if ((sVar4 != -1) && (sVar4 != 5)) {
-					(&plr)[pnum].InvBody[4]._iMaxDam = (&plr)[pnum].InvBody[4]._iMaxDam + '\x01';
+					plr[pnum].InvBody[4]._iMaxDam = plr[pnum].InvBody[4]._iMaxDam + '\x01';
 				}
-				sVar4 = (&plr)[pnum].InvBody[5]._itype;
+				sVar4 = plr[pnum].InvBody[5]._itype;
 				if ((sVar4 != -1) && (sVar4 != 5)) {
-					(&plr)[pnum].InvBody[5]._iMaxDam = (&plr)[pnum].InvBody[5]._iMaxDam + '\x01';
+					plr[pnum].InvBody[5]._iMaxDam = plr[pnum].InvBody[5]._iMaxDam + '\x01';
 				}
 				local_d0 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_00 = 0;
 					do {
-						sVar4 = *(short *)((int)&(&plr)[pnum].InvList[0]._itype + l_00);
+						sVar4 = *(short *)((int)&plr[pnum].InvList[0]._itype + l_00);
 						if ((0 < sVar4) && ((sVar4 < 5 || (sVar4 == 10)))) {
-							(&(&plr)[pnum].InvList[0]._iMaxDam)[l_00] =
-									 (&(&plr)[pnum].InvList[0]._iMaxDam)[l_00] + '\x01';
+							(&plr[pnum].InvList[0]._iMaxDam)[l_00] =
+									 (&plr[pnum].InvList[0]._iMaxDam)[l_00] + '\x01';
 						}
 						local_d0 = local_d0 + 1;
 						l_00 = l_00 + 0x6c;
-					} while (local_d0 < (&plr)[pnum]._pNumInv);
+					} while (local_d0 < plr[pnum]._pNumInv);
 				}
 				InitDiabloMsg__Fc('\x0f');
 				break;
 			case 4:
 			case 0xb:
-				FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)(&plr)[pnum]._px,
-										 (int)(&plr)[pnum]._py,(int)(&plr)[pnum]._pdir,0xd,0xffffffff,pnum,0,
-										 (uint)leveltype << 1);
+				AddMissile__Fiiiiiiciii
+									((int)plr[pnum]._px,(int)plr[pnum]._py,(int)plr[pnum]._px,(int)plr[pnum]._py,
+									 (int)plr[pnum]._pdir,0xd,-1,pnum,0,(uint)leveltype << 1);
 				InitDiabloMsg__Fc('\x10');
 				break;
 			case 5:
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
-					if (*(short *)((int)&plr.InvBody[0]._itype + local_d0) == 10) {
-						(&plr.InvBody[0]._iCharges)[local_d0] = (&plr.InvBody[0]._iMaxCharges)[local_d0];
+					if (*(short *)((int)&plr[0].InvBody[0]._itype + local_d0) == 10) {
+						(&plr[0].InvBody[0]._iCharges)[local_d0] = (&plr[0].InvBody[0]._iMaxCharges)[local_d0];
 					}
 					l_00 = l_00 + 1;
 					local_d0 = local_d0 + 0x6c;
 				} while (l_00 < 7);
 				local_d0 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_00 = 0;
 					do {
-						if (*(short *)((int)&(&plr)[pnum].InvList[0]._itype + l_00) == 10) {
-							(&(&plr)[pnum].InvList[0]._iCharges)[l_00] =
-									 (&(&plr)[pnum].InvList[0]._iMaxCharges)[l_00];
+						if (*(short *)((int)&plr[pnum].InvList[0]._itype + l_00) == 10) {
+							(&plr[pnum].InvList[0]._iCharges)[l_00] = (&plr[pnum].InvList[0]._iMaxCharges)[l_00];
 						}
 						local_d0 = local_d0 + 1;
 						l_00 = l_00 + 0x6c;
-					} while (local_d0 < (&plr)[pnum]._pNumInv);
+					} while (local_d0 < plr[pnum]._pNumInv);
 				}
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
-					if (*(short *)((int)&plr.SpdList[0]._itype + local_d0) == 10) {
-						(&plr.SpdList[0]._iCharges)[local_d0] = (&plr.SpdList[0]._iMaxCharges)[local_d0];
+					if (*(short *)((int)&plr[0].SpdList[0]._itype + local_d0) == 10) {
+						(&plr[0].SpdList[0]._iCharges)[local_d0] = (&plr[0].SpdList[0]._iMaxCharges)[local_d0];
 					}
 					l_00 = l_00 + 1;
 					local_d0 = local_d0 + 0x6c;
@@ -4517,26 +4523,26 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				local_d0 = pnum * 0x19e8;
 				do {
 					l_00 = l_00 + 1;
-					*(undefined2 *)((int)&plr.InvBody[0]._iDurability + local_d0) =
-							 *(undefined2 *)((int)&plr.InvBody[0]._iMaxDur + local_d0);
+					*(undefined2 *)((int)&plr[0].InvBody[0]._iDurability + local_d0) =
+							 *(undefined2 *)((int)&plr[0].InvBody[0]._iMaxDur + local_d0);
 					local_d0 = local_d0 + 0x6c;
 				} while (l_00 < 7);
 				local_d0 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_00 = 0;
 					do {
-						*(undefined2 *)((int)&(&plr)[pnum].InvList[0]._iDurability + l_00) =
-								 *(undefined2 *)((int)&(&plr)[pnum].InvList[0]._iMaxDur + l_00);
+						*(undefined2 *)((int)&plr[pnum].InvList[0]._iDurability + l_00) =
+								 *(undefined2 *)((int)&plr[pnum].InvList[0]._iMaxDur + l_00);
 						local_d0 = local_d0 + 1;
 						l_00 = l_00 + 0x6c;
-					} while (local_d0 < (&plr)[pnum]._pNumInv);
+					} while (local_d0 < plr[pnum]._pNumInv);
 				}
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
 					l_00 = l_00 + 1;
-					*(undefined2 *)((int)&plr.SpdList[0]._iDurability + local_d0) =
-							 *(undefined2 *)((int)&plr.SpdList[0]._iMaxDur + local_d0);
+					*(undefined2 *)((int)&plr[0].SpdList[0]._iDurability + local_d0) =
+							 *(undefined2 *)((int)&plr[0].SpdList[0]._iMaxDur + local_d0);
 					local_d0 = local_d0 + 0x6c;
 				} while (l_00 < 8);
 				InitDiabloMsg__Fc('\x12');
@@ -4546,26 +4552,26 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				uVar19 = 0;
 				uVar17 = 1;
 				l_00 = 1;
-				p = *(uint *)&(&plr)[pnum]._pMemSpells & 1;
+				p = *(uint *)&plr[pnum]._pMemSpells & 1;
 				do {
-					if ((p != 0) || ((*(uint *)((int)&(&plr)[pnum]._pMemSpells + 4) & uVar19) != 0)) {
+					if ((p != 0) || ((*(uint *)((int)&plr[pnum]._pMemSpells + 4) & uVar19) != 0)) {
 						local_d0 = local_d0 + 1;
 					}
 					uVar19 = uVar19 << 1 | uVar17 >> 0x1f;
 					uVar17 = uVar17 << 1;
 					l_00 = l_00 + 1;
-					p = *(uint *)&(&plr)[pnum]._pMemSpells & uVar17;
+					p = *(uint *)&plr[pnum]._pMemSpells & uVar17;
 				} while (l_00 < 0x26);
 				l_00 = 1;
 				if (1 < local_d0) {
 					uVar17 = 0;
 					p = 1;
-					pcVar11 = (&plr)[pnum]._pSplLvl;
+					pcVar11 = plr[pnum]._pSplLvl;
 					do {
 						pcVar11 = pcVar11 + 1;
-						if ((((*(uint *)&(&plr)[pnum]._pMemSpells & p) != 0) ||
-								((*(uint *)((int)&(&plr)[pnum]._pMemSpells + 4) & uVar17) != 0)) &&
-							 (*pcVar11 < '\x0f')) {
+						if ((((*(uint *)&plr[pnum]._pMemSpells & p) != 0) ||
+								((*(uint *)((int)&plr[pnum]._pMemSpells + 4) & uVar17) != 0)) && (*pcVar11 < '\x0f')
+							 ) {
 							*pcVar11 = *pcVar11 + '\x01';
 						}
 						uVar17 = uVar17 << 1 | p >> 0x1f;
@@ -4585,9 +4591,9 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 							}
 							uVar19 = 1 << (p & 0x1f);
 						}
-					} while (((*(uint *)&(&plr)[pnum]._pMemSpells & uVar19) == 0) &&
-									((*(uint *)((int)&(&plr)[pnum]._pMemSpells + 4) & uVar17) == 0));
-					pcVar11 = (&plr)[pnum]._pSplLvl + p + 1;
+					} while (((*(uint *)&plr[pnum]._pMemSpells & uVar19) == 0) &&
+									((*(uint *)((int)&plr[pnum]._pMemSpells + 4) & uVar17) == 0));
+					pcVar11 = plr[pnum]._pSplLvl + p + 1;
 					if (*pcVar11 < '\x02') {
 						*pcVar11 = '\0';
 					}
@@ -4616,60 +4622,60 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				InitDiabloMsg__Fc('\x14');
 				break;
 			case 9:
-				uVar9 = *(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4);
-				cVar2 = (&plr)[pnum]._pSplLvl[1];
-				*(uint *)&(&plr)[pnum]._pMemSpells = *(uint *)&(&plr)[pnum]._pMemSpells | 1;
-				*(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4) = uVar9;
+				uVar9 = *(undefined4 *)((int)&plr[pnum]._pMemSpells + 4);
+				cVar2 = plr[pnum]._pSplLvl[1];
+				*(uint *)&plr[pnum]._pMemSpells = *(uint *)&plr[pnum]._pMemSpells | 1;
+				*(undefined4 *)((int)&plr[pnum]._pMemSpells + 4) = uVar9;
 				if (cVar2 < '\x0f') {
-					(&plr)[pnum]._pSplLvl[1] = cVar2 + '\x01';
-					if ((&plr)[pnum]._pSplLvl[1] < '\x0f') {
-						(&plr)[pnum]._pSplLvl[1] = (&plr)[pnum]._pSplLvl[1] + '\x01';
+					plr[pnum]._pSplLvl[1] = cVar2 + '\x01';
+					if (plr[pnum]._pSplLvl[1] < '\x0f') {
+						plr[pnum]._pSplLvl[1] = plr[pnum]._pSplLvl[1] + '\x01';
 					}
 				}
-				l = (&plr)[pnum]._pMaxManaBase;
-				iVar13 = (&plr)[pnum]._pMana;
-				l_00 = (&plr)[pnum]._pManaBase;
-				iVar12 = (&plr)[pnum]._pMaxMana;
+				l = plr[pnum]._pMaxManaBase;
+				iVar13 = plr[pnum]._pMana;
+				l_00 = plr[pnum]._pManaBase;
+				iVar12 = plr[pnum]._pMaxMana;
 				local_d0 = l / 10;
-				(&plr)[pnum]._pManaBase = l_00 - local_d0;
-				iVar10 = (&plr)[pnum]._pMaxMana;
-				(&plr)[pnum]._pMana = (&plr)[pnum]._pMana - local_d0;
-				l_01 = (&plr)[pnum]._pMaxManaBase;
-				(&plr)[pnum]._pMaxMana = iVar10 - local_d0;
-				iVar10 = (&plr)[pnum]._pMana;
-				(&plr)[pnum]._pMaxManaBase = l_01 - local_d0;
+				plr[pnum]._pManaBase = l_00 - local_d0;
+				iVar10 = plr[pnum]._pMaxMana;
+				plr[pnum]._pMana = plr[pnum]._pMana - local_d0;
+				l_01 = plr[pnum]._pMaxManaBase;
+				plr[pnum]._pMaxMana = iVar10 - local_d0;
+				iVar10 = plr[pnum]._pMana;
+				plr[pnum]._pMaxManaBase = l_01 - local_d0;
 				if (iVar10 >> 6 < 1) {
-					(&plr)[pnum]._pMana = iVar13 - l_00;
-					(&plr)[pnum]._pManaBase = 0;
+					plr[pnum]._pMana = iVar13 - l_00;
+					plr[pnum]._pManaBase = 0;
 				}
-				if ((&plr)[pnum]._pMaxMana >> 6 < 1) {
-					(&plr)[pnum]._pMaxMana = iVar12 - l;
-					(&plr)[pnum]._pMaxManaBase = 0;
+				if (plr[pnum]._pMaxMana >> 6 < 1) {
+					plr[pnum]._pMaxMana = iVar12 - l;
+					plr[pnum]._pMaxManaBase = 0;
 				}
 				InitDiabloMsg__Fc('\x15');
 				break;
 			case 10:
-				FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)(&plr)[pnum]._px,
-										 (int)(&plr)[pnum]._py,(int)(&plr)[pnum]._pdir,0x2a,0xffffffff,pnum,0,
-										 (uint)leveltype << 1);
-				x = (&plr)[pnum]._pMaxManaBase;
-				(&plr)[pnum]._pMana = (&plr)[pnum]._pMaxMana;
-				(&plr)[pnum]._pManaBase = x;
+				AddMissile__Fiiiiiiciii
+									((int)plr[pnum]._px,(int)plr[pnum]._py,(int)plr[pnum]._px,(int)plr[pnum]._py,
+									 (int)plr[pnum]._pdir,0x2a,-1,pnum,0,(uint)leveltype << 1);
+				x = plr[pnum]._pMaxManaBase;
+				plr[pnum]._pMana = plr[pnum]._pMaxMana;
+				plr[pnum]._pManaBase = x;
 				InitDiabloMsg__Fc('\x16');
 				break;
 			case 0xc:
 				local_d0 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_00 = 0;
 					do {
-						if (*(short *)((int)&(&plr)[pnum].InvList[0]._itype + l_00) == 0) {
-							uVar3 = (&(&plr)[pnum].InvList[0]._iMiscId)[l_00];
+						if (*(short *)((int)&plr[pnum].InvList[0]._itype + l_00) == 0) {
+							uVar3 = (&plr[pnum].InvList[0]._iMiscId)[l_00];
 							if ((uVar3 == '\x03') || (uVar3 == '\x06')) {
 								l_01 = ItemMiscIdIdx__Fi(0x12);
-								h_01 = &(&plr)[pnum].HoldItem;
+								h_01 = &plr[pnum].HoldItem;
 								SetPlrHandItem__FP10ItemStructi(h_01,l_01);
 								GetPlrHandSeed__FP10ItemStruct(h_01);
-								(&plr)[pnum].HoldItem._iStatFlag = '\x01';
+								plr[pnum].HoldItem._iStatFlag = '\x01';
 								piVar5 = (int *)(l_00 + pnum * 0x19e8 + -0x7ff25624);
 								do {
 									h_00 = h_01;
@@ -4683,20 +4689,20 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 									piVar15[3] = iVar10;
 									h_01 = (ItemStruct *)&h_00->_iSeed;
 									piVar5 = piVar15 + 4;
-								} while (h_01 != (ItemStruct *)&(&plr)[pnum].HoldItem._iSufPower);
+								} while (h_01 != (ItemStruct *)&plr[pnum].HoldItem._iSufPower);
 								l_01 = h_00->_ivalue;
 								l = h_00->_iIvalue;
 								piVar15[4] = h_01->_iVAdd1;
 								piVar15[5] = l_01;
 								piVar15[6] = l;
 							}
-							uVar3 = (&(&plr)[pnum].InvList[0]._iMiscId)[l_00];
+							uVar3 = (&plr[pnum].InvList[0]._iMiscId)[l_00];
 							if ((uVar3 == '\x02') || (uVar3 == '\a')) {
 								l_01 = ItemMiscIdIdx__Fi(0x13);
-								h_01 = &(&plr)[pnum].HoldItem;
+								h_01 = &plr[pnum].HoldItem;
 								SetPlrHandItem__FP10ItemStructi(h_01,l_01);
 								GetPlrHandSeed__FP10ItemStruct(h_01);
-								(&plr)[pnum].HoldItem._iStatFlag = '\x01';
+								plr[pnum].HoldItem._iStatFlag = '\x01';
 								piVar5 = (int *)(l_00 + pnum * 0x19e8 + -0x7ff25624);
 								do {
 									h_00 = h_01;
@@ -4710,7 +4716,7 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 									piVar15[3] = iVar10;
 									h_01 = (ItemStruct *)&h_00->_iSeed;
 									piVar5 = piVar15 + 4;
-								} while (h_01 != (ItemStruct *)&(&plr)[pnum].HoldItem._iSufPower);
+								} while (h_01 != (ItemStruct *)&plr[pnum].HoldItem._iSufPower);
 								l_01 = h_00->_ivalue;
 								l = h_00->_iIvalue;
 								piVar15[4] = h_01->_iVAdd1;
@@ -4720,20 +4726,20 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 						}
 						local_d0 = local_d0 + 1;
 						l_00 = l_00 + 0x6c;
-					} while (local_d0 < (&plr)[pnum]._pNumInv);
+					} while (local_d0 < plr[pnum]._pNumInv);
 				}
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
-				h_01 = (&plr)[pnum].SpdList;
+				h_01 = plr[pnum].SpdList;
 				do {
-					if (*(short *)((int)&plr.SpdList[0]._itype + local_d0) == 0) {
-						uVar3 = (&plr.SpdList[0]._iMiscId)[local_d0];
+					if (*(short *)((int)&plr[0].SpdList[0]._itype + local_d0) == 0) {
+						uVar3 = (&plr[0].SpdList[0]._iMiscId)[local_d0];
 						if ((uVar3 == '\x03') || (uVar3 == '\x06')) {
 							l_01 = ItemMiscIdIdx__Fi(0x12);
-							h = &(&plr)[pnum].HoldItem;
+							h = &plr[pnum].HoldItem;
 							SetPlrHandItem__FP10ItemStructi(h,l_01);
 							GetPlrHandSeed__FP10ItemStruct(h);
-							(&plr)[pnum].HoldItem._iStatFlag = '\x01';
+							plr[pnum].HoldItem._iStatFlag = '\x01';
 							h_00 = h_01;
 							do {
 								pIVar18 = h;
@@ -4747,21 +4753,21 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 								pIVar14->_iVMult2 = iVar10;
 								h = (ItemStruct *)&pIVar18->_iSeed;
 								h_00 = (ItemStruct *)&pIVar14->_iSeed;
-							} while (h != (ItemStruct *)&(&plr)[pnum].HoldItem._iSufPower);
+							} while (h != (ItemStruct *)&plr[pnum].HoldItem._iSufPower);
 							l_01 = pIVar18->_ivalue;
 							l = pIVar18->_iIvalue;
 							((ItemStruct *)&pIVar14->_iSeed)->_iVAdd1 = h->_iVAdd1;
 							pIVar14->_ivalue = l_01;
 							pIVar14->_iIvalue = l;
-							uVar3 = (&plr.SpdList[0]._iMiscId)[local_d0];
+							uVar3 = (&plr[0].SpdList[0]._iMiscId)[local_d0];
 						}
 						if ((uVar3 == '\x02') || (uVar3 == '\a')) {
 							l_01 = ItemMiscIdIdx__Fi(0x13);
-							h_00 = &(&plr)[pnum].HoldItem;
+							h_00 = &plr[pnum].HoldItem;
 							SetPlrHandItem__FP10ItemStructi(h_00,l_01);
 							GetPlrHandSeed__FP10ItemStruct(h_00);
-							(&plr)[pnum].HoldItem._iStatFlag = '\x01';
-							piVar5 = (int *)((int)&(&plr)[pnum].SpdList[0]._iVAdd1 + l_00);
+							plr[pnum].HoldItem._iStatFlag = '\x01';
+							piVar5 = (int *)((int)&plr[pnum].SpdList[0]._iVAdd1 + l_00);
 							do {
 								h = h_00;
 								piVar15 = piVar5;
@@ -4774,7 +4780,7 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 								piVar15[3] = iVar10;
 								h_00 = (ItemStruct *)&h->_iSeed;
 								piVar5 = piVar15 + 4;
-							} while (h_00 != (ItemStruct *)&(&plr)[pnum].HoldItem._iSufPower);
+							} while (h_00 != (ItemStruct *)&plr[pnum].HoldItem._iSufPower);
 							l_01 = h->_ivalue;
 							l = h->_iIvalue;
 							piVar15[4] = h_00->_iVAdd1;
@@ -4807,13 +4813,13 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 					local_d0 = 0x13;
 				}
 				CreateTypeItem__FiiUciiUcUc((int)cVar2,(int)cVar1,'\0',0,local_d0,1,0);
-				x = (&plr)[pnum]._pMaxManaBase;
-				y = (&plr)[pnum]._pMaxHP;
-				lVar16 = (&plr)[pnum]._pMaxHPBase;
-				(&plr)[pnum]._pMana = (&plr)[pnum]._pMaxMana;
-				(&plr)[pnum]._pManaBase = x;
-				(&plr)[pnum]._pHitPoints = y;
-				(&plr)[pnum]._pHPBase = lVar16;
+				x = plr[pnum]._pMaxManaBase;
+				y = plr[pnum]._pMaxHP;
+				lVar16 = plr[pnum]._pMaxHPBase;
+				plr[pnum]._pMana = plr[pnum]._pMaxMana;
+				plr[pnum]._pManaBase = x;
+				plr[pnum]._pHitPoints = y;
+				plr[pnum]._pHPBase = lVar16;
 				InitDiabloMsg__Fc('\x1a');
 				break;
 			case 0xf:
@@ -4824,42 +4830,43 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 					local_d0 = local_d0 + 1;
 					if (0x2400 < local_d0) break;
 					pvVar6 = GetSOLID__Fii(x,y);
-				} while (((pvVar6 != (void *)0x0) || ((&dung_map)[x * 0x70 + y].dObject != '\0')) ||
-								((&dung_map)[x * 0x70 + y].dMonster != 0));
-				FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,x,y,(int)(&plr)[pnum]._pdir,3,
-										 0xffffffff,pnum,0,(uint)leveltype << 1);
+				} while (((pvVar6 != (void *)0x0) || (dung_map[x * 0x70 + y].dObject != '\0')) ||
+								(dung_map[x * 0x70 + y].dMonster != 0));
+				AddMissile__Fiiiiiiciii
+									((int)plr[pnum]._px,(int)plr[pnum]._py,x,y,(int)plr[pnum]._pdir,3,-1,pnum,0,
+									 (uint)leveltype << 1);
 				InitDiabloMsg__Fc('\x1b');
 				break;
 			case 0x10:
-				uVar9 = *(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4);
-				cVar2 = (&plr)[pnum]._pSplLvl[0x1e];
-				*(uint *)&(&plr)[pnum]._pMemSpells = *(uint *)&(&plr)[pnum]._pMemSpells | 0x20000000;
-				*(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4) = uVar9;
+				uVar9 = *(undefined4 *)((int)&plr[pnum]._pMemSpells + 4);
+				cVar2 = plr[pnum]._pSplLvl[0x1e];
+				*(uint *)&plr[pnum]._pMemSpells = *(uint *)&plr[pnum]._pMemSpells | 0x20000000;
+				*(undefined4 *)((int)&plr[pnum]._pMemSpells + 4) = uVar9;
 				if (cVar2 < '\x0f') {
-					(&plr)[pnum]._pSplLvl[0x1e] = cVar2 + '\x01';
-					if ((&plr)[pnum]._pSplLvl[0x1e] < '\x0f') {
-						(&plr)[pnum]._pSplLvl[0x1e] = (&plr)[pnum]._pSplLvl[0x1e] + '\x01';
+					plr[pnum]._pSplLvl[0x1e] = cVar2 + '\x01';
+					if (plr[pnum]._pSplLvl[0x1e] < '\x0f') {
+						plr[pnum]._pSplLvl[0x1e] = plr[pnum]._pSplLvl[0x1e] + '\x01';
 					}
 				}
-				l = (&plr)[pnum]._pMaxManaBase;
-				iVar13 = (&plr)[pnum]._pMana;
-				l_00 = (&plr)[pnum]._pManaBase;
-				iVar12 = (&plr)[pnum]._pMaxMana;
+				l = plr[pnum]._pMaxManaBase;
+				iVar13 = plr[pnum]._pMana;
+				l_00 = plr[pnum]._pManaBase;
+				iVar12 = plr[pnum]._pMaxMana;
 				local_d0 = l / 10;
-				(&plr)[pnum]._pManaBase = l_00 - local_d0;
-				iVar10 = (&plr)[pnum]._pMaxMana;
-				(&plr)[pnum]._pMana = (&plr)[pnum]._pMana - local_d0;
-				l_01 = (&plr)[pnum]._pMaxManaBase;
-				(&plr)[pnum]._pMaxMana = iVar10 - local_d0;
-				iVar10 = (&plr)[pnum]._pMana;
-				(&plr)[pnum]._pMaxManaBase = l_01 - local_d0;
+				plr[pnum]._pManaBase = l_00 - local_d0;
+				iVar10 = plr[pnum]._pMaxMana;
+				plr[pnum]._pMana = plr[pnum]._pMana - local_d0;
+				l_01 = plr[pnum]._pMaxManaBase;
+				plr[pnum]._pMaxMana = iVar10 - local_d0;
+				iVar10 = plr[pnum]._pMana;
+				plr[pnum]._pMaxManaBase = l_01 - local_d0;
 				if (iVar10 >> 6 < 1) {
-					(&plr)[pnum]._pMana = iVar13 - l_00;
-					(&plr)[pnum]._pManaBase = 0;
+					plr[pnum]._pMana = iVar13 - l_00;
+					plr[pnum]._pManaBase = 0;
 				}
-				if ((&plr)[pnum]._pMaxMana >> 6 < 1) {
-					(&plr)[pnum]._pMaxMana = iVar12 - l;
-					(&plr)[pnum]._pMaxManaBase = 0;
+				if (plr[pnum]._pMaxMana >> 6 < 1) {
+					plr[pnum]._pMaxMana = iVar12 - l;
+					plr[pnum]._pMaxManaBase = 0;
 				}
 				InitDiabloMsg__Fc('\x1c');
 				break;
@@ -4869,7 +4876,7 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				do {
 					if (*(char *)(local_d0 + -0x7ff24540 + l_00) == '\0') {
 						x = ENG_random__Fl((uint)leveltype * 10);
-						l_01 = (&plr)[pnum]._pNumInv;
+						l_01 = plr[pnum]._pNumInv;
 						l = (uint)leveltype * 5 + x;
 						h_01 = _golditem + StorePlrNo;
 						h_00 = _golditem + StorePlrNo;
@@ -4893,11 +4900,11 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 						piVar15[5] = iVar10;
 						piVar15[6] = iVar12;
 						x = GetRndSeed__Fv();
-						(&plr)[pnum].InvList[l_01]._iSeed = x;
-						(&plr)[pnum]._pNumInv = (&plr)[pnum]._pNumInv + 1;
-						*(undefined *)(local_d0 + -0x7ff24540 + l_00) = (char)(&plr)[pnum]._pNumInv;
-						(&plr)[pnum].InvList[l_01]._ivalue = l;
-						(&plr)[pnum]._pGold = (&plr)[pnum]._pGold + l;
+						plr[pnum].InvList[l_01]._iSeed = x;
+						plr[pnum]._pNumInv = plr[pnum]._pNumInv + 1;
+						*(undefined *)(local_d0 + -0x7ff24540 + l_00) = (char)plr[pnum]._pNumInv;
+						plr[pnum].InvList[l_01]._ivalue = l;
+						plr[pnum]._pGold = plr[pnum]._pGold + l;
 						SetGoldCurs__Fii(pnum,l_01);
 					}
 					l_00 = l_00 + 1;
@@ -4911,13 +4918,13 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				else {
 					InitDiabloMsg__Fc('\x1f');
 					p = pnum ^ 1;
-					x = (&plr)[p]._pMaxHPBase;
-					y = (&plr)[p]._pMaxMana;
-					lVar16 = (&plr)[p]._pMaxManaBase;
-					(&plr)[p]._pHitPoints = (&plr)[p]._pMaxHP;
-					(&plr)[p]._pHPBase = x;
-					(&plr)[p]._pMana = y;
-					(&plr)[p]._pManaBase = lVar16;
+					x = plr[p]._pMaxHPBase;
+					y = plr[p]._pMaxMana;
+					lVar16 = plr[p]._pMaxManaBase;
+					plr[p]._pHitPoints = plr[p]._pMaxHP;
+					plr[p]._pHPBase = x;
+					plr[p]._pMana = y;
+					plr[p]._pManaBase = lVar16;
 				}
 				break;
 			case 0x13:
@@ -4950,35 +4957,35 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				InitDiabloMsg__Fc('#');
 				break;
 			case 0x17:
-				uVar9 = *(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4);
-				cVar2 = (&plr)[pnum]._pSplLvl[0x1f];
-				*(uint *)&(&plr)[pnum]._pMemSpells = *(uint *)&(&plr)[pnum]._pMemSpells | 0x40000000;
-				*(undefined4 *)((int)&(&plr)[pnum]._pMemSpells + 4) = uVar9;
+				uVar9 = *(undefined4 *)((int)&plr[pnum]._pMemSpells + 4);
+				cVar2 = plr[pnum]._pSplLvl[0x1f];
+				*(uint *)&plr[pnum]._pMemSpells = *(uint *)&plr[pnum]._pMemSpells | 0x40000000;
+				*(undefined4 *)((int)&plr[pnum]._pMemSpells + 4) = uVar9;
 				if (cVar2 < '\x0f') {
-					(&plr)[pnum]._pSplLvl[0x1f] = cVar2 + '\x01';
-					if ((&plr)[pnum]._pSplLvl[0x1f] < '\x0f') {
-						(&plr)[pnum]._pSplLvl[0x1f] = (&plr)[pnum]._pSplLvl[0x1f] + '\x01';
+					plr[pnum]._pSplLvl[0x1f] = cVar2 + '\x01';
+					if (plr[pnum]._pSplLvl[0x1f] < '\x0f') {
+						plr[pnum]._pSplLvl[0x1f] = plr[pnum]._pSplLvl[0x1f] + '\x01';
 					}
 				}
-				l = (&plr)[pnum]._pMaxManaBase;
-				iVar13 = (&plr)[pnum]._pMana;
-				l_00 = (&plr)[pnum]._pManaBase;
-				iVar12 = (&plr)[pnum]._pMaxMana;
+				l = plr[pnum]._pMaxManaBase;
+				iVar13 = plr[pnum]._pMana;
+				l_00 = plr[pnum]._pManaBase;
+				iVar12 = plr[pnum]._pMaxMana;
 				local_d0 = l / 10;
-				(&plr)[pnum]._pManaBase = l_00 - local_d0;
-				iVar10 = (&plr)[pnum]._pMaxMana;
-				(&plr)[pnum]._pMana = (&plr)[pnum]._pMana - local_d0;
-				l_01 = (&plr)[pnum]._pMaxManaBase;
-				(&plr)[pnum]._pMaxMana = iVar10 - local_d0;
-				iVar10 = (&plr)[pnum]._pMana;
-				(&plr)[pnum]._pMaxManaBase = l_01 - local_d0;
+				plr[pnum]._pManaBase = l_00 - local_d0;
+				iVar10 = plr[pnum]._pMaxMana;
+				plr[pnum]._pMana = plr[pnum]._pMana - local_d0;
+				l_01 = plr[pnum]._pMaxManaBase;
+				plr[pnum]._pMaxMana = iVar10 - local_d0;
+				iVar10 = plr[pnum]._pMana;
+				plr[pnum]._pMaxManaBase = l_01 - local_d0;
 				if (iVar10 >> 6 < 1) {
-					(&plr)[pnum]._pMana = iVar13 - l_00;
-					(&plr)[pnum]._pManaBase = 0;
+					plr[pnum]._pMana = iVar13 - l_00;
+					plr[pnum]._pManaBase = 0;
 				}
-				if ((&plr)[pnum]._pMaxMana >> 6 < 1) {
-					(&plr)[pnum]._pMaxMana = iVar12 - l;
-					(&plr)[pnum]._pMaxManaBase = 0;
+				if (plr[pnum]._pMaxMana >> 6 < 1) {
+					plr[pnum]._pMaxMana = iVar12 - l;
+					plr[pnum]._pMaxManaBase = 0;
 				}
 				InitDiabloMsg__Fc('$');
 				break;
@@ -4986,31 +4993,31 @@ void OperateShrine__Fiii(int pnum,int i,int sType)
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
-					if (((&plr.InvBody[0]._iMagical)[local_d0] != '\0') &&
-						 ((&plr.InvBody[0]._iIdentified)[local_d0] == '\0')) {
-						(&plr.InvBody[0]._iIdentified)[local_d0] = '\x01';
+					if (((&plr[0].InvBody[0]._iMagical)[local_d0] != '\0') &&
+						 ((&plr[0].InvBody[0]._iIdentified)[local_d0] == '\0')) {
+						(&plr[0].InvBody[0]._iIdentified)[local_d0] = '\x01';
 					}
 					l_00 = l_00 + 1;
 					local_d0 = local_d0 + 0x6c;
 				} while (l_00 < 7);
 				local_d0 = 0;
-				if (0 < (&plr)[pnum]._pNumInv) {
+				if (0 < plr[pnum]._pNumInv) {
 					l_00 = 0;
 					do {
-						if (((&(&plr)[pnum].InvList[0]._iMagical)[l_00] != '\0') &&
-							 ((&(&plr)[pnum].InvList[0]._iIdentified)[l_00] == '\0')) {
-							(&(&plr)[pnum].InvList[0]._iIdentified)[l_00] = '\x01';
+						if (((&plr[pnum].InvList[0]._iMagical)[l_00] != '\0') &&
+							 ((&plr[pnum].InvList[0]._iIdentified)[l_00] == '\0')) {
+							(&plr[pnum].InvList[0]._iIdentified)[l_00] = '\x01';
 						}
 						local_d0 = local_d0 + 1;
 						l_00 = l_00 + 0x6c;
-					} while (local_d0 < (&plr)[pnum]._pNumInv);
+					} while (local_d0 < plr[pnum]._pNumInv);
 				}
 				l_00 = 0;
 				local_d0 = pnum * 0x19e8;
 				do {
-					if (((&plr.SpdList[0]._iMagical)[local_d0] != '\0') &&
-						 ((&plr.SpdList[0]._iIdentified)[local_d0] == '\0')) {
-						(&plr.SpdList[0]._iIdentified)[local_d0] = '\x01';
+					if (((&plr[0].SpdList[0]._iMagical)[local_d0] != '\0') &&
+						 ((&plr[0].SpdList[0]._iIdentified)[local_d0] == '\0')) {
+						(&plr[0].SpdList[0]._iIdentified)[local_d0] = '\x01';
 					}
 					l_00 = l_00 + 1;
 					local_d0 = local_d0 + 0x6c;
@@ -5147,19 +5154,18 @@ void OperateBookCase__FiiUc(int pnum,int i,uchar sendmsg)
 		object[i]._oSelFlag = '\0';
 		object[i]._oAnimFrame = cVar1 + -2;
 		uVar2 = QuestStatus__Fi(3);
-		if ((((uVar2 != '\0') && (MonsterStruct_ARRAY_80105534[0].mName == (uint)UniqMonst[2].mName)) &&
-				(QuestStruct_ARRAY_800dda54[2]._qvar2 != '\x03')) &&
-			 ((MonsterStruct_ARRAY_80105534[0]._msquelch == -1 &&
-				(MonsterStruct_ARRAY_80105534[0]._mhitpoints != 0)))) {
-			MonsterStruct_ARRAY_80105534[0].mtalkmsg = 0x95;
-			M_StartStand__Fii(0,(int)MonsterStruct_ARRAY_80105534[0]._mdir);
-			MonsterStruct_ARRAY_80105534[0]._mgoal = '\x05';
-			MonsterStruct_ARRAY_80105534[0]._mmode = '\x11';
-			QuestStruct_ARRAY_800dda54[2]._qvar2 = '\x03';
+		if ((((uVar2 != '\0') && (monster[4].mName == (uint)UniqMonst[2].mName)) &&
+				(quests[3]._qvar2 != '\x03')) &&
+			 ((monster[4]._msquelch == -1 && (monster[4]._mhitpoints != 0)))) {
+			monster[4].mtalkmsg = 0x95;
+			M_StartStand__Fii(0,(int)monster[4]._mdir);
+			monster[4]._mgoal = '\x05';
+			monster[4]._mmode = '\x11';
+			quests[3]._qvar2 = '\x03';
 			if (deltaload != '\0') {
-				QuestStruct_ARRAY_800dda54[2]._qvar2 = '\x03';
-				MonsterStruct_ARRAY_80105534[0]._mmode = '\x11';
-				MonsterStruct_ARRAY_80105534[0]._mgoal = '\x05';
+				quests[3]._qvar2 = '\x03';
+				monster[4]._mmode = '\x11';
+				monster[4]._mgoal = '\x05';
 				return;
 			}
 			NetSendCmdQuest__FUcUc('\x01','\x03');
@@ -5476,21 +5482,21 @@ uchar OperateFountains__Fii(int pnum,int i)
 		if (pnum != myplr) {
 			return '\0';
 		}
-		if ((&plr)[pnum]._pMaxMana <= (&plr)[pnum]._pMana) {
+		if (plr[pnum]._pMaxMana <= plr[pnum]._pMana) {
 LAB_8005d348:
 			PlaySfxLoc__Fiii(0x5a,(int)object[i]._ox,(int)object[i]._oy);
 			force_redraw = 0xff;
 			return '\0';
 		}
 		PlaySfxLoc__Fiii(0x5a,(int)object[i]._ox,(int)object[i]._oy);
-		l = (&plr)[pnum]._pMaxMana;
-		(&plr)[pnum]._pMana = (&plr)[pnum]._pMana + 0x40;
-		iVar4 = (&plr)[pnum]._pMana;
-		(&plr)[pnum]._pManaBase = (&plr)[pnum]._pManaBase + 0x40;
+		l = plr[pnum]._pMaxMana;
+		plr[pnum]._pMana = plr[pnum]._pMana + 0x40;
+		iVar4 = plr[pnum]._pMana;
+		plr[pnum]._pManaBase = plr[pnum]._pManaBase + 0x40;
 		if (l < iVar4) {
-			lVar3 = (&plr)[pnum]._pMaxManaBase;
-			(&plr)[pnum]._pMana = l;
-			(&plr)[pnum]._pManaBase = lVar3;
+			lVar3 = plr[pnum]._pMaxManaBase;
+			plr[pnum]._pMana = l;
+			plr[pnum]._pManaBase = lVar3;
 			force_redraw = 0xff;
 			return '\x01';
 		}
@@ -5507,16 +5513,16 @@ LAB_8005d348:
 			if (pnum != myplr) {
 				return '\0';
 			}
-			if ((&plr)[pnum]._pMaxHP <= (&plr)[pnum]._pHitPoints) goto LAB_8005d348;
+			if (plr[pnum]._pMaxHP <= plr[pnum]._pHitPoints) goto LAB_8005d348;
 			PlaySfxLoc__Fiii(0x5a,(int)object[i]._ox,(int)object[i]._oy);
-			l = (&plr)[pnum]._pMaxHP;
-			(&plr)[pnum]._pHitPoints = (&plr)[pnum]._pHitPoints + 0x40;
-			iVar4 = (&plr)[pnum]._pHitPoints;
-			(&plr)[pnum]._pHPBase = (&plr)[pnum]._pHPBase + 0x40;
+			l = plr[pnum]._pMaxHP;
+			plr[pnum]._pHitPoints = plr[pnum]._pHitPoints + 0x40;
+			iVar4 = plr[pnum]._pHitPoints;
+			plr[pnum]._pHPBase = plr[pnum]._pHPBase + 0x40;
 			if (l < iVar4) {
-				lVar3 = (&plr)[pnum]._pMaxHPBase;
-				(&plr)[pnum]._pHitPoints = l;
-				(&plr)[pnum]._pHPBase = lVar3;
+				lVar3 = plr[pnum]._pMaxHPBase;
+				plr[pnum]._pHitPoints = l;
+				plr[pnum]._pHPBase = lVar3;
 				force_redraw = 0xff;
 				return '\x01';
 			}
@@ -5534,9 +5540,9 @@ LAB_8005d348:
 				if (deltaload != '\0') {
 					return '\0';
 				}
-				FUN_80142a04((int)(&plr)[pnum]._px,(int)(&plr)[pnum]._py,(int)(&plr)[pnum]._px,
-										 (int)(&plr)[pnum]._py,(int)(&plr)[pnum]._pdir,0x27,0xffffffff,pnum,0,
-										 (uint)leveltype << 1);
+				AddMissile__Fiiiiiiciii
+									((int)plr[pnum]._px,(int)plr[pnum]._py,(int)plr[pnum]._px,(int)plr[pnum]._py,
+									 (int)plr[pnum]._pdir,0x27,-1,pnum,0,(uint)leveltype << 1);
 			}
 			else {
 				if (cVar1 != 'R') {
@@ -6341,17 +6347,17 @@ void BreakBarrel__FiiiUcUc(int pnum,int i,int dam,uchar forcebreak,int sendmsg)
 					x = (int)object[i]._ox + -1;
 					iVar5 = x * 0x380 + y * 8;
 					do {
-						i_00 = (int)*(short *)((int)&dung_map.dMonster + iVar5);
+						i_00 = (int)*(short *)((int)&dung_map[0].dMonster + iVar5);
 						if (0 < i_00) {
-							FUN_8013b04c(i_00 + -1,1,4,0,1,0);
+							MonsterTrapHit__FiiiiiUc(i_00 + -1,1,4,0,1,0);
 						}
 						uVar3 = IsDplayer__Fii(x,y);
 						if (uVar3 != '\0') {
 							bVar4 = IsDplayer__Fii(x,y);
-							FUN_8013bb90((uint)bVar4 - 1,0xffffffff,0,8,0x10,1,0,0);
+							PlayerMHit__FiiiiiiUcUc((uint)bVar4 - 1,-1,0,8,0x10,1,0,0);
 						}
-						i_00 = (int)(&dung_map.dObject)[iVar5] + -1;
-						if (((0 < (int)(&dung_map.dObject)[iVar5]) && (object[i_00]._otype == ':')) &&
+						i_00 = (int)(&dung_map[0].dObject)[iVar5] + -1;
+						if (((0 < (int)(&dung_map[0].dObject)[iVar5]) && (object[i_00]._otype == ':')) &&
 							 (object[i_00]._oBreak != -1)) {
 							BreakBarrel__FiiiUcUc(pnum,i_00,dam,'\x01',sendmsg & 0xff);
 						}
@@ -6427,11 +6433,11 @@ void BreakObject__Fii(int pnum,int oi)
 		dam = 10;
 	}
 	else {
-		dam = (&plr)[pnum]._pIMinDam;
-		lVar2 = ENG_random__Fl(((&plr)[pnum]._pIMaxDam - dam) + 1);
+		dam = plr[pnum]._pIMinDam;
+		lVar2 = ENG_random__Fl((plr[pnum]._pIMaxDam - dam) + 1);
 		dam = lVar2 + dam;
-		dam = dam + (dam * (&plr)[pnum]._pIBonusDam) / 100 +
-					(&plr)[pnum]._pIBonusDamMod + (&plr)[pnum]._pDamageMod;
+		dam = dam + (dam * plr[pnum]._pIBonusDam) / 100 +
+					plr[pnum]._pIBonusDamMod + plr[pnum]._pDamageMod;
 	}
 	cVar1 = object[oi]._otype;
 	if ('\x13' < cVar1) {
@@ -6907,7 +6913,7 @@ void GetObjectStr__Fi(int i)
 {
 	ushort uVar1;
 	char *__src;
-	int StrId;
+	text_strs StrId;
 	int **__format;
 	
 	switch((int)(((uint)(byte)object[i]._otype - 1) * 0x1000000) >> 0x18) {
@@ -6918,165 +6924,165 @@ void GetObjectStr__Fi(int i)
 	case 0x49:
 	case 0x4a:
 		if (object[i]._oVar4 == 1) {
-			__src = GetStr__Fi(0x2f3);
+			__src = GetStr__Fi(STR_OPEN_DOOR_755);
 			strcpy(_infostr + sel_data * 0x100,__src);
 		}
 		if (object[i]._oVar4 == 0) {
-			__src = GetStr__Fi(0xbd);
+			__src = GetStr__Fi(STR_CLOSED_DOOR_189);
 			strcpy(_infostr + sel_data * 0x100,__src);
 		}
 		if (object[i]._oVar4 != 2) goto switchD_8005f52c_caseD_2;
-		StrId = 0x5e;
+		StrId = STR_BLOCKED_DOOR_94;
 		break;
 	default:
 		goto switchD_8005f52c_caseD_2;
 	case 3:
 	case 0x31:
-		StrId = 0x248;
+		StrId = STR_LEVER_584;
 		break;
 	case 4:
 	case 0x43:
-		StrId = 0x3df;
+		StrId = STR_SMALL_CHEST_991;
 		break;
 	case 5:
 	case 0x44:
-		StrId = 0xb5;
+		StrId = STR_CHEST_181;
 		break;
 	case 6:
 	case 0x45:
 	case 0x60:
-		StrId = 0x239;
+		StrId = STR_LARGE_CHEST_569;
 		break;
 	case 0x13:
 	case 0x14:
 	case 0x15:
-		StrId = 0xda;
+		StrId = STR_CRUCIFIED_SKELETON_218;
 		break;
 	case 0x18:
 		if (setlevel == '\0') goto switchD_8005f52c_caseD_2;
 		if (setlvlnum == '\x02') {
-			StrId = 0x17;
+			StrId = STR_ANCIENT_TOME_23;
 		}
 		else {
 			if (setlvlnum != '\x05') goto switchD_8005f52c_caseD_2;
-			StrId = 0x7b;
+			StrId = STR_BOOK_OF_VILENESS_123;
 		}
 		break;
 	case 0x1b:
-		StrId = 0x3d8;
+		StrId = STR_SKULL_LEVER_984;
 		break;
 	case 0x28:
-		StrId = 0x2ae;
+		StrId = STR_MYTHICAL_BOOK_686;
 		break;
 	case 0x2f:
-		StrId = 899;
+		StrId = STR_SARCOPHAGUS_899;
 		break;
 	case 0x36:
-		StrId = 0x78;
+		StrId = STR_BOOKSHELF_120;
 		break;
 	case 0x38:
 	case 0x39:
-		StrId = 0x40;
+		StrId = STR_BARREL_64;
 		break;
 	case 0x3a:
 	case 0x3b:
 		uVar1 = shrinestrs[(int)object[i]._oVar1];
 		if (uVar1 == 0x1ed) {
-			__src = GetStr__Fi(0x1ee);
+			__src = GetStr__Fi(STR_HIDDEN_SHRINE_494);
 			__format = &PTR_DAT_8011b9c8;
 		}
 		else {
 			if (uVar1 == 0x1fa) {
-				__src = GetStr__Fi(0x1fd);
+				__src = GetStr__Fi(STR_HOLY_SHRINE_509);
 				__format = &PTR_DAT_8011b9c8;
 			}
 			else {
 				if (uVar1 == 0x4c7) {
-					__src = GetStr__Fi(0x4c8);
+					__src = GetStr__Fi(STR_WEIRD_SHRINE_1224);
 					__format = &PTR_DAT_8011b9c8;
 				}
 				else {
-					__format = (int **)GetStr__Fi(0x517);
+					__format = (int **)GetStr__Fi(STR__S_SHRINE_1303);
 					__src = GetStr__Fi((uint)shrinestrs[(int)object[i]._oVar1]);
 				}
 			}
 		}
-		sprintf(&tempstr,(char *)__format,__src);
-		__src = &tempstr;
+		sprintf(tempstr,(char *)__format,__src);
+		__src = tempstr;
 		goto LAB_8005f880;
 	case 0x3c:
-		StrId = 0x3d3;
+		StrId = STR_SKELETON_TOME_979;
 		break;
 	case 0x3d:
 	case 0x3e:
-		StrId = 0x77;
+		StrId = STR_BOOKCASE_119;
 		break;
 	case 0x3f:
-		StrId = 0x24b;
+		StrId = STR_LIBRARY_BOOK_587;
 		break;
 	case 0x41:
-		StrId = 0x68;
+		StrId = STR_BLOOD_FOUNTAIN_104;
 		break;
 	case 0x42:
-		StrId = 0xef;
+		StrId = STR_DECAPITATED_BODY_239;
 		break;
 	case 0x46:
-		StrId = 0x7a;
+		StrId = STR_BOOK_OF_THE_BLIND_122;
 		break;
 	case 0x47:
-		StrId = 0x79;
+		StrId = STR_BOOK_OF_BLOOD_121;
 		break;
 	case 0x48:
-		StrId = 0x304;
+		StrId = STR_PEDESTAL_OF_BLOOD_772;
 		break;
 	case 0x4b:
-		StrId = 0x337;
+		StrId = STR_PURIFYING_SPRING_823;
 		break;
 	case 0x4c:
 	case 0x58:
-		StrId = 0x28;
+		StrId = STR_ARMOR_40;
 		break;
 	case 0x4e:
-		StrId = 0x18c;
+		StrId = STR_GOAT_SHRINE_396;
 		break;
 	case 0x4f:
-		StrId = 0xa3;
+		StrId = STR_CAULDRON_163;
 		break;
 	case 0x50:
-		StrId = 0x2a9;
+		StrId = STR_MURKY_POOL_681;
 		break;
 	case 0x51:
-		StrId = 0x169;
+		StrId = STR_FOUNTAIN_OF_TEARS_361;
 		break;
 	case 0x55:
 		__src = GetStr__Fi((uint)StoryBookName[(int)object[i]._oVar3]);
 		goto LAB_8005f880;
 	case 0x57:
-		StrId = 0x40d;
+		StrId = STR_STEEL_TOME_1037;
 		break;
 	case 0x59:
-		StrId = 0x4c4;
+		StrId = STR_WEAPON_RACK_1220;
 		break;
 	case 0x5b:
-		StrId = 0x4c4;
+		StrId = STR_WEAPON_RACK_1220;
 		break;
 	case 0x5d:
-		StrId = 0x2aa;
+		StrId = STR_MUSHROOM_PATCH_682;
 		break;
 	case 0x5e:
-		StrId = 0x4b3;
+		StrId = STR_VILE_STAND_1203;
 		break;
 	case 0x5f:
-		StrId = 0x3d9;
+		StrId = STR_SLAIN_HERO_985;
 	}
 	__src = GetStr__Fi(StrId);
 LAB_8005f880:
 	strcpy(_infostr + sel_data * 0x100,__src);
 switchD_8005f52c_caseD_2:
-	if (((&plr)[sel_data]._pClass == '\x01') && (object[i]._oTrapFlag != '\0')) {
-		__src = GetStr__Fi(0x499);
-		sprintf(&tempstr,__src,_infostr + sel_data * 0x100);
-		strcpy(_infostr + sel_data * 0x100,&tempstr);
+	if ((plr[sel_data]._pClass == '\x01') && (object[i]._oTrapFlag != '\0')) {
+		__src = GetStr__Fi(STR_TRAPPED__S_1177);
+		sprintf(tempstr,__src,_infostr + sel_data * 0x100);
+		strcpy(_infostr + sel_data * 0x100,tempstr);
 		_infoclr[sel_data] = '\x02';
 	}
 	return;
@@ -7142,21 +7148,21 @@ void RestoreObjectLight__Fv(void)
 {
 	int iVar1;
 	int r;
-	short *psVar2;
+	MonsterStruct *pMVar2;
 	undefined *puVar3;
 	int iVar4;
 	
 	InitLighting__Fv();
 	iVar4 = 0;
 	if (0 < nummonsters) {
-		psVar2 = &monstactive;
+		pMVar2 = monster + 0xbe;
 		do {
-			iVar1 = (int)*psVar2;
+			iVar1 = (int)*(short *)&pMVar2->mtalkmsg;
 			if (monster[iVar1]._uniqtype != '\0') {
 				AddLight__Fiii((int)monster[iVar1]._mx,(int)monster[iVar1]._my,(int)&DAT_000023f4);
 			}
 			iVar4 = iVar4 + 1;
-			psVar2 = psVar2 + 1;
+			pMVar2 = (MonsterStruct *)((int)&pMVar2->mtalkmsg + 2);
 		} while (iVar4 < nummonsters);
 	}
 	iVar4 = 0;
@@ -7164,10 +7170,10 @@ void RestoreObjectLight__Fv(void)
 		puVar3 = (undefined *)0x0;
 		do {
 			iVar4 = iVar4 + 1;
-			iVar1 = AddLight__Fiii((int)*(short *)((int)&plr._px + (int)puVar3),
-														 (int)*(short *)((int)&plr._py + (int)puVar3),
-														 (int)(&DAT_000023f0 + (int)(&plr._pLightRad)[(int)puVar3]));
-			(&plr._plid)[(int)puVar3] = (char)iVar1;
+			iVar1 = AddLight__Fiii((int)*(short *)((int)&plr[0]._px + (int)puVar3),
+														 (int)*(short *)((int)&plr[0]._py + (int)puVar3),
+														 (int)(&DAT_000023f0 + (int)(&plr[0]._pLightRad)[(int)puVar3]));
+			(&plr[0]._plid)[(int)puVar3] = (char)iVar1;
 			puVar3 = &DAT_000019e8 + (int)puVar3;
 		} while (iVar4 <= FePlayerNo);
 	}
